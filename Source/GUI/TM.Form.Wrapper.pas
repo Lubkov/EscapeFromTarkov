@@ -15,8 +15,8 @@ type
     FTop: Integer;
     FWidth: Integer;
     FHeight: Integer;
-//    FBorderStyle: TFormBorderStyle;
-//    FFormStyle: TFormStyle;
+    FBorderStyle: TFmxFormBorderStyle;
+    FFormStyle: TFormStyle;
     FFullScreen: Boolean;
 
     function GetMainDisplay: TDisplay;
@@ -82,8 +82,8 @@ begin
   FTop := FForm.Top;
   FWidth := FForm.Width;
   FHeight := FForm.Height;
-//  FBorderStyle := FForm.BorderStyle;
-//  FFormStyle := FForm.FormStyle;
+  FBorderStyle := FForm.BorderStyle;
+  FFormStyle := FForm.FormStyle;
 end;
 
 procedure TFormWrapper.RestoreFormState;
@@ -92,8 +92,8 @@ begin
   FForm.Top := FTop;
   FForm.Width := FWidth;
   FForm.Height := FHeight;
-//  FForm.BorderStyle := FBorderStyle;
-//  FForm.FormStyle := FFormStyle;
+  FForm.BorderStyle := FBorderStyle;
+  FForm.FormStyle := FFormStyle;
 end;
 
 procedure TFormWrapper.EnableFullScreenMode;
@@ -107,8 +107,8 @@ begin
   FForm.Top := Display.Bounds.Top;
   FForm.Width := Display.Bounds.Width;
   FForm.Height := Display.Bounds.Height;
-//  FForm.BorderStyle := bsNone;
-//  FForm.FormStyle := fsStayOnTop;
+  FForm.BorderStyle := TFmxFormBorderStyle.None;
+  FForm.FormStyle := TFormStyle.StayOnTop;
 
   FFullScreen := True;
 end;

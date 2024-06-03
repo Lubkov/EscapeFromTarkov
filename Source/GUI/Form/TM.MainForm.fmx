@@ -10,6 +10,7 @@ object MainForm: TMainForm
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnKeyDown = FormKeyDown
   DesignerMasterStyle = 0
   object MainStyleBook: TStyleBook
     Styles = <
@@ -112,7 +113,9 @@ object MainForm: TMainForm
     Size.PlatformDefault = False
     TabOrder = 3
     object buFullScreen: TSpeedButton
+      Action = acFullScreen
       Align = Top
+      Enabled = True
       Images = ImageList32
       ImageIndex = 0
       Margins.Top = 10.000000000000000000
@@ -121,7 +124,6 @@ object MainForm: TMainForm
       Size.Height = 48.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = 'IconToolButtonStyle'
-      Text = 'buFullScreen'
     end
     object buZoomIn: TSpeedButton
       Align = Top
@@ -384,8 +386,14 @@ object MainForm: TMainForm
     Left = 336
     Top = 160
   end
-  object ActionList1: TActionList
+  object MainActionList: TActionList
+    Images = ImageList32
     Left = 288
     Top = 272
+    object acFullScreen: TAction
+      ImageIndex = 0
+      OnExecute = acFullScreenExecute
+      ImageIndex = 0
+    end
   end
 end

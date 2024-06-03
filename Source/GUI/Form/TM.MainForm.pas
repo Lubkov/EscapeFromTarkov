@@ -19,11 +19,16 @@ type
     buZoomOut: TSpeedButton;
     buCentreMap: TSpeedButton;
     buMapFilters: TSpeedButton;
-    ActionList1: TActionList;
+    MainActionList: TActionList;
+    acFullScreen: TAction;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure acFullScreenExecute(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
   private
     FFormWrapper: TFormWrapper;
+
+    procedure SetFullScreenMode(const Value: Boolean);
   public
   end;
 
@@ -47,6 +52,28 @@ end;
 procedure TMainForm.FormDestroy(Sender: TObject);
 begin
   FFormWrapper.Free;
+end;
+
+procedure TMainForm.FormKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
+begin
+  case Key of
+    vkEscape:
+      SetFullScreenMode(False);
+    vkF11:
+      SetFullScreenMode(True);
+  end;
+end;
+
+procedure TMainForm.acFullScreenExecute(Sender: TObject);
+begin
+  SetFullScreenMode(not FFormWrapper.FullScreen);
+end;
+
+procedure TMainForm.SetFullScreenMode(const Value: Boolean);
+begin
+  FFormWrapper.FullScreen := Value;
+  MapControlLayout.Visible := not FFormWrapper.FullScreen;
+//  FormResize(Self);
 end;
 
 end.
