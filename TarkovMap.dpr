@@ -31,7 +31,8 @@ uses
   ME.Service.Quest in 'Source\Service\ME.Service.Quest.pas',
   TM.Form.Wrapper in 'Source\GUI\TM.Form.Wrapper.pas',
   App.DB.Connection in 'Source\App.DB.Connection.pas',
-  App.Service in 'Source\App.Service.pas';
+  App.Service in 'Source\App.Service.pas',
+  TM.Map.Wrapper in 'Source\GUI\TM.Map.Wrapper.pas';
 
 {$R *.res}
 

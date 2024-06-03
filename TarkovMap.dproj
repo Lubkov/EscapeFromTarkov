@@ -315,6 +315,7 @@
         <DCCReference Include="Source\GUI\TM.Form.Wrapper.pas"/>
         <DCCReference Include="Source\App.DB.Connection.pas"/>
         <DCCReference Include="Source\App.Service.pas"/>
+        <DCCReference Include="Source\GUI\TM.Map.Wrapper.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

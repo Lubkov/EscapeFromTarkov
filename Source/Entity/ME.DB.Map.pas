@@ -20,6 +20,7 @@ type
     FQuests: TList<TQuest>;
 
     procedure SetPicture(const Value: TBitmap);
+    function GetMainLayer: TLayer;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -43,6 +44,7 @@ type
     property Layers: TList<TLayer> read FLayers;
     property Tags: TList<TMarker> read FTags;
     property Quests: TList<TQuest> read FQuests;
+    property MainLayer: TLayer read GetMainLayer;
   end;
 
 implementation
@@ -83,6 +85,18 @@ end;
 procedure TMap.SetPicture(const Value: TBitmap);
 begin
   FPicture.Assign(Value);
+end;
+
+function TMap.GetMainLayer: TLayer;
+var
+  Layer: TLayer;
+begin
+  Result := nil;
+  for Layer in Layers do
+    if Layer.IsMainLevel then begin
+      Result := Layer;
+      Exit;
+    end;
 end;
 
 procedure TMap.Assign(const Source: TEntity);
