@@ -103,10 +103,10 @@ begin
   SaveFormState;
 
   Display := GetMainDisplay;
-  FForm.Left := Display.Bounds.Left;
-  FForm.Top := Display.Bounds.Top;
-  FForm.Width := Display.Bounds.Width;
-  FForm.Height := Display.Bounds.Height;
+  FForm.Left := Display.{$IFDEF VER360}PhysicalBounds{$ELSE}Bounds{$ENDIF}.Left;
+  FForm.Top := Display.{$IFDEF VER360}PhysicalBounds{$ELSE}Bounds{$ENDIF}.Top;
+  FForm.Width := Display.{$IFDEF VER360}PhysicalBounds{$ELSE}Bounds{$ENDIF}.Width;
+  FForm.Height := Display.{$IFDEF VER360}PhysicalBounds{$ELSE}Bounds{$ENDIF}.Height;
   FForm.BorderStyle := TFmxFormBorderStyle.None;
   FForm.FormStyle := TFormStyle.StayOnTop;
 

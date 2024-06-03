@@ -29,12 +29,22 @@ uses
   ME.Service.Marker in 'Source\Service\ME.Service.Marker.pas',
   ME.Service.Point in 'Source\Service\ME.Service.Point.pas',
   ME.Service.Quest in 'Source\Service\ME.Service.Quest.pas',
-  TM.Form.Wrapper in 'Source\GUI\TM.Form.Wrapper.pas';
+  TM.Form.Wrapper in 'Source\GUI\TM.Form.Wrapper.pas',
+  App.DB.Connection in 'Source\App.DB.Connection.pas',
+  App.Service in 'Source\App.Service.pas';
 
 {$R *.res}
 
 begin
+{$IFDEF DEBUG}
+  ReportMemoryLeaksOnShutdown := True;
+{$ENDIF}
+
   Application.Initialize;
+
+  // app initialization
+  AppService := TAppService.Create(Application);
+
   Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.
