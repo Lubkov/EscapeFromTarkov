@@ -4,8 +4,7 @@ object MainForm: TMainForm
   Caption = 'Form1'
   ClientHeight = 673
   ClientWidth = 1019
-  Fill.Color = xFF0F0F0F
-  Fill.Kind = Solid
+  Position = ScreenCenter
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
@@ -384,5 +383,9 @@ object MainForm: TMainForm
       end>
     Left = 336
     Top = 160
+  end
+  object ActionList1: TActionList
+    Left = 288
+    Top = 272
   end
 end
