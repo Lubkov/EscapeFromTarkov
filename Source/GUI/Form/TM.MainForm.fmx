@@ -12,6 +12,25 @@ object MainForm: TMainForm
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
   DesignerMasterStyle = 0
+  object MainContainer: TScrollBox
+    Align = Contents
+    Size.Width = 1020.000000000000000000
+    Size.Height = 672.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+    Viewport.Width = 1020.000000000000000000
+    Viewport.Height = 672.000000000000000000
+    object MapBackground: TImage
+      MultiResBitmap.Height = 1758
+      MultiResBitmap.Width = 1759
+      MultiResBitmap = <
+        item
+        end>
+      Size.Width = 1020.000000000000000000
+      Size.Height = 672.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
   object MainStyleBook: TStyleBook
     Styles = <
       item
@@ -90,17 +109,6 @@ object MainForm: TMainForm
     Left = 200
     Top = 160
   end
-  object MapBackground: TImage
-    MultiResBitmap.Height = 1758
-    MultiResBitmap.Width = 1759
-    MultiResBitmap = <
-      item
-      end>
-    Align = Contents
-    Size.Width = 1020.000000000000000000
-    Size.Height = 672.000000000000000000
-    Size.PlatformDefault = False
-  end
   object MapControlLayout: TLayout
     Align = Right
     Margins.Top = 10.000000000000000000
@@ -111,7 +119,7 @@ object MainForm: TMainForm
     Size.Width = 48.000000000000000000
     Size.Height = 652.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 3
+    TabOrder = 2
     object buFullScreen: TSpeedButton
       Action = acFullScreen
       Align = Top
@@ -126,6 +134,7 @@ object MainForm: TMainForm
       TextSettings.Trimming = None
     end
     object buZoomIn: TSpeedButton
+      Action = acZoomIn
       Align = Top
       Images = ImageList32
       ImageIndex = 1
@@ -135,10 +144,10 @@ object MainForm: TMainForm
       Size.Height = 48.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = 'IconToolButtonStyle'
-      Text = 'SpeedButton1'
       TextSettings.Trimming = None
     end
     object buZoomOut: TSpeedButton
+      Action = acZoomOut
       Align = Top
       Images = ImageList32
       ImageIndex = 2
@@ -148,7 +157,6 @@ object MainForm: TMainForm
       Size.Height = 48.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = 'IconToolButtonStyle'
-      Text = 'SpeedButton1'
       TextSettings.Trimming = None
     end
     object buCentreMap: TSpeedButton
@@ -163,6 +171,7 @@ object MainForm: TMainForm
       StyleLookup = 'IconToolButtonStyle'
       Text = 'SpeedButton1'
       TextSettings.Trimming = None
+      OnClick = buCentreMapClick
     end
     object buMapFilters: TSpeedButton
       Align = Top
@@ -176,6 +185,7 @@ object MainForm: TMainForm
       StyleLookup = 'IconToolButtonStyle'
       Text = 'SpeedButton1'
       TextSettings.Trimming = None
+      OnClick = buMapFiltersClick
     end
   end
   object ImageList32: TImageList
@@ -392,5 +402,23 @@ object MainForm: TMainForm
       OnExecute = acFullScreenExecute
       ImageIndex = 0
     end
+    object acZoomIn: TAction
+      Text = 'acZoomIn'
+      ImageIndex = 1
+      OnExecute = acZoomInExecute
+      ImageIndex = 1
+    end
+    object acZoomOut: TAction
+      Text = 'acZoomOut'
+      ImageIndex = 2
+      OnExecute = acZoomOutExecute
+      ImageIndex = 2
+    end
+  end
+  object MapTagImages: TImageList
+    Source = <>
+    Destination = <>
+    Left = 512
+    Top = 296
   end
 end

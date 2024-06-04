@@ -3,8 +3,8 @@ unit TM.Map.Wrapper;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, Winapi.Windows, Winapi.GDIPAPI,
-  Winapi.GDIPOBJ, FMX.Graphics, FMX.ImgList,
+  System.SysUtils, System.Classes, System.IOUtils, System.Types, Winapi.Windows,
+  Winapi.GDIPAPI, Winapi.GDIPOBJ, FMX.Graphics, FMX.ImgList,
   ME.DB.Point, ME.DB.Map, ME.DB.Layer, TM.FilesMonitor, App.Constants
   {, ResUIWrapper, SimpleLogger};
 
@@ -255,6 +255,7 @@ var
   bmp: TBitmap;
   p: TPoint;
   Offset: Double;
+  src, trg: TRectF;
 begin
   FPoint := Value;
 
@@ -264,6 +265,14 @@ begin
 //    bmp.Assign(FBackground);
     bmp.Height := Trunc(FBackground.Height * (FZoom / 100));
     bmp.Width := Trunc(FBackground.Width * (FZoom / 100));
+
+    src := RectF(0, 0, FBackground.Width, FBackground.Height);
+    trg := RectF(0, 0, bmp.Width, bmp.Height);
+
+    bmp.Canvas.BeginScene;
+    bmp.Canvas.DrawBitmap(FBackground, src, trg, 1);
+    bmp.Canvas.EndScene;
+
 //    bmp.Canvas.StretchDraw(Rect(0, 0, bmp.Width, bmp.Height), FBackground);
 
     DrawMapTags(bmp);
