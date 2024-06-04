@@ -110,16 +110,17 @@ procedure TMapWrapper.DrawMapTags(Bitmap: TBitmap);
   var
     Offset: Double;
     src, trg: TRectF;
+    Left, Top: Integer;
   begin
-    Offset := Abs((FMap.Left - Left) / (FMap.Bottom - FMap.Left));
-    Left := Trunc(Bitmap.Width * Offset);
-    Offset := Abs((FMap.Top - Top) / (FMap.Bottom - FMap.Top));
-    Top := Trunc(Bitmap.Height * Offset);
+//    Offset := Abs((FMap.Left - Left) / (FMap.Bottom - FMap.Left));
+//    Left := Trunc(Bitmap.Width * Offset);
+//    Offset := Abs((FMap.Top - Top) / (FMap.Bottom - FMap.Top));
+//    Top := Trunc(Bitmap.Height * Offset);
 
-//    Offset := Abs((FMap.Left.X - Position.X) / (FMap.Right.X - FMap.Left.X));
-//    Position.X := Trunc(Bitmap.Width * Offset);
-//    Offset := Abs((FMap.Left.Y - Position.Y) / (FMap.Right.Y - FMap.Left.Y));
-//    Position.Y := Trunc(Bitmap.Height * Offset);
+    Offset := Abs((FMap.Left - Marker.Left) / (FMap.Right - FMap.Left));
+    Left := Trunc(Bitmap.Width * Offset);
+    Offset := Abs((FMap.Top - Marker.Top) / (FMap.Bottom - FMap.Top));
+    Top := Trunc(Bitmap.Height * Offset);
 
     src := RectF(Left - 16, Top - 16, Left + 16, Top + 16);
     trg := RectF(0, 0, ico.Width, ico.Height);
@@ -156,7 +157,7 @@ var
 begin
   bmp := Images.Bitmap(TSizeF.Create(32, 32), PMCExtractionIndex);
   for Marker in FMap.Tags do begin
-    DrawTag(bmp, Marker.Name, Marker.Left, Marker.Top);
+    DrawTag(bmp, Marker);
   end;
 
 

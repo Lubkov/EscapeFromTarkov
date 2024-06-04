@@ -102,7 +102,7 @@ end;
 procedure TMainForm.SetFullScreenMode(const Value: Boolean);
 begin
   FFormWrapper.FullScreen := Value;
-  MapControlLayout.Visible := not FFormWrapper.FullScreen;
+  ToolBarPanel.Visible := not FFormWrapper.FullScreen;
 //  FormResize(Self);
 end;
 
