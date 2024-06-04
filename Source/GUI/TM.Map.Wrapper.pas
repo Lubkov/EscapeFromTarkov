@@ -3,12 +3,13 @@ unit TM.Map.Wrapper;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Types, Winapi.Windows,
-  Winapi.GDIPAPI, Winapi.GDIPOBJ, FMX.Graphics, FMX.ImgList,
-  ME.DB.Point, ME.DB.Map, ME.DB.Layer, ME.DB.Marker, TM.FilesMonitor, App.Constants
+  System.SysUtils, System.Classes, System.IOUtils, System.Types, System.UITypes,
+  Generics.Collections, FMX.Types, FMX.Graphics, FMX.ImgList, ME.DB.Point,
+  ME.DB.Map, ME.DB.Layer, ME.DB.Marker, TM.FilesMonitor, App.Constants
   {, ResUIWrapper, SimpleLogger};
 
 type
+  TMarkerIconArray = array[TMarkerKind.tkPMCExtraction .. TMarkerKind.tkCoopExtraction] of TBitmap;
   TOnMapChangeEvent = procedure (Bitmap: TBitmap) of object;
 
   TMapWrapper = class
@@ -22,10 +23,13 @@ type
     FPoint: TPoint;
     FZoom: Integer;
     FImages: TImageList;
+    FMarkerIcons: TMarkerIconArray;
 
     procedure DoMapChange(Bitmap: TBitmap);
     procedure OnFileChange(Sender: TObject);
     procedure DrawMapTags(Bitmap: TBitmap);
+    procedure SetImages(const Value: TImageList);
+    function GetMarkerIcon(Index: TMarkerKind): TBitmap;
   public
     constructor Create(const Directory: string); virtual;
     destructor Destroy; override;
@@ -46,7 +50,8 @@ type
     property Map: TMap read FMap;
     property Directory: string read FDirectory;
     property TrackLocation: Boolean read FTrackLocation write FTrackLocation;
-    property Images: TImageList read FImages write FImages;
+    property Images: TImageList read FImages write SetImages;
+    property MarkerIcon[Index: TMarkerKind]: TBitmap read GetMarkerIcon;
     property OnMapChange: TOnMapChangeEvent read FOnMapChange write FOnMapChange;
   end;
 
@@ -111,34 +116,42 @@ procedure TMapWrapper.DrawMapTags(Bitmap: TBitmap);
     Offset: Double;
     src, trg: TRectF;
     Left, Top: Integer;
+    TextWidth, TextHeight: Single;
   begin
-//    Offset := Abs((FMap.Left - Left) / (FMap.Bottom - FMap.Left));
-//    Left := Trunc(Bitmap.Width * Offset);
-//    Offset := Abs((FMap.Top - Top) / (FMap.Bottom - FMap.Top));
-//    Top := Trunc(Bitmap.Height * Offset);
-
     Offset := Abs((FMap.Left - Marker.Left) / (FMap.Right - FMap.Left));
     Left := Trunc(Bitmap.Width * Offset);
     Offset := Abs((FMap.Top - Marker.Top) / (FMap.Bottom - FMap.Top));
     Top := Trunc(Bitmap.Height * Offset);
 
-    src := RectF(Left - 16, Top - 16, Left + 16, Top + 16);
-    trg := RectF(0, 0, ico.Width, ico.Height);
+    src := RectF(0, 0, ico.Width, ico.Height);
+    trg := RectF(Left - 16, Top - 16, Left + 16, Top + 16);
 
     Bitmap.Canvas.BeginScene;
-    Bitmap.Canvas.DrawBitmap(ico, trg, src, 1);
-    Bitmap.Canvas.EndScene;
+    try
+      Bitmap.Canvas.DrawBitmap(ico, src, trg, 1);
 
-//    Bitmap.Canvas.Draw(Position.X - 16, Position.Y - 16, ico);
-//
-//    if Trim(Caption) <> '' then begin
-//      Bitmap.Canvas.Brush.Color := $00060606;
-//      Bitmap.Canvas.Font.Name := 'Tahoma';
-//      Bitmap.Canvas.Font.Color := clGreen;
-//      Bitmap.Canvas.Font.Style := [fsBold];
-//      Bitmap.Canvas.Font.Height := 18;
-//      Bitmap.Canvas.TextOut(Position.X + 15, Position.Y - 10, Caption);
-//    end;
+      if Trim(Marker.Name) <> '' then begin
+//        Bitmap.Canvas.DrawRect()
+
+        Bitmap.Canvas.Stroke.Kind := TBrushKind.Solid;
+        Bitmap.Canvas.Font.Size := 16;
+        Bitmap.Canvas.Font.Family := 'Tahoma';
+        Bitmap.Canvas.Font.Style := [TFontStyle.fsbold];
+        Bitmap.Canvas.Fill.Color := $FFFFFFFF;
+
+        TextWidth := Bitmap.Canvas.TextWidth(Marker.Name) * Bitmap.Canvas.Scale;
+        TextHeight := Bitmap.Canvas.TextHeight(Marker.Name) * Bitmap.Canvas.Scale;
+
+        trg.Left := Left + (ico.Width / 2) + 2;
+        trg.Top := Top - (TextHeight / 2);
+        trg.Right := trg.Left + TextWidth;
+        trg.Bottom := trg.Top + TextHeight;
+        Bitmap.Canvas.FillText(trg, Marker.Name, false, 100, [TFillTextFlag.RightToLeft], TTextAlign.Trailing, TTextAlign.Leading);
+  //      Bitmap.Canvas.EndScene;
+      end;
+    finally
+      Bitmap.Canvas.EndScene;
+    end;
   end;
 
 const
@@ -152,14 +165,10 @@ const
 //  p: TPoint;
 //  png: TPngImage;
 var
-  bmp: TBitmap;
   Marker: TMarker;
 begin
-  bmp := Images.Bitmap(TSizeF.Create(32, 32), PMCExtractionIndex);
-  for Marker in FMap.Tags do begin
-    DrawTag(bmp, Marker);
-  end;
-
+  for Marker in FMap.Tags do
+    DrawTag(MarkerIcon[Marker.Kind], Marker);
 
 //  png := TPngImage.Create;
 //  try
@@ -206,6 +215,21 @@ begin
 //  finally
 //    png.Free;
 //  end;
+end;
+
+procedure TMapWrapper.SetImages(const Value: TImageList);
+var
+  Kind: TMarkerKind;
+begin
+  FImages := Value;
+
+  for Kind := TMarkerKind.tkPMCExtraction to TMarkerKind.tkCoopExtraction do
+    FMarkerIcons[kind] := Images.Bitmap(TSizeF.Create(32, 32), Ord(Kind));
+end;
+
+function TMapWrapper.GetMarkerIcon(Index: TMarkerKind): TBitmap;
+begin
+  Result := FMarkerIcons[Index];
 end;
 
 function TMapWrapper.GetScreenshotName: string;
