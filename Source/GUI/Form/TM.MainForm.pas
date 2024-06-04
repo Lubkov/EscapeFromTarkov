@@ -7,7 +7,7 @@ uses
   Generics.Collections, FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   TM.Form.Wrapper, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts,
   System.ImageList, FMX.ImgList, FMX.Objects, System.Actions, FMX.ActnList,
-  ME.DB.Entity, ME.DB.Map, TM.Map.Wrapper;
+  ME.DB.Entity, ME.DB.Map, TM.Map.Wrapper, TM.Form.Location;
 
 type
   TMainForm = class(TForm)
@@ -26,21 +26,24 @@ type
     acZoomIn: TAction;
     acZoomOut: TAction;
     MainContainer: TScrollBox;
+    ToolBarPanel: TPanel;
+    buChoiceLocation: TSpeedButton;
+    acChoiceLocation: TAction;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acFullScreenExecute(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
-    procedure buMapFiltersClick(Sender: TObject);
     procedure acZoomInExecute(Sender: TObject);
     procedure acZoomOutExecute(Sender: TObject);
-    procedure buCentreMapClick(Sender: TObject);
+    procedure acChoiceLocationExecute(Sender: TObject);
   private
     FFormWrapper: TFormWrapper;
     FMapWrapper: TMapWrapper;
-    FMap: TMap;  // for debug
+    FLocationForm: TLocationForm;
 
     procedure SetFullScreenMode(const Value: Boolean);
     procedure OnMapChange(Bitmap: TBitmap);
+    procedure OnLocationChanged(const Value: TMap);
   public
   end;
 
@@ -69,14 +72,16 @@ begin
 
   AppService.Connect;
 
-  FMap := TMap.Create;
+  FLocationForm := TLocationForm.Create(Self);
+  FLocationForm.Init;
+  FLocationForm.OnLocationChanged := OnLocationChanged;
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
 begin
   FFormWrapper.Free;
   FMapWrapper.Free;
-  FMap.Free;
+  FreeAndNil(FLocationForm);
 end;
 
 procedure TMainForm.FormKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -112,22 +117,17 @@ begin
   MapBackground.Bitmap.Assign(Bitmap);
 end;
 
-procedure TMainForm.buCentreMapClick(Sender: TObject);
+procedure TMainForm.OnLocationChanged(const Value: TMap);
 begin
-  FMap.Free;
-  FMap := TMap.Create;
-  MapService.GetAt(1, FMap);
-  MapService.LoadLayers(FMap, True);
-  FMapWrapper.LoadMap(FMap);
-end;
+  if FMapWrapper.Map = Value then
+    Exit;
 
-procedure TMainForm.buMapFiltersClick(Sender: TObject);
-begin
-  FMap.Free;
-  FMap := TMap.Create;
-  MapService.GetAt(2, FMap);
-  MapService.LoadLayers(FMap, True);
-  FMapWrapper.LoadMap(FMap);
+  if Value.Layers.Count = 0 then begin
+    MapService.LoadLayers(Value, True);
+    MapService.LoadMarkers(Value);
+  end;
+
+  FMapWrapper.LoadMap(Value);
 end;
 
 procedure TMainForm.acZoomInExecute(Sender: TObject);
@@ -138,6 +138,11 @@ end;
 procedure TMainForm.acZoomOutExecute(Sender: TObject);
 begin
   FMapWrapper.ZoomOut;
+end;
+
+procedure TMainForm.acChoiceLocationExecute(Sender: TObject);
+begin
+  FLocationForm.Show;
 end;
 
 end.

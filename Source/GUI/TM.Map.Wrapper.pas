@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, System.IOUtils, System.Types, Winapi.Windows,
   Winapi.GDIPAPI, Winapi.GDIPOBJ, FMX.Graphics, FMX.ImgList,
-  ME.DB.Point, ME.DB.Map, ME.DB.Layer, TM.FilesMonitor, App.Constants
+  ME.DB.Point, ME.DB.Map, ME.DB.Layer, ME.DB.Marker, TM.FilesMonitor, App.Constants
   {, ResUIWrapper, SimpleLogger};
 
 type
@@ -58,6 +58,7 @@ constructor TMapWrapper.Create(const Directory: string);
 begin
   inherited Create;
 
+  FMap := nil;
   FDirectory := Directory;
   FPoint := nil;
   FTrackLocation := True;
@@ -105,14 +106,27 @@ end;
 
 procedure TMapWrapper.DrawMapTags(Bitmap: TBitmap);
 
-  procedure DrawTag(ico: TBitmap; const Caption: string; Position: TPoint);
+  procedure DrawTag(ico: TBitmap; const Marker: TMarker);
   var
     Offset: Double;
+    src, trg: TRectF;
   begin
-    Offset := Abs((FMap.Left - Position.X) / (FMap.Bottom - FMap.Left));
-    Position.X := Trunc(Bitmap.Width * Offset);
-    Offset := Abs((FMap.Top - Position.Y) / (FMap.Bottom - FMap.Top));
-    Position.Y := Trunc(Bitmap.Height * Offset);
+    Offset := Abs((FMap.Left - Left) / (FMap.Bottom - FMap.Left));
+    Left := Trunc(Bitmap.Width * Offset);
+    Offset := Abs((FMap.Top - Top) / (FMap.Bottom - FMap.Top));
+    Top := Trunc(Bitmap.Height * Offset);
+
+//    Offset := Abs((FMap.Left.X - Position.X) / (FMap.Right.X - FMap.Left.X));
+//    Position.X := Trunc(Bitmap.Width * Offset);
+//    Offset := Abs((FMap.Left.Y - Position.Y) / (FMap.Right.Y - FMap.Left.Y));
+//    Position.Y := Trunc(Bitmap.Height * Offset);
+
+    src := RectF(Left - 16, Top - 16, Left + 16, Top + 16);
+    trg := RectF(0, 0, ico.Width, ico.Height);
+
+    Bitmap.Canvas.BeginScene;
+    Bitmap.Canvas.DrawBitmap(ico, trg, src, 1);
+    Bitmap.Canvas.EndScene;
 
 //    Bitmap.Canvas.Draw(Position.X - 16, Position.Y - 16, ico);
 //
@@ -136,7 +150,16 @@ const
 //  i: Integer;
 //  p: TPoint;
 //  png: TPngImage;
+var
+  bmp: TBitmap;
+  Marker: TMarker;
 begin
+  bmp := Images.Bitmap(TSizeF.Create(32, 32), PMCExtractionIndex);
+  for Marker in FMap.Tags do begin
+    DrawTag(bmp, Marker.Name, Marker.Left, Marker.Top);
+  end;
+
+
 //  png := TPngImage.Create;
 //  try
 //    TResIUWrapper.LoadPNGImage('scav_extraction_map_tag_32', png);

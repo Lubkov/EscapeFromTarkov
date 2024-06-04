@@ -32,7 +32,8 @@ uses
   TM.Form.Wrapper in 'Source\GUI\TM.Form.Wrapper.pas',
   App.DB.Connection in 'Source\App.DB.Connection.pas',
   App.Service in 'Source\App.Service.pas',
-  TM.Map.Wrapper in 'Source\GUI\TM.Map.Wrapper.pas';
+  TM.Map.Wrapper in 'Source\GUI\TM.Map.Wrapper.pas',
+  TM.Form.Location in 'Source\GUI\Form\TM.Form.Location.pas' {LocationForm};
 
 {$R *.res}
 
