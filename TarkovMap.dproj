@@ -363,6 +363,12 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="Bin\TarkovMap.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="Bin\TarkovMap.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>TarkovMap.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>

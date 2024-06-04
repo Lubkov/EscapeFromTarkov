@@ -36,10 +36,16 @@ type
     procedure acZoomInExecute(Sender: TObject);
     procedure acZoomOutExecute(Sender: TObject);
     procedure acChoiceLocationExecute(Sender: TObject);
+    procedure MapBackgroundMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
+    procedure MapBackgroundMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Single);
+    procedure MapBackgroundMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Single);
   private
     FFormWrapper: TFormWrapper;
     FMapWrapper: TMapWrapper;
     FLocationForm: TLocationForm;
+    FMousePosition: TMousePosition;
 
     procedure SetFullScreenMode(const Value: Boolean);
     procedure OnMapChange(Bitmap: TBitmap);
@@ -75,6 +81,8 @@ begin
   FLocationForm := TLocationForm.Create(Self);
   FLocationForm.Init;
   FLocationForm.OnLocationChanged := OnLocationChanged;
+
+  FMousePosition := TMousePosition.Create(0, 0);
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
@@ -143,6 +151,47 @@ end;
 procedure TMainForm.acChoiceLocationExecute(Sender: TObject);
 begin
   FLocationForm.Show;
+end;
+
+procedure TMainForm.MapBackgroundMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
+begin
+  FMousePosition.Down := True;
+  FMousePosition.X := X;
+  FMousePosition.Y := Y;
+end;
+
+procedure TMainForm.MapBackgroundMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
+const
+  Offset = 5;
+var
+  DeltaX, DeltaY: Single;
+begin
+  if not FMousePosition.Down then
+    Exit;
+
+{$IFNDEF DEBUG}
+  Label1.Caption := Sender.ClassName + '.Position: (' + IntToStr(X) + ', ' + IntToStr(Y) + ')';
+  Label2.Caption := 'Image: (' + IntToStr(imLocalMap.Left) + ', ' + IntToStr(imLocalMap.Top) + ')';
+{$ENDIF}
+
+  DeltaX := X - FMousePosition.X;
+  DeltaY := Y - FMousePosition.Y;
+
+  if (Abs(DeltaX) > Offset) or (Abs(DeltaY) > Offset) then begin
+    MapBackground.Position.X := MapBackground.Position.X + DeltaX;
+    MapBackground.Position.Y := MapBackground.Position.Y + DeltaY;
+
+    FMousePosition.X := X - DeltaX;
+    FMousePosition.Y := Y - DeltaY;
+
+    buFullScreen.Repaint;
+    buZoomIn.Repaint;
+  end;
+end;
+
+procedure TMainForm.MapBackgroundMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
+begin
+  FMousePosition.Down := False;
 end;
 
 end.

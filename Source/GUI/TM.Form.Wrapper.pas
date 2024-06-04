@@ -7,6 +7,15 @@ uses
   FMX.Controls, FMX.Forms, FMX.Types;
 
 type
+  TMousePosition = record
+  public
+    X: Single;
+    Y: Single;
+    Down: Boolean;
+
+    constructor Create(X, Y: Single);
+  end;
+
   TFormWrapper = class
   private
     FForm: TForm;
@@ -35,6 +44,15 @@ type
   end;
 
 implementation
+
+{ TMousePosition }
+
+constructor TMousePosition.Create(X, Y: Single);
+begin
+  Self.X := X;
+  Self.Y := Y;
+  Self.Down := False;
+end;
 
 { TFormWrapper }
 
