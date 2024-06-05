@@ -20,6 +20,7 @@ type
 
     procedure LoadLayers(const Map: TMap; LoadPicture: Boolean);
     procedure LoadMarkers(const Map: TMap);
+    procedure LoadQuests(const Map: TMap);
 
     property MapDAO: TMapDAO read GetMapDAO;
   end;
@@ -118,12 +119,20 @@ end;
 
 procedure TMapService.LoadLayers(const Map: TMap; LoadPicture: Boolean);
 begin
+  Map.ClearLevelList;
   MapDAO.LoadLayers(Map, LoadPicture);
 end;
 
 procedure TMapService.LoadMarkers(const Map: TMap);
 begin
+  Map.ClearTagList;
   MarkerService.LoadMarkers(Map.ID, Map.Tags);
+end;
+
+procedure TMapService.LoadQuests(const Map: TMap);
+begin
+  Map.ClearQuestList;
+  QuestService.LoadQuests(Map.ID, Map.Quests);
 end;
 
 end.

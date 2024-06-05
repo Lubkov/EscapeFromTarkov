@@ -65,7 +65,6 @@ procedure TQuestService.LoadQuests(const MapID: Variant; const Items: TList<TQue
 var
   Quest: TQuest;
 begin
-  Items.Clear;
   TQuestDAO(DAO).LoadQuests(MapID, Items);
 
   for Quest in Items do
@@ -74,7 +73,6 @@ end;
 
 procedure TQuestService.LoadMarkers(const MapID, QuestID: Variant; const Items: TList<TMarker>);
 begin
-  Items.Clear;
   MarkerService.LoadQuestMarkers(MapID, QuestID, Items);
 end;
 

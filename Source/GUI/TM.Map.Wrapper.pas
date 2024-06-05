@@ -5,11 +5,11 @@ interface
 uses
   System.SysUtils, System.Classes, System.IOUtils, System.Types, System.UITypes,
   Generics.Collections, FMX.Types, FMX.Graphics, FMX.ImgList, ME.DB.Point,
-  ME.DB.Map, ME.DB.Layer, ME.DB.Marker, TM.FilesMonitor, App.Constants
+  ME.DB.Map, ME.DB.Layer, ME.DB.Quest, ME.DB.Marker, TM.FilesMonitor, App.Constants
   {, ResUIWrapper, SimpleLogger};
 
 type
-  TMarkerIconArray = array[TMarkerKind.tkPMCExtraction .. TMarkerKind.tkCoopExtraction] of TBitmap;
+  TMarkerIconArray = array[Low(TMarkerKind) .. High(TMarkerKind)] of TBitmap;
   TOnMapChangeEvent = procedure (Bitmap: TBitmap) of object;
 
   TMapWrapper = class
@@ -166,9 +166,15 @@ const
 //  png: TPngImage;
 var
   Marker: TMarker;
+  Quest: TQuest;
 begin
   for Marker in FMap.Tags do
     DrawTag(MarkerIcon[Marker.Kind], Marker);
+
+  for Quest in FMap.Quests do
+    // if quest selected
+    for Marker in Quest.Markers do
+      DrawTag(MarkerIcon[Marker.Kind], Marker);
 
 //  png := TPngImage.Create;
 //  try
@@ -223,7 +229,7 @@ var
 begin
   FImages := Value;
 
-  for Kind := TMarkerKind.tkPMCExtraction to TMarkerKind.tkCoopExtraction do
+  for Kind := Low(TMarkerKind) to High(TMarkerKind) do
     FMarkerIcons[kind] := Images.Bitmap(TSizeF.Create(32, 32), Ord(Kind));
 end;
 

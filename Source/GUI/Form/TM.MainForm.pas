@@ -138,6 +138,7 @@ begin
   if Value.Layers.Count = 0 then begin
     MapService.LoadLayers(Value, True);
     MapService.LoadMarkers(Value);
+    MapService.LoadQuests(Value);
   end;
 
   FMapWrapper.LoadMap(Value);
