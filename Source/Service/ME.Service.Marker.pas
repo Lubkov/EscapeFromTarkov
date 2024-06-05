@@ -14,6 +14,7 @@ type
     function GetDAOClass: TDAOClass; override;
   public
     procedure LoadMarkers(const MapID: Variant; const Items: TList<TMarker>);
+    procedure LoadQuestMarkers(const MapID, QuestID: Variant; const Items: TList<TMarker>);
 
     property MarkerDAO: TMarkerDAO read GetMarkerDAO;
   end;
@@ -37,7 +38,12 @@ end;
 
 procedure TMarkerService.LoadMarkers(const MapID: Variant; const Items: TList<TMarker>);
 begin
-  MarkerDAO.LoadMarkers(MapID, Items);
+  MarkerDAO.LoadMarkers(MapID, Null, Items);
+end;
+
+procedure TMarkerService.LoadQuestMarkers(const MapID, QuestID: Variant; const Items: TList<TMarker>);
+begin
+  MarkerDAO.LoadMarkers(MapID, QuestID, Items);
 end;
 
 end.

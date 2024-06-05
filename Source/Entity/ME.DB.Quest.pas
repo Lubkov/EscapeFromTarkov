@@ -4,14 +4,14 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Variants, Generics.Collections,
-  Data.DB, ME.DB.Entity, ME.DB.Point;
+  Data.DB, ME.DB.Entity, ME.DB.Marker;
 
 type
   TQuest = class(TEntity)
   private
     FMapID: Variant;
     FName: string;
-    FParts: TList<TPoint>;
+    FMarkers: TList<TMarker>;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -22,11 +22,11 @@ type
     class function EntityName: string; override;
     class function FieldList: string; override;
 
-    procedure ClearParts;
+    procedure ClearMarkers;
 
     property MapID: Variant read FMapID write FMapID;
     property Name: string read FName write FName;
-    property Parts: TList<TPoint> read FParts;
+    property Markers: TList<TMarker> read FMarkers;
   end;
 
 implementation
@@ -39,13 +39,13 @@ begin
 
   FMapID := Null;
   FName := '';
-  FParts := TList<TPoint>.Create;
+  FMarkers := TList<TMarker>.Create;
 end;
 
 destructor TQuest.Destroy;
 begin
-  ClearParts;
-  FParts.Free;
+  ClearMarkers;
+  FMarkers.Free;
 
   inherited;
 end;
@@ -76,14 +76,14 @@ begin
   Result := 'ID, MapID, Name';
 end;
 
-procedure TQuest.ClearParts;
+procedure TQuest.ClearMarkers;
 var
   i: Integer;
 begin
-  for i := 0 to FParts.Count - 1 do
-    FParts[i].Free;
+  for i := 0 to FMarkers.Count - 1 do
+    FMarkers[i].Free;
 
-  FParts.Clear;
+  FMarkers.Clear;
 end;
 
 end.

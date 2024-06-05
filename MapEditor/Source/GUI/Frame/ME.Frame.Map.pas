@@ -130,7 +130,7 @@ begin
     QuestService.LoadQuests(Map.ID, Map.Quests);
 
     for Quest in Map.Quests do
-      QuestService.LoadParts(Quest.ID, Quest.Parts);
+      QuestService.LoadMarkers(Quest.MapID, Quest.ID, Quest.Markers);
   end;
 
   Grid.BeginUpdate;

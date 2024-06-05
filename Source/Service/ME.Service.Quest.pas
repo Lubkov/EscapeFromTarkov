@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, Generics.Collections, Data.DB, ME.DB.Entity,
-  ME.DB.DAO, ME.DB.Service, ME.DB.Quest, ME.DB.Point, ME.DAO.Quest;
+  ME.DB.DAO, ME.DB.Service, ME.DB.Quest, ME.DB.Marker, ME.DAO.Quest;
 
 type
   TQuestService = class(TServiceCommon)
@@ -14,7 +14,7 @@ type
     procedure Insert(const Entity: TEntity); override;
 
     procedure LoadQuests(const MapID: Variant; const Items: TList<TQuest>);
-    procedure LoadParts(const QuestID: Variant; const Items: TList<TPoint>);
+    procedure LoadMarkers(const MapID, QuestID: Variant; const Items: TList<TMarker>);
   end;
 
 var
@@ -23,7 +23,7 @@ var
 implementation
 
 uses
-  ME.Service.Point;
+  ME.Service.Marker;
 
 { TQuestService }
 
@@ -35,7 +35,7 @@ end;
 procedure TQuestService.Insert(const Entity: TEntity);
 var
   Quest: TQuest;
-  Part: TPoint;
+  Marker: TMarker;
   TranStarted: Boolean;
 begin
   Quest := TQuest(Entity);
@@ -46,9 +46,10 @@ begin
   try
     DAO.Insert(Quest);
 
-    for Part in Quest.Parts do begin
-      Part.QuestID := Quest.ID;
-      PointService.Insert(Part);
+    for Marker in Quest.Markers do begin
+      Marker.MapID := Quest.MapID;
+      Marker.QuestID := Quest.ID;
+      MarkerService.Insert(Marker);
     end;
 
     if not TranStarted then
@@ -65,9 +66,9 @@ begin
   TQuestDAO(DAO).LoadQuests(MapID, Items);
 end;
 
-procedure TQuestService.LoadParts(const QuestID: Variant; const Items: TList<TPoint>);
+procedure TQuestService.LoadMarkers(const MapID, QuestID: Variant; const Items: TList<TMarker>);
 begin
-  PointService.LoadQuestParts(QuestID, Items);
+  MarkerService.LoadQuestMarkers(MapID, QuestID, Items);
 end;
 
 end.

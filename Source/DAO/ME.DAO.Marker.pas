@@ -14,12 +14,15 @@ type
   public
     function GetAt(ID: Integer; const Entity: TEntity): Boolean; override;
     procedure GetAll(const Items: TList<TEntity>); override;
-    procedure LoadMarkers(const MapID: Variant; const Items: TList<TMarker>);
+    procedure LoadMarkers(const MapID, QuestID: Variant; const Items: TList<TMarker>);
     procedure Insert(const Entity: TEntity); override;
     procedure Update(const Entity: TEntity); override;
   end;
 
 implementation
+
+uses
+  ME.DB.Utils;
 
 const
   SqlSelectCommandText =
@@ -88,13 +91,20 @@ begin
   end;
 end;
 
-procedure TMarkerDAO.LoadMarkers(const MapID: Variant; const Items: TList<TMarker>);
-const
-  Filter = ' WHERE (t.MapID = :MapID) ';
+procedure TMarkerDAO.LoadMarkers(const MapID, QuestID: Variant; const Items: TList<TMarker>);
+//const
+//  Filter = ' WHERE (t.MapID = :MapID) ';
 var
   Query: TUniQuery;
   Entity: TMarker;
+  Filter: string;
 begin
+  Filter := ' WHERE (t.MapID = :MapID) ';
+  if VarIsNull(QuestID) or VarIsEmpty(QuestID) then
+    Filter := Filter + ' AND (t.QuestID IS NULL) '
+  else
+    Filter := Filter + ' AND (t.QuestID = :QuestID) ';
+
   Query := TUniQuery.Create(nil);
   try
     Query.Connection := Connection;

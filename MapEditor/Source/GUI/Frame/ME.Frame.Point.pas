@@ -78,15 +78,15 @@ end;
 
 function TfrPointList.GetCount: Integer;
 begin
-  if FQuest <> nil then
-    Result := FQuest.Parts.Count
-  else
-    Result := 0;
+//  if FQuest <> nil then
+//    Result := FQuest.Parts.Count
+//  else
+//    Result := 0;
 end;
 
 function TfrPointList.GetItem(Index: Integer): TPoint;
 begin
-  Result := FQuest.Parts[Index];
+//  Result := FQuest.Parts[Index];
 end;
 
 function TfrPointList.GetFocusedIndex: Integer;
@@ -190,26 +190,26 @@ var
   Point: TPoint;
   Res: Boolean;
 begin
-  Res := False;
-  Point := TPoint.Create;
-  try
-    Point.QuestID := FQuest.ID;
-
-    Res := InternalPointEdit(Point);
-    if Res then begin
-      FQuest.Parts.Add(Point);
-
-      Grid.BeginUpdate;
-      try
-        Grid.RowCount := Count;
-      finally
-        Grid.EndUpdate;
-      end;
-    end;
-  finally
-    if not Res then
-      Point.Free;
-  end;
+//  Res := False;
+//  Point := TPoint.Create;
+//  try
+//    Point.QuestID := FQuest.ID;
+//
+//    Res := InternalPointEdit(Point);
+//    if Res then begin
+//      FQuest.Parts.Add(Point);
+//
+//      Grid.BeginUpdate;
+//      try
+//        Grid.RowCount := Count;
+//      finally
+//        Grid.EndUpdate;
+//      end;
+//    end;
+//  finally
+//    if not Res then
+//      Point.Free;
+//  end;
 end;
 
 procedure TfrPointList.acEditPointExecute(Sender: TObject);
@@ -224,36 +224,36 @@ var
   Dialog: TedMessage;
   Res: Boolean;
 begin
-  if (Grid.Selected < 0) or (Grid.Selected >= Count) then
-    Exit;
-
-  Res := False;
-  Point := Items[Grid.Selected];
-  try
-    Dialog := TedMessage.Create(Self);
-    try
-      Presenter := TDelPointPresenter.Create(Dialog, Point);
-      try
-        Res := Presenter.Delete;
-        if Res then begin
-          Grid.BeginUpdate;
-          try
-            FQuest.Parts.Delete(Grid.Selected);
-            Grid.RowCount := Count;
-          finally
-            Grid.EndUpdate;
-          end;
-        end;
-      finally
-        Presenter.Free;
-      end;
-    finally
-      Dialog.Free;
-    end;
-  finally
-    if Res then
-      Point.Free;
-  end;
+//  if (Grid.Selected < 0) or (Grid.Selected >= Count) then
+//    Exit;
+//
+//  Res := False;
+//  Point := Items[Grid.Selected];
+//  try
+//    Dialog := TedMessage.Create(Self);
+//    try
+//      Presenter := TDelPointPresenter.Create(Dialog, Point);
+//      try
+//        Res := Presenter.Delete;
+//        if Res then begin
+//          Grid.BeginUpdate;
+//          try
+//            FQuest.Parts.Delete(Grid.Selected);
+//            Grid.RowCount := Count;
+//          finally
+//            Grid.EndUpdate;
+//          end;
+//        end;
+//      finally
+//        Presenter.Free;
+//      end;
+//    finally
+//      Dialog.Free;
+//    end;
+//  finally
+//    if Res then
+//      Point.Free;
+//  end;
 end;
 
 procedure TfrPointList.GridCellDblClick(const Column: TColumn; const Row: Integer);
