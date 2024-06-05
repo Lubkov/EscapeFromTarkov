@@ -15,13 +15,10 @@ uses
   ME.AppService in 'Source\ME.AppService.pas',
   ME.DAO.Map in '..\Source\DAO\ME.DAO.Map.pas',
   ME.DAO.Layer in '..\Source\DAO\ME.DAO.Layer.pas',
-  ME.DAO.Point in '..\Source\DAO\ME.DAO.Point.pas',
   ME.DB.Map in '..\Source\Entity\ME.DB.Map.pas',
   ME.DB.Layer in '..\Source\Entity\ME.DB.Layer.pas',
-  ME.DB.Point in '..\Source\Entity\ME.DB.Point.pas',
   ME.Service.Map in '..\Source\Service\ME.Service.Map.pas',
   ME.Service.Layer in '..\Source\Service\ME.Service.Layer.pas',
-  ME.Service.Point in '..\Source\Service\ME.Service.Point.pas',
   ME.Frame.Map in 'Source\GUI\Frame\ME.Frame.Map.pas' {frMap: TFrame},
   ME.Presenter.Map in 'Source\GUI\ME.Presenter.Map.pas',
   ME.Dialog.Message in 'Source\GUI\Dialog\ME.Dialog.Message.pas' {edMessage},
@@ -41,13 +38,12 @@ uses
   ME.DB.Quest in '..\Source\Entity\ME.DB.Quest.pas',
   ME.DAO.Quest in '..\Source\DAO\ME.DAO.Quest.pas',
   ME.Service.Quest in '..\Source\Service\ME.Service.Quest.pas',
-  ME.Edit.Point in 'Source\GUI\Dialog\ME.Edit.Point.pas' {edPoint},
-  ME.Presenter.Point in 'Source\GUI\ME.Presenter.Point.pas',
   ME.Frame.Quest in 'Source\GUI\Frame\ME.Frame.Quest.pas' {frQuest: TFrame},
   ME.Edit.Quest in 'Source\GUI\Dialog\ME.Edit.Quest.pas' {edQuest},
   ME.Presenter.Quest in 'Source\GUI\ME.Presenter.Quest.pas',
   ME.Edit.QuestPart in 'Source\GUI\Dialog\ME.Edit.QuestPart.pas' {edQuestPart},
-  ME.Frame.QuestPart in 'Source\GUI\Frame\ME.Frame.QuestPart.pas' {frQuestPartGrid: TFrame};
+  ME.Frame.QuestPart in 'Source\GUI\Frame\ME.Frame.QuestPart.pas' {frQuestPartGrid: TFrame},
+  ME.Presenter.QuestPart in 'Source\GUI\ME.Presenter.QuestPart.pas';
 
 {$R *.res}
 

@@ -118,7 +118,6 @@ end;
 procedure TfrMap.MapEdit(const Index: Integer);
 var
   Map: TMap;
-  Quest: TQuest;
 begin
   if (Index < 0) or (Index >= Count) then
     Exit;
@@ -128,9 +127,6 @@ begin
     MapService.LoadLayers(Map, True);
     MarkerService.LoadMarkers(Map.ID, Map.Tags);
     QuestService.LoadQuests(Map.ID, Map.Quests);
-
-    for Quest in Map.Quests do
-      QuestService.LoadMarkers(Quest.MapID, Quest.ID, Quest.Markers);
   end;
 
   Grid.BeginUpdate;

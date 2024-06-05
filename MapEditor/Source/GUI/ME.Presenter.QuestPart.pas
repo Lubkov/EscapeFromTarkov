@@ -1,4 +1,4 @@
-﻿unit ME.Presenter.Marker;
+unit ME.Presenter.QuestPart;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   ME.DB.Marker, ME.Service.Marker;
 
 type
-  TEditMarkerPresenter = class(TEditFormPresenter<TMarker>)
+  TEditQuestPartPresenter = class(TEditFormPresenter<TMarker>)
   private
   protected
     procedure InternalSave; override;
@@ -16,7 +16,7 @@ type
   public
   end;
 
-  TDelMarkerPresenter = class(TDelFormPresenter<TMarker>)
+  TDelQuestPartPresenter = class(TDelFormPresenter<TMarker>)
   protected
     function GetDelMessage: string; override;
     procedure InternalDelete; override;
@@ -27,29 +27,28 @@ implementation
 uses
   ME.DB.Utils;
 
-{ TEditMarkerPresenter }
+{ TEditQuestPartPresenter }
 
-procedure TEditMarkerPresenter.InternalSave;
+procedure TEditQuestPartPresenter.InternalSave;
 begin
-  if not IsNullID(Instance.MapID) then begin
+  if not (IsNullID(Instance.MapID) or IsNullID(Instance.QuestID)) then
     MarkerService.Save(Instance);
-  end;
 end;
 
-procedure TEditMarkerPresenter.Cancel;
+procedure TEditQuestPartPresenter.Cancel;
 begin
   inherited;
 
 end;
 
-{ TDelMarkerPresenter }
+{ TDelQuestPartPresenter }
 
-function TDelMarkerPresenter.GetDelMessage: string;
+function TDelQuestPartPresenter.GetDelMessage: string;
 begin
-  Result := 'Удалить маркер "' + Instance.Name + '"?';
+  Result := 'Удалить подзадачу квеста?';
 end;
 
-procedure TDelMarkerPresenter.InternalDelete;
+procedure TDelQuestPartPresenter.InternalDelete;
 begin
   MarkerService.Remove(Instance);
 end;

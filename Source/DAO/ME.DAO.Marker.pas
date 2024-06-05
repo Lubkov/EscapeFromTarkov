@@ -110,6 +110,10 @@ begin
     Query.Connection := Connection;
     Query.SQL.Text := Format(SqlSelectCommandText, [Filter]);
     Query.ParamByName('MapID').Value := MapID;
+
+    if Query.FindParam('QuestID') <> nil then
+      Query.ParamByName('QuestID').Value := QuestID;
+
     Query.Open;
 
     while not Query.Eof do begin
@@ -140,7 +144,7 @@ begin
       ' INSERT INTO Marker (MapID, QuestID, Name, Kind, Left, Top) ' +
       ' VALUES (:MapID, :QuestID, :Name, :Kind, :Left, :Top) ';
     Query.ParamByName('MapID').Value := Marker.MapID;
-    Query.ParamByName('MapID').Value := Marker.QuestID;
+    Query.ParamByName('QuestID').Value := Marker.QuestID;
     Query.ParamByName('Name').AsString := Marker.Name;
     Query.ParamByName('Kind').AsInteger := Ord(Marker.Kind);
     Query.ParamByName('Left').AsInteger := Marker.Left;

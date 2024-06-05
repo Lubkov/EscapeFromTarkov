@@ -294,13 +294,10 @@
         <DCCReference Include="Source\ME.AppService.pas"/>
         <DCCReference Include="..\Source\DAO\ME.DAO.Map.pas"/>
         <DCCReference Include="..\Source\DAO\ME.DAO.Layer.pas"/>
-        <DCCReference Include="..\Source\DAO\ME.DAO.Point.pas"/>
         <DCCReference Include="..\Source\Entity\ME.DB.Map.pas"/>
         <DCCReference Include="..\Source\Entity\ME.DB.Layer.pas"/>
-        <DCCReference Include="..\Source\Entity\ME.DB.Point.pas"/>
         <DCCReference Include="..\Source\Service\ME.Service.Map.pas"/>
         <DCCReference Include="..\Source\Service\ME.Service.Layer.pas"/>
-        <DCCReference Include="..\Source\Service\ME.Service.Point.pas"/>
         <DCCReference Include="Source\GUI\Frame\ME.Frame.Map.pas">
             <Form>frMap</Form>
             <FormType>dfm</FormType>
@@ -347,11 +344,6 @@
         <DCCReference Include="..\Source\Entity\ME.DB.Quest.pas"/>
         <DCCReference Include="..\Source\DAO\ME.DAO.Quest.pas"/>
         <DCCReference Include="..\Source\Service\ME.Service.Quest.pas"/>
-        <DCCReference Include="Source\GUI\Dialog\ME.Edit.Point.pas">
-            <Form>edPoint</Form>
-            <FormType>fmx</FormType>
-        </DCCReference>
-        <DCCReference Include="Source\GUI\ME.Presenter.Point.pas"/>
         <DCCReference Include="Source\GUI\Frame\ME.Frame.Quest.pas">
             <Form>frQuest</Form>
             <FormType>fmx</FormType>
@@ -371,6 +363,7 @@
             <FormType>fmx</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="Source\GUI\ME.Presenter.QuestPart.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

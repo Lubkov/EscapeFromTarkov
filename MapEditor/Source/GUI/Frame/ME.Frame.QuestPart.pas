@@ -58,7 +58,7 @@ implementation
 {$R *.fmx}
 
 uses
-  ME.Edit.QuestPart, ME.Presenter.Marker, ME.Dialog.Message;
+  ME.Edit.QuestPart, ME.Presenter.QuestPart, ME.Dialog.Message;
 
 { frQuestPartGrid }
 
@@ -104,12 +104,12 @@ end;
 
 function TfrQuestPartGrid.InternalMarkerEdit(const Point: TMarker): Boolean;
 var
-  Presenter: TEditMarkerPresenter;
+  Presenter: TEditQuestPartPresenter;
   Dialog: TedQuestPart;
 begin
   Dialog := TedQuestPart.Create(Self);
   try
-    Presenter := TEditMarkerPresenter.Create(Dialog, Point);
+    Presenter := TEditQuestPartPresenter.Create(Dialog, Point);
     try
       Result := Presenter.Edit;
     finally
@@ -122,15 +122,15 @@ end;
 
 procedure TfrQuestPartGrid.MarkerEdit(const Index: Integer);
 var
-  Point: TMarker;
+  Marker: TMarker;
 begin
   if (Index < 0) or (Index >= Count) then
     Exit;
 
-  Point := Items[Index];
+  Marker := Items[Index];
   Grid.BeginUpdate;
   try
-    InternalMarkerEdit(Point);
+    InternalMarkerEdit(Marker);
   finally
     Grid.EndUpdate;
   end;
@@ -194,6 +194,7 @@ begin
   try
     Marker.MapID := FQuest.MapID;
     Marker.QuestID := FQuest.ID;
+    Marker.Kind := TMarkerKind.Quest;
 
     Res := InternalMarkerEdit(Marker);
     if Res then begin
@@ -220,7 +221,7 @@ end;
 procedure TfrQuestPartGrid.acDeleteMarkerExecute(Sender: TObject);
 var
   Marker: TMarker;
-  Presenter: TDelMarkerPresenter;
+  Presenter: TDelQuestPartPresenter;
   Dialog: TedMessage;
   Res: Boolean;
 begin
@@ -232,7 +233,7 @@ begin
   try
     Dialog := TedMessage.Create(Self);
     try
-      Presenter := TDelMarkerPresenter.Create(Dialog, Marker);
+      Presenter := TDelQuestPartPresenter.Create(Dialog, Marker);
       try
         Res := Presenter.Delete;
         if Res then begin
