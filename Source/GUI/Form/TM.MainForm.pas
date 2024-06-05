@@ -29,6 +29,7 @@ type
     ToolBarPanel: TPanel;
     buChoiceLocation: TSpeedButton;
     acChoiceLocation: TAction;
+    acCentreMap: TAction;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acFullScreenExecute(Sender: TObject);
@@ -37,10 +38,10 @@ type
     procedure acZoomOutExecute(Sender: TObject);
     procedure acChoiceLocationExecute(Sender: TObject);
     procedure MapBackgroundMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
-    procedure MapBackgroundMouseMove(Sender: TObject; Shift: TShiftState; X,
-      Y: Single);
+    procedure MapBackgroundMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure MapBackgroundMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Single);
+    procedure acCentreMapExecute(Sender: TObject);
   private
     FFormWrapper: TFormWrapper;
     FMapWrapper: TMapWrapper;
@@ -183,15 +184,23 @@ begin
 
     FMousePosition.X := X - DeltaX;
     FMousePosition.Y := Y - DeltaY;
-
-    buFullScreen.Repaint;
-    buZoomIn.Repaint;
   end;
 end;
 
 procedure TMainForm.MapBackgroundMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
 begin
   FMousePosition.Down := False;
+end;
+
+procedure TMainForm.acCentreMapExecute(Sender: TObject);
+begin
+//  MainContainer.Scene.DisableUpdating;
+//  try
+    MapBackground.Position.X := (MainContainer.Width - MapBackground.Width) / 2;
+    MapBackground.Position.Y := (MainContainer.Height - MapBackground.Height) / 2;
+//  finally
+//    MainContainer.Scene.EnableUpdating;
+//  end;
 end;
 
 end.

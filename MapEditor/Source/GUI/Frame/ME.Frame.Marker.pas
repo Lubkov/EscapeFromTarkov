@@ -1,4 +1,4 @@
-unit ME.Frame.Extraction;
+unit ME.Frame.Marker;
 
 interface
 
@@ -10,7 +10,7 @@ uses
   FMX.ScrollBox, ME.DB.Entity, ME.DB.Map, ME.DB.Marker;
 
 type
-  TfrExtraction = class(TFrame)
+  TfrMarkerGrid = class(TFrame)
     ActionList1: TActionList;
     acAddExtraction: TAction;
     acEditExtraction: TAction;
@@ -58,41 +58,41 @@ type
 implementation
 
 uses
-  ME.Service.Marker, ME.Presenter.Extraction, ME.Edit.Extraction, ME.Dialog.Message;
+  ME.Service.Marker, ME.Presenter.Marker, ME.Edit.Marker, ME.Dialog.Message;
 
 {$R *.fmx}
 
-constructor TfrExtraction.Create(AOwner: TComponent);
+constructor TfrMarkerGrid.Create(AOwner: TComponent);
 begin
   inherited;
 
   Grid.RowCount := 0;
 end;
 
-destructor TfrExtraction.Destroy;
+destructor TfrMarkerGrid.Destroy;
 begin
 
   inherited;
 end;
 
-function TfrExtraction.GetCount: Integer;
+function TfrMarkerGrid.GetCount: Integer;
 begin
   Result := FMap.Tags.Count;
 end;
 
-function TfrExtraction.GetItem(Index: Integer): TMarker;
+function TfrMarkerGrid.GetItem(Index: Integer): TMarker;
 begin
   Result := FMap.Tags[Index];
 end;
 
-function TfrExtraction.InternalExtractionEdit(const Marker: TMarker): Boolean;
+function TfrMarkerGrid.InternalExtractionEdit(const Marker: TMarker): Boolean;
 var
-  Presenter: TEditExtractionPresenter;
-  Dialog: TedExtraction;
+  Presenter: TEditMarkerPresenter;
+  Dialog: TedMarker;
 begin
-  Dialog := TedExtraction.Create(Self);
+  Dialog := TedMarker.Create(Self);
   try
-    Presenter := TEditExtractionPresenter.Create(Dialog, Marker);
+    Presenter := TEditMarkerPresenter.Create(Dialog, Marker);
     try
       Result := Presenter.Edit;
     finally
@@ -103,7 +103,7 @@ begin
   end;
 end;
 
-procedure TfrExtraction.ExtractionEdit(const Index: Integer);
+procedure TfrMarkerGrid.ExtractionEdit(const Index: Integer);
 var
   Marker: TMarker;
 begin
@@ -119,7 +119,7 @@ begin
   end;
 end;
 
-function TfrExtraction.GetFocusedIndex: Integer;
+function TfrMarkerGrid.GetFocusedIndex: Integer;
 begin
   if (FMap = nil) or (Grid.Selected < 0) or (Grid.Selected >= Count) then
     Result := -1
@@ -127,13 +127,13 @@ begin
     Result := Grid.Selected;
 end;
 
-procedure TfrExtraction.SetFocusedIndex(const Value: Integer);
+procedure TfrMarkerGrid.SetFocusedIndex(const Value: Integer);
 begin
   if FFocusedIndex <> Value then
     FFocusedIndex := Value;
 end;
 
-procedure TfrExtraction.GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
+procedure TfrMarkerGrid.GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
 const
   ColumnKeyIdx = 0;
   ColumnNameIdx = 1;
@@ -158,7 +158,7 @@ begin
   end;
 end;
 
-procedure TfrExtraction.Init(const Map: TMap);
+procedure TfrMarkerGrid.Init(const Map: TMap);
 begin
   FMap := Map;
 
@@ -173,7 +173,7 @@ begin
     Grid.Selected := 0;
 end;
 
-procedure TfrExtraction.acAddExtractionExecute(Sender: TObject);
+procedure TfrMarkerGrid.acAddExtractionExecute(Sender: TObject);
 var
   Marker: TMarker;
   Res: Boolean;
@@ -200,15 +200,15 @@ begin
   end;
 end;
 
-procedure TfrExtraction.acEditExtractionExecute(Sender: TObject);
+procedure TfrMarkerGrid.acEditExtractionExecute(Sender: TObject);
 begin
   ExtractionEdit(Grid.Selected);
 end;
 
-procedure TfrExtraction.acDeleteExtractionExecute(Sender: TObject);
+procedure TfrMarkerGrid.acDeleteExtractionExecute(Sender: TObject);
 var
   Marker: TMarker;
-  Presenter: TDelExtractionPresenter;
+  Presenter: TDelMarkerPresenter;
   Dialog: TedMessage;
   Res: Boolean;
 begin
@@ -220,7 +220,7 @@ begin
   try
     Dialog := TedMessage.Create(Self);
     try
-      Presenter := TDelExtractionPresenter.Create(Dialog, Marker);
+      Presenter := TDelMarkerPresenter.Create(Dialog, Marker);
       try
         Res := Presenter.Delete;
         if Res then begin
@@ -244,12 +244,12 @@ begin
   end;
 end;
 
-procedure TfrExtraction.GridCellDblClick(const Column: TColumn; const Row: Integer);
+procedure TfrMarkerGrid.GridCellDblClick(const Column: TColumn; const Row: Integer);
 begin
   ExtractionEdit(Row);
 end;
 
-procedure TfrExtraction.ActionList1Update(Action: TBasicAction; var Handled: Boolean);
+procedure TfrMarkerGrid.ActionList1Update(Action: TBasicAction; var Handled: Boolean);
 begin
   acAddExtraction.Enabled := FMap <> nil;
   acEditExtraction.Enabled := (FMap <> nil) and (FocusedIndex >= 0);

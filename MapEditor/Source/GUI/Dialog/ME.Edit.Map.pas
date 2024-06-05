@@ -7,7 +7,7 @@ uses
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   ME.Edit.Form, FMX.EditBox, FMX.NumberBox, FMX.Edit, System.Actions, FMX.ActnList,
   FMX.Controls.Presentation, ME.DB.Map, ME.Dialog.Presenter, ME.Edit.Form.Presenter,
-  ME.Frame.Picture, ME.Frame.Layer, FMX.TabControl, ME.Frame.Extraction,
+  ME.Frame.Picture, ME.Frame.Layer, FMX.TabControl, ME.Frame.Marker,
   ME.Frame.Quest;
 
 type
@@ -30,7 +30,7 @@ type
     FMap: TMap;
     FPicturePanel: TfrPicture;
     FLayerList: TfrLayerList;
-    FExtractionList: TfrExtraction;
+    FMarkerGrid: TfrMarkerGrid;
     FQuestList: TfrQuest;
 
     function GetMapName: string;
@@ -78,9 +78,9 @@ begin
   FLayerList.Parent := tabLayer;
   FLayerList.Align := TAlignLayout.Client;
 
-  FExtractionList := TfrExtraction.Create(Self);
-  FExtractionList.Parent := tabExtractions;
-  FExtractionList.Align := TAlignLayout.Client;
+  FMarkerGrid := TfrMarkerGrid.Create(Self);
+  FMarkerGrid.Parent := tabExtractions;
+  FMarkerGrid.Align := TAlignLayout.Client;
 
   FQuestList := TfrQuest.Create(Self);
   FQuestList.Parent := tabQuests;
@@ -164,7 +164,7 @@ begin
   Picture := FMap.Picture;
 
   FLayerList.Init(FMap);
-  FExtractionList.Init(FMap);
+  FMarkerGrid.Init(FMap);
   FQuestList.Init(FMap);
 end;
 

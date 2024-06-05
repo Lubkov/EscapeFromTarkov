@@ -200,16 +200,16 @@
         <DCCReference Include="..\Source\Entity\ME.DB.Marker.pas"/>
         <DCCReference Include="..\Source\DAO\ME.DAO.Marker.pas"/>
         <DCCReference Include="..\Source\Service\ME.Service.Marker.pas"/>
-        <DCCReference Include="Source\GUI\Frame\ME.Frame.Extraction.pas">
-            <Form>frExtraction</Form>
+        <DCCReference Include="Source\GUI\Frame\ME.Frame.Marker.pas">
+            <Form>frMarkerGrid</Form>
             <FormType>fmx</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="Source\GUI\Dialog\ME.Edit.Extraction.pas">
-            <Form>edExtraction</Form>
+        <DCCReference Include="Source\GUI\Dialog\ME.Edit.Marker.pas">
+            <Form>edMarker</Form>
             <FormType>fmx</FormType>
         </DCCReference>
-        <DCCReference Include="Source\GUI\ME.Presenter.Extraction.pas"/>
+        <DCCReference Include="Source\GUI\ME.Presenter.Marker.pas"/>
         <DCCReference Include="..\Source\Entity\ME.DB.Quest.pas"/>
         <DCCReference Include="..\Source\DAO\ME.DAO.Quest.pas"/>
         <DCCReference Include="..\Source\Service\ME.Service.Quest.pas"/>

@@ -1,4 +1,4 @@
-inherited edExtraction: TedExtraction
+inherited edMarker: TedMarker
   Caption = 'EditForm1'
   DesignerMasterStyle = 0
   inherited paBottom: TPanel

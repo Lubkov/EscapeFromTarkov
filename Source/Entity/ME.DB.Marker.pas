@@ -11,7 +11,7 @@ type
   TMarker = class(TEntity)
   private
     FMapID: Variant;
-//    FQuestID: Variant;
+    FQuestID: Variant;
     FName: string;
     FKind: TMarkerKind;
     FLeft: Integer;
@@ -28,6 +28,7 @@ type
     class function KindToStr(Value: TMarkerKind): string;
 
     property MapID: Variant read FMapID write FMapID;
+    property QuestID: Variant read FQuestID write FQuestID;
     property Name: string read FName write FName;
     property Kind: TMarkerKind read FKind write FKind;
     property Left: Integer read FLeft write FLeft;
@@ -43,6 +44,7 @@ begin
   inherited;
 
   FMapID := Null;
+  FQuestID := Null;
   FName := '';
   FKind := tkPMCExtraction;
   FLeft := 0;
@@ -60,6 +62,7 @@ begin
   inherited;
 
   MapID := TMarker(Source).MapID;
+  QuestID := TMarker(Source).QuestID;
   Name := TMarker(Source).Name;
   Kind := TMarker(Source).Kind;
   Left := TMarker(Source).Left;
@@ -71,6 +74,7 @@ begin
   inherited;
 
   MapID := DataSet.FieldByName('MapID').Value;
+  QuestID := DataSet.FieldByName('QuestID').Value;
   Name := DataSet.FieldByName('Name').AsString;
   Kind := TMarkerKind(DataSet.FieldByName('Kind').AsInteger);
   Left := DataSet.FieldByName('Left').AsInteger;
@@ -84,7 +88,7 @@ end;
 
 class function TMarker.FieldList: string;
 begin
-  Result := 'ID, "MapID", "Name", "Kind", "Left", "Top"';
+  Result := 'ID, "MapID", "QuestID", "Name", "Kind", "Left", "Top"';
 end;
 
 class function TMarker.KindToStr(Value: TMarkerKind): string;

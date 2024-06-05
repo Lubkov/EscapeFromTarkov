@@ -1,4 +1,4 @@
-﻿unit ME.Presenter.Extraction;
+﻿unit ME.Presenter.Marker;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   ME.DB.Marker, ME.Service.Marker;
 
 type
-  TEditExtractionPresenter = class(TEditFormPresenter<TMarker>)
+  TEditMarkerPresenter = class(TEditFormPresenter<TMarker>)
   private
   protected
     procedure InternalSave; override;
@@ -16,7 +16,7 @@ type
   public
   end;
 
-  TDelExtractionPresenter = class(TDelFormPresenter<TMarker>)
+  TDelMarkerPresenter = class(TDelFormPresenter<TMarker>)
   protected
     function GetDelMessage: string; override;
     procedure InternalDelete; override;
@@ -27,9 +27,9 @@ implementation
 uses
   ME.DB.Utils;
 
-{ TEditExtractionPresenter }
+{ TEditMarkerPresenter }
 
-procedure TEditExtractionPresenter.InternalSave;
+procedure TEditMarkerPresenter.InternalSave;
 begin
   inherited;
 
@@ -38,20 +38,20 @@ begin
   end;
 end;
 
-procedure TEditExtractionPresenter.Cancel;
+procedure TEditMarkerPresenter.Cancel;
 begin
   inherited;
 
 end;
 
-{ TDelExtractionPresenter }
+{ TDelMarkerPresenter }
 
-function TDelExtractionPresenter.GetDelMessage: string;
+function TDelMarkerPresenter.GetDelMessage: string;
 begin
-  Result := 'Удалить выход "' + Instance.Name + '"?';
+  Result := 'Удалить маркер "' + Instance.Name + '"?';
 end;
 
-procedure TDelExtractionPresenter.InternalDelete;
+procedure TDelMarkerPresenter.InternalDelete;
 begin
   MarkerService.Remove(Instance);
 end;

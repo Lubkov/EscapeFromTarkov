@@ -26,6 +26,7 @@ const
     ' SELECT ' +
     '     t.ID as ID, ' +
     '     t.MapID as MapID, ' +
+    '     t.QuestID as QuestID, ' +
     '     t.Name as Name, ' +
     '     t.Kind as Kind, ' +
     '     t.Left as Left, ' +
@@ -126,9 +127,10 @@ begin
   try
     Query.Connection := Connection;
     Query.SQL.Text :=
-      ' INSERT INTO Marker (MapID, Name, Kind, Left, Top) ' +
-      ' VALUES (:MapID, :Name, :Kind, :Left, :Top) ';
+      ' INSERT INTO Marker (MapID, QuestID, Name, Kind, Left, Top) ' +
+      ' VALUES (:MapID, :QuestID, :Name, :Kind, :Left, :Top) ';
     Query.ParamByName('MapID').Value := Marker.MapID;
+    Query.ParamByName('MapID').Value := Marker.QuestID;
     Query.ParamByName('Name').AsString := Marker.Name;
     Query.ParamByName('Kind').AsInteger := Ord(Marker.Kind);
     Query.ParamByName('Left').AsInteger := Marker.Left;
@@ -154,6 +156,7 @@ begin
       ' UPDATE Marker ' +
       ' SET ' +
       '   MapID = :MapID, ' +
+      '   QuestID = :QuestID, ' +
       '   Name = :Name, ' +
       '   Kind = :Kind, ' +
       '   Left = :Left, ' +
@@ -161,6 +164,7 @@ begin
       ' WHERE ID = :ID ';
     Query.ParamByName('ID').Value := Marker.ID;
     Query.ParamByName('MapID').Value := Marker.MapID;
+    Query.ParamByName('QuestID').Value := Marker.QuestID;
     Query.ParamByName('Name').AsString := Marker.Name;
     Query.ParamByName('Kind').AsInteger := Ord(Marker.Kind);
     Query.ParamByName('Left').AsInteger := Marker.Left;

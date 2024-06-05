@@ -1,4 +1,4 @@
-﻿unit ME.Edit.Extraction;
+﻿unit ME.Edit.Marker;
 
 interface
 
@@ -10,7 +10,7 @@ uses
   ME.Edit.Form.Presenter;
 
 type
-  TedExtraction = class(TEditForm, IEditDialog<TMarker>)
+  TedMarker = class(TEditForm, IEditDialog<TMarker>)
     edMarkerName: TEdit;
     edPositionX: TNumberBox;
     edPositionY: TNumberBox;
@@ -44,9 +44,9 @@ implementation
 
 {$R *.fmx}
 
-{ TedExtraction }
+{ TedMarker }
 
-constructor TedExtraction.Create(AOwner: TComponent);
+constructor TedMarker.Create(AOwner: TComponent);
 var
   Kind: TMarkerKind;
 begin
@@ -57,53 +57,53 @@ begin
     edKindName.Items.Add(TMarker.KindToStr(Kind));
 end;
 
-destructor TedExtraction.Destroy;
+destructor TedMarker.Destroy;
 begin
 
   inherited;
 end;
 
-function TedExtraction.GetMarkerName: string;
+function TedMarker.GetMarkerName: string;
 begin
   Result := edMarkerName.Text;
 end;
 
-procedure TedExtraction.SetMarkerName(const Value: string);
+procedure TedMarker.SetMarkerName(const Value: string);
 begin
   edMarkerName.Text := Value;
 end;
 
-function TedExtraction.GetMarkerKind: TMarkerKind;
+function TedMarker.GetMarkerKind: TMarkerKind;
 begin
   Result := TMarkerKind(edKindName.ItemIndex);
 end;
 
-procedure TedExtraction.SetMarkerKind(const Value: TMarkerKind);
+procedure TedMarker.SetMarkerKind(const Value: TMarkerKind);
 begin
   edKindName.ItemIndex := Ord(Value);
 end;
 
-function TedExtraction.GetPositionX: Integer;
+function TedMarker.GetPositionX: Integer;
 begin
   Result := Trunc(edPositionX.Value);
 end;
 
-procedure TedExtraction.SetPositionX(const Value: Integer);
+procedure TedMarker.SetPositionX(const Value: Integer);
 begin
   edPositionX.Value := Value;
 end;
 
-function TedExtraction.GetPositionY: Integer;
+function TedMarker.GetPositionY: Integer;
 begin
   Result := Trunc(edPositionY.Value);
 end;
 
-procedure TedExtraction.SetPositionY(const Value: Integer);
+procedure TedMarker.SetPositionY(const Value: Integer);
 begin
   edPositionY.Value := Value;
 end;
 
-procedure TedExtraction.SetInstance(const Value: TMarker);
+procedure TedMarker.SetInstance(const Value: TMarker);
 begin
   FMarker := Value;
 
@@ -118,7 +118,7 @@ begin
   PositionY := FMarker.Top;
 end;
 
-procedure TedExtraction.PostValues(const Value: TMarker);
+procedure TedMarker.PostValues(const Value: TMarker);
 begin
   Value.Name := MarkerName;
   Value.Kind := MarkerKind;
