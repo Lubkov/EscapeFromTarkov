@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Classes, System.Variants, Data.DB, ME.DB.Entity;
 
 type
-  TMarkerKind = (tkPMCExtraction, tkScavExtraction, tkCoopExtraction);
+  TMarkerKind = (tkPMCExtraction, tkScavExtraction, tkCoopExtraction, Quest);
 
   TMarker = class(TEntity)
   private

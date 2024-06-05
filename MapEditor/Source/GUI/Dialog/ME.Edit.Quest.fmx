@@ -3,7 +3,7 @@ inherited edQuest: TedQuest
   DesignerMasterStyle = 0
   object paTop: TPanel [1]
     Align = Top
-    Size.Width = 345.000000000000000000
+    Size.Width = 344.000000000000000000
     Size.Height = 57.000000000000000000
     Size.PlatformDefault = False
     StyleLookup = 'pushpanel'
@@ -20,8 +20,8 @@ inherited edQuest: TedQuest
   end
   object paMain: TPanel [2]
     Align = Client
-    Size.Width = 345.000000000000000000
-    Size.Height = 151.000000000000000000
+    Size.Width = 344.000000000000000000
+    Size.Height = 153.000000000000000000
     Size.PlatformDefault = False
     StyleLookup = 'pushpanel'
     TabOrder = 4

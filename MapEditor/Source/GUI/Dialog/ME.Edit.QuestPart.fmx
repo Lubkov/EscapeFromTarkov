@@ -1,0 +1,4 @@
+inherited edQuestPart: TedQuestPart
+  Caption = 'edMarker1'
+  DesignerMasterStyle = 0
+end

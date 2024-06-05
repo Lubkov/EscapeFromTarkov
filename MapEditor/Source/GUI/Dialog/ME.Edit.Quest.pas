@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   System.Actions, FMX.ActnList, FMX.Controls.Presentation, FMX.Edit,
-  ME.Edit.Form, ME.Edit.Form.Presenter, ME.DB.Quest, ME.Frame.Point;
+  ME.Edit.Form, ME.Edit.Form.Presenter, ME.DB.Quest, ME.Frame.QuestPart;
 
 type
   TedQuest = class(TEditForm, IEditDialog<TQuest>)
@@ -15,7 +15,7 @@ type
     paMain: TPanel;
   private
     FQuest: TQuest;
-    FPointList: TfrPointList;
+    FQuestPartGrid: TfrQuestPartGrid;
 
     function GetQuestName: string;
     procedure SetQuestName(const Value: string);
@@ -40,9 +40,9 @@ begin
   inherited;
 
   FQuest := nil;
-  FPointList := TfrPointList.Create(Self);
-  FPointList.Parent := paMain;
-  FPointList.Align := TAlignLayout.Client;
+  FQuestPartGrid := TfrQuestPartGrid.Create(Self);
+  FQuestPartGrid.Parent := paMain;
+  FQuestPartGrid.Align := TAlignLayout.Client;
 end;
 
 destructor TedQuest.Destroy;
@@ -71,7 +71,7 @@ begin
     Caption := '#' + VarToStr(FQuest.ID) + ' Редактирование квеста';
 
   QuestName := FQuest.Name;
-  FPointList.Init(FQuest);
+  FQuestPartGrid.Init(FQuest);
 end;
 
 procedure TedQuest.PostValues(const Value: TQuest);

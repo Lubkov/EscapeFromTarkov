@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, Data.DB, ME.DB.Entity, ME.DB.DAO, ME.DB.Service,
-  ME.DB.Map, ME.DB.Layer, ME.DB.Marker, ME.DAO.Map, ME.DB.Quest, ME.DB.Point;
+  ME.DB.Map, ME.DB.Layer, ME.DB.Marker, ME.DAO.Map, ME.DB.Quest;
 
 type
   TMapService = class(TServiceCommon)
@@ -30,7 +30,7 @@ var
 implementation
 
 uses
-  ME.DB.Utils, ME.Service.Point, ME.Service.Layer, ME.Service.Marker,
+  ME.DB.Utils, ME.Service.Layer, ME.Service.Marker,
   ME.Service.Quest;
 
 { TMapService }

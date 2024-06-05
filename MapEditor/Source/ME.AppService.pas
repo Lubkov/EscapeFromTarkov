@@ -32,7 +32,7 @@ var
 implementation
 
 uses
-  ME.Service.Point, ME.Service.Map, ME.Service.Layer, ME.Service.Marker,
+  ME.Service.Map, ME.Service.Layer, ME.Service.Marker,
   ME.Service.Quest;
 
 { TMEService }
@@ -42,7 +42,6 @@ begin
   inherited;
 
   FConnection := TMEConnection.Create(Self);
-  PointService := TPointService.Create(FConnection.Connection);
   MapService := TMapService.Create(FConnection.Connection);
   LayerService := TLayerService.Create(FConnection.Connection);
   MarkerService := TMarkerService.Create(FConnection.Connection);
@@ -52,7 +51,6 @@ end;
 destructor TMEService.Destroy;
 begin
   FreeAndNil(MapService);
-  FreeAndNil(PointService);
   FreeAndNil(LayerService);
   FreeAndNil(MarkerService);
   FreeAndNil(QuestService);

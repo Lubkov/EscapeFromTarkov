@@ -27,6 +27,8 @@ type
     procedure SetPositionX(const Value: Integer);
     function GetPositionY: Integer;
     procedure SetPositionY(const Value: Integer);
+  protected
+    function GetTitle(const Value: TMarker): string; virtual;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -103,15 +105,19 @@ begin
   edPositionY.Value := Value;
 end;
 
+function TedMarker.GetTitle(const Value: TMarker): string;
+begin
+  if Value.IsNewInstance then
+    Result := 'Добавление нового выхода с карты'
+  else
+    Result := '#' + VarToStr(Value.ID) + ' Редактирование выхода с карты';
+end;
+
 procedure TedMarker.SetInstance(const Value: TMarker);
 begin
   FMarker := Value;
 
-  if FMarker.IsNewInstance then
-    Caption := 'Добавление нового выхода с карты'
-  else
-    Caption := '#' + VarToStr(FMarker.ID) + ' Редактирование выхода с карты';
-
+  Caption := GetTitle(Value);
   MarkerName := FMarker.Name;
   MarkerKind := FMarker.Kind;
   PositionX := FMarker.Left;

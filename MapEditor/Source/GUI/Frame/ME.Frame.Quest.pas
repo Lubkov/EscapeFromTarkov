@@ -24,8 +24,7 @@ type
     ImageList1: TImageList;
     StringColumn1: TStringColumn;
     IntegerColumn1: TIntegerColumn;
-    procedure GridGetValue(Sender: TObject; const ACol, ARow: Integer;
-      var Value: TValue);
+    procedure GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
     procedure ActionList1Update(Action: TBasicAction; var Handled: Boolean);
     procedure acAddQuestExecute(Sender: TObject);
     procedure acEditQuestExecute(Sender: TObject);
