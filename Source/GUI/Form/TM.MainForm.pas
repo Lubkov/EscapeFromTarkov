@@ -1,4 +1,4 @@
-unit TM.MainForm;
+﻿unit TM.MainForm;
 
 interface
 
@@ -60,7 +60,7 @@ var
 implementation
 
 uses
-  App.Service, ME.Service.Map;
+  App.Constants, App.Service, ME.Service.Map;
 
 {$R *.fmx}
 
@@ -75,13 +75,14 @@ begin
   Self.Fill.Color := BackgroundColor;
   Self.Fill.Kind := TBrushKind.Solid;
 
+  AppParams.Load;
+  AppService.Connect;
+
   FFormWrapper := TFormWrapper.Create(Self);
-  FMapWrapper := TMapWrapper.Create('');
-  FMapWrapper.TrackLocation := True; // AppParams.TrackLocation;
+  FMapWrapper := TMapWrapper.Create(AppParams.SreenshotPath);
+  FMapWrapper.TrackLocation := AppParams.TrackLocation;
   FMapWrapper.Images := MapTagImages;
   FMapWrapper.OnMapChange := OnMapChange;
-
-  AppService.Connect;
 
   FLocationForm := TLocationForm.Create(Self);
   FLocationForm.Init;

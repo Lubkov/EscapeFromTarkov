@@ -21,6 +21,8 @@ type
     procedure Connect;
     procedure Disconnect;
 
+    procedure LoadParams;
+
     property Connected: Boolean read GetConnected write SetConnected;
     property Connection: TDBConnection read FConnection;
     property Database: string read GetDatabase;
@@ -32,8 +34,8 @@ var
 implementation
 
 uses
-  ME.Service.Point, ME.Service.Map, ME.Service.Layer, ME.Service.Marker,
-  ME.Service.Quest;
+  App.Constants, ME.Service.Map, ME.Service.Layer,
+  ME.Service.Marker, ME.Service.Quest;
 
 { TAppService }
 
@@ -42,7 +44,6 @@ begin
   inherited;
 
   FConnection := TDBConnection.Create(Self);
-  PointService := TPointService.Create(FConnection.Connection);
   MapService := TMapService.Create(FConnection.Connection);
   LayerService := TLayerService.Create(FConnection.Connection);
   MarkerService := TMarkerService.Create(FConnection.Connection);
@@ -52,7 +53,6 @@ end;
 destructor TAppService.Destroy;
 begin
   FreeAndNil(MapService);
-  FreeAndNil(PointService);
   FreeAndNil(LayerService);
   FreeAndNil(MarkerService);
   FreeAndNil(QuestService);
@@ -85,6 +85,11 @@ end;
 procedure TAppService.Disconnect;
 begin
   FConnection.Disconnect;
+end;
+
+procedure TAppService.LoadParams;
+begin
+  AppParams.Load;
 end;
 
 end.
