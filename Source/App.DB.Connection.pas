@@ -64,8 +64,8 @@ procedure TDBConnection.InitConnection;
 begin
   FConnection.Close;
   FConnection.ProviderName := 'SQLite';
-  FConnection.SpecificOptions.Values['Direct'] := 'True';
   FConnection.Database := AppParams.Path + 'data.db';
+  FConnection.SpecificOptions.Values['UseUnicode'] := 'True';
 end;
 
 procedure TDBConnection.Connect;
