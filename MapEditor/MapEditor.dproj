@@ -364,6 +364,7 @@
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Source\GUI\ME.Presenter.QuestPart.pas"/>
+        <DCCReference Include="..\Source\Entity\LocalMap.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

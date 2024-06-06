@@ -43,7 +43,8 @@ uses
   ME.Presenter.Quest in 'Source\GUI\ME.Presenter.Quest.pas',
   ME.Edit.QuestPart in 'Source\GUI\Dialog\ME.Edit.QuestPart.pas' {edQuestPart},
   ME.Frame.QuestPart in 'Source\GUI\Frame\ME.Frame.QuestPart.pas' {frQuestPartGrid: TFrame},
-  ME.Presenter.QuestPart in 'Source\GUI\ME.Presenter.QuestPart.pas';
+  ME.Presenter.QuestPart in 'Source\GUI\ME.Presenter.QuestPart.pas',
+  LocalMap in '..\Source\Entity\LocalMap.pas';
 
 {$R *.res}
 

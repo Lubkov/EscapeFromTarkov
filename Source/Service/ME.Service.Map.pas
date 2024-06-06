@@ -67,6 +67,7 @@ begin
     for Layer in Map.Layers do begin
       Layer.MapID := Map.ID;
       LayerService.Insert(Layer);
+      LayerService.SavePicture(Layer)
     end;
 
     for Marker in Map.Tags do begin
