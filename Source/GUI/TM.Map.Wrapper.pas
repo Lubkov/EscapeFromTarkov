@@ -4,9 +4,8 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.IOUtils, System.Types, System.UITypes,
-  Generics.Collections, FMX.Types, FMX.Graphics, FMX.ImgList, ME.DB.Point,
-  ME.DB.Map, ME.DB.Layer, ME.DB.Quest, ME.DB.Marker, TM.FilesMonitor, App.Constants
-  {, ResUIWrapper, SimpleLogger};
+  Generics.Collections, FMX.Types, FMX.Graphics, FMX.ImgList,
+  ME.Point, ME.DB.Map, ME.DB.Layer, ME.DB.Quest, ME.DB.Marker, TM.FilesMonitor;
 
 type
   TMarkerIconArray = array[Low(TMarkerKind) .. High(TMarkerKind)] of TBitmap;
@@ -57,6 +56,9 @@ type
 
 implementation
 
+uses
+  App.Constants;
+
 { TMapWrapper }
 
 constructor TMapWrapper.Create(const Directory: string);
@@ -65,7 +67,7 @@ begin
 
   FMap := nil;
   FDirectory := Directory;
-  FPoint := nil;
+  FPoint.Empty := True;
   FTrackLocation := True;
   FOnMapChange := nil;
   FChangeMonitor := nil;
@@ -259,7 +261,7 @@ var
   Layer: TLayer;
 begin
   FMap := Map;
-  FPoint := nil;
+  FPoint.Empty := True;
   FZoom := 100;
 
   Layer := FMap.MainLayer;
@@ -289,14 +291,14 @@ begin
     Str := Copy(Str, k + 1, Length(Str) - k);
     if FormatSettings.DecimalSeparator = ',' then
       Str := StringReplace(Str, '.', ',', [rfReplaceAll]);
-    Result.X := Round(StrToFloat(Str));
+    Result.Left := Round(StrToFloat(Str));
 
     Str := Trim(List[2]);
     k := Pos('_', Str);
     Str := Copy(Str, 1, k - 1);
     if FormatSettings.DecimalSeparator = ',' then
       Str := StringReplace(Str, '.', ',', [rfReplaceAll]);
-    Result.Y := Round(StrToFloat(Str));
+    Result.Top := Round(StrToFloat(Str));
   finally
     List.Free;
   end;
@@ -304,7 +306,7 @@ end;
 
 procedure TMapWrapper.DrawPoint(const Value: TPoint);
 const
-  PointColor = $0053FF53;
+  PointColor = $FFE41A10; // $FF53FF53;
 var
   bmp: TBitmap;
   p: TPoint;
@@ -331,16 +333,19 @@ begin
 
     DrawMapTags(bmp);
 
-    if Value <> nil then begin
-      Offset := Abs((FMap.Left - Value.X) / (FMap.Right - FMap.Left));
-      p.X := Trunc(bmp.Width * Offset);
-      Offset := Abs((FMap.Top - Value.Y) / (FMap.Bottom - FMap.Top));
-      p.Y := Trunc(bmp.Height * Offset);
+    if not FPoint.Empty then begin
+      Offset := Abs((FMap.Left - FPoint.Left) / (FMap.Right - FMap.Left));
+      p.Left := Trunc(bmp.Width * Offset);
+      Offset := Abs((FMap.Top - FPoint.Top) / (FMap.Bottom - FMap.Top));
+      p.Top := Trunc(bmp.Height * Offset);
+      trg := RectF(p.Left - 3, p.Top - 3, p.Left + 3, p.Top + 3);
 
-//      bmp.Canvas.Pen.Color := PointColor;
-//      bmp.Canvas.Pen.Width := 1;
-//      bmp.Canvas.Brush.Color := PointColor;
-//      bmp.Canvas.Ellipse(p.X - 5, p.Y - 5, p.X + 5, p.y + 5);
+      bmp.Canvas.BeginScene;
+      bmp.Canvas.Stroke.Kind := TBrushKind.Solid;
+      bmp.Canvas.Stroke.Thickness := 5.0;
+      bmp.Canvas.Stroke.Color := PointColor;
+      bmp.Canvas.DrawEllipse(trg, 1);
+      bmp.Canvas.EndScene;
     end;
 
     DoMapChange(bmp);

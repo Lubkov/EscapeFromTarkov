@@ -143,6 +143,7 @@ begin
   end;
 
   FMapWrapper.LoadMap(Value);
+  FMapWrapper.Start;
 end;
 
 procedure TMainForm.acZoomInExecute(Sender: TObject);

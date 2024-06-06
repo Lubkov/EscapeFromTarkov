@@ -16,24 +16,22 @@ uses
   ME.DAO.Layer in 'Source\DAO\ME.DAO.Layer.pas',
   ME.DAO.Map in 'Source\DAO\ME.DAO.Map.pas',
   ME.DAO.Marker in 'Source\DAO\ME.DAO.Marker.pas',
-  ME.DAO.Point in 'Source\DAO\ME.DAO.Point.pas',
   ME.DAO.Quest in 'Source\DAO\ME.DAO.Quest.pas',
   ME.DB.Layer in 'Source\Entity\ME.DB.Layer.pas',
   ME.DB.Map in 'Source\Entity\ME.DB.Map.pas',
   ME.DB.Marker in 'Source\Entity\ME.DB.Marker.pas',
-  ME.DB.Point in 'Source\Entity\ME.DB.Point.pas',
   ME.DB.Quest in 'Source\Entity\ME.DB.Quest.pas',
   TM.FilesMonitor in 'Source\Service\TM.FilesMonitor.pas',
   ME.Service.Layer in 'Source\Service\ME.Service.Layer.pas',
   ME.Service.Map in 'Source\Service\ME.Service.Map.pas',
   ME.Service.Marker in 'Source\Service\ME.Service.Marker.pas',
-  ME.Service.Point in 'Source\Service\ME.Service.Point.pas',
   ME.Service.Quest in 'Source\Service\ME.Service.Quest.pas',
   TM.Form.Wrapper in 'Source\GUI\TM.Form.Wrapper.pas',
   App.DB.Connection in 'Source\App.DB.Connection.pas',
   App.Service in 'Source\App.Service.pas',
   TM.Map.Wrapper in 'Source\GUI\TM.Map.Wrapper.pas',
-  TM.Form.Location in 'Source\GUI\Form\TM.Form.Location.pas' {LocationForm};
+  TM.Form.Location in 'Source\GUI\Form\TM.Form.Location.pas' {LocationForm},
+  ME.Point in 'Source\Entity\ME.Point.pas';
 
 {$R *.res}
 
