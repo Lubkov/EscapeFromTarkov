@@ -133,23 +133,29 @@ procedure TMapWrapper.DrawMapTags(Bitmap: TBitmap);
       Bitmap.Canvas.DrawBitmap(ico, src, trg, 1);
 
       if Trim(Marker.Name) <> '' then begin
-//        Bitmap.Canvas.DrawRect()
-
         Bitmap.Canvas.Stroke.Kind := TBrushKind.Solid;
-        Bitmap.Canvas.Font.Size := 16;
+        Bitmap.Canvas.Font.Size := 14;
         Bitmap.Canvas.Font.Family := 'Tahoma';
-        Bitmap.Canvas.Font.Style := [TFontStyle.fsbold];
-        Bitmap.Canvas.Fill.Color := $FFFFFFFF;
+        Bitmap.Canvas.Font.Style := []; // [TFontStyle.fsbold];
 
         TextWidth := Bitmap.Canvas.TextWidth(Marker.Name) * Bitmap.Canvas.Scale;
         TextHeight := Bitmap.Canvas.TextHeight(Marker.Name) * Bitmap.Canvas.Scale;
 
         trg.Left := Left + (ico.Width / 2) + 2;
-        trg.Top := Top - (TextHeight / 2);
+        trg.Top := Top - (TextHeight / 2) - 1;
         trg.Right := trg.Left + TextWidth;
         trg.Bottom := trg.Top + TextHeight;
+
+        src.Left := trg.Left - 2;
+        src.Top := trg.Top - 2;
+        src.Right := trg.Right + 2;
+        src.Bottom := trg.Bottom + 2;
+
+        Bitmap.Canvas.Fill.Color := $FF000000; //$FF343D41;
+        Bitmap.Canvas.FillRect(src, 0, 0, AllCorners, 0.5);
+
+        Bitmap.Canvas.Fill.Color := $FFFFFFFF;
         Bitmap.Canvas.FillText(trg, Marker.Name, false, 100, [TFillTextFlag.RightToLeft], TTextAlign.Trailing, TTextAlign.Leading);
-  //      Bitmap.Canvas.EndScene;
       end;
     finally
       Bitmap.Canvas.EndScene;
