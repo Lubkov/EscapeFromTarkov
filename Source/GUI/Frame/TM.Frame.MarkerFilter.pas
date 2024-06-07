@@ -20,6 +20,7 @@ type
     MainContainer: TPanel;
     QuestList: TListBox;
     procedure buCloseClick(Sender: TObject);
+    procedure QuestListChangeCheck(Sender: TObject);
   private
     FMarkerFilter: TMarkerFilter;
     FMap: TMap;
@@ -62,6 +63,17 @@ begin
   Self.Visible := False;
 end;
 
+procedure TMarkerFilterPanel.QuestListChangeCheck(Sender: TObject);
+var
+  Item: TListBoxItem;
+begin
+  Item := TListBoxItem(Sender);
+  if Item.IsChecked then
+    FMarkerFilter.EnableQuest(Item.Index)
+  else
+    FMarkerFilter.DisablQuest(Item.Index);
+end;
+
 procedure TMarkerFilterPanel.OnMapChanged(Sender: TObject);
 var
   Quest: TQuest;
@@ -93,3 +105,6 @@ begin
 end;
 
 end.
+
+
+

@@ -121,7 +121,7 @@ end;
 
 procedure TMapWrapper.DrawMapTags(Bitmap: TBitmap);
 
-  procedure DrawTag(ico: TBitmap; const Marker: TMarker);
+  procedure DrawMarker(ico: TBitmap; const Marker: TMarker);
   var
     Offset: Double;
     src, trg: TRectF;
@@ -175,69 +175,21 @@ const
   ScavExtractionIndex = 1;
   ShredExtractionIndex = 2;
   QuestPartIndex = 3;
-//var
-//  Tag: TMapTag;
-//  i: Integer;
-//  p: TPoint;
-//  png: TPngImage;
 var
   Marker: TMarker;
   Quest: TQuest;
+  i: Integer;
 begin
   for Marker in FMap.Tags do
     if FMarkerFilter.IsGropupEnable(Marker.Kind) then
-      DrawTag(MarkerIcon[Marker.Kind], Marker);
+      DrawMarker(MarkerIcon[Marker.Kind], Marker);
 
-  for Quest in FMap.Quests do
-    // if quest selected
-    for Marker in Quest.Markers do
-      DrawTag(MarkerIcon[Marker.Kind], Marker);
-
-//  png := TPngImage.Create;
-//  try
-//    TResIUWrapper.LoadPNGImage('scav_extraction_map_tag_32', png);
-//
-//    if tagScavExtraction in MapFilter then
-//      for Tag in FMap.ScavExtraction do
-//        DrawTag(png, Tag.Caption, Tag.Position);
-//  finally
-//    png.Free;
-//  end;
-//
-//  png := TPngImage.Create;
-//  try
-//    TResIUWrapper.LoadPNGImage('pmc_extraction_map_tag_32', png);
-//
-//    if tagPMCExtraction in MapFilter then
-//      for Tag in FMap.PMCExtraction do
-//        DrawTag(png, Tag.Caption, Tag.Position);
-//  finally
-//    png.Free;
-//  end;
-//
-//  png := TPngImage.Create;
-//  try
-//    TResIUWrapper.LoadPNGImage('shared_extraction_map_tag_32', png);
-//
-//    if tagSharedExtraction in MapFilter then
-//      for Tag in FMap.SharedExtraction do
-//        DrawTag(png, Tag.Caption, Tag.Position);
-//  finally
-//    png.Free;
-//  end;
-//
-//  // draw question tags
-//  png := TPngImage.Create;
-//  try
-//    TResIUWrapper.LoadPNGImage('quest_map_tag_32', png);
-//
-//    for i := 0 to Length(QuestFilter) - 1 do
-//      if QuestFilter[i] then
-//        for p in Map.Quests[i].Parts do
-//          DrawTag(png, '', p);
-//  finally
-//    png.Free;
-//  end;
+  for i := 0 to FMap.Quests.Count - 1 do begin
+    Quest := FMap.Quests[i];
+    if FMarkerFilter.IsQuestEnable(i) then
+      for Marker in Quest.Markers do
+        DrawMarker(MarkerIcon[Marker.Kind], Marker);
+  end;
 end;
 
 procedure TMapWrapper.SetImages(const Value: TImageList);

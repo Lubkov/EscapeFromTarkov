@@ -33,6 +33,7 @@ type
     procedure DisableAll;
 
     function IsGropupEnable(const Kind: TMarkerKind): Boolean;
+    function IsQuestEnable(const Index: Integer): Boolean;
 
     // read-only filter state
     property GroupFilter: TMarkerKindSet read FGroupFilter;
@@ -131,6 +132,11 @@ end;
 function TMarkerFilter.IsGropupEnable(const Kind: TMarkerKind): Boolean;
 begin
   Result := Kind in FGroupFilter;
+end;
+
+function TMarkerFilter.IsQuestEnable(const Index: Integer): Boolean;
+begin
+  Result := FQuestFilter[Index];
 end;
 
 end.
