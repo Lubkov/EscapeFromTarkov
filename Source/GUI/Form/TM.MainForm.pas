@@ -54,7 +54,6 @@ type
     procedure SetFullScreenMode(const Value: Boolean);
     procedure OnMapChange(Bitmap: TBitmap);
     procedure OnLocationChanged(const Value: TMap);
-    procedure OnFilterChanged(Sender: TObject);
   public
   end;
 
@@ -97,7 +96,7 @@ begin
   FMarkerFilterPanel.Position.X := 50;
   FMarkerFilterPanel.Position.Y := 20;
   FMarkerFilterPanel.Visible := False;
-  FMarkerFilterPanel.OnFilterChanged := OnFilterChanged;
+  FMarkerFilterPanel.Init(FMapWrapper.MarkerFilter);
 
   FMousePosition := TMousePosition.Create(0, 0);
 end;
@@ -155,12 +154,6 @@ begin
 
   FMapWrapper.LoadMap(Value);
   FMapWrapper.Start;
-end;
-
-procedure TMainForm.OnFilterChanged(Sender: TObject);
-begin
-  FMapWrapper.ExtractionFilter := FMarkerFilterPanel.ExtractionFilter;
-  FMapWrapper.Refresh;
 end;
 
 procedure TMainForm.acZoomInExecute(Sender: TObject);
@@ -229,7 +222,6 @@ end;
 
 procedure TMainForm.acMarkerFilterOpenExecute(Sender: TObject);
 begin
-  FMarkerFilterPanel.Init(FMapWrapper.Map);
   FMarkerFilterPanel.Visible := True;
 end;
 

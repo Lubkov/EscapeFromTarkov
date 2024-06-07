@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   FMX.Controls.Presentation, FMX.Layouts, System.ImageList, FMX.ImgList, FMX.ListBox,
-  ME.DB.Map, ME.DB.Marker, ME.DB.Quest;
+  ME.DB.Map, ME.DB.Marker, ME.DB.Quest, ME.MarkerFilter;
 
 type
   TMarkerFilterPanel = class(TFrame)
@@ -21,25 +21,20 @@ type
     QuestList: TListBox;
     procedure buCloseClick(Sender: TObject);
   private
+    FMarkerFilter: TMarkerFilter;
     FMap: TMap;
-    FOnFilterChanged: TNotifyEvent;
-    FExtractionFilter: TMarkerKindSet;
 
+    procedure OnMapChanged(Sender: TObject);
     procedure OnExtractionButtonClick(Sender: TObject);
   public
     constructor Create(AOwner: TComponent); override;
 
-    procedure Init(const Map: TMap);
-
-    property OnFilterChanged: TNotifyEvent read FOnFilterChanged write FOnFilterChanged;
-    property ExtractionFilter: TMarkerKindSet read FExtractionFilter;
+    procedure Init(const MarkerFilter: TMarkerFilter);
   end;
 
 implementation
 
 {$R *.fmx}
-
-// TMarkerKind = (tkPMCExtraction, tkScavExtraction, tkCoopExtraction, Quest);
 
 constructor TMarkerFilterPanel.Create(AOwner: TComponent);
 begin
@@ -56,15 +51,26 @@ begin
   buCoopExtraction.OnClick := OnExtractionButtonClick;
 end;
 
-procedure TMarkerFilterPanel.Init(const Map: TMap);
+procedure TMarkerFilterPanel.Init(const MarkerFilter: TMarkerFilter);
+begin
+  FMarkerFilter := MarkerFilter;
+  FMarkerFilter.OnMapChanged := OnMapChanged;
+end;
+
+procedure TMarkerFilterPanel.buCloseClick(Sender: TObject);
+begin
+  Self.Visible := False;
+end;
+
+procedure TMarkerFilterPanel.OnMapChanged(Sender: TObject);
 var
   Quest: TQuest;
 begin
-  FMap := Map;
+  FMap := TMap(Sender);
 
   QuestList.BeginUpdate;
   try
-    QuestList.Items.Create;
+    QuestList.Items.Clear;
 
     if FMap <> nil then
       for Quest in FMap.Quests do
@@ -74,11 +80,6 @@ begin
   end;
 end;
 
-procedure TMarkerFilterPanel.buCloseClick(Sender: TObject);
-begin
-  Self.Visible := False;
-end;
-
 procedure TMarkerFilterPanel.OnExtractionButtonClick(Sender: TObject);
 var
   Item: TSpeedButton;
@@ -86,12 +87,9 @@ begin
   Item := TSpeedButton(Sender);
 
   if Item.IsPressed then
-    FExtractionFilter := FExtractionFilter + [TMarkerKind(Item.Tag)]
+    FMarkerFilter.EnableGroup(TMarkerKind(Item.Tag))
   else
-    FExtractionFilter := FExtractionFilter - [TMarkerKind(Item.Tag)];
-
-  if Assigned(FOnFilterChanged) then
-    FOnFilterChanged(Self);
+    FMarkerFilter.DisableGroup(TMarkerKind(Item.Tag));
 end;
 
 end.

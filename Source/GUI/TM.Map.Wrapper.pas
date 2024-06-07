@@ -5,7 +5,8 @@ interface
 uses
   System.SysUtils, System.Classes, System.IOUtils, System.Types, System.UITypes,
   Generics.Collections, FMX.Types, FMX.Graphics, FMX.ImgList,
-  ME.Point, ME.DB.Map, ME.DB.Layer, ME.DB.Quest, ME.DB.Marker, TM.FilesMonitor;
+  ME.Point, ME.DB.Map, ME.DB.Layer, ME.DB.Quest, ME.DB.Marker, TM.FilesMonitor,
+  ME.MarkerFilter;
 
 type
   TMarkerIconArray = array[Low(TMarkerKind) .. High(TMarkerKind)] of TBitmap;
@@ -23,13 +24,14 @@ type
     FZoom: Integer;
     FImages: TImageList;
     FMarkerIcons: TMarkerIconArray;
-    FExtractionFilter: TMarkerKindSet;
+    FMarkerFilter: TMarkerFilter;
 
     procedure DoMapChange(Bitmap: TBitmap);
     procedure OnFileChange(Sender: TObject);
     procedure DrawMapTags(Bitmap: TBitmap);
     procedure SetImages(const Value: TImageList);
     function GetMarkerIcon(Index: TMarkerKind): TBitmap;
+    procedure OnFilterChanged(Sender: TObject);
   public
     constructor Create(const Directory: string); virtual;
     destructor Destroy; override;
@@ -52,8 +54,8 @@ type
     property TrackLocation: Boolean read FTrackLocation write FTrackLocation;
     property Images: TImageList read FImages write SetImages;
     property MarkerIcon[Index: TMarkerKind]: TBitmap read GetMarkerIcon;
+    property MarkerFilter: TMarkerFilter read FMarkerFilter;
     property OnMapChange: TOnMapChangeEvent read FOnMapChange write FOnMapChange;
-    property ExtractionFilter: TMarkerKindSet read FExtractionFilter write FExtractionFilter;
   end;
 
 implementation
@@ -76,10 +78,14 @@ begin
   FBackground := TBitmap.Create;
 //  FBackground.PixelFormat := pf32bit;
   FZoom := 100;
+
+  FMarkerFilter := TMarkerFilter.Create;
+  FMarkerFilter.OnChanged := OnFilterChanged;
 end;
 
 destructor TMapWrapper.Destroy;
 begin
+  FMarkerFilter.Free;
   FChangeMonitor.Free;
   FOnMapChange := nil;
   FBackground.Free;
@@ -179,7 +185,7 @@ var
   Quest: TQuest;
 begin
   for Marker in FMap.Tags do
-    if Marker.Kind in ExtractionFilter then
+    if FMarkerFilter.IsGropupEnable(Marker.Kind) then
       DrawTag(MarkerIcon[Marker.Kind], Marker);
 
   for Quest in FMap.Quests do
@@ -249,6 +255,11 @@ begin
   Result := FMarkerIcons[Index];
 end;
 
+procedure TMapWrapper.OnFilterChanged(Sender: TObject);
+begin
+  Refresh;
+end;
+
 function TMapWrapper.GetScreenshotName: string;
 var
   FileName: string;
@@ -279,6 +290,7 @@ begin
   else
     FBackground.Assign(nil);
 
+  MarkerFilter.Init(Map);
   DrawPoint(FPoint);
 end;
 
