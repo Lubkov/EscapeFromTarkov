@@ -11,7 +11,7 @@ uses
 type
   TMarkerFilterPanel = class(TFrame)
     ImageList24: TImageList;
-    Label1: TLabel;
+    laTitle: TLabel;
     buPMCExtraction: TSpeedButton;
     buScavExtraction: TSpeedButton;
     buCoopExtraction: TSpeedButton;
@@ -19,6 +19,9 @@ type
     StyleBook: TStyleBook;
     MainContainer: TPanel;
     QuestList: TListBox;
+    paPMCExtraction: TLayout;
+    paScavExtraction: TLayout;
+    paCoopExtraction: TLayout;
     procedure buCloseClick(Sender: TObject);
     procedure QuestListChangeCheck(Sender: TObject);
   private

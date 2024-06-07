@@ -26,11 +26,10 @@ type
     acZoomIn: TAction;
     acZoomOut: TAction;
     MainContainer: TScrollBox;
-    ToolBarPanel: TPanel;
-    buChoiceLocation: TSpeedButton;
     acChoiceLocation: TAction;
     acCentreMap: TAction;
     acMarkerFilterOpen: TAction;
+    buChoiceLocation: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acFullScreenExecute(Sender: TObject);
@@ -93,8 +92,8 @@ begin
 
   FMarkerFilterPanel := TMarkerFilterPanel.Create(Self);
   FMarkerFilterPanel.Parent := Self;
-  FMarkerFilterPanel.Position.X := 50;
-  FMarkerFilterPanel.Position.Y := 20;
+  FMarkerFilterPanel.Position.X := MapControlLayout.Position.X + MapControlLayout.Width + 10;
+  FMarkerFilterPanel.Position.Y := MapControlLayout.Position.Y;
   FMarkerFilterPanel.Visible := False;
   FMarkerFilterPanel.Init(FMapWrapper.MarkerFilter);
 
@@ -126,7 +125,7 @@ end;
 procedure TMainForm.SetFullScreenMode(const Value: Boolean);
 begin
   FFormWrapper.FullScreen := Value;
-  ToolBarPanel.Visible := not FFormWrapper.FullScreen;
+//  MapControlLayout.Visible := not FFormWrapper.FullScreen;
 //  FormResize(Self);
 end;
 

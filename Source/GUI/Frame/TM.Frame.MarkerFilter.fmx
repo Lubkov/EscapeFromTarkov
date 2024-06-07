@@ -23,11 +23,15 @@ object MarkerFilterPanel: TMarkerFilterPanel
       TextSettings.Trimming = None
       OnClick = buCloseClick
     end
-    object Label1: TLabel
+    object laTitle: TLabel
+      Align = Top
       StyledSettings = [Style, FontColor]
-      Position.X = 32.000000000000000000
-      Position.Y = 24.000000000000000000
-      Size.Width = 73.000000000000000000
+      Margins.Left = 20.000000000000000000
+      Margins.Top = 20.000000000000000000
+      Margins.Right = 20.000000000000000000
+      Position.X = 20.000000000000000000
+      Position.Y = 20.000000000000000000
+      Size.Width = 312.000000000000000000
       Size.Height = 17.000000000000000000
       Size.PlatformDefault = False
       TextSettings.Font.Family = 'Tahoma'
@@ -35,50 +39,89 @@ object MarkerFilterPanel: TMarkerFilterPanel
       Text = #1042#1099#1093#1086#1076#1099
       TabOrder = 1
     end
-    object buPMCExtraction: TSpeedButton
-      StaysPressed = True
-      Cursor = crHandPoint
-      Images = ImageList24
-      ImageIndex = 0
+    object paPMCExtraction: TLayout
+      Align = Top
+      Margins.Left = 40.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 10.000000000000000000
       Position.X = 40.000000000000000000
-      Position.Y = 64.000000000000000000
-      Size.Width = 113.000000000000000000
+      Position.Y = 42.000000000000000000
+      Size.Width = 302.000000000000000000
       Size.Height = 28.000000000000000000
       Size.PlatformDefault = False
-      StyleLookup = 'FilterIconButtonStyle'
-      Text = #1042#1099#1093#1086#1076' '#1063#1042#1050
-      TextSettings.HorzAlign = Leading
-      TextSettings.Trimming = None
+      TabOrder = 2
+      object buPMCExtraction: TSpeedButton
+        StaysPressed = True
+        Align = Left
+        Cursor = crHandPoint
+        StyledSettings = [Family, Style, FontColor]
+        Images = ImageList24
+        ImageIndex = 0
+        Size.Width = 110.000000000000000000
+        Size.Height = 28.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'FilterIconButtonStyle'
+        Text = #1042#1099#1093#1086#1076' '#1063#1042#1050
+        TextSettings.Font.Family = 'Tahoma'
+        TextSettings.HorzAlign = Leading
+        TextSettings.Trimming = None
+      end
     end
-    object buScavExtraction: TSpeedButton
-      StaysPressed = True
-      Cursor = crHandPoint
-      Images = ImageList24
-      ImageIndex = 1
+    object paScavExtraction: TLayout
+      Align = Top
+      Margins.Left = 40.000000000000000000
+      Margins.Top = 2.000000000000000000
+      Margins.Right = 10.000000000000000000
       Position.X = 40.000000000000000000
-      Position.Y = 91.000000000000000000
-      Size.Width = 129.000000000000000000
+      Position.Y = 72.000000000000000000
+      Size.Width = 302.000000000000000000
       Size.Height = 28.000000000000000000
       Size.PlatformDefault = False
-      StyleLookup = 'FilterIconButtonStyle'
-      Text = #1042#1099#1093#1086#1076' '#1076#1080#1082#1086#1075#1086
-      TextSettings.HorzAlign = Leading
-      TextSettings.Trimming = None
+      TabOrder = 3
+      object buScavExtraction: TSpeedButton
+        StaysPressed = True
+        Align = Left
+        Cursor = crHandPoint
+        StyledSettings = [Family, Style, FontColor]
+        Images = ImageList24
+        ImageIndex = 1
+        Size.Width = 125.000000000000000000
+        Size.Height = 28.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'FilterIconButtonStyle'
+        Text = #1042#1099#1093#1086#1076' '#1076#1080#1082#1086#1075#1086
+        TextSettings.Font.Family = 'Tahoma'
+        TextSettings.HorzAlign = Leading
+        TextSettings.Trimming = None
+      end
     end
-    object buCoopExtraction: TSpeedButton
-      StaysPressed = True
-      Cursor = crHandPoint
-      Images = ImageList24
-      ImageIndex = 2
+    object paCoopExtraction: TLayout
+      Align = Top
+      Margins.Left = 40.000000000000000000
+      Margins.Top = 2.000000000000000000
+      Margins.Right = 10.000000000000000000
       Position.X = 40.000000000000000000
-      Position.Y = 120.000000000000000000
-      Size.Width = 121.000000000000000000
+      Position.Y = 102.000000000000000000
+      Size.Width = 302.000000000000000000
       Size.Height = 28.000000000000000000
       Size.PlatformDefault = False
-      StyleLookup = 'FilterIconButtonStyle'
-      Text = #1057#1086#1074#1084'. '#1074#1099#1093#1086#1076
-      TextSettings.HorzAlign = Leading
-      TextSettings.Trimming = None
+      TabOrder = 4
+      object buCoopExtraction: TSpeedButton
+        StaysPressed = True
+        Align = Left
+        Cursor = crHandPoint
+        StyledSettings = [Family, Style, FontColor]
+        Images = ImageList24
+        ImageIndex = 2
+        Size.Width = 120.000000000000000000
+        Size.Height = 28.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'FilterIconButtonStyle'
+        Text = #1057#1086#1074#1084'. '#1074#1099#1093#1086#1076
+        TextSettings.Font.Family = 'Tahoma'
+        TextSettings.HorzAlign = Leading
+        TextSettings.Trimming = None
+      end
     end
   end
   object StyleBook: TStyleBook
@@ -136,8 +179,8 @@ object MarkerFilterPanel: TMarkerFilterPanel
     DefaultItemStyles.GroupFooterStyle = ''
     ShowCheckboxes = True
     OnChangeCheck = QuestListChangeCheck
-    Viewport.Width = 313.000000000000000000
-    Viewport.Height = 289.000000000000000000
+    Viewport.Width = 309.000000000000000000
+    Viewport.Height = 285.000000000000000000
   end
   object ImageList24: TImageList
     Source = <

@@ -170,11 +170,6 @@ procedure TMapWrapper.DrawMapTags(Bitmap: TBitmap);
     end;
   end;
 
-const
-  PMCExtractionIndex = 0;
-  ScavExtractionIndex = 1;
-  ShredExtractionIndex = 2;
-  QuestPartIndex = 3;
 var
   Marker: TMarker;
   Quest: TQuest;
