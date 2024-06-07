@@ -31,7 +31,9 @@ uses
   App.Service in 'Source\App.Service.pas',
   TM.Map.Wrapper in 'Source\GUI\TM.Map.Wrapper.pas',
   TM.Form.Location in 'Source\GUI\Form\TM.Form.Location.pas' {LocationForm},
-  ME.Point in 'Source\Entity\ME.Point.pas';
+  ME.Point in 'Source\Entity\ME.Point.pas',
+  TM.Frame.MarkerFilter in 'Source\GUI\Frame\TM.Frame.MarkerFilter.pas' {MarkerFilterPanel: TFrame},
+  ME.MarkerFilter in 'Source\Entity\ME.MarkerFilter.pas';
 
 {$R *.res}
 

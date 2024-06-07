@@ -23,6 +23,7 @@ type
     FZoom: Integer;
     FImages: TImageList;
     FMarkerIcons: TMarkerIconArray;
+    FExtractionFilter: TMarkerKindSet;
 
     procedure DoMapChange(Bitmap: TBitmap);
     procedure OnFileChange(Sender: TObject);
@@ -52,6 +53,7 @@ type
     property Images: TImageList read FImages write SetImages;
     property MarkerIcon[Index: TMarkerKind]: TBitmap read GetMarkerIcon;
     property OnMapChange: TOnMapChangeEvent read FOnMapChange write FOnMapChange;
+    property ExtractionFilter: TMarkerKindSet read FExtractionFilter write FExtractionFilter;
   end;
 
 implementation
@@ -177,7 +179,8 @@ var
   Quest: TQuest;
 begin
   for Marker in FMap.Tags do
-    DrawTag(MarkerIcon[Marker.Kind], Marker);
+    if Marker.Kind in ExtractionFilter then
+      DrawTag(MarkerIcon[Marker.Kind], Marker);
 
   for Quest in FMap.Quests do
     // if quest selected
@@ -320,6 +323,8 @@ var
   src, trg: TRectF;
 begin
   FPoint := Value;
+  if FMap = nil then
+    Exit;
 
   bmp := TBitmap.Create;
   try

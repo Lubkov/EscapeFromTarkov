@@ -7,7 +7,7 @@ uses
   Generics.Collections, FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   TM.Form.Wrapper, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts,
   System.ImageList, FMX.ImgList, FMX.Objects, System.Actions, FMX.ActnList,
-  ME.DB.Entity, ME.DB.Map, TM.Map.Wrapper, TM.Form.Location;
+  ME.DB.Entity, ME.DB.Map, TM.Map.Wrapper, TM.Form.Location, TM.Frame.MarkerFilter;
 
 type
   TMainForm = class(TForm)
@@ -30,6 +30,7 @@ type
     buChoiceLocation: TSpeedButton;
     acChoiceLocation: TAction;
     acCentreMap: TAction;
+    acMarkerFilterOpen: TAction;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acFullScreenExecute(Sender: TObject);
@@ -42,15 +43,18 @@ type
     procedure MapBackgroundMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Single);
     procedure acCentreMapExecute(Sender: TObject);
+    procedure acMarkerFilterOpenExecute(Sender: TObject);
   private
     FFormWrapper: TFormWrapper;
     FMapWrapper: TMapWrapper;
     FLocationForm: TLocationForm;
     FMousePosition: TMousePosition;
+    FMarkerFilterPanel: TMarkerFilterPanel;
 
     procedure SetFullScreenMode(const Value: Boolean);
     procedure OnMapChange(Bitmap: TBitmap);
     procedure OnLocationChanged(const Value: TMap);
+    procedure OnFilterChanged(Sender: TObject);
   public
   end;
 
@@ -87,6 +91,13 @@ begin
   FLocationForm := TLocationForm.Create(Self);
   FLocationForm.Init;
   FLocationForm.OnLocationChanged := OnLocationChanged;
+
+  FMarkerFilterPanel := TMarkerFilterPanel.Create(Self);
+  FMarkerFilterPanel.Parent := Self;
+  FMarkerFilterPanel.Position.X := 50;
+  FMarkerFilterPanel.Position.Y := 20;
+  FMarkerFilterPanel.Visible := False;
+  FMarkerFilterPanel.OnFilterChanged := OnFilterChanged;
 
   FMousePosition := TMousePosition.Create(0, 0);
 end;
@@ -144,6 +155,12 @@ begin
 
   FMapWrapper.LoadMap(Value);
   FMapWrapper.Start;
+end;
+
+procedure TMainForm.OnFilterChanged(Sender: TObject);
+begin
+  FMapWrapper.ExtractionFilter := FMarkerFilterPanel.ExtractionFilter;
+  FMapWrapper.Refresh;
 end;
 
 procedure TMainForm.acZoomInExecute(Sender: TObject);
@@ -208,6 +225,12 @@ begin
 //  finally
 //    MainContainer.Scene.EnableUpdating;
 //  end;
+end;
+
+procedure TMainForm.acMarkerFilterOpenExecute(Sender: TObject);
+begin
+  FMarkerFilterPanel.Init(FMapWrapper.Map);
+  FMarkerFilterPanel.Visible := True;
 end;
 
 end.

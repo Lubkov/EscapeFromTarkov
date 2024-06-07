@@ -6,7 +6,8 @@ uses
   System.SysUtils, System.Classes, System.Variants, Data.DB, ME.DB.Entity;
 
 type
-  TMarkerKind = (tkPMCExtraction, tkScavExtraction, tkCoopExtraction, Quest);
+  TMarkerKind = (PMCExtraction, ScavExtraction, CoopExtraction, Quest);
+  TMarkerKindSet = set of TMarkerKind;
 
   TMarker = class(TEntity)
   private
@@ -46,7 +47,7 @@ begin
   FMapID := Null;
   FQuestID := Null;
   FName := '';
-  FKind := tkPMCExtraction;
+  FKind := TMarkerKind.PMCExtraction;
   FLeft := 0;
   FTop := 0;
 end;
@@ -94,11 +95,11 @@ end;
 class function TMarker.KindToStr(Value: TMarkerKind): string;
 begin
   case Value of
-    tkPMCExtraction:
+    TMarkerKind.PMCExtraction:
       Result := 'Выход ЧВК';
-    tkScavExtraction:
+    TMarkerKind.ScavExtraction:
       Result := 'Выход дикого';
-    tkCoopExtraction:
+    TMarkerKind.CoopExtraction:
       Result := 'Совм. выход';
   else
     Result := '';

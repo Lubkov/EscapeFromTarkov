@@ -107,7 +107,7 @@ begin
     Image.OnClick := OnLocationClick;
   end;
 
-  Self.Width := (ItemWidth + 10) * (Count div 2);
+  Self.Width := (ItemWidth + 10) * Round(Count / 2 + 0.1);
   Self.Height := (ItemHeight + 10) * 2;
 end;
 
