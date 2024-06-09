@@ -221,7 +221,7 @@ end;
 
 procedure TMainForm.acMarkerFilterOpenExecute(Sender: TObject);
 begin
-  FMarkerFilterPanel.Visible := True;
+  FMarkerFilterPanel.Visible := not FMarkerFilterPanel.Visible;
 end;
 
 end.
