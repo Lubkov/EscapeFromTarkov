@@ -5,7 +5,7 @@ object LocationForm: TLocationForm
   BorderStyle = None
   ClientHeight = 316
   ClientWidth = 486
-  Position = MainFormCenter
+  Position = OwnerFormCenter
   FormStyle = Popup
   FormFactor.Width = 320
   FormFactor.Height = 480
