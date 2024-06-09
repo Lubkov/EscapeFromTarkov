@@ -55,7 +55,7 @@ begin
   inherited;
 
   edKindName.Clear;
-  for Kind := tkPMCExtraction to tkCoopExtraction do
+  for Kind := TMarkerKind.PMCExtraction to TMarkerKind.CoopExtraction do
     edKindName.Items.Add(TMarker.KindToStr(Kind));
 end;
 

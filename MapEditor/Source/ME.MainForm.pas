@@ -142,9 +142,9 @@ begin
       Map.Layers.Add(Layer);
     end;
 
-    ImportExtraction(Map, TMarkerKind.tkPMCExtraction, LocalMap.PMCExtraction);
-    ImportExtraction(Map, TMarkerKind.tkScavExtraction, LocalMap.ScavExtraction);
-    ImportExtraction(Map, TMarkerKind.tkCoopExtraction, LocalMap.SharedExtraction);
+    ImportExtraction(Map, TMarkerKind.PMCExtraction, LocalMap.PMCExtraction);
+    ImportExtraction(Map, TMarkerKind.ScavExtraction, LocalMap.ScavExtraction);
+    ImportExtraction(Map, TMarkerKind.CoopExtraction, LocalMap.SharedExtraction);
     ImportQuest(Map, LocalMap.Quests);
 
     MapService.Save(Map);

@@ -17,6 +17,7 @@ object MainForm: TMainForm
     Size.Width = 640.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
+    Visible = False
     TabOrder = 1
     object Button1: TButton
       Align = Left
