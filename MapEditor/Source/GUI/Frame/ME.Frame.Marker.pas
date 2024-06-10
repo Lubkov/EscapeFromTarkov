@@ -92,6 +92,7 @@ var
 begin
   Dialog := TedMarker.Create(Self);
   try
+    Dialog.Map := FMap;
     Presenter := TEditMarkerPresenter.Create(Dialog, Marker);
     try
       Result := Presenter.Edit;

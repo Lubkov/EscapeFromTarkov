@@ -7,7 +7,7 @@ uses
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   System.Rtti, FMX.Grid.Style, System.ImageList, FMX.ImgList, System.Actions,
   FMX.ActnList, FMX.Grid, FMX.ScrollBox, FMX.Controls.Presentation,
-  ME.DB.Quest, ME.DB.Marker;
+  ME.DB.Map, ME.DB.Quest, ME.DB.Marker;
 
 type
   TfrQuestPartGrid = class(TFrame)
@@ -33,6 +33,7 @@ type
     procedure acDeleteMarkerExecute(Sender: TObject);
     procedure GridCellDblClick(const Column: TColumn; const Row: Integer);
   private
+    FMap: TMap;
     FQuest: TQuest;
     FFocusedIndex: Integer;
 
@@ -46,7 +47,7 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure Init(const Quest: TQuest);
+    procedure Init(const Map: TMap; const Quest: TQuest);
 
     property Count: Integer read GetCount;
     property Items[Index: Integer]: TMarker read GetItem;
@@ -109,6 +110,7 @@ var
 begin
   Dialog := TedQuestPart.Create(Self);
   try
+    Dialog.Map := FMap;
     Presenter := TEditQuestPartPresenter.Create(Dialog, Point);
     try
       Result := Presenter.Edit;
@@ -136,8 +138,9 @@ begin
   end;
 end;
 
-procedure TfrQuestPartGrid.Init(const Quest: TQuest);
+procedure TfrQuestPartGrid.Init(const Map: TMap; const Quest: TQuest);
 begin
+  FMap := Map;
   FQuest := Quest;
 
   Grid.BeginUpdate;

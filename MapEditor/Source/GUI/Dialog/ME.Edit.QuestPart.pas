@@ -1,4 +1,4 @@
-unit ME.Edit.QuestPart;
+﻿unit ME.Edit.QuestPart;
 
 interface
 
@@ -6,7 +6,8 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   ME.Edit.Marker, System.Actions, FMX.ActnList, FMX.ListBox, FMX.EditBox,
-  FMX.NumberBox, FMX.Edit, FMX.Controls.Presentation, ME.DB.Marker;
+  FMX.NumberBox, FMX.Edit, FMX.Controls.Presentation, ME.DB.Marker,
+  System.ImageList, FMX.ImgList, FMX.Layouts;
 
 type
   TedQuestPart = class(TedMarker)
@@ -29,10 +30,10 @@ begin
 
   MarkerKind := TMarkerKind.Quest;
   edKindName.Visible := False;
-  laTopPoint.Position.Y := 70;
-  edPositionX.Position.Y := 95;
-  edPositionY.Position.Y := 95;
-  Self.Height := 220;
+//  laTopPoint.Position.Y := 70;
+//  edPositionX.Position.Y := 95;
+//  edPositionY.Position.Y := 95;
+  Self.Height := 325;
 end;
 
 function TedQuestPart.GetTitle(const Value: TMarker): string;
