@@ -11,8 +11,6 @@ uses
   ME.Del.Form.Presenter in '..\Source\Common\ME.Del.Form.Presenter.pas',
   ME.Dialog.Presenter in '..\Source\Common\ME.Dialog.Presenter.pas',
   ME.Edit.Form.Presenter in '..\Source\Common\ME.Edit.Form.Presenter.pas',
-  ME.Connection in 'Source\ME.Connection.pas',
-  ME.AppService in 'Source\ME.AppService.pas',
   ME.DAO.Map in '..\Source\DAO\ME.DAO.Map.pas',
   ME.DAO.Layer in '..\Source\DAO\ME.DAO.Layer.pas',
   ME.DB.Map in '..\Source\Entity\ME.DB.Map.pas',
@@ -27,7 +25,6 @@ uses
   ME.Edit.Form in '..\Source\Common\ME.Edit.Form.pas' {EditForm},
   ME.Edit.Map in 'Source\GUI\Dialog\ME.Edit.Map.pas' {edMap},
   ME.Edit.Layer in 'Source\GUI\Dialog\ME.Edit.Layer.pas' {edLayer},
-  App.Constants in '..\Source\App.Constants.pas',
   ME.Frame.Picture in 'Source\GUI\Frame\ME.Frame.Picture.pas' {frPicture: TFrame},
   ME.DB.Marker in '..\Source\Entity\ME.DB.Marker.pas',
   ME.DAO.Marker in '..\Source\DAO\ME.DAO.Marker.pas',
@@ -44,7 +41,11 @@ uses
   ME.Edit.QuestPart in 'Source\GUI\Dialog\ME.Edit.QuestPart.pas' {edQuestPart},
   ME.Frame.QuestPart in 'Source\GUI\Frame\ME.Frame.QuestPart.pas' {frQuestPartGrid: TFrame},
   ME.Presenter.QuestPart in 'Source\GUI\ME.Presenter.QuestPart.pas',
-  LocalMap in '..\Source\Entity\LocalMap.pas';
+  LocalMap in '..\Source\Entity\LocalMap.pas',
+  App.Constants in '..\Source\Common\App.Constants.pas',
+  App.DB.Connection in '..\Source\Common\App.DB.Connection.pas',
+  App.SQLite.Connection in '..\Source\Common\App.SQLite.Connection.pas',
+  App.Service in '..\Source\Common\App.Service.pas';
 
 {$R *.res}
 
@@ -56,7 +57,7 @@ begin
   Application.Initialize;
 
   // app initialization
-  AppService := TMEService.Create(Application);
+  AppService := TAppService.Create(Application);
 
   Application.CreateForm(TMainForm, MainForm);
   Application.Run;

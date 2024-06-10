@@ -4,7 +4,6 @@ uses
   System.StartUpCopy,
   FMX.Forms,
   TM.MainForm in 'Source\GUI\Form\TM.MainForm.pas' {MainForm},
-  App.Constants in 'Source\App.Constants.pas',
   ME.DB.DAO in 'Source\Common\ME.DB.DAO.pas',
   ME.DB.Entity in 'Source\Common\ME.DB.Entity.pas',
   ME.DB.Service in 'Source\Common\ME.DB.Service.pas',
@@ -27,13 +26,15 @@ uses
   ME.Service.Marker in 'Source\Service\ME.Service.Marker.pas',
   ME.Service.Quest in 'Source\Service\ME.Service.Quest.pas',
   TM.Form.Wrapper in 'Source\GUI\TM.Form.Wrapper.pas',
-  App.DB.Connection in 'Source\App.DB.Connection.pas',
-  App.Service in 'Source\App.Service.pas',
   TM.Map.Wrapper in 'Source\GUI\TM.Map.Wrapper.pas',
   TM.Form.Location in 'Source\GUI\Form\TM.Form.Location.pas' {LocationForm},
   ME.Point in 'Source\Entity\ME.Point.pas',
   TM.Frame.MarkerFilter in 'Source\GUI\Frame\TM.Frame.MarkerFilter.pas' {MarkerFilterPanel: TFrame},
-  ME.MarkerFilter in 'Source\Entity\ME.MarkerFilter.pas';
+  ME.MarkerFilter in 'Source\Entity\ME.MarkerFilter.pas',
+  App.DB.Connection in 'Source\Common\App.DB.Connection.pas',
+  App.SQLite.Connection in 'Source\Common\App.SQLite.Connection.pas',
+  App.Constants in 'Source\Common\App.Constants.pas',
+  App.Service in 'Source\Common\App.Service.pas';
 
 {$R *.res}
 

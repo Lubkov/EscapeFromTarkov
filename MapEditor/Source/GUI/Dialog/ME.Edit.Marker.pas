@@ -34,9 +34,9 @@ type
     buTop: TSpeedButton;
     buBottom: TSpeedButton;
     ImageList24: TImageList;
-    edIncrement: TNumberBox;
     buGenerate: TButton;
     laScreenShotName: TLabel;
+    edIncrement: TComboBox;
     procedure edLeftClick(Sender: TObject);
     procedure buRightClick(Sender: TObject);
     procedure buTopClick(Sender: TObject);
@@ -56,7 +56,6 @@ type
     procedure SetPositionY(const Value: Integer);
     procedure SetMap(const Value: TMap);
     function GetIncrement: Integer;
-    procedure SetIncrement(const Value: Integer);
   protected
     function GetTitle(const Value: TMarker): string; virtual;
   public
@@ -71,7 +70,7 @@ type
     property MarkerKind: TMarkerKind read GetMarkerKind write SetMarkerKind;
     property PositionX: Integer read GetPositionX write SetPositionX;
     property PositionY: Integer read GetPositionY write SetPositionY;
-    property Increment: Integer read GetIncrement write SetIncrement;
+    property Increment: Integer read GetIncrement;
   end;
 
 implementation
@@ -116,14 +115,47 @@ begin
 end;
 
 procedure TedMarker.SetMap(const Value: TMap);
+var
+  MapLeft: Integer;
+  MapRight: Integer;
+  MapTop: Integer;
+  MapBottom: Integer;
 begin
   FMap := Value;
 
-  if Map = nil then
-    Exit;
+  if Map = nil then begin
+    MapLeft := -9999;
+    MapRight := 9999;
+    MapTop := -9999;
+    MapBottom := 9999;
+  end
+  else begin
+    MapLeft := Map.Left;
+    MapRight := Map.Right;
+    MapTop := Map.Top;
+    MapBottom := Map.Bottom;
+  end;
 
-  laMapWidth.Text := 'Ширина карты: (' + IntToStr(Map.Left) + ', ' + IntToStr(Map.Right) + ')';
-  laMapHeight.Text := 'Высота карты: (' + IntToStr(Map.Top) + ', ' + IntToStr(Map.Bottom) + ')';
+  if MapLeft < MapRight then begin
+    edPositionX.Min := MapLeft;
+    edPositionX.Max := MapRight;
+  end
+  else begin
+    edPositionX.Min := MapRight;
+    edPositionX.Max := MapLeft;
+  end;
+
+  if MapTop < MapBottom then begin
+    edPositionY.Min := MapTop;
+    edPositionY.Max := MapBottom;
+  end
+  else begin
+    edPositionY.Min := MapBottom;
+    edPositionY.Max := MapTop;
+  end;
+
+  laMapWidth.Text := 'Ширина карты: (' + IntToStr(MapLeft) + ', ' + IntToStr(MapRight) + ')';
+  laMapHeight.Text := 'Высота карты: (' + IntToStr(MapTop) + ', ' + IntToStr(MapBottom) + ')';
 end;
 
 procedure TedMarker.SetMarkerKind(const Value: TMarkerKind);
@@ -161,12 +193,7 @@ end;
 
 function TedMarker.GetIncrement: Integer;
 begin
-  Result := Trunc(edIncrement.Value);
-end;
-
-procedure TedMarker.SetIncrement(const Value: Integer);
-begin
-  edIncrement.Value := Value;
+  Result := StrToInt(edIncrement.Items[edIncrement.ItemIndex]);
 end;
 
 procedure TedMarker.SetInstance(const Value: TMarker);

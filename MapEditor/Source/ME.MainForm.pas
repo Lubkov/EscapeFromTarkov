@@ -30,8 +30,8 @@ var
 implementation
 
 uses
-  ME.AppService, ME.Service.Layer, ME.Service.Map, ME.DB.Marker, ME.Service.Marker,
-  ME.Service.Quest;
+  App.Service, ME.Service.Layer, ME.Service.Map, ME.DB.Marker,
+  ME.Service.Marker, ME.Service.Quest;
 
 {$R *.fmx}
 
@@ -39,7 +39,9 @@ uses
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
+  AppService.LoadParams;
   AppService.Connect;
+
   Self.Caption := '[Maps Editor] Database = "' + AppService.Database + '"';
 
   FMapPanel := TfrMap.Create(Self);

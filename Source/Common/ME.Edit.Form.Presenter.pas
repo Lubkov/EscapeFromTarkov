@@ -17,6 +17,7 @@ type
   TEditFormPresenter<T> = class(TDialogPresenter)
   private
     FInstance: T;
+//    FParams: array of TVarRec;
   protected
     procedure SetInstance(const Value: T); virtual;
     procedure PostValues; virtual;
@@ -27,6 +28,7 @@ type
     constructor Create(Dialog: IEditDialog<T>; Instance: T); reintroduce; overload; virtual;
 
     function Edit: Boolean;
+//    procedure SetParams(const Params: array of const);
 
     property Instance: T read FInstance write SetInstance;
   end;

@@ -77,7 +77,7 @@ begin
   Self.Fill.Color := BackgroundColor;
   Self.Fill.Kind := TBrushKind.Solid;
 
-  AppParams.Load;
+  AppService.LoadParams;
   AppService.Connect;
 
   FFormWrapper := TFormWrapper.Create(Self);
@@ -186,10 +186,10 @@ begin
   if not FMousePosition.Down then
     Exit;
 
-{$IFNDEF DEBUG}
-  Label1.Caption := Sender.ClassName + '.Position: (' + IntToStr(X) + ', ' + IntToStr(Y) + ')';
-  Label2.Caption := 'Image: (' + IntToStr(imLocalMap.Left) + ', ' + IntToStr(imLocalMap.Top) + ')';
-{$ENDIF}
+//{$IFNDEF DEBUG}
+//  Label1.Caption := Sender.ClassName + '.Position: (' + IntToStr(X) + ', ' + IntToStr(Y) + ')';
+//  Label2.Caption := 'Image: (' + IntToStr(imLocalMap.Left) + ', ' + IntToStr(imLocalMap.Top) + ')';
+//{$ENDIF}
 
   DeltaX := X - FMousePosition.X;
   DeltaY := Y - FMousePosition.Y;

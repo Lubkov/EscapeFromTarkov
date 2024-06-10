@@ -22,8 +22,8 @@ type
     acEditQuest: TAction;
     acDeleteQuest: TAction;
     ImageList1: TImageList;
-    StringColumn1: TStringColumn;
-    IntegerColumn1: TIntegerColumn;
+    NameColumn: TStringColumn;
+    IDColumn: TIntegerColumn;
     procedure GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
     procedure ActionList1Update(Action: TBasicAction; var Handled: Boolean);
     procedure acAddQuestExecute(Sender: TObject);
@@ -105,6 +105,8 @@ var
 begin
   Dialog := TedQuest.Create(Self);
   try
+    Dialog.Map := FMap;
+
     Presenter := TEditQuestPresenter.Create(Dialog, Quest);
     try
       Result := Presenter.Edit;
@@ -145,6 +147,8 @@ begin
 
   if Count > 0 then
     Grid.Selected := 0;
+
+  NameColumn.Width := Grid.Width - IDColumn.Width - 25;
 end;
 
 procedure TfrQuest.GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
