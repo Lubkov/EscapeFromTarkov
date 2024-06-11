@@ -74,6 +74,7 @@ procedure TMainForm.FormCreate(Sender: TObject);
 const
   BackgroundColor = $FF0F0F0F;
 begin
+  Self.Caption := '["Escape of Tarkov" position tracking]';
   Self.Fill.Color := BackgroundColor;
   Self.Fill.Kind := TBrushKind.Solid;
 

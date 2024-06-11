@@ -20,6 +20,8 @@ type
     function GetCount: Integer;
     function GetItem(Index: Integer): TMap;
     procedure OnLocationClick(Sender: TObject);
+    function GetColumnCount: Integer;
+    function GetRowCount: Integer;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -28,6 +30,8 @@ type
     procedure Init;
 
     property Count: Integer read GetCount;
+    property ColumnCount: Integer read GetColumnCount;
+    property RowCount: Integer read GetRowCount;
     property Items[Index: Integer]: TMap read GetItem;
     property OnLocationChanged: TLocationChangedEvent read FOnLocationChanged write FOnLocationChanged;
   end;
@@ -64,6 +68,18 @@ end;
 function TLocationPanel.GetCount: Integer;
 begin
   Result := FItems.Count;
+end;
+
+function TLocationPanel.GetColumnCount: Integer;
+begin
+  Result := Count div 2;
+  if (Count mod 2) <> 0 then
+    Result := Result + 1;
+end;
+
+function TLocationPanel.GetRowCount: Integer;
+begin
+  Result := 2;
 end;
 
 function TLocationPanel.GetItem(Index: Integer): TMap;
@@ -108,8 +124,8 @@ begin
 
   Grid.Position.X := 0;
   Grid.Position.Y := 0;
-  Grid.Width := (ItemWidth + 10) * Round(Count / 2 + 0.1);
-  Grid.Height := (ItemHeight + 10) * 2;
+  Grid.Width := (ItemWidth + 10) * ColumnCount;
+  Grid.Height := (ItemHeight + 10) * RowCount;
 end;
 
 procedure TLocationPanel.OnLocationClick(Sender: TObject);

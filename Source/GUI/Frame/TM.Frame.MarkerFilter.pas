@@ -96,8 +96,29 @@ var
   Idx: Integer;
   Quest: TQuest;
   Item: TSpeedButton;
+  Marker: TMarker;
+  PMCCount: Integer;
+  ScavCount: Integer;
+  CoopCount: Integer;
 begin
   FMap := TMap(Sender);
+
+  PMCCount := 0;
+  ScavCount := 0;
+  CoopCount := 0;
+  for Marker in FMap.Tags do
+    case Marker.Kind of
+      TMarkerKind.PMCExtraction:
+        Inc(PMCCount);
+      TMarkerKind.ScavExtraction:
+        Inc(ScavCount);
+      TMarkerKind.CoopExtraction:
+        Inc(CoopCount);
+    end;
+
+  buPMCExtraction.Text := 'Выход ЧВК (' + PMCCount.ToString + ')';
+  buScavExtraction.Text := 'Выход дикого (' + ScavCount.ToString + ')';
+  buCoopExtraction.Text := 'Совм. выход (' + CoopCount.ToString + ')';
 
   QuestGrid.BeginUpdate;
   try
