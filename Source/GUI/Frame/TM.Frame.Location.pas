@@ -5,15 +5,17 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   Generics.Collections, FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs,
-  FMX.StdCtrls, FMX.Layouts, Data.DB, ME.DB.Entity, ME.DB.Map, FMX.Objects;
+  FMX.StdCtrls, FMX.Layouts, Data.DB, ME.DB.Entity, ME.DB.Map, FMX.Objects,
+  FMX.Controls.Presentation, System.ImageList, FMX.ImgList;
 
 type
   TLocationChangedEvent = procedure (const Value: TMap) of object;
 
-  TLocationPanel = class(TFrame)
+  TLocationGrid = class(TFrame)
     MainContainer: THorzScrollBox;
-    StyleBook1: TStyleBook;
     Grid: TGridLayout;
+    MainStyleBook: TStyleBook;
+    ImageList1: TImageList;
   private
     FItems: TList<TEntity>;
     FMaxHeight: Integer;
@@ -48,10 +50,10 @@ uses
 
 {$R *.fmx}
 
-constructor TLocationPanel.Create(AOwner: TComponent);
+constructor TLocationGrid.Create(AOwner: TComponent);
 const
-  ItemHeight = 200;
-  ItemWidth = 200;
+  ItemHeight = 180;
+  ItemWidth = 160;
   BackgroundColor = $001C1612;
 begin
   inherited;
@@ -66,7 +68,7 @@ begin
   Grid.ItemWidth := ItemWidth;
 end;
 
-destructor TLocationPanel.Destroy;
+destructor TLocationGrid.Destroy;
 begin
   FOnLocationChanged := nil;
   Clear;
@@ -75,29 +77,29 @@ begin
   inherited;
 end;
 
-function TLocationPanel.GetCount: Integer;
+function TLocationGrid.GetCount: Integer;
 begin
   Result := FItems.Count;
 end;
 
-function TLocationPanel.GetColumnCount: Integer;
+function TLocationGrid.GetColumnCount: Integer;
 begin
   Result := Count div 2;
   if (Count mod 2) <> 0 then
     Result := Result + 1;
 end;
 
-function TLocationPanel.GetRowCount: Integer;
+function TLocationGrid.GetRowCount: Integer;
 begin
   Result := 2;
 end;
 
-function TLocationPanel.GetItem(Index: Integer): TMap;
+function TLocationGrid.GetItem(Index: Integer): TMap;
 begin
   Result := TMap(FItems[Index]);
 end;
 
-procedure TLocationPanel.Clear;
+procedure TLocationGrid.Clear;
 var
   i: Integer;
 begin
@@ -107,30 +109,34 @@ begin
   FItems.Clear;
 end;
 
-procedure TLocationPanel.Init;
+procedure TLocationGrid.Init;
 var
-  Image: TImage;
+  Button: TSpeedButton;
   i: Integer;
 begin
   MapService.GetAll(FItems);
 
   for i := 0 to Count - 1 do begin
-    Image := TImage.Create(Self);
-    Image.Parent := Grid;
-    Image.Height := Grid.ItemHeight;
-    Image.Width := Grid.ItemWidth;
-    Image.Margins.Left := 5;
-    Image.Margins.Top := 5;
-    Image.Margins.Right := 5;
-    Image.Margins.Bottom := 5;
-    Image.Cursor := crHandPoint;
-    Image.Bitmap.Assign(Items[i].Picture);
-    Image.Tag := i;
-    Image.OnClick := OnLocationClick;
+    Button := TSpeedButton.Create(Self);
+    Button.Parent := Grid;
+    Button.Height := Grid.ItemHeight;
+    Button.Width := Grid.ItemWidth;
+    Button.Margins.Left := 5;
+    Button.Margins.Top := 5;
+    Button.Margins.Right := 0;
+    Button.Margins.Bottom := 0;
+    Button.Cursor := crHandPoint;
+    Button.StyleLookup := 'LocationGridItemStyle';
+    Button.Images := ImageList1;
+    Button.ImageIndex := i;
+    Button.Text := Items[i].Name;
+//    Button.Bitmap.Assign(Items[i].Picture);
+    Button.Tag := i;
+    Button.OnClick := OnLocationClick;
   end;
 
-  FMaxWidth := Trunc(Grid.ItemWidth + 10) * ColumnCount + 20;
-  FMaxHeight := Trunc(Grid.ItemHeight + 10) * RowCount + 20;
+  FMaxWidth := Trunc(Grid.ItemWidth) * ColumnCount + 5; //+ 20;
+  FMaxHeight := Trunc(Grid.ItemHeight) * RowCount + 5; //+ 20;
 
   Grid.Position.X := 0;
   Grid.Position.Y := 0;
@@ -138,12 +144,10 @@ begin
   Grid.Height := FMaxHeight;
 end;
 
-procedure TLocationPanel.OnLocationClick(Sender: TObject);
+procedure TLocationGrid.OnLocationClick(Sender: TObject);
 begin
   if Assigned(FOnLocationChanged) then
     FOnLocationChanged(Items[TImage(Sender).Tag]);
-
-  Self.Visible := False;
 end;
 
 end.

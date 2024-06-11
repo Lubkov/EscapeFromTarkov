@@ -30,6 +30,7 @@ type
     acCentreMap: TAction;
     acMarkerFilterOpen: TAction;
     buChoiceLocation: TSpeedButton;
+    LocationPanel: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acFullScreenExecute(Sender: TObject);
@@ -43,10 +44,11 @@ type
       Shift: TShiftState; X, Y: Single);
     procedure acCentreMapExecute(Sender: TObject);
     procedure acMarkerFilterOpenExecute(Sender: TObject);
+    procedure FormResize(Sender: TObject);
   private
     FFormWrapper: TFormWrapper;
     FMapWrapper: TMapWrapper;
-    FLocationPanel: TLocationPanel;
+    FLocationGrid: TLocationGrid;
     FMousePosition: TMousePosition;
     FMarkerFilterPanel: TMarkerFilterPanel;
 
@@ -94,11 +96,13 @@ begin
   FMarkerFilterPanel.Visible := False;
   FMarkerFilterPanel.Init(FMapWrapper.MarkerFilter);
 
-  FLocationPanel := TLocationPanel.Create(Self);
-  FLocationPanel.Parent := Self;
-  FLocationPanel.Visible := False;
-  FLocationPanel.Init;
-  FLocationPanel.OnLocationChanged := OnLocationChanged;
+  LocationPanel.Visible := False;
+
+  FLocationGrid := TLocationGrid.Create(Self);
+  FLocationGrid.Parent := LocationPanel;
+  FLocationGrid.Align := TAlignLayout.Client;
+  FLocationGrid.Init;
+  FLocationGrid.OnLocationChanged := OnLocationChanged;
 
   FMousePosition := TMousePosition.Create(0, 0);
 end;
@@ -107,7 +111,7 @@ procedure TMainForm.FormDestroy(Sender: TObject);
 begin
   FFormWrapper.Free;
   FMapWrapper.Free;
-  FreeAndNil(FLocationPanel);
+  FreeAndNil(FLocationGrid);
 end;
 
 procedure TMainForm.FormKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -118,6 +122,11 @@ begin
     vkF11:
       SetFullScreenMode(True);
   end;
+end;
+
+procedure TMainForm.FormResize(Sender: TObject);
+begin
+  LocationPanel.Visible := False;
 end;
 
 procedure TMainForm.acFullScreenExecute(Sender: TObject);
@@ -145,6 +154,8 @@ end;
 
 procedure TMainForm.OnLocationChanged(const Value: TMap);
 begin
+  LocationPanel.Visible := False;
+
   if FMapWrapper.Map = Value then
     Exit;
 
@@ -176,22 +187,22 @@ var
 begin
 
   OffsetX := MapControlLayout.Position.X + MapControlLayout.Width;
-  Height := Self.Height;
-  Width := Self.Width - OffsetX - 40;
+  Height := Self.ClientHeight;
+  Width := Self.ClientWidth - OffsetX - 40;
 
-  if Width < FLocationPanel.MaxWidth then
-    FLocationPanel.Width := Width
+  if Width < FLocationGrid.MaxWidth then
+    LocationPanel.Width := Width
   else
-    FLocationPanel.Width := FLocationPanel.MaxWidth;
+    LocationPanel.Width := FLocationGrid.MaxWidth;
 
-  if Height < FLocationPanel.MaxHeight then
-    FLocationPanel.Height := Height
+  if Height < FLocationGrid.MaxHeight then
+    LocationPanel.Height := Height
   else
-    FLocationPanel.Height := FLocationPanel.MaxHeight;
+    LocationPanel.Height := FLocationGrid.MaxHeight;
 
-  FLocationPanel.Position.X := (Width / 2) - (FLocationPanel.Width / 2) + OffsetX + 20;
-  FLocationPanel.Position.Y := (Height / 2) - (FLocationPanel.Height / 2);
-  FLocationPanel.Visible := not FLocationPanel.Visible;
+  LocationPanel.Position.X := (Width / 2) - (LocationPanel.Width / 2) + OffsetX + 20;
+  LocationPanel.Position.Y := (Height / 2) - (LocationPanel.Height / 2);
+  LocationPanel.Visible := not LocationPanel.Visible;
 end;
 
 procedure TMainForm.MapBackgroundMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
