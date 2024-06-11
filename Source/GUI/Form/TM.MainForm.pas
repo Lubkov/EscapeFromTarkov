@@ -7,7 +7,7 @@ uses
   Generics.Collections, FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   TM.Form.Wrapper, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts,
   System.ImageList, FMX.ImgList, FMX.Objects, System.Actions, FMX.ActnList,
-  ME.DB.Entity, ME.DB.Map, TM.Map.Wrapper, TM.Form.Location, TM.Frame.MarkerFilter;
+  ME.DB.Entity, ME.DB.Map, TM.Map.Wrapper, TM.Frame.Location, TM.Frame.MarkerFilter;
 
 type
   TMainForm = class(TForm)
@@ -46,7 +46,7 @@ type
   private
     FFormWrapper: TFormWrapper;
     FMapWrapper: TMapWrapper;
-    FLocationForm: TLocationForm;
+    FLocationPanel: TLocationPanel;
     FMousePosition: TMousePosition;
     FMarkerFilterPanel: TMarkerFilterPanel;
 
@@ -86,16 +86,18 @@ begin
   FMapWrapper.Images := MapTagImages;
   FMapWrapper.OnMapChange := OnMapChange;
 
-  FLocationForm := TLocationForm.Create(Self);
-  FLocationForm.Init;
-  FLocationForm.OnLocationChanged := OnLocationChanged;
-
   FMarkerFilterPanel := TMarkerFilterPanel.Create(Self);
   FMarkerFilterPanel.Parent := Self;
   FMarkerFilterPanel.Position.X := MapControlLayout.Position.X + MapControlLayout.Width + 10;
   FMarkerFilterPanel.Position.Y := MapControlLayout.Position.Y;
   FMarkerFilterPanel.Visible := False;
   FMarkerFilterPanel.Init(FMapWrapper.MarkerFilter);
+
+  FLocationPanel := TLocationPanel.Create(Self);
+  FLocationPanel.Parent := MainContainer;
+  FLocationPanel.Visible := False;
+  FLocationPanel.Init;
+  FLocationPanel.OnLocationChanged := OnLocationChanged;
 
   FMousePosition := TMousePosition.Create(0, 0);
 end;
@@ -104,7 +106,7 @@ procedure TMainForm.FormDestroy(Sender: TObject);
 begin
   FFormWrapper.Free;
   FMapWrapper.Free;
-  FreeAndNil(FLocationForm);
+  FreeAndNil(FLocationPanel);
 end;
 
 procedure TMainForm.FormKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -167,7 +169,7 @@ end;
 
 procedure TMainForm.acChoiceLocationExecute(Sender: TObject);
 begin
-  FLocationForm.Show;
+  FLocationPanel.Visible := True;
 end;
 
 procedure TMainForm.MapBackgroundMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);

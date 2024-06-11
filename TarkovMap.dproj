@@ -5,7 +5,7 @@
         <FrameworkType>FMX</FrameworkType>
         <MainSource>TarkovMap.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -243,6 +243,11 @@
         <DCCReference Include="Source\Common\App.SQLite.Connection.pas"/>
         <DCCReference Include="Source\Common\App.Constants.pas"/>
         <DCCReference Include="Source\Common\App.Service.pas"/>
+        <DCCReference Include="Source\GUI\Frame\TM.Frame.Location.pas">
+            <Form>LocationPanel</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -287,6 +292,12 @@
                 </DeployFile>
                 <DeployFile LocalName="Bin\TarkovMap.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Bin\TarkovMap.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>TarkovMap.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Bin\TarkovMap.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>TarkovMap.exe</RemoteName>
                         <Overwrite>true</Overwrite>
