@@ -95,7 +95,7 @@ begin
   FMarkerFilterPanel.Init(FMapWrapper.MarkerFilter);
 
   FLocationPanel := TLocationPanel.Create(Self);
-  FLocationPanel.Parent := MainContainer;
+  FLocationPanel.Parent := Self;
   FLocationPanel.Visible := False;
   FLocationPanel.Init;
   FLocationPanel.OnLocationChanged := OnLocationChanged;
@@ -169,11 +169,29 @@ begin
 end;
 
 procedure TMainForm.acChoiceLocationExecute(Sender: TObject);
+var
+  Height: Single;
+  Width: Single;
+  OffsetX: Single;
 begin
-  FLocationPanel.Align := TAlignLayout.Center;
-  FLocationPanel.Height := FLocationPanel.MaxHeight;
-  FLocationPanel.Width := FLocationPanel.MaxWidth;
-  FLocationPanel.Visible := True;
+
+  OffsetX := MapControlLayout.Position.X + MapControlLayout.Width;
+  Height := Self.Height;
+  Width := Self.Width - OffsetX - 40;
+
+  if Width < FLocationPanel.MaxWidth then
+    FLocationPanel.Width := Width
+  else
+    FLocationPanel.Width := FLocationPanel.MaxWidth;
+
+  if Height < FLocationPanel.MaxHeight then
+    FLocationPanel.Height := Height
+  else
+    FLocationPanel.Height := FLocationPanel.MaxHeight;
+
+  FLocationPanel.Position.X := (Width / 2) - (FLocationPanel.Width / 2) + OffsetX + 20;
+  FLocationPanel.Position.Y := (Height / 2) - (FLocationPanel.Height / 2);
+  FLocationPanel.Visible := not FLocationPanel.Visible;
 end;
 
 procedure TMainForm.MapBackgroundMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);

@@ -12,6 +12,7 @@ type
 
   TLocationPanel = class(TFrame)
     MainContainer: THorzScrollBox;
+    StyleBook1: TStyleBook;
     Grid: TGridLayout;
   private
     FItems: TList<TEntity>;
@@ -49,6 +50,8 @@ uses
 
 constructor TLocationPanel.Create(AOwner: TComponent);
 const
+  ItemHeight = 200;
+  ItemWidth = 200;
   BackgroundColor = $001C1612;
 begin
   inherited;
@@ -58,6 +61,9 @@ begin
 
   FItems := TList<TEntity>.Create;
   FOnLocationChanged := nil;
+
+  Grid.ItemHeight := ItemHeight;
+  Grid.ItemWidth := ItemWidth;
 end;
 
 destructor TLocationPanel.Destroy;
@@ -102,9 +108,6 @@ begin
 end;
 
 procedure TLocationPanel.Init;
-const
-  ItemHeight = 200;
-  ItemWidth = 200;
 var
   Image: TImage;
   i: Integer;
@@ -114,8 +117,8 @@ begin
   for i := 0 to Count - 1 do begin
     Image := TImage.Create(Self);
     Image.Parent := Grid;
-    Image.Height := 200;
-    Image.Width := 200;
+    Image.Height := Grid.ItemHeight;
+    Image.Width := Grid.ItemWidth;
     Image.Margins.Left := 5;
     Image.Margins.Top := 5;
     Image.Margins.Right := 5;
@@ -126,8 +129,8 @@ begin
     Image.OnClick := OnLocationClick;
   end;
 
-  FMaxWidth := (ItemWidth + 10) * ColumnCount;
-  FMaxHeight := (ItemHeight + 10) * RowCount;
+  FMaxWidth := Trunc(Grid.ItemWidth + 10) * ColumnCount + 20;
+  FMaxHeight := Trunc(Grid.ItemHeight + 10) * RowCount + 20;
 
   Grid.Position.X := 0;
   Grid.Position.Y := 0;

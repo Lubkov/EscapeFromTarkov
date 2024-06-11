@@ -3,7 +3,6 @@ object LocationPanel: TLocationPanel
   Size.Height = 272.000000000000000000
   Size.PlatformDefault = False
   object MainContainer: THorzScrollBox
-    Align = Client
     Size.Width = 540.000000000000000000
     Size.Height = 272.000000000000000000
     Size.PlatformDefault = False
@@ -11,13 +10,27 @@ object LocationPanel: TLocationPanel
     Viewport.Width = 540.000000000000000000
     Viewport.Height = 272.000000000000000000
     object Grid: TGridLayout
-      ItemHeight = 210.000000000000000000
-      ItemWidth = 210.000000000000000000
+      ItemHeight = 200.000000000000000000
+      ItemWidth = 200.000000000000000000
       Orientation = Horizontal
       Size.Width = 540.000000000000000000
       Size.Height = 272.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 0
     end
+  end
+  object StyleBook1: TStyleBook
+    Styles = <
+      item
+        ResourcesBin = {
+          464D585F5354594C4520322E350106124D61696E436F6E7461696E6572537479
+          6C6503970000545046300A5452656374616E676C6500095374796C654E616D65
+          06124D61696E436F6E7461696E65725374796C6505416C69676E070643656E74
+          65720A46696C6C2E436F6C6F7207097846463730463635420A53697A652E5769
+          6474680500000000000000C804400B53697A652E486569676874050000000000
+          0000C804401453697A652E506C6174666F726D44656661756C74080000}
+      end>
+    Left = 256
+    Top = 120
   end
 end

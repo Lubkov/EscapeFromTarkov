@@ -28,8 +28,8 @@ object MainForm: TMainForm
         item
         end>
       Cursor = crHandPoint
-      Size.Width = 1020.000000000000000000
-      Size.Height = 672.000000000000000000
+      Size.Width = 100.000000000000000000
+      Size.Height = 100.000000000000000000
       Size.PlatformDefault = False
       OnMouseDown = MapBackgroundMouseDown
       OnMouseMove = MapBackgroundMouseMove
