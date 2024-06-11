@@ -15,6 +15,8 @@ type
     Grid: TGridLayout;
   private
     FItems: TList<TEntity>;
+    FMaxHeight: Integer;
+    FMaxWidth: Integer;
     FOnLocationChanged: TLocationChangedEvent;
 
     function GetCount: Integer;
@@ -33,6 +35,8 @@ type
     property ColumnCount: Integer read GetColumnCount;
     property RowCount: Integer read GetRowCount;
     property Items[Index: Integer]: TMap read GetItem;
+    property MaxHeight: Integer read FMaxHeight;
+    property MaxWidth: Integer read FMaxWidth;
     property OnLocationChanged: TLocationChangedEvent read FOnLocationChanged write FOnLocationChanged;
   end;
 
@@ -122,10 +126,13 @@ begin
     Image.OnClick := OnLocationClick;
   end;
 
+  FMaxWidth := (ItemWidth + 10) * ColumnCount;
+  FMaxHeight := (ItemHeight + 10) * RowCount;
+
   Grid.Position.X := 0;
   Grid.Position.Y := 0;
-  Grid.Width := (ItemWidth + 10) * ColumnCount;
-  Grid.Height := (ItemHeight + 10) * RowCount;
+  Grid.Width := FMaxWidth;
+  Grid.Height := FMaxHeight;
 end;
 
 procedure TLocationPanel.OnLocationClick(Sender: TObject);

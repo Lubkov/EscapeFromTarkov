@@ -170,6 +170,9 @@ end;
 
 procedure TMainForm.acChoiceLocationExecute(Sender: TObject);
 begin
+  FLocationPanel.Align := TAlignLayout.Center;
+  FLocationPanel.Height := FLocationPanel.MaxHeight;
+  FLocationPanel.Width := FLocationPanel.MaxWidth;
   FLocationPanel.Visible := True;
 end;
 
