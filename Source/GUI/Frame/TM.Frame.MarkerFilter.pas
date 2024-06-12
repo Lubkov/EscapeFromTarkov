@@ -1,4 +1,4 @@
-unit TM.Frame.MarkerFilter;
+﻿unit TM.Frame.MarkerFilter;
 
 interface
 
@@ -9,26 +9,26 @@ uses
   FMX.ListBox, ME.DB.Map, ME.DB.Marker, ME.DB.Quest, ME.MarkerFilter;
 
 type
-  TMarkerFilterPanel = class(TFrame)
+  TMarkerFilterList = class(TFrame)
     ImageList24: TImageList;
-    laTitle: TLabel;
+    laExtractionGroup: TLabel;
     buPMCExtraction: TSpeedButton;
     buScavExtraction: TSpeedButton;
     buCoopExtraction: TSpeedButton;
-    buClose: TButton;
     StyleBook: TStyleBook;
-    MainContainer: TPanel;
     paPMCExtraction: TLayout;
     paScavExtraction: TLayout;
     paCoopExtraction: TLayout;
     QuestGrid: TGridLayout;
-    Label1: TLabel;
+    laQuestGroup: TLabel;
     VertScrollBox1: TVertScrollBox;
-    procedure buCloseClick(Sender: TObject);
+    SpeedButton1: TSpeedButton;
+    procedure SpeedButton1Click(Sender: TObject);
   private
     FMarkerFilter: TMarkerFilter;
     FMap: TMap;
     FQuests: TList<TSpeedButton>;
+    FOnClose: TNotifyEvent;
 
     procedure ClearQuests;
     procedure OnMapChanged(Sender: TObject);
@@ -39,13 +39,15 @@ type
     destructor Destroy; override;
 
     procedure Init(const MarkerFilter: TMarkerFilter);
+
+    property OnClose: TNotifyEvent read FOnClose write FOnClose;
   end;
 
 implementation
 
 {$R *.fmx}
 
-constructor TMarkerFilterPanel.Create(AOwner: TComponent);
+constructor TMarkerFilterList.Create(AOwner: TComponent);
 begin
   inherited;
 
@@ -60,17 +62,24 @@ begin
   buCoopExtraction.OnClick := OnExtractionButtonClick;
 
   FQuests := TList<TSpeedButton>.Create;
+
+  laExtractionGroup.FontColor := $FFFFFFFF;
+  laQuestGroup.FontColor := $FFFFFFFF;
+
+  FOnClose := nil;
 end;
 
-destructor TMarkerFilterPanel.Destroy;
+destructor TMarkerFilterList.Destroy;
 begin
+  FOnClose := nil;
+
   ClearQuests;
   FQuests.Free;
 
   inherited;
 end;
 
-procedure TMarkerFilterPanel.ClearQuests;
+procedure TMarkerFilterList.ClearQuests;
 var
   Items: TSpeedButton;
 begin
@@ -80,18 +89,13 @@ begin
   FQuests.Clear;
 end;
 
-procedure TMarkerFilterPanel.Init(const MarkerFilter: TMarkerFilter);
+procedure TMarkerFilterList.Init(const MarkerFilter: TMarkerFilter);
 begin
   FMarkerFilter := MarkerFilter;
   FMarkerFilter.OnMapChanged := OnMapChanged;
 end;
 
-procedure TMarkerFilterPanel.buCloseClick(Sender: TObject);
-begin
-  Self.Visible := False;
-end;
-
-procedure TMarkerFilterPanel.OnMapChanged(Sender: TObject);
+procedure TMarkerFilterList.OnMapChanged(Sender: TObject);
 var
   Idx: Integer;
   Quest: TQuest;
@@ -116,9 +120,9 @@ begin
         Inc(CoopCount);
     end;
 
-  buPMCExtraction.Text := 'Выход ЧВК (' + PMCCount.ToString + ')';
-  buScavExtraction.Text := 'Выход дикого (' + ScavCount.ToString + ')';
-  buCoopExtraction.Text := 'Совм. выход (' + CoopCount.ToString + ')';
+  buPMCExtraction.Text := TMarker.KindToStr(TMarkerKind.PMCExtraction) + ' (' + PMCCount.ToString + ')';
+  buScavExtraction.Text := TMarker.KindToStr(TMarkerKind.ScavExtraction) + ' (' + ScavCount.ToString + ')';
+  buCoopExtraction.Text := TMarker.KindToStr(TMarkerKind.CoopExtraction) + ' (' + CoopCount.ToString + ')';
 
   QuestGrid.BeginUpdate;
   try
@@ -159,7 +163,7 @@ begin
   end;
 end;
 
-procedure TMarkerFilterPanel.OnExtractionButtonClick(Sender: TObject);
+procedure TMarkerFilterList.OnExtractionButtonClick(Sender: TObject);
 var
   Item: TSpeedButton;
 begin
@@ -171,7 +175,7 @@ begin
     FMarkerFilter.DisableGroup(TMarkerKind(Item.Tag));
 end;
 
-procedure TMarkerFilterPanel.OnQuestButtonClick(Sender: TObject);
+procedure TMarkerFilterList.OnQuestButtonClick(Sender: TObject);
 var
   Item: TSpeedButton;
 begin
@@ -181,6 +185,12 @@ begin
     FMarkerFilter.EnableQuest(Item.Tag)
   else
     FMarkerFilter.DisablQuest(Item.Tag);
+end;
+
+procedure TMarkerFilterList.SpeedButton1Click(Sender: TObject);
+begin
+  if Assigned(FOnClose) then
+    FOnClose(Self);
 end;
 
 end.

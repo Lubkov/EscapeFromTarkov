@@ -234,7 +234,7 @@
         </DCCReference>
         <DCCReference Include="Source\Entity\ME.Point.pas"/>
         <DCCReference Include="Source\GUI\Frame\TM.Frame.MarkerFilter.pas">
-            <Form>MarkerFilterPanel</Form>
+            <Form>MarkerFilterList</Form>
             <FormType>fmx</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>

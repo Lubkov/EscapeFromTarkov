@@ -31,6 +31,7 @@ type
     acMarkerFilterOpen: TAction;
     buChoiceLocation: TSpeedButton;
     LocationPanel: TPanel;
+    MarkerFilterPanel: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acFullScreenExecute(Sender: TObject);
@@ -50,11 +51,12 @@ type
     FMapWrapper: TMapWrapper;
     FLocationGrid: TLocationGrid;
     FMousePosition: TMousePosition;
-    FMarkerFilterPanel: TMarkerFilterPanel;
+    FMarkerFilterList: TMarkerFilterList;
 
     procedure SetFullScreenMode(const Value: Boolean);
     procedure OnMapChange(Bitmap: TBitmap);
     procedure OnLocationChanged(const Value: TMap);
+    procedure MarkerFilterListOnClose(Sender: TObject);
   public
   end;
 
@@ -83,20 +85,20 @@ begin
   AppService.LoadParams;
   AppService.Connect;
 
+  LocationPanel.Visible := False;
+  MarkerFilterPanel.Visible := False;
+
   FFormWrapper := TFormWrapper.Create(Self);
   FMapWrapper := TMapWrapper.Create(AppParams.SreenshotPath);
   FMapWrapper.TrackLocation := AppParams.TrackLocation;
   FMapWrapper.Images := MapTagImages;
   FMapWrapper.OnMapChange := OnMapChange;
 
-  FMarkerFilterPanel := TMarkerFilterPanel.Create(Self);
-  FMarkerFilterPanel.Parent := Self;
-  FMarkerFilterPanel.Position.X := MapControlLayout.Position.X + MapControlLayout.Width + 10;
-  FMarkerFilterPanel.Position.Y := MapControlLayout.Position.Y;
-  FMarkerFilterPanel.Visible := False;
-  FMarkerFilterPanel.Init(FMapWrapper.MarkerFilter);
-
-  LocationPanel.Visible := False;
+  FMarkerFilterList := TMarkerFilterList.Create(Self);
+  FMarkerFilterList.Parent := MarkerFilterPanel;
+  FMarkerFilterList.Align := TAlignLayout.Client;
+  FMarkerFilterList.Init(FMapWrapper.MarkerFilter);
+  FMarkerFilterList.OnClose := MarkerFilterListOnClose;
 
   FLocationGrid := TLocationGrid.Create(Self);
   FLocationGrid.Parent := LocationPanel;
@@ -127,6 +129,7 @@ end;
 procedure TMainForm.FormResize(Sender: TObject);
 begin
   LocationPanel.Visible := False;
+  MarkerFilterPanel.Visible := False;
 end;
 
 procedure TMainForm.acFullScreenExecute(Sender: TObject);
@@ -169,6 +172,11 @@ begin
   FMapWrapper.Start;
 end;
 
+procedure TMainForm.MarkerFilterListOnClose(Sender: TObject);
+begin
+  MarkerFilterPanel.Visible := False;
+end;
+
 procedure TMainForm.acZoomInExecute(Sender: TObject);
 begin
   FMapWrapper.ZoomIn;
@@ -185,6 +193,7 @@ var
   Width: Single;
   OffsetX: Single;
 begin
+  MarkerFilterPanel.Visible := False;
 
   OffsetX := MapControlLayout.Position.X + MapControlLayout.Width;
   Height := Self.ClientHeight;
@@ -207,6 +216,9 @@ end;
 
 procedure TMainForm.MapBackgroundMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
 begin
+  LocationPanel.Visible := False;
+  MarkerFilterPanel.Visible := False;
+
   FMousePosition.Down := True;
   FMousePosition.X := X;
   FMousePosition.Y := Y;
@@ -256,7 +268,14 @@ end;
 
 procedure TMainForm.acMarkerFilterOpenExecute(Sender: TObject);
 begin
-  FMarkerFilterPanel.Visible := not FMarkerFilterPanel.Visible;
+  LocationPanel.Visible := False;
+
+  MarkerFilterPanel.Position.X := MapControlLayout.Position.X + MapControlLayout.Width + 10;
+  MarkerFilterPanel.Position.Y := MapControlLayout.Position.Y;
+  MarkerFilterPanel.Height := 550;
+  MarkerFilterPanel.Width := 340;
+
+  MarkerFilterPanel.Visible := not MarkerFilterPanel.Visible;
 end;
 
 end.

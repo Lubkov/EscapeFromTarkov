@@ -29,7 +29,7 @@ uses
   TM.Map.Wrapper in 'Source\GUI\TM.Map.Wrapper.pas',
   TM.Form.Location in 'Source\GUI\Form\TM.Form.Location.pas' {LocationForm},
   ME.Point in 'Source\Entity\ME.Point.pas',
-  TM.Frame.MarkerFilter in 'Source\GUI\Frame\TM.Frame.MarkerFilter.pas' {MarkerFilterPanel: TFrame},
+  TM.Frame.MarkerFilter in 'Source\GUI\Frame\TM.Frame.MarkerFilter.pas' {MarkerFilterList: TFrame},
   ME.MarkerFilter in 'Source\Entity\ME.MarkerFilter.pas',
   App.DB.Connection in 'Source\Common\App.DB.Connection.pas',
   App.SQLite.Connection in 'Source\Common\App.SQLite.Connection.pas',
