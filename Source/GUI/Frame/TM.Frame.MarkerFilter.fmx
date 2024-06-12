@@ -182,7 +182,7 @@ object MarkerFilterList: TMarkerFilterList
     Size.PlatformDefault = False
     TextSettings.Font.Family = 'Tahoma'
     TextSettings.Font.Size = 16.000000000000000000
-    Text = #1050#1074#1077#1089#1090#1099
+    Text = #1050#1074#1077#1089#1090#1099':'
     TabOrder = 9
   end
   object QuestContainer: TVertScrollBox
