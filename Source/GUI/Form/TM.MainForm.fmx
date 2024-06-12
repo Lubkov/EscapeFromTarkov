@@ -32,6 +32,7 @@ object MainForm: TMainForm
       Size.Width = 100.000000000000000000
       Size.Height = 100.000000000000000000
       Size.PlatformDefault = False
+      OnDblClick = MapBackgroundDblClick
       OnMouseDown = MapBackgroundMouseDown
       OnMouseMove = MapBackgroundMouseMove
       OnMouseUp = MapBackgroundMouseUp

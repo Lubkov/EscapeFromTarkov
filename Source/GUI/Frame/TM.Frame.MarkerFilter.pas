@@ -21,13 +21,14 @@ type
     paCoopExtraction: TLayout;
     QuestGrid: TGridLayout;
     laQuestGroup: TLabel;
-    VertScrollBox1: TVertScrollBox;
+    QuestContainer: TVertScrollBox;
     SpeedButton1: TSpeedButton;
     procedure SpeedButton1Click(Sender: TObject);
   private
     FMarkerFilter: TMarkerFilter;
     FMap: TMap;
     FQuests: TList<TSpeedButton>;
+    FMaxHeight: Integer;
     FOnClose: TNotifyEvent;
 
     procedure ClearQuests;
@@ -40,6 +41,7 @@ type
 
     procedure Init(const MarkerFilter: TMarkerFilter);
 
+    property MaxHeight: Integer read FMaxHeight;
     property OnClose: TNotifyEvent read FOnClose write FOnClose;
   end;
 
@@ -66,6 +68,7 @@ begin
   laExtractionGroup.FontColor := $FFFFFFFF;
   laQuestGroup.FontColor := $FFFFFFFF;
 
+  FMaxHeight := 0;
   FOnClose := nil;
 end;
 
@@ -156,11 +159,14 @@ begin
 
     QuestGrid.Position.X := 0;
     QuestGrid.Position.Y := 0;
-    QuestGrid.Width := VertScrollBox1.Width;
+    QuestGrid.Width := QuestContainer.Width;
     QuestGrid.Height := QuestGrid.ItemHeight * FMap.Quests.Count;
   finally
     QuestGrid.EndUpdate;
   end;
+
+  FMaxHeight := Trunc(QuestContainer.Position.Y + QuestGrid.Height) + 10;
+  Self.Height := MaxHeight;
 end;
 
 procedure TMarkerFilterList.OnExtractionButtonClick(Sender: TObject);

@@ -46,6 +46,7 @@ type
     procedure acCentreMapExecute(Sender: TObject);
     procedure acMarkerFilterOpenExecute(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure MapBackgroundDblClick(Sender: TObject);
   private
     FFormWrapper: TFormWrapper;
     FMapWrapper: TMapWrapper;
@@ -214,6 +215,11 @@ begin
   LocationPanel.Visible := not LocationPanel.Visible;
 end;
 
+procedure TMainForm.MapBackgroundDblClick(Sender: TObject);
+begin
+  SetFullScreenMode(not FFormWrapper.FullScreen);
+end;
+
 procedure TMainForm.MapBackgroundMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
 begin
   LocationPanel.Visible := False;
@@ -267,6 +273,8 @@ begin
 end;
 
 procedure TMainForm.acMarkerFilterOpenExecute(Sender: TObject);
+var
+  Height: Single;
 begin
   LocationPanel.Visible := False;
 
@@ -274,6 +282,12 @@ begin
   MarkerFilterPanel.Position.Y := MapControlLayout.Position.Y;
   MarkerFilterPanel.Height := 550;
   MarkerFilterPanel.Width := 340;
+
+  Height :=  Self.ClientHeight - MarkerFilterPanel.Position.Y - 20;
+  if Height < FMarkerFilterList.MaxHeight then
+    MarkerFilterPanel.Height := Height
+  else
+    MarkerFilterPanel.Height := FMarkerFilterList.MaxHeight;
 
   MarkerFilterPanel.Visible := not MarkerFilterPanel.Visible;
 end;
