@@ -30,7 +30,7 @@ object MainForm: TMainForm
       Size.Width = 80.000000000000000000
       Size.Height = 35.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 2
+      TabOrder = 3
       Text = 'Load'
       TextSettings.Trimming = None
       OnClick = Button1Click
@@ -46,10 +46,26 @@ object MainForm: TMainForm
       Size.Width = 80.000000000000000000
       Size.Height = 35.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 1
+      TabOrder = 2
       Text = 'Expot'
       TextSettings.Trimming = None
       OnClick = buExpotClick
+    end
+    object buImport: TButton
+      Align = Left
+      Margins.Left = 10.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.X = 200.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 80.000000000000000000
+      Size.Height = 35.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Import'
+      TextSettings.Trimming = None
+      OnClick = buImportClick
     end
   end
 end

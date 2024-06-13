@@ -135,6 +135,9 @@ begin
       Root.Free;
     end;
   finally
+    for i := 0 to Source.Count - 1 do
+      Source[i].Free;
+
     Source.Free;
   end;
 end;

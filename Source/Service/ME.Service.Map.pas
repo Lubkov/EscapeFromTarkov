@@ -3,7 +3,8 @@ unit ME.Service.Map;
 interface
 
 uses
-  System.SysUtils, System.Classes, Data.DB, ME.DB.Entity, ME.DB.DAO, ME.DB.Service,
+  System.SysUtils, System.Classes, Generics.Collections, System.Rtti, System.TypInfo,
+  System.SysConst, System.JSON, Data.DB, ME.DB.Entity, ME.DB.DAO, ME.DB.Service,
   ME.DB.Map, ME.DB.Layer, ME.DB.Marker, ME.DAO.Map, ME.DB.Quest;
 
 type
@@ -12,6 +13,8 @@ type
     function GetMapDAO: TMapDAO;
   protected
     function GetDAOClass: TDAOClass; override;
+
+    procedure LoadExtractions(const Value: TJSONValue; const Items: TList<TMarker>);
   public
     function GetAt(ID: Integer; const Entity: TEntity): Boolean; override;
     procedure Insert(const Entity: TEntity); override;
@@ -21,6 +24,8 @@ type
     procedure LoadLayers(const Map: TMap; LoadPicture: Boolean);
     procedure LoadMarkers(const Map: TMap);
     procedure LoadQuests(const Map: TMap);
+
+    procedure LoadFromJSON(const Data: string; const Items: TList<TMap>);
 
     property MapDAO: TMapDAO read GetMapDAO;
   end;
@@ -134,6 +139,66 @@ procedure TMapService.LoadQuests(const Map: TMap);
 begin
   Map.ClearQuestList;
   QuestService.LoadQuests(Map.ID, Map.Quests);
+end;
+
+procedure TMapService.LoadExtractions(const Value: TJSONValue; const Items: TList<TMarker>);
+var
+  List: TJSONArray;
+  Item: TJSONValue;
+  Marker: TMarker;
+  i: Integer;
+begin
+  if not (Value is TJSONArray) then
+    Exit;
+
+  List := Value as TJSONArray;
+  for i := 0 to List.Count - 1 do begin
+    Item := List.Items[i] as TJSONObject;
+
+    Marker := TMarker.Create;
+    try
+      Marker.Name := Item.GetValue<string>('name');
+      Marker.Kind := TRttiEnumerationType.GetValue<TMarkerKind>(Item.GetValue<string>('kind'));
+      Marker.Left := Item.GetValue<Integer>('left');
+      Marker.Top := Item.GetValue<Integer>('top');
+    finally
+      Items.Add(Marker);
+    end;
+  end;
+end;
+
+procedure TMapService.LoadFromJSON(const Data: string; const Items: TList<TMap>);
+var
+  Root: TJSONArray;
+  JSONObject: TJSONValue;
+  i: Integer;
+  Map: TMap;
+begin
+  JSONObject := TJSONObject.ParseJSONValue(Data);
+  if not (JSONObject is TJSONArray) then
+    Exit;
+
+  Root := JSONObject as TJSONArray;
+  try
+    for i := 0 to Root.Count - 1 do begin
+      JSONObject := Root.Items[i] as TJSONObject;
+
+      Map := TMap.Create;
+      try
+        Map.Name := JSONObject.GetValue<string>('name');
+        Map.Left := JSONObject.GetValue<Integer>('left');
+        Map.Top := JSONObject.GetValue<Integer>('top');
+        Map.Right := JSONObject.GetValue<Integer>('right');
+        Map.Bottom := JSONObject.GetValue<Integer>('bottom');
+
+        LoadExtractions(JSONObject.FindValue('markers'), Map.Tags);
+      finally
+        Items.Add(Map);
+      end;
+    end;
+  finally
+    Root.Free;
+  end;
 end;
 
 end.

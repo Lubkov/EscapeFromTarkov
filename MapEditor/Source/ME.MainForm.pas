@@ -4,20 +4,22 @@ interface
 
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
-  System.IOUtils, FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
-  FMX.Controls.Presentation, FMX.StdCtrls, System.ImageList, FMX.ImgList,
-  FMX.Objects, ME.Frame.Map, ME.Frame.Layer, ME.DB.Map, ME.DB.Quest,
-  ME.DB.Layer, LocalMap;
+  System.IOUtils, Generics.Collections, FMX.Types, FMX.Controls, FMX.Forms,
+  FMX.Graphics, FMX.Dialogs, FMX.Controls.Presentation, FMX.StdCtrls,
+  System.ImageList, FMX.ImgList, FMX.Objects, ME.Frame.Map, ME.Frame.Layer,
+  ME.DB.Map, ME.DB.Quest, ME.DB.Layer, LocalMap;
 
 type
   TMainForm = class(TForm)
     Panel1: TPanel;
     Button1: TButton;
     buExpot: TButton;
+    buImport: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure buExpotClick(Sender: TObject);
+    procedure buImportClick(Sender: TObject);
   private
     FMapPanel: TfrMap;
 
@@ -178,6 +180,32 @@ begin
     ExportService.ExportToJSON(System.IOUtils.TPath.Combine(AppParams.Path, 'data.json'));
   finally
     ExportService.Free;
+  end;
+
+  ShowMessage('Done');
+end;
+
+procedure TMainForm.buImportClick(Sender: TObject);
+var
+  Data: TStrings;
+  Items: TList<TMap>;
+  i: Integer;
+begin
+  Data := TStringList.Create;
+  try
+    Data.LoadFromFile(System.IOUtils.TPath.Combine(AppParams.Path, 'data.json'));
+
+    Items := TList<TMap>.Create;
+    try
+      MapService.LoadFromJSON(Data.Text, Items);
+    finally
+      for i := 0 to Items.Count - 1 do
+        Items[i].Free;
+
+      Items.Free;
+    end;
+  finally
+    Data.Free;
   end;
 
   ShowMessage('Done');
