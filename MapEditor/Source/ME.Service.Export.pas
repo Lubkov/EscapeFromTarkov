@@ -83,22 +83,34 @@ procedure TExportService.ExportToJSON(const FileName: string);
     Root.AddPair('quests', JSONItems);
   end;
 
+  procedure SaveToFile(Data: TJSONArray);
+  var
+    List: TStrings;
+  begin
+    List := TStringList.Create;
+    try
+      List.Add(Data.ToJSON);
+      List.SaveToFile(FileName);
+    finally
+      List.Free;
+    end;
+  end;
+
 var
-  Data: TStrings;
-  Items: TList<TEntity>;
+  Source: TList<TEntity>;
   i: Integer;
   Map: TMap;
   Root: TJSONArray;
   JSONObject: TJSONObject;
 begin
-  Items := TList<TEntity>.Create;
+  Source := TList<TEntity>.Create;
   try
-    MapService.GetAll(Items);
+    MapService.GetAll(Source);
 
     Root := TJSONArray.Create;
     try
-      for i := 0 to Items.Count - 1 do begin
-        Map := TMap(Items[i]);
+      for i := 0 to Source.Count - 1 do begin
+        Map := TMap(Source[i]);
 
         MapService.LoadLayers(Map, False);
         MapService.LoadMarkers(Map);
@@ -118,18 +130,12 @@ begin
         Root.Add(JSONObject);
       end;
 
-      Data := TStringList.Create;
-      try
-        Data.Add(Root.ToJSON);
-        Data.SaveToFile(FileName);
-      finally
-        Data.Free;
-      end;
+      SaveToFile(Root);
     finally
       Root.Free;
     end;
   finally
-    Items.Free;
+    Source.Free;
   end;
 end;
 
