@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
+  System.IOUtils, FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   FMX.Controls.Presentation, FMX.StdCtrls, System.ImageList, FMX.ImgList,
   FMX.Objects, ME.Frame.Map, ME.Frame.Layer, ME.DB.Map, ME.DB.Quest,
   ME.DB.Layer, LocalMap;
@@ -13,9 +13,11 @@ type
   TMainForm = class(TForm)
     Panel1: TPanel;
     Button1: TButton;
+    buExpot: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure buExpotClick(Sender: TObject);
   private
     FMapPanel: TfrMap;
 
@@ -30,8 +32,8 @@ var
 implementation
 
 uses
-  App.Service, ME.Service.Layer, ME.Service.Map, ME.DB.Marker,
-  ME.Service.Marker, ME.Service.Quest;
+  App.Constants, App.Service, ME.Service.Layer, ME.Service.Map, ME.DB.Marker,
+  ME.Service.Marker, ME.Service.Quest, ME.Service.Export;
 
 {$R *.fmx}
 
@@ -165,6 +167,18 @@ begin
   ImportLocalMap(ReserveMap);
 
   ShowMessage('Success');
+end;
+
+procedure TMainForm.buExpotClick(Sender: TObject);
+var
+  ExportService: TExportService;
+begin
+  ExportService := TExportService.Create;
+  try
+    ExportService.ExportToJSON(System.IOUtils.TPath.Combine(AppParams.Path, 'data.json'));
+  finally
+    ExportService.Free;
+  end;
 end;
 
 end.

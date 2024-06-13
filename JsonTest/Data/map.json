@@ -1,0 +1,39 @@
+﻿[
+  { 
+    "id": "1",  
+    "name": "Woods", 
+    "left": 500,
+    "top": -920,
+    "right": -700,
+    "bottom": 480,
+    "layers": [{"level": 0, "name": "main"}],
+    "markers": [{"name": "Окраины", "Kind": "PMCExtraction", "left": "350", "top": "350"},
+                {"name": "ЗБ-014", "Kind": "PMCExtraction", "left": "434", "top": "67"},
+                {"name": "А-Выход на мосту (Платный)", "Kind": "PMCExtraction", "left": "-485", "top": "-510"},
+                {"name": "Окраины", "Kind": "ScavExtraction", "left": "350", "top": "350"},
+                {"name": "Изба диких", "Kind": "ScavExtraction", "left": "410", "top": "240"},
+                {"name": "Убежище мертвеца", "Kind": "ScavExtraction", "left": "186", "top": "252"},
+                {"name": "Лодка", "Kind": "ScavExtraction", "left": "184", "top": "214"},
+                {"name": "Ворота завода (Совм)", "Kind": "CoopExtraction", "left": "-362", "top": "348"}],
+    "quests": [{"name": "Устойчивый сигнал", "markers": [{"name": "", "Kind": "Quest", "left": "251", "top": "292"},
+                                                         {"name": "", "Kind": "Quest", "left": "401", "top": "-609"},
+                                                         {"name": "", "Kind": "Quest", "left": "-78", "top": "-543"},
+                                                         {"name": "", "Kind": "Quest", "left": "-210", "top": "-277"},
+                                                         {"name": "", "Kind": "Quest", "left": "-447", "top": "251"}]
+                                                         },
+               {"name": "Лендлиз - Часть 1", "markers": [{"name": "", "Kind": "Quest", "left": "231", "top": "-70"},
+                                                         {"name": "", "Kind": "Quest", "left": "56", "top": "-52"}]}
+              ]
+  },
+  { 
+    "id": "2",  
+    "name": "Customs", 
+    "left": "800",
+    "top": "-300",
+    "right": "-400",
+    "bottom": "300",
+    "pmc_extraction": [],
+    "scav_extraction": [],
+    "shared_extraction": []
+  }
+]
