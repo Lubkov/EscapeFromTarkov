@@ -179,6 +179,8 @@ begin
   finally
     ExportService.Free;
   end;
+
+  ShowMessage('Done');
 end;
 
 end.
