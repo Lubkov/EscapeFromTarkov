@@ -95,28 +95,6 @@ begin
   try
     MapService.GetAll(Items);
 
-//      Data.Add('[');
-//      for i := 0 to Items.Count - 1 do begin
-//        Map := TMap(Items[i]);
-//
-//        Data.Add('  {');
-//        Data.Add('    "name": "' + Map.Name + '",');
-//        Data.Add('    "left": ' + Map.Left.ToString + ',');
-//        Data.Add('    "top": ' + Map.Top.ToString + ',');
-//        Data.Add('    "right": ' + Map.Right.ToString + ',');
-//        Data.Add('    "bottom": ' + Map.Bottom.ToString + ',');
-//        Data.Add('    "layers": [{"level": 0, "name": "main"}],');
-//        Data.Add('    "markers": [');
-//        ExportMarkers(Data, Map.Tags);
-//        Data.Add('                ],');
-//        Data.Add('    "quests": []');
-//
-//
-//
-//        Data.Add('  },');
-//      end;
-//      Data.Add(']');
-
     Root := TJSONArray.Create;
     try
       for i := 0 to Items.Count - 1 do begin
