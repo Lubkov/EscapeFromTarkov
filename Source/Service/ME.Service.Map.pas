@@ -14,7 +14,9 @@ type
   protected
     function GetDAOClass: TDAOClass; override;
 
-    procedure LoadExtractions(const Value: TJSONValue; const Items: TList<TMarker>);
+    procedure LoadLayerFromJSON(const Value: TJSONValue; const Items: TList<TLayer>);
+    procedure LoadMarkersFromJSON(const Value: TJSONValue; const Items: TList<TMarker>);
+    procedure LoadQuestsFromJSON(const Value: TJSONValue; const Items: TList<TQuest>);
   public
     function GetAt(ID: Integer; const Entity: TEntity): Boolean; override;
     procedure Insert(const Entity: TEntity); override;
@@ -141,7 +143,31 @@ begin
   QuestService.LoadQuests(Map.ID, Map.Quests);
 end;
 
-procedure TMapService.LoadExtractions(const Value: TJSONValue; const Items: TList<TMarker>);
+procedure TMapService.LoadLayerFromJSON(const Value: TJSONValue; const Items: TList<TLayer>);
+var
+  i: Integer;
+  List: TJSONArray;
+  Item: TJSONValue;
+  Layer: TLayer;
+begin
+  if not (Value is TJSONArray) then
+    Exit;
+
+  List := Value as TJSONArray;
+  for i := 0 to List.Count - 1 do begin
+    Item := List.Items[i] as TJSONObject;
+
+    Layer := TLayer.Create;
+    try
+      Layer.Level := Item.GetValue<Integer>('level');
+      Layer.Name := Item.GetValue<string>('name');
+    finally
+      Items.Add(Layer);
+    end;
+  end;
+end;
+
+procedure TMapService.LoadMarkersFromJSON(const Value: TJSONValue; const Items: TList<TMarker>);
 var
   List: TJSONArray;
   Item: TJSONValue;
@@ -163,6 +189,31 @@ begin
       Marker.Top := Item.GetValue<Integer>('top');
     finally
       Items.Add(Marker);
+    end;
+  end;
+end;
+
+procedure TMapService.LoadQuestsFromJSON(const Value: TJSONValue; const Items: TList<TQuest>);
+var
+  i: Integer;
+  List: TJSONArray;
+  Item: TJSONValue;
+  Quest: TQuest;
+begin
+  if not (Value is TJSONArray) then
+    Exit;
+
+  List := Value as TJSONArray;
+  for i := 0 to List.Count - 1 do begin
+    Item := List.Items[i] as TJSONObject;
+
+    Quest := TQuest.Create;
+    try
+      Quest.Name := Item.GetValue<string>('name');
+
+      LoadMarkersFromJSON(Item.FindValue('markers'), Quest.Markers);
+    finally
+      Items.Add(Quest);
     end;
   end;
 end;
@@ -191,7 +242,9 @@ begin
         Map.Right := JSONObject.GetValue<Integer>('right');
         Map.Bottom := JSONObject.GetValue<Integer>('bottom');
 
-        LoadExtractions(JSONObject.FindValue('markers'), Map.Tags);
+        LoadLayerFromJSON(JSONObject.FindValue('layers'), Map.Layers);
+        LoadMarkersFromJSON(JSONObject.FindValue('markers'), Map.Tags);
+        LoadQuestsFromJSON(JSONObject.FindValue('quests'), Map.Quests);
       finally
         Items.Add(Map);
       end;

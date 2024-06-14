@@ -11,7 +11,7 @@ type
   TExportService = class(TObject)
   private
   public
-    procedure ExportToJSON(const FileName: string);
+    function ExportToJSON: string;
   end;
 
 implementation
@@ -21,7 +21,7 @@ uses
 
 { TExportService }
 
-procedure TExportService.ExportToJSON(const FileName: string);
+function TExportService.ExportToJSON: string;
 
   procedure ExportLayers(Root: TJSONObject; Items: TList<TLayer>);
   var
@@ -33,7 +33,7 @@ procedure TExportService.ExportToJSON(const FileName: string);
     for Layer in Items do begin
       JSONObject := TJSONObject.Create;
       try
-        JSONObject.AddPair('level', Layer.Level);
+        JSONObject.AddPair('level', Layer.Level.ToString);
         JSONObject.AddPair('name', Layer.Name);
       finally
         JSONItems.Add(JSONObject);
@@ -54,8 +54,8 @@ procedure TExportService.ExportToJSON(const FileName: string);
       try
         JSONObject.AddPair('name', Marker.Name);
         JSONObject.AddPair('kind', TRttiEnumerationType.GetName<TMarkerKind>(Marker.Kind));
-        JSONObject.AddPair('left', Marker.Left);
-        JSONObject.AddPair('top', Marker.Top);
+        JSONObject.AddPair('left', Marker.Left.ToString);
+        JSONObject.AddPair('top', Marker.Top.ToString);
       finally
         JSONItems.Add(JSONObject);
       end;
@@ -83,19 +83,6 @@ procedure TExportService.ExportToJSON(const FileName: string);
     Root.AddPair('quests', JSONItems);
   end;
 
-  procedure SaveToFile(Data: TJSONArray);
-  var
-    List: TStrings;
-  begin
-    List := TStringList.Create;
-    try
-      List.Add(Data.ToJSON);
-      List.SaveToFile(FileName);
-    finally
-      List.Free;
-    end;
-  end;
-
 var
   Source: TList<TEntity>;
   i: Integer;
@@ -118,10 +105,10 @@ begin
 
         JSONObject := TJSONObject.Create;
         JSONObject.AddPair('name', Map.Name);
-        JSONObject.AddPair('left', Map.Left);
-        JSONObject.AddPair('top', Map.Top);
-        JSONObject.AddPair('right', Map.Right);
-        JSONObject.AddPair('bottom', Map.Bottom);
+        JSONObject.AddPair('left', Map.Left.ToString);
+        JSONObject.AddPair('top', Map.Top.ToString);
+        JSONObject.AddPair('right', Map.Right.ToString);
+        JSONObject.AddPair('bottom', Map.Bottom.ToString);
 
         ExportLayers(JSONObject, Map.Layers);
         ExportMarkers(JSONObject, Map.Tags);
@@ -130,7 +117,7 @@ begin
         Root.Add(JSONObject);
       end;
 
-      SaveToFile(Root);
+      Result := Root.ToJSON;
     finally
       Root.Free;
     end;
