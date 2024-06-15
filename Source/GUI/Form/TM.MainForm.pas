@@ -4,10 +4,11 @@ interface
 
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
-  Generics.Collections, FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
-  TM.Form.Wrapper, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts,
-  System.ImageList, FMX.ImgList, FMX.Objects, System.Actions, FMX.ActnList,
-  ME.DB.Entity, ME.DB.Map, TM.Map.Wrapper, TM.Frame.Location, TM.Frame.MarkerFilter;
+  System.IOUtils, Generics.Collections, FMX.Types, FMX.Controls, FMX.Forms,
+  FMX.Graphics, FMX.Dialogs, TM.Form.Wrapper, FMX.Controls.Presentation, FMX.StdCtrls,
+  FMX.Layouts, System.ImageList, FMX.ImgList, FMX.Objects, System.Actions, FMX.ActnList,
+  ME.DB.Entity, {ME.DB.Map,} TM.Map.Wrapper, TM.Frame.Location, TM.Frame.MarkerFilter,
+  Map.Data.Types;
 
 type
   TMainForm = class(TForm)
@@ -41,8 +42,7 @@ type
     procedure acChoiceLocationExecute(Sender: TObject);
     procedure MapBackgroundMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
     procedure MapBackgroundMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
-    procedure MapBackgroundMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Single);
+    procedure MapBackgroundMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
     procedure acCentreMapExecute(Sender: TObject);
     procedure acMarkerFilterOpenExecute(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -78,36 +78,58 @@ uses
 procedure TMainForm.FormCreate(Sender: TObject);
 const
   BackgroundColor = $FF0F0F0F;
+var
+  DataImport: TJSONDataImport;
+  FileName: string;
+  Data: TStrings;
+  Maps: TMapArray;
 begin
-  Self.Caption := '["Escape of Tarkov" position tracking]';
-  Self.Fill.Color := BackgroundColor;
-  Self.Fill.Kind := TBrushKind.Solid;
-
   AppService.LoadParams;
-  AppService.Connect;
 
-  LocationPanel.Visible := False;
-  MarkerFilterPanel.Visible := False;
+  DataImport := TJSONDataImport.Create;
+  try
+    Data := TStringList.Create;
+    try
+      FileName := System.IOUtils.TPath.Combine(AppParams.Path, 'data.json');
+      Data.LoadFromFile(FileName, TEncoding.UTF8);
+      DataImport.Load(Data.Text, Maps);
+    finally
+      Data.Free;
+    end;
+  finally
+    DataImport.Free;
+  end;
 
-  FFormWrapper := TFormWrapper.Create(Self);
-  FMapWrapper := TMapWrapper.Create(AppParams.SreenshotPath);
-  FMapWrapper.TrackLocation := AppParams.TrackLocation;
-  FMapWrapper.Images := MapTagImages;
-  FMapWrapper.OnMapChange := OnMapChange;
 
-  FMarkerFilterList := TMarkerFilterList.Create(Self);
-  FMarkerFilterList.Parent := MarkerFilterPanel;
-  FMarkerFilterList.Align := TAlignLayout.Client;
-  FMarkerFilterList.Init(FMapWrapper.MarkerFilter);
-  FMarkerFilterList.OnClose := MarkerFilterListOnClose;
-
-  FLocationGrid := TLocationGrid.Create(Self);
-  FLocationGrid.Parent := LocationPanel;
-  FLocationGrid.Align := TAlignLayout.Client;
-  FLocationGrid.Init;
-  FLocationGrid.OnLocationChanged := OnLocationChanged;
-
-  FMousePosition := TMousePosition.Create(0, 0);
+//  Self.Caption := '["Escape of Tarkov" position tracking]';
+//  Self.Fill.Color := BackgroundColor;
+//  Self.Fill.Kind := TBrushKind.Solid;
+//
+//  AppService.LoadParams;
+//  AppService.Connect;
+//
+//  LocationPanel.Visible := False;
+//  MarkerFilterPanel.Visible := False;
+//
+//  FFormWrapper := TFormWrapper.Create(Self);
+//  FMapWrapper := TMapWrapper.Create(AppParams.SreenshotPath);
+//  FMapWrapper.TrackLocation := AppParams.TrackLocation;
+//  FMapWrapper.Images := MapTagImages;
+//  FMapWrapper.OnMapChange := OnMapChange;
+//
+//  FMarkerFilterList := TMarkerFilterList.Create(Self);
+//  FMarkerFilterList.Parent := MarkerFilterPanel;
+//  FMarkerFilterList.Align := TAlignLayout.Client;
+//  FMarkerFilterList.Init(FMapWrapper.MarkerFilter);
+//  FMarkerFilterList.OnClose := MarkerFilterListOnClose;
+//
+//  FLocationGrid := TLocationGrid.Create(Self);
+//  FLocationGrid.Parent := LocationPanel;
+//  FLocationGrid.Align := TAlignLayout.Client;
+//  FLocationGrid.Init;
+//  FLocationGrid.OnLocationChanged := OnLocationChanged;
+//
+//  FMousePosition := TMousePosition.Create(0, 0);
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
@@ -158,19 +180,19 @@ end;
 
 procedure TMainForm.OnLocationChanged(const Value: TMap);
 begin
-  LocationPanel.Visible := False;
-
-  if FMapWrapper.Map = Value then
-    Exit;
-
-  if Value.Layers.Count = 0 then begin
-    MapService.LoadLayers(Value, True);
-    MapService.LoadMarkers(Value);
-    MapService.LoadQuests(Value);
-  end;
-
-  FMapWrapper.LoadMap(Value);
-  FMapWrapper.Start;
+//  LocationPanel.Visible := False;
+//
+//  if FMapWrapper.Map = Value then
+//    Exit;
+//
+//  if Value.Layers.Count = 0 then begin
+//    MapService.LoadLayers(Value, True);
+//    MapService.LoadMarkers(Value);
+//    MapService.LoadQuests(Value);
+//  end;
+//
+//  FMapWrapper.LoadMap(Value);
+//  FMapWrapper.Start;
 end;
 
 procedure TMainForm.MarkerFilterListOnClose(Sender: TObject);

@@ -35,7 +35,8 @@ uses
   App.SQLite.Connection in 'Source\Common\App.SQLite.Connection.pas',
   App.Constants in 'Source\Common\App.Constants.pas',
   App.Service in 'Source\Common\App.Service.pas',
-  TM.Frame.Location in 'Source\GUI\Frame\TM.Frame.Location.pas' {LocationGrid: TFrame};
+  TM.Frame.Location in 'Source\GUI\Frame\TM.Frame.Location.pas' {LocationGrid: TFrame},
+  Map.Data.Types in 'Source\Map.Data.Types.pas';
 
 {$R *.res}
 

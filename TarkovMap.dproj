@@ -248,6 +248,7 @@
             <FormType>fmx</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="Source\Map.Data.Types.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -293,6 +294,12 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="Bin\TarkovMap.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="Bin\TarkovMap.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>TarkovMap.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>
