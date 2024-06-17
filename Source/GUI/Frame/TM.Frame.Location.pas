@@ -4,12 +4,12 @@ interface
 
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
-  Generics.Collections, FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs,
-  FMX.StdCtrls, FMX.Layouts, Data.DB, ME.DB.Entity, ME.DB.Map, FMX.Objects,
-  FMX.Controls.Presentation, System.ImageList, FMX.ImgList;
+  System.ImageList, FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs,
+  FMX.StdCtrls, FMX.Layouts, FMX.Objects, FMX.Controls.Presentation,
+  FMX.ImgList, Map.Data.Types;
 
 type
-  TLocationChangedEvent = procedure (const Value: TMap) of object;
+  TLocationChangedEvent = procedure (const Value: PMap) of object;
 
   TLocationGrid = class(TFrame)
     MainContainer: THorzScrollBox;
@@ -17,7 +17,7 @@ type
     MainStyleBook: TStyleBook;
     ImageList1: TImageList;
   private
-    FItems: TList<TEntity>;
+//    FItems: TList<TEntity>;
     FMaxHeight: Integer;
     FMaxWidth: Integer;
     FOnLocationChanged: TLocationChangedEvent;
@@ -31,7 +31,7 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure Clear;
+//    procedure Clear;
     procedure Init;
 
     property Count: Integer read GetCount;
@@ -46,7 +46,7 @@ type
 implementation
 
 uses
-  ME.Service.Map;
+  Map.Data.Service;
 
 {$R *.fmx}
 
@@ -61,7 +61,7 @@ begin
 //  Self.Fill.Color := BackgroundColor;
 //  Self.Fill.Kind := TBrushKind.Solid;
 
-  FItems := TList<TEntity>.Create;
+//  FItems := TList<TEntity>.Create;
   FOnLocationChanged := nil;
 
   Grid.ItemHeight := ItemHeight;
@@ -71,15 +71,15 @@ end;
 destructor TLocationGrid.Destroy;
 begin
   FOnLocationChanged := nil;
-  Clear;
-  FItems.Free;
+//  Clear;
+//  FItems.Free;
 
   inherited;
 end;
 
 function TLocationGrid.GetCount: Integer;
 begin
-  Result := FItems.Count;
+  Result := DataSertvice.Data.Count;
 end;
 
 function TLocationGrid.GetColumnCount: Integer;
@@ -96,25 +96,25 @@ end;
 
 function TLocationGrid.GetItem(Index: Integer): TMap;
 begin
-  Result := TMap(FItems[Index]);
+  Result := DataSertvice.Data.Map[Index];
 end;
 
-procedure TLocationGrid.Clear;
-var
-  i: Integer;
-begin
-  for i := 0 to Count - 1 do
-    FItems[i].Free;
-
-  FItems.Clear;
-end;
+//procedure TLocationGrid.Clear;
+//var
+//  i: Integer;
+//begin
+//  for i := 0 to Count - 1 do
+//    FItems[i].Free;
+//
+//  FItems.Clear;
+//end;
 
 procedure TLocationGrid.Init;
 var
   Button: TSpeedButton;
   i: Integer;
 begin
-  MapService.GetAll(FItems);
+//  MapService.GetAll(FItems);
 
   for i := 0 to Count - 1 do begin
     Button := TSpeedButton.Create(Self);
@@ -145,9 +145,13 @@ begin
 end;
 
 procedure TLocationGrid.OnLocationClick(Sender: TObject);
+var
+  Map: TMap;
 begin
-  if Assigned(FOnLocationChanged) then
-    FOnLocationChanged(Items[TImage(Sender).Tag]);
+  if Assigned(FOnLocationChanged) then begin
+    Map := Items[TImage(Sender).Tag];
+    FOnLocationChanged(@Map);
+  end;
 end;
 
 end.

@@ -4,17 +4,18 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Variants,
-  ME.DB.Map, ME.DB.Marker, ME.DB.Quest;
+  Map.Data.Types;
 
 type
   TBoolArray = array of Boolean;
+  TMapChangedEvent = procedure(Map: PMap) of object;
 
   TMarkerFilter = class
   private
     FGroupFilter: TMarkerKindSet;
     FQuestFilter: TBoolArray;
     FOnChanged: TNotifyEvent;
-    FOnMapChanged: TNotifyEvent;
+    FOnMapChanged: TMapChangedEvent;
 
     procedure DoChange;
     procedure SelectAllQuest(const Enable: Boolean);
@@ -23,7 +24,7 @@ type
     destructor Destroy; override;
 
     procedure Clear;
-    procedure Init(const Map: TMap);
+    procedure Init(const Map: PMap);
 
     procedure EnableGroup(const Kind: TMarkerKind);
     procedure DisableGroup(const Kind: TMarkerKind);
@@ -40,7 +41,7 @@ type
     property QuestFilter: TBoolArray read FQuestFilter;
     // events
     property OnChanged: TNotifyEvent read FOnChanged write FOnChanged;
-    property OnMapChanged: TNotifyEvent read FOnMapChanged write FOnMapChanged;
+    property OnMapChanged: TMapChangedEvent read FOnMapChanged write FOnMapChanged;
   end;
 
 implementation
@@ -82,9 +83,9 @@ begin
   SetLength(FQuestFilter, 0);
 end;
 
-procedure TMarkerFilter.Init(const Map: TMap);
+procedure TMarkerFilter.Init(const Map: PMap);
 begin
-  SetLength(FQuestFilter, Map.Quests.Count);
+  SetLength(FQuestFilter, Length(Map.Quests));
   SelectAllQuest(False);
 
   if Assigned(FOnMapChanged) then

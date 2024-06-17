@@ -36,7 +36,9 @@ uses
   App.Constants in 'Source\Common\App.Constants.pas',
   App.Service in 'Source\Common\App.Service.pas',
   TM.Frame.Location in 'Source\GUI\Frame\TM.Frame.Location.pas' {LocationGrid: TFrame},
-  Map.Data.Types in 'Source\Map.Data.Types.pas';
+  Map.Data.Classes in 'Source\Data\Map.Data.Classes.pas',
+  Map.Data.Types in 'Source\Data\Map.Data.Types.pas',
+  Map.Data.Service in 'Source\Data\Map.Data.Service.pas';
 
 {$R *.res}
 

@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   Generics.Collections, FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs,
   FMX.StdCtrls, FMX.Controls.Presentation, FMX.Layouts, System.ImageList, FMX.ImgList,
-  FMX.ListBox, ME.DB.Map, ME.DB.Marker, ME.DB.Quest, ME.MarkerFilter;
+  FMX.ListBox, Map.Data.Types, ME.MarkerFilter;
 
 type
   TMarkerFilterList = class(TFrame)
@@ -26,13 +26,13 @@ type
     procedure SpeedButton1Click(Sender: TObject);
   private
     FMarkerFilter: TMarkerFilter;
-    FMap: TMap;
+    FMap: PMap;
     FQuests: TList<TSpeedButton>;
     FMaxHeight: Integer;
     FOnClose: TNotifyEvent;
 
     procedure ClearQuests;
-    procedure OnMapChanged(Sender: TObject);
+    procedure OnMapChanged(Value: PMap);
     procedure OnExtractionButtonClick(Sender: TObject);
     procedure OnQuestButtonClick(Sender: TObject);
   public
@@ -98,8 +98,9 @@ begin
   FMarkerFilter.OnMapChanged := OnMapChanged;
 end;
 
-procedure TMarkerFilterList.OnMapChanged(Sender: TObject);
+procedure TMarkerFilterList.OnMapChanged(Value: PMap);
 var
+  Map: TMap;
   Idx: Integer;
   Quest: TQuest;
   Item: TSpeedButton;
@@ -108,12 +109,17 @@ var
   ScavCount: Integer;
   CoopCount: Integer;
 begin
-  FMap := TMap(Sender);
+  FMap := Value;
+  if FMap = nil then begin
+    ClearQuests;
+    Exit;
+  end;
+  Map := FMap^;
 
   PMCCount := 0;
   ScavCount := 0;
   CoopCount := 0;
-  for Marker in FMap.Tags do
+  for Marker in Map.Markers do
     case Marker.Kind of
       TMarkerKind.PMCExtraction:
         Inc(PMCCount);
@@ -134,20 +140,17 @@ begin
     QuestGrid.EndUpdate;
   end;
 
-  if not Assigned(FMap) then
-    Exit;
-
   QuestGrid.BeginUpdate;
   try
-    for Idx := 0 to FMap.Quests.Count - 1 do begin
-      Quest := FMap.Quests[Idx];
+    for Idx := 0 to Length(Map.Quests) - 1 do begin
+      Quest := Map.Quests[Idx];
 
       Item := TSpeedButton.Create(Self);
       try
         Item.Tag := Idx;
         Item.Parent := QuestGrid;
         Item.Cursor := crHandPoint;
-        Item.Text := Quest.Name + ' (' + IntToStr(Quest.Markers.Count) + ')';
+        Item.Text := Quest.Name + ' (' + IntToStr(Length(Quest.Markers)) + ')';
         Item.StaysPressed := True;
         Item.StyleLookup := 'FilterItemStyle';
         Item.TextSettings.HorzAlign := TTextAlign.Leading;
@@ -160,7 +163,7 @@ begin
     QuestGrid.Position.X := 0;
     QuestGrid.Position.Y := 0;
     QuestGrid.Width := QuestContainer.Width;
-    QuestGrid.Height := QuestGrid.ItemHeight * FMap.Quests.Count;
+    QuestGrid.Height := QuestGrid.ItemHeight * Length(Map.Quests);
   finally
     QuestGrid.EndUpdate;
   end;

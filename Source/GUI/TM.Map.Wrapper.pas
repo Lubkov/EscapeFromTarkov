@@ -5,8 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, System.IOUtils, System.Types, System.UITypes,
   Generics.Collections, FMX.Types, FMX.Graphics, FMX.ImgList,
-  ME.Point, ME.DB.Map, ME.DB.Layer, ME.DB.Quest, ME.DB.Marker, TM.FilesMonitor,
-  ME.MarkerFilter;
+  ME.Point, Map.Data.Types, TM.FilesMonitor, ME.MarkerFilter;
 
 type
   TMarkerIconArray = array[Low(TMarkerKind) .. High(TMarkerKind)] of TBitmap;
@@ -16,7 +15,7 @@ type
   private
     FDirectory: string;
     FTrackLocation: Boolean;
-    FMap: TMap;
+    FMap: PMap;
     FBackground: TBitmap;
     FChangeMonitor: TChangeMonitor;
     FOnMapChange: TOnMapChangeEvent;
@@ -26,6 +25,7 @@ type
     FMarkerIcons: TMarkerIconArray;
     FMarkerFilter: TMarkerFilter;
 
+    function GetMap: TMap;
     procedure DoMapChange(Bitmap: TBitmap);
     procedure OnFileChange(Sender: TObject);
     procedure DrawMapTags(Bitmap: TBitmap);
@@ -38,7 +38,7 @@ type
 
     function GetScreenshotName: string;
     procedure DeleteAllScreenshots;
-    procedure LoadMap(const Map: TMap);
+    procedure LoadMap(const Value: PMap);
 
     function ExtractPoint(const FileName: string): TPoint;
     procedure DrawPoint(const Value: TPoint);
@@ -49,7 +49,7 @@ type
     procedure Stop;
     procedure Refresh;
 
-    property Map: TMap read FMap;
+    property Map: TMap read GetMap;
     property Directory: string read FDirectory;
     property TrackLocation: Boolean read FTrackLocation write FTrackLocation;
     property Images: TImageList read FImages write SetImages;
@@ -61,7 +61,7 @@ type
 implementation
 
 uses
-  App.Constants;
+  App.Constants, Map.Data.Service;
 
 { TMapWrapper }
 
@@ -91,6 +91,14 @@ begin
   FBackground.Free;
 
   inherited;
+end;
+
+function TMapWrapper.GetMap: TMap;
+begin
+  if FMap <> nil then
+    Result := FMap^
+  else
+    raise Exception.Create('Map don''t assigned');
 end;
 
 procedure TMapWrapper.DoMapChange(Bitmap: TBitmap);
@@ -175,11 +183,11 @@ var
   Quest: TQuest;
   i: Integer;
 begin
-  for Marker in FMap.Tags do
+  for Marker in FMap.Markers do
     if FMarkerFilter.IsGropupEnable(Marker.Kind) then
       DrawMarker(MarkerIcon[Marker.Kind], Marker);
 
-  for i := 0 to FMap.Quests.Count - 1 do begin
+  for i := 0 to Length(FMap.Quests) - 1 do begin
     Quest := FMap.Quests[i];
     if FMarkerFilter.IsQuestEnable(i) then
       for Marker in Quest.Markers do
@@ -223,21 +231,21 @@ begin
     TFile.Delete(FileName);
 end;
 
-procedure TMapWrapper.LoadMap(const Map: TMap);
+procedure TMapWrapper.LoadMap(const Value: PMap);
 var
-  Layer: TLayer;
+  Layer: PLayer;
 begin
-  FMap := Map;
+  FMap := Value;
   FPoint.Empty := True;
   FZoom := 100;
 
-  Layer := FMap.MainLayer;
-  if Layer <> nil then
-    FBackground.Assign(Layer.Picture)
-  else
+  Layer := Map.MainLayer;
+//  if Layer <> nil then
+//    FBackground.Assign(Layer^.Picture)
+//  else
     FBackground.Assign(nil);
 
-  MarkerFilter.Init(Map);
+  MarkerFilter.Init(Value);
   DrawPoint(FPoint);
 end;
 

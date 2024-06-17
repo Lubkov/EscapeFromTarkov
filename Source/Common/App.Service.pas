@@ -22,6 +22,7 @@ type
     procedure Disconnect;
 
     procedure LoadParams;
+    procedure LoadDataFromJSON;
 
     property Connected: Boolean read GetConnected write SetConnected;
     property Connection: TSQLiteConnection read FConnection;
@@ -34,7 +35,7 @@ var
 implementation
 
 uses
-  App.Constants, ME.Service.Map, ME.Service.Layer,
+  App.Constants, Map.Data.Service, ME.Service.Map, ME.Service.Layer,
   ME.Service.Marker, ME.Service.Quest;
 
 { TAppService }
@@ -43,6 +44,7 @@ constructor TAppService.Create(AOwner: TComponent);
 begin
   inherited;
 
+  DataSertvice := TDataSertvice.Create;
   FConnection := TSQLiteConnection.Create(Self);
   MapService := TMapService.Create(FConnection.Connection);
   LayerService := TLayerService.Create(FConnection.Connection);
@@ -52,6 +54,7 @@ end;
 
 destructor TAppService.Destroy;
 begin
+  DataSertvice.Free;
   FreeAndNil(MapService);
   FreeAndNil(LayerService);
   FreeAndNil(MarkerService);
@@ -91,6 +94,11 @@ procedure TAppService.LoadParams;
 begin
   AppParams.Load;
   FConnection.Database := AppParams.DatabasePath;
+end;
+
+procedure TAppService.LoadDataFromJSON;
+begin
+  DataSertvice.Load;
 end;
 
 end.

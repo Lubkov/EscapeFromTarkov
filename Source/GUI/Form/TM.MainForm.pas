@@ -7,8 +7,8 @@ uses
   System.IOUtils, Generics.Collections, FMX.Types, FMX.Controls, FMX.Forms,
   FMX.Graphics, FMX.Dialogs, TM.Form.Wrapper, FMX.Controls.Presentation, FMX.StdCtrls,
   FMX.Layouts, System.ImageList, FMX.ImgList, FMX.Objects, System.Actions, FMX.ActnList,
-  ME.DB.Entity, {ME.DB.Map,} TM.Map.Wrapper, TM.Frame.Location, TM.Frame.MarkerFilter,
-  Map.Data.Types;
+  TM.Map.Wrapper, TM.Frame.Location, TM.Frame.MarkerFilter,
+  Map.Data.Types, Map.Data.Classes;
 
 type
   TMainForm = class(TForm)
@@ -56,7 +56,7 @@ type
 
     procedure SetFullScreenMode(const Value: Boolean);
     procedure OnMapChange(Bitmap: TBitmap);
-    procedure OnLocationChanged(const Value: TMap);
+    procedure OnLocationChanged(const Value: PMap);
     procedure MarkerFilterListOnClose(Sender: TObject);
   public
   end;
@@ -67,44 +67,49 @@ var
 implementation
 
 uses
-  App.Constants, App.Service, ME.Service.Map;
+  App.Constants, App.Service, Map.Data.Service;
 
 {$R *.fmx}
 
 // поместить Image с картой в контейнер и двигать контейнер, а не Image с картой
 // Изменять размер контейнер, карта всегда под размеры контейнера
-// добавлять на в конейнер маркеры, Image с картинкой маркера, что позволить выполнять ключ по маркеру
+// добавлять в конейнер маркеры, Image с картинкой маркера, что позволить выполнять клик по маркеру
 
 procedure TMainForm.FormCreate(Sender: TObject);
 const
   BackgroundColor = $FF0F0F0F;
-var
-  DataImport: TJSONDataImport;
-  FileName: string;
-  Data: TStrings;
-  Maps: TMapArray;
 begin
   AppService.LoadParams;
+  AppService.LoadDataFromJSON;
 
-  DataImport := TJSONDataImport.Create;
-  try
-    Data := TStringList.Create;
-    try
-      FileName := System.IOUtils.TPath.Combine(AppParams.Path, 'data.json');
-      Data.LoadFromFile(FileName, TEncoding.UTF8);
-      DataImport.Load(Data.Text, Maps);
-    finally
-      Data.Free;
-    end;
-  finally
-    DataImport.Free;
-  end;
+  Self.Caption := '["Escape of Tarkov" position tracking]';
+  Self.Fill.Color := BackgroundColor;
+  Self.Fill.Kind := TBrushKind.Solid;
 
+  LocationPanel.Visible := False;
+  MarkerFilterPanel.Visible := False;
 
-//  Self.Caption := '["Escape of Tarkov" position tracking]';
-//  Self.Fill.Color := BackgroundColor;
-//  Self.Fill.Kind := TBrushKind.Solid;
+  FFormWrapper := TFormWrapper.Create(Self);
+  FMapWrapper := TMapWrapper.Create(AppParams.SreenshotPath);
+  FMapWrapper.TrackLocation := AppParams.TrackLocation;
+  FMapWrapper.Images := MapTagImages;
+  FMapWrapper.OnMapChange := OnMapChange;
+
+  FMarkerFilterList := TMarkerFilterList.Create(Self);
+  FMarkerFilterList.Parent := MarkerFilterPanel;
+  FMarkerFilterList.Align := TAlignLayout.Client;
+  FMarkerFilterList.Init(FMapWrapper.MarkerFilter);
+  FMarkerFilterList.OnClose := MarkerFilterListOnClose;
+
+  FLocationGrid := TLocationGrid.Create(Self);
+  FLocationGrid.Parent := LocationPanel;
+  FLocationGrid.Align := TAlignLayout.Client;
+  FLocationGrid.Init;
+  FLocationGrid.OnLocationChanged := OnLocationChanged;
 //
+//  FMousePosition := TMousePosition.Create(0, 0);
+
+//------------------------------------------------------------------------------
 //  AppService.LoadParams;
 //  AppService.Connect;
 //
@@ -178,21 +183,21 @@ begin
   MapBackground.Bitmap.Assign(Bitmap);
 end;
 
-procedure TMainForm.OnLocationChanged(const Value: TMap);
+procedure TMainForm.OnLocationChanged(const Value: PMap);
 begin
-//  LocationPanel.Visible := False;
-//
-//  if FMapWrapper.Map = Value then
-//    Exit;
-//
+  LocationPanel.Visible := False;
+
+  if (Value = nil) or (FMapWrapper.Map.Name = Value^.Name) then
+    Exit;
+
 //  if Value.Layers.Count = 0 then begin
 //    MapService.LoadLayers(Value, True);
 //    MapService.LoadMarkers(Value);
 //    MapService.LoadQuests(Value);
 //  end;
-//
-//  FMapWrapper.LoadMap(Value);
-//  FMapWrapper.Start;
+
+  FMapWrapper.LoadMap(Value);
+  FMapWrapper.Start;
 end;
 
 procedure TMainForm.MarkerFilterListOnClose(Sender: TObject);
