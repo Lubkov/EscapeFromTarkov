@@ -21,8 +21,8 @@ type
   private
     FMapArray: TMapArray;
 
-    function GetMapItem(Index: Integer): TMap;
-    procedure SetMapItem(Index: Integer; const Value: TMap);
+    function GetMapItem(Index: Integer): PMap;
+    procedure SetMapItem(Index: Integer; const Value: PMap);
     function GetCount: Integer;
   public
     procedure Clear;
@@ -30,7 +30,7 @@ type
     procedure LoadFromFile(const FileName: string);
 
     property Count: Integer read GetCount;
-    property Map[Index: Integer]: TMap read GetMapItem write SetMapItem;
+    property Map[Index: Integer]: PMap read GetMapItem write SetMapItem;
   end;
 
 implementation
@@ -130,14 +130,14 @@ begin
   Result := Length(FMapArray);
 end;
 
-function TJSONMapData.GetMapItem(Index: Integer): TMap;
+function TJSONMapData.GetMapItem(Index: Integer): PMap;
 begin
-  Result := FMapArray[Index];
+  Result := @FMapArray[Index];
 end;
 
-procedure TJSONMapData.SetMapItem(Index: Integer; const Value: TMap);
+procedure TJSONMapData.SetMapItem(Index: Integer; const Value: PMap);
 begin
-  FMapArray[Index] := Value;
+  FMapArray[Index] := Value^;
 end;
 
 procedure TJSONMapData.Clear;

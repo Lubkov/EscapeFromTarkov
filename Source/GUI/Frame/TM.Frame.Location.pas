@@ -23,7 +23,7 @@ type
     FOnLocationChanged: TLocationChangedEvent;
 
     function GetCount: Integer;
-    function GetItem(Index: Integer): TMap;
+    function GetItem(Index: Integer): PMap;
     procedure OnLocationClick(Sender: TObject);
     function GetColumnCount: Integer;
     function GetRowCount: Integer;
@@ -37,7 +37,7 @@ type
     property Count: Integer read GetCount;
     property ColumnCount: Integer read GetColumnCount;
     property RowCount: Integer read GetRowCount;
-    property Items[Index: Integer]: TMap read GetItem;
+    property Items[Index: Integer]: PMap read GetItem;
     property MaxHeight: Integer read FMaxHeight;
     property MaxWidth: Integer read FMaxWidth;
     property OnLocationChanged: TLocationChangedEvent read FOnLocationChanged write FOnLocationChanged;
@@ -94,7 +94,7 @@ begin
   Result := 2;
 end;
 
-function TLocationGrid.GetItem(Index: Integer): TMap;
+function TLocationGrid.GetItem(Index: Integer): PMap;
 begin
   Result := DataSertvice.Data.Map[Index];
 end;
@@ -145,13 +145,9 @@ begin
 end;
 
 procedure TLocationGrid.OnLocationClick(Sender: TObject);
-var
-  Map: TMap;
 begin
-  if Assigned(FOnLocationChanged) then begin
-    Map := Items[TImage(Sender).Tag];
-    FOnLocationChanged(@Map);
-  end;
+  if Assigned(FOnLocationChanged) then
+    FOnLocationChanged(Items[TImage(Sender).Tag]);
 end;
 
 end.

@@ -25,7 +25,6 @@ type
     FMarkerIcons: TMarkerIconArray;
     FMarkerFilter: TMarkerFilter;
 
-    function GetMap: TMap;
     procedure DoMapChange(Bitmap: TBitmap);
     procedure OnFileChange(Sender: TObject);
     procedure DrawMapTags(Bitmap: TBitmap);
@@ -49,7 +48,7 @@ type
     procedure Stop;
     procedure Refresh;
 
-    property Map: TMap read GetMap;
+    property Map: PMap read FMap;
     property Directory: string read FDirectory;
     property TrackLocation: Boolean read FTrackLocation write FTrackLocation;
     property Images: TImageList read FImages write SetImages;
@@ -91,14 +90,6 @@ begin
   FBackground.Free;
 
   inherited;
-end;
-
-function TMapWrapper.GetMap: TMap;
-begin
-  if FMap <> nil then
-    Result := FMap^
-  else
-    raise Exception.Create('Map don''t assigned');
 end;
 
 procedure TMapWrapper.DoMapChange(Bitmap: TBitmap);
@@ -183,12 +174,15 @@ var
   Quest: TQuest;
   i: Integer;
 begin
-  for Marker in FMap.Markers do
+  for i := 0 to Length(FMap^.Markers) - 1 do begin
+    Marker := FMap^.Markers[i];
+
     if FMarkerFilter.IsGropupEnable(Marker.Kind) then
       DrawMarker(MarkerIcon[Marker.Kind], Marker);
+  end;
 
   for i := 0 to Length(FMap.Quests) - 1 do begin
-    Quest := FMap.Quests[i];
+    Quest := FMap^.Quests[i];
     if FMarkerFilter.IsQuestEnable(i) then
       for Marker in Quest.Markers do
         DrawMarker(MarkerIcon[Marker.Kind], Marker);
@@ -232,18 +226,26 @@ begin
 end;
 
 procedure TMapWrapper.LoadMap(const Value: PMap);
+const
+  FolderName = 'Maps';
+  fmtFileName = '%s_%s.png';
 var
   Layer: PLayer;
+  FileName: string;
 begin
   FMap := Value;
   FPoint.Empty := True;
   FZoom := 100;
 
-  Layer := Map.MainLayer;
-//  if Layer <> nil then
-//    FBackground.Assign(Layer^.Picture)
-//  else
+  Layer := Map^.MainLayer;
+  if Layer = nil then begin
     FBackground.Assign(nil);
+    Exit;
+  end;
+
+  FileName := TPath.Combine(AppParams.Path, FolderName);
+  FileName := TPath.Combine(FileName, Format(fmtFileName, [Map^.Name, Layer^.Name]));
+  FBackground.LoadFromFile(FileName);
 
   MarkerFilter.Init(Value);
   DrawPoint(FPoint);

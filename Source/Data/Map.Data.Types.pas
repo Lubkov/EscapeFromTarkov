@@ -1,4 +1,4 @@
-unit Map.Data.Types;
+﻿unit Map.Data.Types;
 
 interface
 
@@ -167,11 +167,11 @@ end;
 
 function TMap.GetMainLayer: PLayer;
 var
-  Layer: TLayer;
+  i: Integer;
 begin
-  for Layer in Layers do
-    if Layer.IsMainLevel then begin
-      Result^ := Layer;
+  for i := 0 to Length(Layers) - 1  do
+    if Layers[i].IsMainLevel then begin
+      Result := @Layers[i];
       Exit;
     end;
 

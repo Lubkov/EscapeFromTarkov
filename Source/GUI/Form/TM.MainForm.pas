@@ -187,7 +187,7 @@ procedure TMainForm.OnLocationChanged(const Value: PMap);
 begin
   LocationPanel.Visible := False;
 
-  if (Value = nil) or (FMapWrapper.Map.Name = Value^.Name) then
+  if (Value = nil) or (FMapWrapper.Map = Value) then
     Exit;
 
 //  if Value.Layers.Count = 0 then begin
