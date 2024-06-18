@@ -135,278 +135,53 @@
     "right": "-1130",
     "bottom": "650",
     "layers": [{"level": "0", "name": "main"}],
-    "markers": [
-      {
-        "name": "Тоннель",
-        "kind": "PMCExtraction",
-        "left": "385",
-        "top": "310"
-      },
-      {
-        "name": "Переход на Маяк",
-        "kind": "PMCExtraction",
-        "left": "444",
-        "top": "-210"
-      },
-      {
-        "name": "Тропа альпиниста",
-        "kind": "PMCExtraction",
-        "left": "-197",
-        "top": "-360"
-      },
-      {
-        "name": "А-Выход дорога на сервер (Платный)",
-        "kind": "PMCExtraction",
-        "left": "-543",
-        "top": "-375"
-      },
-      {
-        "name": "Дорога на Таможню",
-        "kind": "PMCExtraction",
-        "left": "-853",
-        "top": "10"
-      },
-      {
-        "name": "ЖД-мост",
-        "kind": "PMCExtraction",
-        "left": "-1025",
-        "top": "310"
-      },
-      {
-        "name": "Лодка на причале",
-        "kind": "PMCExtraction",
-        "left": "-340",
-        "top": "575"
-      }
-    ],
-    "quests": [
-      {
-        "name": "Анестезия",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-264",
-            "top": "-84"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "96",
-            "top": "96"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-316",
-            "top": "496"
-          }
-        ]
-      },
-      {
-        "name": "Коллеги - Часть 1",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-256",
-            "top": "-57"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-316",
-            "top": "496"
-          }
-        ]
-      },
-      {
-        "name": "Коллеги - Часть 2",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "99",
-            "top": "107"
-          }
-        ]
-      },
-      {
-        "name": "Металлолом",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "380",
-            "top": "165"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-348",
-            "top": "186"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-155",
-            "top": "-280"
-          }
-        ]
-      },
-      {
-        "name": "Глаз орла",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-553",
-            "top": "-129"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "81",
-            "top": "-167"
-          }
-        ]
-      },
-      {
-        "name": "Игра на верняк",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "98",
-            "top": "96"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-305",
-            "top": "493"
-          }
-        ]
-      },
-      {
-        "name": "Гуманитарка",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-236",
-            "top": "-165"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-594",
-            "top": "476"
-          }
-        ]
-      },
-      {
-        "name": "Сигнал - Часть 3",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-228",
-            "top": "-88"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-491",
-            "top": "250"
-          }
-        ]
-      },
-      {
-        "name": "Секта - Часть 1",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "288",
-            "top": "-40"
-          }
-        ]
-      },
-      {
-        "name": "Витамины - Часть 1",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-186",
-            "top": "-87"
-          }
-        ]
-      },
-      {
-        "name": "Лендлиз - Часть 1",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-181",
-            "top": "-80"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-290",
-            "top": "-85"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-567",
-            "top": "105"
-          }
-        ]
-      },
-      {
-        "name": "Секта - Часть 2",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-338",
-            "top": "-90"
-          }
-        ]
-      },
-      {
-        "name": "Путевка в санаторий - Часть 2",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-250",
-            "top": "-47"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-281",
-            "top": "-43"
-          }
-        ]
-      },
-      {
-        "name": "\"Выгодная\" сделка",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "220",
-            "top": "-158"
-          }
-        ]
-      }
-    ]
+    "markers": [{"name": "Тоннель", "kind": "PMCExtraction", "left": "385", "top": "310"},
+                {"name": "Переход на Маяк", "kind": "PMCExtraction", "left": "444", "top": "-210"},
+                {"name": "Тропа альпиниста", "kind": "PMCExtraction", "left": "-197", "top": "-360"},
+                {"name": "А-Выход дорога на сервер (Платный)", "kind": "PMCExtraction", "left": "-543", "top": "-375"},
+                {"name": "Дорога на Таможню", "kind": "PMCExtraction", "left": "-853", "top": "10"},
+                {"name": "ЖД-мост", "kind": "PMCExtraction", "left": "-1025", "top": "310"},
+                {"name": "Лодка на причале", "kind": "PMCExtraction", "left": "-340", "top": "575"}],
+    "quests": [{"name": "Анестезия",
+                "markers": [{"name": "", "kind": "Quest", "left": "-264", "top": "-84"},
+                            {"name": "", "kind": "Quest", "left": "96", "top": "96"},
+                            {"name": "", "kind": "Quest", "left": "-316", "top": "496"}]},
+               {"name": "Коллеги - Часть 1",
+                "markers": [{"name": "", "kind": "Quest", "left": "-256", "top": "-57"},
+                            {"name": "", "kind": "Quest", "left": "-316", "top": "496"}]},
+               {"name": "Коллеги - Часть 2",
+                "markers": [{"name": "", "kind": "Quest", "left": "99", "top": "107"}]},
+               {"name": "Металлолом", 
+                "markers": [{"name": "", "kind": "Quest", "left": "380", "top": "165"},
+                            {"name": "", "kind": "Quest", "left": "-348", "top": "186"},
+                            {"name": "", "kind": "Quest", "left": "-155", "top": "-280"}]},
+               {"name": "Глаз орла",
+                "markers": [{"name": "", "kind": "Quest", "left": "-553", "top": "-129"},
+                            {"name": "", "kind": "Quest", "left": "81", "top": "-167"}]},
+               {"name": "Игра на верняк",
+                "markers": [{"name": "", "kind": "Quest", "left": "98", "top": "96"},
+                            {"name": "", "kind": "Quest", "left": "-305", "top": "493"}]},
+               {"name": "Гуманитарка",
+                "markers": [{"name": "", "kind": "Quest", "left": "-236", "top": "-165"},
+                            {"name": "", "kind": "Quest", "left": "-594", "top": "476"}]},
+               {"name": "Сигнал - Часть 3",
+                "markers": [{"name": "", "kind": "Quest", "left": "-228", "top": "-88"},
+                            {"name": "", "kind": "Quest", "left": "-491", "top": "250"}]},
+               {"name": "Секта - Часть 1", 
+                "markers": [{"name": "", "kind": "Quest", "left": "288", "top": "-40"}]},
+               {"name": "Витамины - Часть 1",        
+                "markers": [{"name": "", "kind": "Quest", "left": "-186", "top": "-87"}]},
+               {"name": "Лендлиз - Часть 1",
+                "markers": [{"name": "", "kind": "Quest", "left": "-181", "top": "-80"},
+                            {"name": "", "kind": "Quest", "left": "-290", "top": "-85"},
+                            {"name": "", "kind": "Quest", "left": "-567", "top": "105"}]},
+               {"name": "Секта - Часть 2",
+                "markers": [{"name": "", "kind": "Quest", "left": "-338", "top": "-90"}]},
+               {"name": "Путевка в санаторий - Часть 2",
+                "markers": [{"name": "", "kind": "Quest", "left": "-250", "top": "-47"},
+                            {"name": "", "kind": "Quest", "left": "-281", "top": "-43"}]},
+               {"name": "\"Выгодная\" сделка",
+                "markers": [{"name": "", "kind": "Quest", "left": "220", "top": "-158"}]}]
   },
   {
     "name": "Reserve",
@@ -659,8 +434,21 @@
     "right": "-300",
     "bottom": "540",
     "layers": [{"level": "0", "name": "main"}],
-    "markers": [{"name": "Место Крушения", "kind": "PMCExtraction", "left": "309", "top": "410"}],
-    "quests": []
+    "markers": [{"name": "Место Крушения", "kind": "PMCExtraction", "left": "309", "top": "410"},
+                {"name": "Упавший кран", "kind": "PMCExtraction", "left": "213", "top": "270"},
+                {"name": "КПП у выставочного центра", "kind": "PMCExtraction", "left": "215", "top": "-108"},
+                {"name": "ЖД Кардинал", "kind": "PMCExtraction", "left": "100", "top": "-194"},
+                {"name": "Лифт в стилобаре", "kind": "PMCExtraction", "left": "-50", "top": "-80"},
+                {"name": "Улица Климова", "kind": "PMCExtraction", "left": "-231", "top": "46"},
+                {"name": "Река в коллекторе", "kind": "PMCExtraction", "left": "-252", "top": "205"},
+                {"name": "Разрушенный дом", "kind": "PMCExtraction", "left": "-249", "top": "344"},
+                {"name": "Двор-Колодец", "kind": "PMCExtraction", "left": "-151", "top": "496"},
+                {"name": "А-выход такси на Проморском (Платный)", "kind": "PMCExtraction", "left": "3", "top": "459"}],
+    "quests": [{"name": "Продразведка",
+                "markers": [{"name": "", "kind": "Quest", "left": "257", "top": "286"},
+                            {"name": "", "kind": "Quest", "left": "143", "top": "297"},
+                            {"name": "", "kind": "Quest", "left": "-76", "top": "161"},
+                            {"name": "", "kind": "Quest", "left": "-206", "top": "184"}]}]
   },
   {
     "name": "Laboratory",
