@@ -326,8 +326,20 @@
     "markers": [{"name": "Проспект Мира", "kind": "PMCExtraction", "left": "216", "top": "31"},
                 {"name": "Пункт МЧС", "kind": "PMCExtraction", "left": "155", "top": "-93"}, 
                 {"name": "Полицейский кордон (Платный)", "kind": "PMCExtraction", "left": "-18", "top": "112"},
-                {"name": "Спуск в подвал в Nakatani", "kind": "PMCExtraction", "left": "-22", "top": "333"}],
-    "quests": []
+                {"name": "Спуск в подвал в Nakatani", "kind": "PMCExtraction", "left": "-22", "top": "333"},
+                {"name": "Пункт МЧС", "kind": "ScavExtraction", "left": "155", "top": "-93"},
+                {"name": "Спуск в подвал в Nakatani", "kind": "ScavExtraction", "left": "-22", "top": "333"},
+                {"name": "Блокпост Диких (Совм.)", "kind": "CoopExtraction", "left": "28", "top": "-83"}],
+    "quests": [{"name": "Первый в очереди",
+                "markers": [{"name": "", "kind": "Quest", "left": "152", "top": "-80"}]},
+               {"name": "Роскошная жизнь",
+                "markers": [{"name": "", "kind": "Quest", "left": "112", "top": "28"}]},
+               {"name": "Спасение крота",
+                "markers": [{"name": "", "kind": "Quest", "left": "-18", "top": "31"}]},
+               {"name": "Стрельба по баночкам",
+                "markers": [{"name": "", "kind": "Quest", "left": "56", "top": "152"},
+                            {"name": "", "kind": "Quest", "left": "95", "top": "276"}]}
+              ]
   },
   {
     "name": "Factory",
