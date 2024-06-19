@@ -191,38 +191,11 @@
     "right": "-227",
     "bottom": "309",
     "layers": [{"level": "0", "name": "main"}],
-    "markers": [
-      {
-        "name": "Гермозатвор бункера",
-        "kind": "PMCExtraction",
-        "left": "51",
-        "top": "-245"
-      },
-      {
-        "name": "Д-2",
-        "kind": "PMCExtraction",
-        "left": "-121",
-        "top": "170"
-      },
-      {
-        "name": "Спуск со скалы",
-        "kind": "PMCExtraction",
-        "left": "-10",
-        "top": "209"
-      },
-      {
-        "name": "Канализационный люк",
-        "kind": "PMCExtraction",
-        "left": "40",
-        "top": "76"
-      },
-      {
-        "name": "Бронепоезд",
-        "kind": "PMCExtraction",
-        "left": "126",
-        "top": "-145"
-      }
-    ],
+    "markers": [{"name": "Гермозатвор бункера", "kind": "PMCExtraction", "left": "51", "top": "-245"},
+                {"name": "Д-2", "kind": "PMCExtraction", "left": "-121", "top": "170"},
+                {"name": "Спуск со скалы", "kind": "PMCExtraction", "left": "-10", "top": "209"},
+                {"name": "Канализационный люк", "kind": "PMCExtraction", "left": "40", "top": "76"},
+                {"name": "Бронепоезд", "kind": "PMCExtraction", "left": "126", "top": "-145"}],
     "quests": []
   },
   {
@@ -233,198 +206,40 @@
     "right": "-550",
     "bottom": "650",
     "layers": [{"level": "0", "name": "main"}],
-    "markers": [
-      {
-        "name": "Серверный блокпост",
-        "kind": "PMCExtraction",
-        "left": "116",
-        "top": "-976"
-      },
-      {
-        "name": "Бронепоезд",
-        "kind": "PMCExtraction",
-        "left": "5",
-        "top": "-876"
-      },
-      {
-        "name": "А-Выход дорога к военной базе (Платный)",
-        "kind": "PMCExtraction",
-        "left": "-341",
-        "top": "-783"
-      },
-      {
-        "name": "Переход на Берег",
-        "kind": "PMCExtraction",
-        "left": "-352",
-        "top": "-144"
-      },
-      {
-        "name": "Тропа через перевал",
-        "kind": "CoopExtraction",
-        "left": "-168",
-        "top": "-10"
-      },
-      {
-        "name": "Южная дорога",
-        "kind": "PMCExtraction",
-        "left": "-267",
-        "top": "417"
-      }
-    ],
-    "quests": [
-      {
-        "name": "Энергетический кризис",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-112",
-            "top": "-922"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-85",
-            "top": "-883"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-159",
-            "top": "-605"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "25",
-            "top": "-425"
-          }
-        ]
-      },
-      {
-        "name": "Простая задача. Часть 1",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-99",
-            "top": "-558"
-          }
-        ]
-      },
-      {
-        "name": "Отдых у моря",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "141",
-            "top": "-136"
-          }
-        ]
-      },
-      {
-        "name": "Потерянный контакт",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-71",
-            "top": "131"
-          }
-        ]
-      },
-      {
-        "name": "Ревизия - Маяк",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-42",
-            "top": "13"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "72",
-            "top": "514"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "10",
-            "top": "-506"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-69",
-            "top": "-694"
-          }
-        ]
-      },
-      {
-        "name": "Груз X. Часть 4",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "135",
-            "top": "47"
-          }
-        ]
-      },
-      {
-        "name": "Тайны Корпоратов",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "51",
-            "top": "-642"
-          },
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-119",
-            "top": "-753"
-          }
-        ]
-      },
-      {
-        "name": "Стрим - Часть 1",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "34",
-            "top": "-642"
-          }
-        ]
-      },
-      {
-        "name": "Отшельник",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-250",
-            "top": "-327"
-          }
-        ]
-      },
-      {
-        "name": "Наркотрафик",
-        "markers": [
-          {
-            "name": "",
-            "kind": "Quest",
-            "left": "-105",
-            "top": "-560"
-          }
-        ]
-      }
-    ]
+    "markers": [{"name": "Серверный блокпост", "kind": "PMCExtraction", "left": "116", "top": "-976"},
+                {"name": "Бронепоезд", "kind": "PMCExtraction", "left": "5", "top": "-876"},
+                {"name": "А-Выход дорога к военной базе (Платный)", "kind": "PMCExtraction", "left": "-341", "top": "-783"},
+                {"name": "Переход на Берег", "kind": "PMCExtraction", "left": "-352", "top": "-144"},
+                {"name": "Тропа через перевал", "kind": "CoopExtraction", "left": "-168", "top": "-10"},
+                {"name": "Южная дорога", "kind": "PMCExtraction", "left": "-267", "top": "417"}],
+    "quests": [{"name": "Энергетический кризис",
+                "markers": [{"name": "", "kind": "Quest", "left": "-112", "top": "-922"},
+                            {"name": "", "kind": "Quest", "left": "-85", "top": "-883"},
+                            {"name": "", "kind": "Quest", "left": "-159", "top": "-605"},
+                            {"name": "", "kind": "Quest", "left": "25", "top": "-425"}]},
+               {"name": "Простая задача. Часть 1",
+                "markers": [{"name": "", "kind": "Quest", "left": "-99", "top": "-558"}]},
+               {"name": "Отдых у моря",
+                "markers": [{"name": "", "kind": "Quest", "left": "141", "top": "-136"}]},
+               {"name": "Потерянный контакт",  
+                "markers": [{"name": "", "kind": "Quest", "left": "-71", "top": "131"}]},
+               {"name": "Ревизия - Маяк", 
+                "markers": [{"name": "", "kind": "Quest", "left": "-42", "top": "13"},
+                            {"name": "", "kind": "Quest", "left": "72", "top": "514"},
+                            {"name": "", "kind": "Quest", "left": "10", "top": "-506"},
+                            {"name": "", "kind": "Quest", "left": "-69", "top": "-694"}]},
+               {"name": "Груз X. Часть 4",
+                "markers": [{"name": "", "kind": "Quest", "left": "135", "top": "47"}]},
+               {"name": "Тайны Корпоратов",
+                "markers": [{"name": "", "kind": "Quest", "left": "51", "top": "-642"},
+                            {"name": "", "kind": "Quest", "left": "-119", "top": "-753"}]},
+               {"name": "Стрим - Часть 1",
+                "markers": [{"name": "", "kind": "Quest", "left": "34", "top": "-642"}]},
+               {"name": "Отшельник",
+                "markers": [{"name": "", "kind": "Quest", "left": "-250", "top": "-327"}]},
+               {"name": "Наркотрафик",
+                "markers": [{"name": "", "kind": "Quest", "left": "-105", "top": "-560"}]}
+              ]
   },
   {
     "name": "Streets",
