@@ -318,12 +318,15 @@
   {
     "name": "GroundZero",
     "caption": "Ground Zero",
-    "left": "0",
-    "top": "0",
-    "right": "0",
-    "bottom": "0",
+    "left": "300",
+    "top": "-150",
+    "right": "-100",
+    "bottom": "400",
     "layers": [{"level": "0", "name": "main"}],
-    "markers": [],
+    "markers": [{"name": "Проспект Мира", "kind": "PMCExtraction", "left": "216", "top": "31"},
+                {"name": "Пункт МЧС", "kind": "PMCExtraction", "left": "155", "top": "-93"}, 
+                {"name": "Полицейский кордон (Платный)", "kind": "PMCExtraction", "left": "-18", "top": "112"},
+                {"name": "Спуск в подвал в Nakatani", "kind": "PMCExtraction", "left": "-22", "top": "333"}],
     "quests": []
   },
   {
