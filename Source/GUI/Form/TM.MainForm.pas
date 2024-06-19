@@ -106,6 +106,7 @@ begin
   FLocationGrid.Align := TAlignLayout.Client;
   FLocationGrid.Init;
   FLocationGrid.OnLocationChanged := OnLocationChanged;
+
 //
 //  FMousePosition := TMousePosition.Create(0, 0);
 
@@ -148,7 +149,13 @@ procedure TMainForm.FormKeyDown(Sender: TObject; var Key: Word; var KeyChar: Cha
 begin
   case Key of
     vkEscape:
-      SetFullScreenMode(False);
+      if LocationPanel.Visible then
+        LocationPanel.Visible := False
+      else
+      if MarkerFilterPanel.Visible then
+        MarkerFilterPanel.Visible := False
+      else
+        SetFullScreenMode(False);
     vkF11:
       SetFullScreenMode(True);
   end;
