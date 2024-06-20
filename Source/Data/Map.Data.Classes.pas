@@ -72,7 +72,6 @@ var
   JSONObject: TJSONValue;
   Map: TMap;
   i: Integer;
-  Layers: TLayerArray;
 begin
   JSONObject := TJSONObject.ParseJSONValue(Data);
   if not (JSONObject is TJSONArray) then
