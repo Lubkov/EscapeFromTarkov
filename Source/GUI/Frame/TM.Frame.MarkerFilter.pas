@@ -140,7 +140,7 @@ begin
 
   QuestGrid.BeginUpdate;
   try
-    for Idx := 0 to Length(FMap.Quests) - 1 do begin
+    for Idx := 0 to FMap.Quests.Count - 1 do begin
       Quest := FMap.Quests[Idx];
 
       Item := TSpeedButton.Create(Self);
@@ -148,7 +148,7 @@ begin
         Item.Tag := Idx;
         Item.Parent := QuestGrid;
         Item.Cursor := crHandPoint;
-        Item.Text := Quest.Name + ' (' + IntToStr(Length(Quest.Markers)) + ')';
+        Item.Text := Quest.Name + ' (' + IntToStr(Quest.Markers.Count) + ')';
         Item.StaysPressed := True;
         Item.StyleLookup := 'FilterItemStyle';
         Item.TextSettings.HorzAlign := TTextAlign.Leading;
@@ -161,7 +161,7 @@ begin
     QuestGrid.Position.X := 0;
     QuestGrid.Position.Y := 0;
     QuestGrid.Width := QuestContainer.Width;
-    QuestGrid.Height := QuestGrid.ItemHeight * Length(FMap.Quests);
+    QuestGrid.Height := QuestGrid.ItemHeight * FMap.Quests.Count;
   finally
     QuestGrid.EndUpdate;
   end;

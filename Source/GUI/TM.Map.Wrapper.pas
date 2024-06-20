@@ -180,16 +180,14 @@ var
   Quest: TQuest;
   i: Integer;
 begin
-  for i := 0 to Length(FMap.Markers) - 1 do begin
-    Marker := FMap.Markers[i];
-
+  for Marker in FMap.Markers do
     if FMarkerFilter.IsGropupEnable(Marker.Kind) then
 //      Markers.Add(@(FMap.Markers[i]));
       DrawMarker(MarkerIcon[Marker.Kind], Marker);
-  end;
 
-  for i := 0 to Length(FMap.Quests) - 1 do begin
+  for i := 0 to FMap.Quests.Count - 1 do begin
     Quest := FMap.Quests[i];
+
     if FMarkerFilter.IsQuestEnable(i) then
       for Marker in Quest.Markers do
         DrawMarker(MarkerIcon[Marker.Kind], Marker);
@@ -234,10 +232,10 @@ end;
 
 procedure TMapWrapper.LoadMap(const Value: TMap);
 const
-  FolderName = 'Maps';
+  FolderName = 'Levels';
   fmtFileName = '%s_%s.png';
 var
-  Layer: PLayer;
+  Layer: TLayer;
   FileName: string;
 begin
   FMap := Value;
@@ -250,8 +248,8 @@ begin
     Exit;
   end;
 
-  FileName := TPath.Combine(AppParams.Path, FolderName);
-  FileName := TPath.Combine(FileName, Format(fmtFileName, [Map.Name, Layer^.Name]));
+  FileName := TPath.Combine(AppParams.DataPath, FolderName);
+  FileName := TPath.Combine(FileName, Format(fmtFileName, [Map.Name, Layer.Name]));
   FBackground.LoadFromFile(FileName);
 
   MarkerFilter.Init(Value);

@@ -12,7 +12,7 @@ type
     DataPath: string;
     SreenshotPath: string;
     TrackLocation: Boolean;
-
+  public
     procedure Load;
   end;
 

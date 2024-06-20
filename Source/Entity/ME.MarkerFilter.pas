@@ -85,7 +85,7 @@ end;
 
 procedure TMarkerFilter.Init(const Map: TMap);
 begin
-  SetLength(FQuestFilter, Length(Map.Quests));
+  SetLength(FQuestFilter, Map.Quests.Count);
   SelectAllQuest(False);
 
   if Assigned(FOnMapChanged) then

@@ -10,11 +10,11 @@ const
   MainLayerIndex = 0;
 
 type
-  PLayer = ^TLayer;
-  TLayer = record
+  TLayer = class
   private
     FLevel: Integer;
     FName: string;
+
     function GetIsMainLevel: Boolean;
   public
     procedure Assign(const Source: TJSONValue);
@@ -24,13 +24,10 @@ type
     property IsMainLevel: Boolean read GetIsMainLevel;
   end;
 
-  PLayerArray = ^TLayerArray;
-  TLayerArray = array of TLayer;
   TMarkerKind = (PMCExtraction, ScavExtraction, CoopExtraction, Quest);
   TMarkerKindSet = set of TMarkerKind;
-  PMarker = ^TMarker;
 
-  TMarker = record
+  TMarker = class
   private
     FName: string;
     FKind: TMarkerKind;
@@ -47,22 +44,20 @@ type
     property Top: Integer read FTop write FTop;
   end;
 
-  PMarkerArray = ^TMarkerArray;
-  TMarkerArray = array of TMarker;
-
-  TQuest = record
+  TQuest = class
   private
     FName: string;
-    FMarkers: TMarkerArray;
+    FMarkers: TList<TMarker>;
   public
+    constructor Create;
+    destructor Destroy; override;
+
     procedure Assign(const Source: TJSONValue);
+    procedure ClearMarkers;
 
     property Name: string read FName write FName;
-    property Markers: TMarkerArray read FMarkers write FMarkers;
+    property Markers: TList<TMarker> read FMarkers write FMarkers;
   end;
-
-  PQuestArray = ^TQuestArray;
-  TQuestArray = array of TQuest;
 
   TMap = class(TObject)
   private
@@ -71,25 +66,29 @@ type
     FTop: Integer;
     FRight: Integer;
     FBottom: Integer;
-    FLayers: TLayerArray;
-    FMarkers: TMarkerArray;
-    FQuests: TQuestArray;
-    function GetMainLayer: PLayer;
+    FLayers: TList<TLayer>;
+    FMarkers: TList<TMarker>;
+    FQuests: TList<TQuest>;
+
+    function GetMainLayer: TLayer;
   public
     constructor Create;
     destructor Destroy; override;
 
     procedure Assign(const Source: TJSONValue);
+    procedure ClearLevels;
+    procedure ClearMarkers;
+    procedure ClearQuests;
 
     property Name: string read FName write FName;
     property Left: Integer read FLeft write FLeft;
     property Top: Integer read FTop write FTop;
     property Right: Integer read FRight write FRight;
     property Bottom: Integer read FBottom write FBottom;
-    property Layers: TLayerArray read FLayers write FLayers;
-    property Markers: TMarkerArray read FMarkers write FMarkers;
-    property Quests: TQuestArray read FQuests write FQuests;
-    property MainLayer: PLayer read GetMainLayer;
+    property Layers: TList<TLayer> read FLayers write FLayers;
+    property Markers: TList<TMarker> read FMarkers write FMarkers;
+    property Quests: TList<TQuest> read FQuests write FQuests;
+    property MainLayer: TLayer read GetMainLayer;
   end;
 
 implementation
@@ -133,12 +132,65 @@ end;
 
 { TQuest }
 
+constructor TQuest.Create;
+begin
+  inherited;
+
+  FMarkers := TList<TMarker>.Create;
+end;
+
+destructor TQuest.Destroy;
+begin
+  ClearMarkers;
+  FMarkers.Free;
+
+  inherited;
+end;
+
+procedure TQuest.ClearMarkers;
+var
+  i: Integer;
+begin
+  for i := 0 to FMarkers.Count - 1 do
+    FMarkers[i].Free;
+
+  FMarkers.Clear;
+end;
+
 procedure TQuest.Assign(const Source: TJSONValue);
 begin
   Name := Source.GetValue<string>('name');
 end;
 
 { TMap }
+
+constructor TMap.Create;
+begin
+  inherited;
+
+  FName := '';
+  FLeft := 0;
+  FTop := 0;
+  FRight := 0;
+  FBottom := 0;
+  FLayers := TList<TLayer>.Create;
+  FMarkers := TList<TMarker>.Create;
+  FQuests := TList<TQuest>.Create;
+end;
+
+destructor TMap.Destroy;
+begin
+  ClearLevels;
+  FLayers.Free;
+
+  ClearMarkers;
+  FMarkers.Free;
+
+  ClearQuests;
+  FQuests.Free;
+
+  inherited;
+end;
 
 procedure TMap.Assign(const Source: TJSONValue);
 begin
@@ -149,25 +201,43 @@ begin
   Bottom := Source.GetValue<Integer>('bottom');
 end;
 
-constructor TMap.Create;
-begin
-  inherited;
-
-end;
-
-destructor TMap.Destroy;
-begin
-
-  inherited;
-end;
-
-function TMap.GetMainLayer: PLayer;
+procedure TMap.ClearLevels;
 var
   i: Integer;
 begin
-  for i := 0 to Length(Layers) - 1  do
-    if Layers[i].IsMainLevel then begin
-      Result := @Layers[i];
+  for i := 0 to FLayers.Count - 1 do
+    FLayers[i].Free;
+
+  FLayers.Clear;
+end;
+
+procedure TMap.ClearMarkers;
+var
+  i: Integer;
+begin
+  for i := 0 to FMarkers.Count - 1 do
+    FMarkers[i].Free;
+
+  FMarkers.Clear;
+end;
+
+procedure TMap.ClearQuests;
+var
+  i: Integer;
+begin
+  for i := 0 to FQuests.Count - 1 do
+    FQuests[i].Free;
+
+  FQuests.Clear;
+end;
+
+function TMap.GetMainLayer: TLayer;
+var
+  Layer: TLayer;
+begin
+  for Layer in FLayers do
+    if Layer.IsMainLevel then begin
+      Result := Layer;
       Exit;
     end;
 

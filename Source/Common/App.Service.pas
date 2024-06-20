@@ -3,7 +3,7 @@ unit App.Service;
 interface
 
 uses
-  System.SysUtils, System.Variants, System.Classes;
+  System.SysUtils, System.Variants, System.Classes, System.IOUtils;
 
 type
   TAppService = class(TComponent)
@@ -46,8 +46,11 @@ begin
 end;
 
 procedure TAppService.LoadDataFromJSON;
+var
+  FileName: string;
 begin
-  DataSertvice.Load(AppParams.DataPath);
+  FileName := TPath.Combine(AppParams.DataPath, 'data.json');
+  DataSertvice.Load(FileName);
 end;
 
 end.

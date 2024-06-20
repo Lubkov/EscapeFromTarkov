@@ -9,9 +9,9 @@ uses
 type
   TJSONDataImport = class(TObject)
   private
-    class procedure LoadLayers(const Source: TJSONValue; Items: PLayerArray);
-    class procedure LoadMarkers(const Source: TJSONValue; Items: PMarkerArray);
-    class procedure LoadQuests(const Source: TJSONValue; Items: PQuestArray);
+    class procedure LoadLayers(const Source: TJSONValue; Items: TList<TLayer>);
+    class procedure LoadMarkers(const Source: TJSONValue; Items: TList<TMarker>);
+    class procedure LoadQuests(const Source: TJSONValue; Items: TList<TQuest>);
   public
     class procedure Load(const Data: string; Items: TList<TMap>);
     class procedure LoadFromFile(const FileName: string; Items: TList<TMap>);
@@ -19,50 +19,67 @@ type
 
 implementation
 
-class procedure TJSONDataImport.LoadLayers(const Source: TJSONValue; Items: PLayerArray);
+class procedure TJSONDataImport.LoadLayers(const Source: TJSONValue; Items: TList<TLayer>);
 var
   i: Integer;
   List: TJSONArray;
+  Layer: TLayer;
 begin
   if not (Source is TJSONArray) then
     Exit;
 
   List := TJSONArray(Source);
-  SetLength(Items^, List.Count);
-  for i := 0 to List.Count - 1 do
-    Items^[i].Assign(TJSONObject(List.Items[i]));
+  for i := 0 to List.Count - 1 do begin
+    Layer := TLayer.Create;
+    try
+      Layer.Assign(TJSONObject(List.Items[i]));
+    finally
+      Items.Add(Layer);
+    end;
+  end;
 end;
 
-class procedure TJSONDataImport.LoadMarkers(const Source: TJSONValue; Items: PMarkerArray);
+class procedure TJSONDataImport.LoadMarkers(const Source: TJSONValue; Items: TList<TMarker>);
 var
   i: Integer;
   List: TJSONArray;
+  Marker: TMarker;
 begin
   if not (Source is TJSONArray) then
     Exit;
 
   List := TJSONArray(Source);
-  SetLength(Items^, List.Count);
-  for i := 0 to List.Count - 1 do
-    Items^[i].Assign(TJSONObject(List.Items[i]));
+  for i := 0 to List.Count - 1 do begin
+    Marker := TMarker.Create;
+    try
+      Marker.Assign(TJSONObject(List.Items[i]));
+    finally
+      Items.Add(Marker);
+    end;
+  end;
 end;
 
-class procedure TJSONDataImport.LoadQuests(const Source: TJSONValue; Items: PQuestArray);
+class procedure TJSONDataImport.LoadQuests(const Source: TJSONValue; Items: TList<TQuest>);
 var
   i: Integer;
   List: TJSONArray;
   JSONObject: TJSONValue;
+  Quest: TQuest;
 begin
   if not (Source is TJSONArray) then
     Exit;
 
   List := TJSONArray(Source);
-  SetLength(Items^, List.Count);
   for i := 0 to List.Count - 1 do begin
     JSONObject := TJSONObject(List.Items[i]);
 
-    Items^[i].Assign(JSONObject);
-    LoadMarkers(JSONObject.FindValue('markers'), @(Items^[i].Markers));
+    Quest := TQuest.Create;
+    try
+      Quest.Assign(JSONObject);
+      LoadMarkers(JSONObject.FindValue('markers'), Quest.Markers);
+    finally
+      Items.Add(Quest);
+    end;
   end;
 end;
 
@@ -85,9 +102,9 @@ begin
       Map := TMap.Create;
       try
         Map.Assign(JSONObject);
-        LoadLayers(JSONObject.FindValue('layers'), @(Map.Layers));
-        LoadMarkers(JSONObject.FindValue('markers'), @(Map.Markers));
-        LoadQuests(JSONObject.FindValue('quests'), @(Map.Quests));
+        LoadLayers(JSONObject.FindValue('layers'), Map.Layers);
+        LoadMarkers(JSONObject.FindValue('markers'), Map.Markers);
+        LoadQuests(JSONObject.FindValue('quests'), Map.Quests);
       finally
         Items.Add(Map);
       end;
