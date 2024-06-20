@@ -1,4 +1,4 @@
-unit App.Constants;
+unit PG.Constants;
 
 interface
 
@@ -9,10 +9,10 @@ type
   TAppParams = record
   public
     Path: string;
-    MapsPath: string;
+    DataPath: string;
     SreenshotPath: string;
     TrackLocation: Boolean;
-
+  public
     procedure Load;
   end;
 
@@ -20,9 +20,6 @@ var
   AppParams: TAppParams;
 
 implementation
-
-const
-  MapsFolder = 'Maps';
 
 { TAppParams }
 
@@ -34,6 +31,7 @@ var
 begin
   Config := TIniFile.Create(TPath.Combine(Path, ConfigFileName));
   try
+    DataPath := Config.ReadString('Options', 'DataPath', '');
     SreenshotPath := Config.ReadString('Options', 'SreenshotPath', '');
     TrackLocation := Config.ReadBool('Options', 'TrackLocation', True);
   finally
@@ -43,6 +41,5 @@ end;
 
 initialization
   AppParams.Path := IncludeTrailingPathDelimiter(System.SysUtils.GetCurrentDir);
-  AppParams.MapsPath := TPath.Combine(AppParams.Path, MapsFolder);
 
 end.

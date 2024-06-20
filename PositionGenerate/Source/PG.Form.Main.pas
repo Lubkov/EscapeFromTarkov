@@ -14,53 +14,65 @@ uses
 type
   TMainForm = class(TForm)
     Panel1: TPanel;
-    laTopPoint: TLabel;
-    edPositionX: TNumberBox;
-    edPositionY: TNumberBox;
-    F: TClientDataSet;
-    FID: TIntegerField;
-    FName: TStringField;
-    FLeft: TIntegerField;
-    FTop: TIntegerField;
-    FRight: TIntegerField;
-    FBottom: TIntegerField;
     edMapName: TComboBox;
     buGenerate: TButton;
-    BindSourceDB1: TBindSourceDB;
-    BindingsList1: TBindingsList;
-    LinkListControlToField1: TLinkListControlToField;
     Label1: TLabel;
     edMapLeft: TNumberBox;
     edMapRight: TNumberBox;
-    LinkControlToField1: TLinkControlToField;
-    LinkControlToField2: TLinkControlToField;
     Label2: TLabel;
     edMapTop: TNumberBox;
     edMapBottom: TNumberBox;
-    LinkControlToField3: TLinkControlToField;
-    LinkControlToField4: TLinkControlToField;
     Line1: TLine;
     laScreenShotName: TLabel;
     ImageList24: TImageList;
-    VerticalLayout: TLayout;
+    Layout1: TLayout;
+    Layout2: TLayout;
+    PositionLayout: TLayout;
+    Label3: TLabel;
+    Layout4: TLayout;
+    edPositionX: TNumberBox;
+    edPositionY: TNumberBox;
+    Layout5: TLayout;
+    Layout6: TLayout;
     buTop: TSpeedButton;
     buBottom: TSpeedButton;
-    HorizontalLayout: TLayout;
+    Layout7: TLayout;
     edLeft: TSpeedButton;
     buRight: TSpeedButton;
-    Layout3: TLayout;
-    UniConnection1: TUniConnection;
+    edIncrement: TComboBox;
+    Button1: TButton;
+    laKindName: TLabel;
+    edKindName: TComboBox;
     procedure buGenerateClick(Sender: TObject);
     procedure edLeftClick(Sender: TObject);
     procedure edMapNameChange(Sender: TObject);
     procedure buRightClick(Sender: TObject);
     procedure buTopClick(Sender: TObject);
     procedure buBottomClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     procedure Init;
+    function GetMapBottom: Integer;
+    function GetMapLeft: Integer;
+    function GetMapRight: Integer;
+    function GetMapTop: Integer;
+    function GetIncrement: Integer;
+    function GetPositionX: Integer;
+    function GetPositionY: Integer;
+    procedure SetPositionX(const Value: Integer);
+    procedure SetPositionY(const Value: Integer);
+    procedure SaveToClipboard(const Value: string);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+
+    property MapLeft: Integer read GetMapLeft;
+    property MapTop: Integer read GetMapTop;
+    property MapRight: Integer read GetMapRight;
+    property MapBottom: Integer read GetMapBottom;
+    property PositionX: Integer read GetPositionX write SetPositionX;
+    property PositionY: Integer read GetPositionY write SetPositionY;
+    property Increment: Integer read GetIncrement;
   end;
 
 var
@@ -69,7 +81,7 @@ var
 implementation
 
 uses
-  App.Main.Service;
+  PG.Service;
 
 {$R *.fmx}
 
@@ -89,48 +101,140 @@ begin
   inherited;
 end;
 
+function TMainForm.GetMapLeft: Integer;
+begin
+  if edMapName.ItemIndex >= 0 then
+    Result := PositionService.Items[edMapName.ItemIndex].Left
+  else
+    Result := 9999;
+end;
+
+function TMainForm.GetMapTop: Integer;
+begin
+  if edMapName.ItemIndex >= 0 then
+    Result := PositionService.Items[edMapName.ItemIndex].Top
+  else
+    Result := -9999;
+end;
+
+function TMainForm.GetMapRight: Integer;
+begin
+  if edMapName.ItemIndex >= 0 then
+    Result := PositionService.Items[edMapName.ItemIndex].Right
+  else
+    Result := -9999;
+end;
+
+function TMainForm.GetMapBottom: Integer;
+begin
+  if edMapName.ItemIndex >= 0 then
+    Result := PositionService.Items[edMapName.ItemIndex].Bottom
+  else
+    Result := 9999;
+end;
+
+function TMainForm.GetPositionX: Integer;
+begin
+  Result := Trunc(edPositionX.Value);
+end;
+
+procedure TMainForm.SetPositionX(const Value: Integer);
+begin
+  edPositionX.Value := Value;
+end;
+
+function TMainForm.GetPositionY: Integer;
+begin
+  Result := Trunc(edPositionY.Value);
+end;
+
+procedure TMainForm.SetPositionY(const Value: Integer);
+begin
+  edPositionY.Value := Value;
+end;
+
+function TMainForm.GetIncrement: Integer;
+begin
+  Result := StrToInt(edIncrement.Items[edIncrement.ItemIndex]);
+end;
+
+procedure TMainForm.edLeftClick(Sender: TObject);
+begin
+  if MapLeft < MapRight then
+    PositionX := PositionX - Increment
+  else
+    PositionX := PositionX + Increment;
+end;
+
+procedure TMainForm.buRightClick(Sender: TObject);
+begin
+  if MapLeft < MapRight then
+    PositionX := PositionX + Increment
+  else
+    PositionX := PositionX - Increment;
+end;
+
+procedure TMainForm.buTopClick(Sender: TObject);
+begin
+  if MapTop < MapBottom then
+    PositionY := PositionY - Increment
+  else
+    PositionY := PositionY + Increment;
+end;
+
+procedure TMainForm.buBottomClick(Sender: TObject);
+begin
+  if MapTop < MapBottom then
+    PositionY := PositionY + Increment
+  else
+    PositionY := PositionY - Increment;
+end;
+
 procedure TMainForm.Init;
 var
-  Query: TUniQuery;
+  i: Integer;
+  Kind: TMarkerKind;
 begin
-  F.CreateDataSet;
-  F.Open;
+  PositionService.LoadParams;
+  PositionService.LoadDataFromJSON;
 
-  AppService.Connect;
-  try
-    Query := TUniQuery.Create(Self);
-    try
-      Query.Connection := AppService.Connection.Connection;
-      Query.SQL.Text := 'SELECT ID, Name, Left, Top, Right, Bottom FROM Map';
-      Query.Open;
+  for i := 0 to PositionService.Count - 1 do
+    edMapName.Items.Add(PositionService.Items[i].Name);
 
-      F.DisableControls;
-      try
-        while not Query.Eof do begin
-          F.Append;
-          FID.Value := Query.FieldByName('ID').Value;
-          FName.AsString := Query.FieldByName('Name').AsString;
-          FLeft.AsInteger := Query.FieldByName('Left').AsInteger;
-          FTop.AsInteger := Query.FieldByName('Top').AsInteger;
-          FRight.AsInteger := Query.FieldByName('Right').AsInteger;
-          FBottom.AsInteger := Query.FieldByName('Bottom').AsInteger;
-          F.Post;
+  for Kind := Low(TMarkerKind) to High(TMarkerKind) do
+    edKindName.Items.Add(PositionService.KindToStr(Kind));
 
-          Query.Next;
-        end;
+  edKindName.ItemIndex := 0;
+end;
 
-        F.First;
-      finally
-        F.EnableControls;
-      end;
-    finally
-      Query.Free;
-    end;
-  finally
-    AppService.Disconnect;
+procedure TMainForm.edMapNameChange(Sender: TObject);
+begin
+  edMapLeft.Value := MapLeft;
+  edMapTop.Value := MapTop;
+  edMapRight.Value := MapRight;
+  edMapBottom.Value := MapBottom;
+
+//  laMapWidth.Text := 'Ширина карты: (' + IntToStr(MapLeft) + ', ' + IntToStr(MapRight) + ')';
+//  laMapHeight.Text := 'Высота карты: (' + IntToStr(MapTop) + ', ' + IntToStr(MapBottom) + ')';
+
+  if MapLeft < MapRight then begin
+    edPositionX.Min := MapLeft;
+    edPositionX.Max := MapRight;
+  end
+  else begin
+    edPositionX.Min := MapRight;
+    edPositionX.Max := MapLeft;
   end;
+end;
 
-  edMapNameChange(Self);
+procedure TMainForm.SaveToClipboard(const Value: string);
+var
+  clp: IFMXClipboardService;
+begin
+  if TPlatformServices.Current.SupportsPlatformService(IFMXClipboardService) then begin
+    clp := IFMXClipboardService(TPlatformServices.Current.GetPlatformService(IFMXClipboardService));
+    clp.SetClipboard(Value);
+  end;
 end;
 
 procedure TMainForm.buGenerateClick(Sender: TObject);
@@ -140,7 +244,6 @@ const
 var
   x, y: Integer;
   FileName: string;
-  clp: IFMXClipboardService;
 begin
   x := Trunc(edPositionX.Value);
   y := Trunc(edPositionY.Value);
@@ -148,74 +251,26 @@ begin
   laScreenShotName.Text := FileName;
   laScreenShotName.Visible := True;
 
-  if TPlatformServices.Current.SupportsPlatformService(IFMXClipboardService) then begin
-    clp := IFMXClipboardService(TPlatformServices.Current.GetPlatformService(IFMXClipboardService));
-    clp.SetClipboard(FileName);
-  end;
+  SaveToClipboard(FileName);
 end;
 
-procedure TMainForm.edMapNameChange(Sender: TObject);
-begin
-  if FLeft.AsInteger < FRight.AsInteger then begin
-    edPositionX.Min := FLeft.AsInteger;
-    edPositionX.Max := FRight.AsInteger;
-  end
-  else begin
-    edPositionX.Min := FRight.AsInteger;
-    edPositionX.Max := FLeft.AsInteger;
-  end;
-end;
-
-procedure TMainForm.edLeftClick(Sender: TObject);
+procedure TMainForm.Button1Click(Sender: TObject);
+const
+  MarkerItemFmt = '{"name": "%s", "kind": "%s", "left": "%d", "top": "%d"}';
 var
-  Value: Integer;
+  Kind: TMarkerKind;
+  MarkerName: string;
+  MarkerKind: string;
+  Marker: string;
 begin
-  Value := Trunc(edPositionX.Value);
-  if FLeft.AsInteger < FRight.AsInteger then
-    Dec(Value)
-  else
-    Inc(Value);
+  Kind := TMarkerKind(edKindName.ItemIndex);
+  MarkerName := '';
+  MarkerKind := TRttiEnumerationType.GetName<TMarkerKind>(Kind);
+  Marker := Format(MarkerItemFmt, [MarkerName, MarkerKind, PositionX, PositionY]);
 
-  edPositionX.Value := Value;
-end;
-
-procedure TMainForm.buRightClick(Sender: TObject);
-var
-  Value: Integer;
-begin
-  Value := Trunc(edPositionX.Value);
-  if FLeft.AsInteger < FRight.AsInteger then
-    Inc(Value)
-  else
-    Dec(Value);
-
-  edPositionX.Value := Value;
-end;
-
-procedure TMainForm.buTopClick(Sender: TObject);
-var
-  Value: Integer;
-begin
-  Value := Trunc(edPositionY.Value);
-  if FTop.AsInteger < FBottom.AsInteger then
-    Dec(Value)
-  else
-    Inc(Value);
-
-  edPositionY.Value := Value;
-end;
-
-procedure TMainForm.buBottomClick(Sender: TObject);
-var
-  Value: Integer;
-begin
-  Value := Trunc(edPositionY.Value);
-  if FTop.AsInteger < FBottom.AsInteger then
-    Inc(Value)
-  else
-    Dec(Value);
-
-  edPositionY.Value := Value;
+  laScreenShotName.Text := Marker;
+  laScreenShotName.Visible := True;
+  SaveToClipboard(Marker);
 end;
 
 end.

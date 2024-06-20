@@ -31,6 +31,9 @@
                {"name": "Лендлиз - Часть 1", 
                 "markers": [{"name": "", "kind": "Quest", "left": "231", "top": "-70"},
                             {"name": "", "kind": "Quest", "left": "56", "top": "-52"}]}, 
+               {"name": "Поисковая миссия",
+                "markers": [{"name": "", "kind": "Quest", "left": "289", "top": "-455"},
+                            {"name": "", "kind": "Quest", "left": "197", "top": "-588"}]},
                {"name": "Поручение",
                 "markers": [{"name": "", "kind": "Quest", "left": "-257", "top": "6"}]},
                {"name": "Путь выживальщика. Запасливый",
@@ -88,6 +91,8 @@
                 "markers": [{"name": "", "kind": "Quest", "left": "570", "top": "-22"},
                             {"name": "", "kind": "Quest", "left": "496", "top": "-10"},
                             {"name": "", "kind": "Quest", "left": "14", "top": "0"}]},
+               {"name": "Проверка на вшивость",
+                "markers": [{"name": "", "kind": "Quest", "left": "101", "top": "-7"}]},
                {"name": "Секта - Часть 2",
                 "markers": [{"name": "", "kind": "Quest", "left": "184", "top": "183"}]}
               ]

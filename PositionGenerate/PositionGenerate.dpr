@@ -4,10 +4,9 @@ uses
   MidasLib,
   System.StartUpCopy,
   FMX.Forms,
-  App.Lite.Connection in 'Source\App.Lite.Connection.pas',
-  App.Main.Service in 'Source\App.Main.Service.pas',
   PG.Form.Main in 'Source\PG.Form.Main.pas' {MainForm},
-  App.Constants in 'Source\App.Constants.pas';
+  PG.Service in 'Source\PG.Service.pas',
+  PG.Constants in 'Source\PG.Constants.pas';
 
 {$R *.res}
 
@@ -19,7 +18,7 @@ begin
   Application.Initialize;
 
   // app initialization
-  AppService := TAppService.Create(Application);
+  PositionService := TPositionService.Create(Application);
 
   Application.CreateForm(TMainForm, MainForm);
   Application.Run;
