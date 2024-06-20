@@ -26,13 +26,14 @@ type
     MapTagImages: TImageList;
     acZoomIn: TAction;
     acZoomOut: TAction;
-    MainContainer: TScrollBox;
+    MainContainer2: TScrollBox;
     acChoiceLocation: TAction;
     acCentreMap: TAction;
     acMarkerFilterOpen: TAction;
     buChoiceLocation: TSpeedButton;
     LocationPanel: TPanel;
     MarkerFilterPanel: TPanel;
+    MainContainer: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acFullScreenExecute(Sender: TObject);
@@ -98,6 +99,11 @@ begin
   FMapWrapper.Images := MapTagImages;
   FMapWrapper.OnMapChange := OnMapChange;
 
+  FInteractiveMap := TInteractiveMap.Create(Self);
+  FInteractiveMap.Parent := Self;
+  FInteractiveMap.Align := TAlignLayout.Client;
+  FInteractiveMap.SendToBack;
+
   FMarkerFilterList := TMarkerFilterList.Create(Self);
   FMarkerFilterList.Parent := MarkerFilterPanel;
   FMarkerFilterList.Align := TAlignLayout.Client;
@@ -110,12 +116,12 @@ begin
   FLocationGrid.Init;
   FLocationGrid.OnLocationChanged := OnLocationChanged;
 
-  FInteractiveMap := TInteractiveMap.Create(Self);
-  FInteractiveMap.Parent := MainContainer;
-  FInteractiveMap.Position.X := 0;
-  FInteractiveMap.Position.Y := 0;
-  FInteractiveMap.Height := 0;
-  FInteractiveMap.Width := 0;
+
+
+//  FInteractiveMap.Position.X := 0;
+//  FInteractiveMap.Position.Y := 0;
+//  FInteractiveMap.Height := 0;
+//  FInteractiveMap.Width := 0;
 //
 //  FMousePosition := TMousePosition.Create(0, 0);
 
@@ -204,8 +210,8 @@ begin
 //  MapBackground.Bitmap.Assign(Bitmap);
 
 //  FInteractiveMap.Visible := not Bitmap.IsEmpty;
-  FInteractiveMap.Width := Bitmap.Width;
-  FInteractiveMap.Height := Bitmap.Height;
+//  FInteractiveMap.Width := Bitmap.Width;
+//  FInteractiveMap.Height := Bitmap.Height;
   FInteractiveMap.Bitmap := Bitmap;
 
 //  for i := 0 to FMapWrapper.Markers.Count -1 do begin
@@ -334,13 +340,8 @@ end;
 
 procedure TMainForm.acCentreMapExecute(Sender: TObject);
 begin
-//  MainContainer.Scene.DisableUpdating;
-//  try
-    MapBackground.Position.X := (MainContainer.Width - MapBackground.Width) / 2;
-    MapBackground.Position.Y := (MainContainer.Height - MapBackground.Height) / 2;
-//  finally
-//    MainContainer.Scene.EnableUpdating;
-//  end;
+  MapBackground.Position.X := (MainContainer.Width - MapBackground.Width) / 2;
+  MapBackground.Position.Y := (MainContainer.Height - MapBackground.Height) / 2;
 end;
 
 procedure TMainForm.acMarkerFilterOpenExecute(Sender: TObject);

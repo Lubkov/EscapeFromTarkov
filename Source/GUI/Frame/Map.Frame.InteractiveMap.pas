@@ -5,10 +5,11 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
-  FMX.Objects;
+  FMX.Objects, FMX.Layouts;
 
 type
   TInteractiveMap = class(TFrame)
+    MainContainer: TScrollBox;
     Background: TImage;
   private
     function GetBitmap: TBitmap;
@@ -30,8 +31,10 @@ end;
 
 procedure TInteractiveMap.SetBitmap(const Value: TBitmap);
 begin
-  Self.Width := Bitmap.Width;
-  Self.Height := Bitmap.Height;
+  Background.Position.X := 0;
+  Background.Position.Y := 0;
+  Background.Width := Bitmap.Width;
+  Background.Height := Bitmap.Height;
   Background.Bitmap.Assign(nil);
   Background.Bitmap.Assign(Value);
 end;
