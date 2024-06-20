@@ -342,7 +342,7 @@ end;
 procedure TMapWrapper.ZoomIn;
 begin
   if FZoom < 180 then begin
-    Inc(FZoom, 20);
+    Inc(FZoom, 10);
     DrawPoint(FPoint);
   end;
 end;
@@ -352,7 +352,7 @@ begin
   if FZoom < 60 then
     Exit;
 
-  Dec(FZoom, 20);
+  Dec(FZoom, 10);
   DrawPoint(FPoint);
 end;
 

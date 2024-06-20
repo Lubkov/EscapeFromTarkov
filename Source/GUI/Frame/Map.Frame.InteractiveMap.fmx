@@ -2,14 +2,23 @@ object InteractiveMap: TInteractiveMap
   Size.Width = 320.000000000000000000
   Size.Height = 240.000000000000000000
   Size.PlatformDefault = False
-  object MainContainer: TScrollBox
+  object MainContainer2: TScrollBox
     Align = Contents
+    EnableDragHighlight = False
     Size.Width = 320.000000000000000000
     Size.Height = 240.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 7
+    ShowScrollBars = False
     Viewport.Width = 320.000000000000000000
     Viewport.Height = 240.000000000000000000
+  end
+  object MainContainer: TLayout
+    Align = Contents
+    Size.Width = 320.000000000000000000
+    Size.Height = 240.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 8
     object Background: TImage
       MultiResBitmap.Height = 1758
       MultiResBitmap.Width = 1759
@@ -19,6 +28,11 @@ object InteractiveMap: TInteractiveMap
       Size.Width = 100.000000000000000000
       Size.Height = 100.000000000000000000
       Size.PlatformDefault = False
+      OnDblClick = BackgroundDblClick
+      OnMouseDown = BackgroundMouseDown
+      OnMouseMove = BackgroundMouseMove
+      OnMouseUp = BackgroundMouseUp
+      OnMouseLeave = BackgroundMouseLeave
     end
   end
 end

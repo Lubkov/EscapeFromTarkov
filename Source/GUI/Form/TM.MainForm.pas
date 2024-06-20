@@ -13,7 +13,6 @@ uses
 type
   TMainForm = class(TForm)
     MainStyleBook: TStyleBook;
-    MapBackground: TImage;
     ImageList32: TImageList;
     MapControlLayout: TLayout;
     buFullScreen: TSpeedButton;
@@ -26,14 +25,12 @@ type
     MapTagImages: TImageList;
     acZoomIn: TAction;
     acZoomOut: TAction;
-    MainContainer2: TScrollBox;
     acChoiceLocation: TAction;
     acCentreMap: TAction;
     acMarkerFilterOpen: TAction;
     buChoiceLocation: TSpeedButton;
     LocationPanel: TPanel;
     MarkerFilterPanel: TPanel;
-    MainContainer: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acFullScreenExecute(Sender: TObject);
@@ -41,19 +38,14 @@ type
     procedure acZoomInExecute(Sender: TObject);
     procedure acZoomOutExecute(Sender: TObject);
     procedure acChoiceLocationExecute(Sender: TObject);
-    procedure MapBackgroundMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
-    procedure MapBackgroundMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
-    procedure MapBackgroundMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
     procedure acCentreMapExecute(Sender: TObject);
     procedure acMarkerFilterOpenExecute(Sender: TObject);
     procedure FormResize(Sender: TObject);
-    procedure MapBackgroundDblClick(Sender: TObject);
-    procedure ToolButtonMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
+    procedure buToolButtonMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
   private
     FFormWrapper: TFormWrapper;
     FMapWrapper: TMapWrapper;
     FLocationGrid: TLocationGrid;
-    FMousePosition: TMousePosition;
     FMarkerFilterList: TMarkerFilterList;
     FInteractiveMap: TInteractiveMap;
 
@@ -61,7 +53,8 @@ type
     procedure OnMapChange(Bitmap: TBitmap);
     procedure OnLocationChanged(const Value: TMap);
     procedure MarkerFilterListOnClose(Sender: TObject);
-    procedure SetMouseDown(const Value: Boolean);
+    procedure OnInteractiveMapDblClick(Sender: TObject);
+    procedure OnInteractiveMouseDown(Sender: TObject);
   public
   end;
 
@@ -101,8 +94,10 @@ begin
 
   FInteractiveMap := TInteractiveMap.Create(Self);
   FInteractiveMap.Parent := Self;
-  FInteractiveMap.Align := TAlignLayout.Client;
+  FInteractiveMap.Align := TAlignLayout.Contents;
   FInteractiveMap.SendToBack;
+  FInteractiveMap.OnDoubleClick := OnInteractiveMapDblClick;
+  FInteractiveMap.OnMouseDown := OnInteractiveMouseDown;
 
   FMarkerFilterList := TMarkerFilterList.Create(Self);
   FMarkerFilterList.Parent := MarkerFilterPanel;
@@ -115,8 +110,6 @@ begin
   FLocationGrid.Align := TAlignLayout.Client;
   FLocationGrid.Init;
   FLocationGrid.OnLocationChanged := OnLocationChanged;
-
-
 
 //  FInteractiveMap.Position.X := 0;
 //  FInteractiveMap.Position.Y := 0;
@@ -182,6 +175,11 @@ begin
   MarkerFilterPanel.Visible := False;
 end;
 
+procedure TMainForm.buToolButtonMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
+begin
+  FInteractiveMap.SetMouseDown(False);
+end;
+
 procedure TMainForm.acFullScreenExecute(Sender: TObject);
 begin
   SetFullScreenMode(not FFormWrapper.FullScreen);
@@ -241,15 +239,6 @@ begin
   MarkerFilterPanel.Visible := False;
 end;
 
-procedure TMainForm.SetMouseDown(const Value: Boolean);
-begin
-  FMousePosition.Down := Value;
-  if Value then
-    MapBackground.Cursor := crSizeAll
-  else
-    MapBackground.Cursor := crDefault;
-end;
-
 procedure TMainForm.acZoomInExecute(Sender: TObject);
 begin
   FMapWrapper.ZoomIn;
@@ -287,61 +276,20 @@ begin
   LocationPanel.Visible := not LocationPanel.Visible;
 end;
 
-procedure TMainForm.MapBackgroundDblClick(Sender: TObject);
+procedure TMainForm.OnInteractiveMapDblClick(Sender: TObject);
 begin
   SetFullScreenMode(not FFormWrapper.FullScreen);
 end;
 
-procedure TMainForm.ToolButtonMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
-begin
-  SetMouseDown(False);
-end;
-
-procedure TMainForm.MapBackgroundMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
+procedure TMainForm.OnInteractiveMouseDown(Sender: TObject);
 begin
   LocationPanel.Visible := False;
   MarkerFilterPanel.Visible := False;
-
-  SetMouseDown(True);
-  FMousePosition.X := X;
-  FMousePosition.Y := Y;
-end;
-
-procedure TMainForm.MapBackgroundMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
-const
-  Offset = 5;
-var
-  DeltaX, DeltaY: Single;
-begin
-  if not FMousePosition.Down then
-    Exit;
-
-//{$IFNDEF DEBUG}
-//  Label1.Caption := Sender.ClassName + '.Position: (' + IntToStr(X) + ', ' + IntToStr(Y) + ')';
-//  Label2.Caption := 'Image: (' + IntToStr(imLocalMap.Left) + ', ' + IntToStr(imLocalMap.Top) + ')';
-//{$ENDIF}
-
-  DeltaX := X - FMousePosition.X;
-  DeltaY := Y - FMousePosition.Y;
-
-  if (Abs(DeltaX) > Offset) or (Abs(DeltaY) > Offset) then begin
-    MapBackground.Position.X := MapBackground.Position.X + DeltaX;
-    MapBackground.Position.Y := MapBackground.Position.Y + DeltaY;
-
-    FMousePosition.X := X - DeltaX;
-    FMousePosition.Y := Y - DeltaY;
-  end;
-end;
-
-procedure TMainForm.MapBackgroundMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
-begin
-  SetMouseDown(False);
 end;
 
 procedure TMainForm.acCentreMapExecute(Sender: TObject);
 begin
-  MapBackground.Position.X := (MainContainer.Width - MapBackground.Width) / 2;
-  MapBackground.Position.Y := (MainContainer.Height - MapBackground.Height) / 2;
+  FInteractiveMap.Center;
 end;
 
 procedure TMainForm.acMarkerFilterOpenExecute(Sender: TObject);
