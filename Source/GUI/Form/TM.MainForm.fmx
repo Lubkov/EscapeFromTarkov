@@ -28,10 +28,10 @@ object MainForm: TMainForm
       MultiResBitmap = <
         item
         end>
-      Cursor = crHandPoint
       Size.Width = 100.000000000000000000
       Size.Height = 100.000000000000000000
       Size.PlatformDefault = False
+      Visible = False
       OnDblClick = MapBackgroundDblClick
       OnMouseDown = MapBackgroundMouseDown
       OnMouseMove = MapBackgroundMouseMove
@@ -135,6 +135,7 @@ object MainForm: TMainForm
     object buFullScreen: TSpeedButton
       Action = acFullScreen
       Align = Top
+      Cursor = crHandPoint
       Images = ImageList32
       ImageIndex = 0
       Margins.Top = 25.000000000000000000
@@ -144,10 +145,12 @@ object MainForm: TMainForm
       Size.PlatformDefault = False
       StyleLookup = 'IconToolButtonStyle'
       TextSettings.Trimming = None
+      OnMouseMove = ToolButtonMouseMove
     end
     object buZoomIn: TSpeedButton
       Action = acZoomIn
       Align = Top
+      Cursor = crHandPoint
       Images = ImageList32
       ImageIndex = 1
       Margins.Top = 10.000000000000000000
@@ -157,10 +160,12 @@ object MainForm: TMainForm
       Size.PlatformDefault = False
       StyleLookup = 'IconToolButtonStyle'
       TextSettings.Trimming = None
+      OnMouseMove = ToolButtonMouseMove
     end
     object buZoomOut: TSpeedButton
       Action = acZoomOut
       Align = Top
+      Cursor = crHandPoint
       Images = ImageList32
       ImageIndex = 2
       Margins.Top = 10.000000000000000000
@@ -170,10 +175,12 @@ object MainForm: TMainForm
       Size.PlatformDefault = False
       StyleLookup = 'IconToolButtonStyle'
       TextSettings.Trimming = None
+      OnMouseMove = ToolButtonMouseMove
     end
     object buCentreMap: TSpeedButton
       Action = acCentreMap
       Align = Top
+      Cursor = crHandPoint
       Images = ImageList32
       ImageIndex = 3
       Margins.Top = 10.000000000000000000
@@ -183,10 +190,12 @@ object MainForm: TMainForm
       Size.PlatformDefault = False
       StyleLookup = 'IconToolButtonStyle'
       TextSettings.Trimming = None
+      OnMouseMove = ToolButtonMouseMove
     end
     object buMapFilters: TSpeedButton
       Action = acMarkerFilterOpen
       Align = Top
+      Cursor = crHandPoint
       Images = ImageList32
       ImageIndex = 6
       Margins.Top = 10.000000000000000000
@@ -196,10 +205,12 @@ object MainForm: TMainForm
       Size.PlatformDefault = False
       StyleLookup = 'IconToolButtonStyle'
       TextSettings.Trimming = None
+      OnMouseMove = ToolButtonMouseMove
     end
     object buChoiceLocation: TSpeedButton
       Action = acChoiceLocation
       Align = Top
+      Cursor = crHandPoint
       Images = ImageList32
       ImageIndex = 5
       Size.Width = 48.000000000000000000
@@ -207,6 +218,7 @@ object MainForm: TMainForm
       Size.PlatformDefault = False
       StyleLookup = 'IconToolButtonStyle'
       TextSettings.Trimming = None
+      OnMouseMove = ToolButtonMouseMove
     end
   end
   object LocationPanel: TPanel

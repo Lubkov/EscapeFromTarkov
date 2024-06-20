@@ -8,7 +8,7 @@ uses
   FMX.Graphics, FMX.Dialogs, TM.Form.Wrapper, FMX.Controls.Presentation, FMX.StdCtrls,
   FMX.Layouts, System.ImageList, FMX.ImgList, FMX.Objects, System.Actions, FMX.ActnList,
   TM.Map.Wrapper, TM.Frame.Location, TM.Frame.MarkerFilter,
-  Map.Data.Types, Map.Data.Classes;
+  Map.Data.Types, Map.Data.Classes, Map.Frame.InteractiveMap;
 
 type
   TMainForm = class(TForm)
@@ -47,17 +47,20 @@ type
     procedure acMarkerFilterOpenExecute(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure MapBackgroundDblClick(Sender: TObject);
+    procedure ToolButtonMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
   private
     FFormWrapper: TFormWrapper;
     FMapWrapper: TMapWrapper;
     FLocationGrid: TLocationGrid;
     FMousePosition: TMousePosition;
     FMarkerFilterList: TMarkerFilterList;
+    FInteractiveMap: TInteractiveMap;
 
     procedure SetFullScreenMode(const Value: Boolean);
     procedure OnMapChange(Bitmap: TBitmap);
     procedure OnLocationChanged(const Value: TMap);
     procedure MarkerFilterListOnClose(Sender: TObject);
+    procedure SetMouseDown(const Value: Boolean);
   public
   end;
 
@@ -107,6 +110,12 @@ begin
   FLocationGrid.Init;
   FLocationGrid.OnLocationChanged := OnLocationChanged;
 
+  FInteractiveMap := TInteractiveMap.Create(Self);
+  FInteractiveMap.Parent := MainContainer;
+  FInteractiveMap.Position.X := 0;
+  FInteractiveMap.Position.Y := 0;
+  FInteractiveMap.Height := 0;
+  FInteractiveMap.Width := 0;
 //
 //  FMousePosition := TMousePosition.Create(0, 0);
 
@@ -187,10 +196,17 @@ begin
 //{$IFNDEF DEBUG}
 //  Logger.Lines.Add('OnMapChange');
 //{$ENDIF}
-  MapBackground.Width := Bitmap.Width;
-  MapBackground.Height := Bitmap.Height;
-  MapBackground.Bitmap.Assign(nil);
-  MapBackground.Bitmap.Assign(Bitmap);
+
+
+//  MapBackground.Width := Bitmap.Width;
+//  MapBackground.Height := Bitmap.Height;
+//  MapBackground.Bitmap.Assign(nil);
+//  MapBackground.Bitmap.Assign(Bitmap);
+
+//  FInteractiveMap.Visible := not Bitmap.IsEmpty;
+  FInteractiveMap.Width := Bitmap.Width;
+  FInteractiveMap.Height := Bitmap.Height;
+  FInteractiveMap.Bitmap := Bitmap;
 
 //  for i := 0 to FMapWrapper.Markers.Count -1 do begin
 //    Item := TImage.Create(Self);
@@ -210,12 +226,6 @@ begin
   if (Value = nil) or (FMapWrapper.Map = Value) then
     Exit;
 
-//  if Value.Layers.Count = 0 then begin
-//    MapService.LoadLayers(Value, True);
-//    MapService.LoadMarkers(Value);
-//    MapService.LoadQuests(Value);
-//  end;
-
   FMapWrapper.LoadMap(Value);
   FMapWrapper.Start;
 end;
@@ -223,6 +233,15 @@ end;
 procedure TMainForm.MarkerFilterListOnClose(Sender: TObject);
 begin
   MarkerFilterPanel.Visible := False;
+end;
+
+procedure TMainForm.SetMouseDown(const Value: Boolean);
+begin
+  FMousePosition.Down := Value;
+  if Value then
+    MapBackground.Cursor := crSizeAll
+  else
+    MapBackground.Cursor := crDefault;
 end;
 
 procedure TMainForm.acZoomInExecute(Sender: TObject);
@@ -267,12 +286,17 @@ begin
   SetFullScreenMode(not FFormWrapper.FullScreen);
 end;
 
+procedure TMainForm.ToolButtonMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
+begin
+  SetMouseDown(False);
+end;
+
 procedure TMainForm.MapBackgroundMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
 begin
   LocationPanel.Visible := False;
   MarkerFilterPanel.Visible := False;
 
-  FMousePosition.Down := True;
+  SetMouseDown(True);
   FMousePosition.X := X;
   FMousePosition.Y := Y;
 end;
@@ -305,7 +329,7 @@ end;
 
 procedure TMainForm.MapBackgroundMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
 begin
-  FMousePosition.Down := False;
+  SetMouseDown(False);
 end;
 
 procedure TMainForm.acCentreMapExecute(Sender: TObject);

@@ -38,7 +38,8 @@ uses
   TM.Frame.Location in 'Source\GUI\Frame\TM.Frame.Location.pas' {LocationGrid: TFrame},
   Map.Data.Classes in 'Source\Data\Map.Data.Classes.pas',
   Map.Data.Types in 'Source\Data\Map.Data.Types.pas',
-  Map.Data.Service in 'Source\Data\Map.Data.Service.pas';
+  Map.Data.Service in 'Source\Data\Map.Data.Service.pas',
+  Map.Frame.InteractiveMap in 'Source\GUI\Frame\Map.Frame.InteractiveMap.pas' {InteractiveMap: TFrame};
 
 {$R *.res}
 
