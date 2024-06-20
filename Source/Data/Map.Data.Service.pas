@@ -81,18 +81,11 @@ end;
 procedure TDataSertvice.Load(const FileName: string);
 var
   Data: TStrings;
-  DataImport: TJSONDataImport;
 begin
   Data := TStringList.Create;
   try
     Data.LoadFromFile(FileName, TEncoding.UTF8);
-
-    DataImport := TJSONDataImport.Create;
-    try
-      DataImport.Load(Data.Text, Items);
-    finally
-      DataImport.Free;
-    end;
+    TJSONDataImport.Load(Data.Text, Items);
   finally
     Data.Free;
   end;

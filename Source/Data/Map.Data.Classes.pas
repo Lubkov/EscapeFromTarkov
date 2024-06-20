@@ -9,17 +9,17 @@ uses
 type
   TJSONDataImport = class(TObject)
   private
-    procedure LoadLayers(const Source: TJSONValue; Items: PLayerArray);
-    procedure LoadMarkers(const Source: TJSONValue; Items: PMarkerArray);
-    procedure LoadQuests(const Source: TJSONValue; Items: PQuestArray);
+    class procedure LoadLayers(const Source: TJSONValue; Items: PLayerArray);
+    class procedure LoadMarkers(const Source: TJSONValue; Items: PMarkerArray);
+    class procedure LoadQuests(const Source: TJSONValue; Items: PQuestArray);
   public
-    procedure Load(const Data: string; Items: TList<TMap>);
-    procedure LoadFromFile(const FileName: string; Items: TList<TMap>);
+    class procedure Load(const Data: string; Items: TList<TMap>);
+    class procedure LoadFromFile(const FileName: string; Items: TList<TMap>);
   end;
 
 implementation
 
-procedure TJSONDataImport.LoadLayers(const Source: TJSONValue; Items: PLayerArray);
+class procedure TJSONDataImport.LoadLayers(const Source: TJSONValue; Items: PLayerArray);
 var
   i: Integer;
   List: TJSONArray;
@@ -33,7 +33,7 @@ begin
     Items^[i].Assign(TJSONObject(List.Items[i]));
 end;
 
-procedure TJSONDataImport.LoadMarkers(const Source: TJSONValue; Items: PMarkerArray);
+class procedure TJSONDataImport.LoadMarkers(const Source: TJSONValue; Items: PMarkerArray);
 var
   i: Integer;
   List: TJSONArray;
@@ -47,7 +47,7 @@ begin
     Items^[i].Assign(TJSONObject(List.Items[i]));
 end;
 
-procedure TJSONDataImport.LoadQuests(const Source: TJSONValue; Items: PQuestArray);
+class procedure TJSONDataImport.LoadQuests(const Source: TJSONValue; Items: PQuestArray);
 var
   i: Integer;
   List: TJSONArray;
@@ -66,11 +66,10 @@ begin
   end;
 end;
 
-procedure TJSONDataImport.Load(const Data: string; Items: TList<TMap>);
+class procedure TJSONDataImport.Load(const Data: string; Items: TList<TMap>);
 var
   Root: TJSONArray;
   JSONObject: TJSONValue;
-  List: TJSONArray;
   Map: TMap;
   i: Integer;
   Layers: TLayerArray;
@@ -99,7 +98,7 @@ begin
   end;
 end;
 
-procedure TJSONDataImport.LoadFromFile(const FileName: string; Items: TList<TMap>);
+class procedure TJSONDataImport.LoadFromFile(const FileName: string; Items: TList<TMap>);
 var
   Data: TStrings;
 begin
