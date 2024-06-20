@@ -93,12 +93,12 @@ end;
 procedure TAppService.LoadParams;
 begin
   AppParams.Load;
-  FConnection.Database := AppParams.DatabasePath;
+//  FConnection.Database := AppParams.DatabasePath;
 end;
 
 procedure TAppService.LoadDataFromJSON;
 begin
-  DataSertvice.Load;
+  DataSertvice.Load(AppParams.DataPath);
 end;
 
 end.

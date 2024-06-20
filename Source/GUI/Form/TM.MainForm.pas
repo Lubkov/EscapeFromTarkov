@@ -56,7 +56,7 @@ type
 
     procedure SetFullScreenMode(const Value: Boolean);
     procedure OnMapChange(Bitmap: TBitmap);
-    procedure OnLocationChanged(const Value: PMap);
+    procedure OnLocationChanged(const Value: TMap);
     procedure MarkerFilterListOnClose(Sender: TObject);
   public
   end;
@@ -180,6 +180,9 @@ begin
 end;
 
 procedure TMainForm.OnMapChange(Bitmap: TBitmap);
+//var
+//  i: Integer;
+//  Item: TImage;
 begin
 //{$IFNDEF DEBUG}
 //  Logger.Lines.Add('OnMapChange');
@@ -188,9 +191,19 @@ begin
   MapBackground.Height := Bitmap.Height;
   MapBackground.Bitmap.Assign(nil);
   MapBackground.Bitmap.Assign(Bitmap);
+
+//  for i := 0 to FMapWrapper.Markers.Count -1 do begin
+//    Item := TImage.Create(Self);
+//    Item.Height := 32;
+//    Item.Width := 32;
+//    Item.Parent := MainContainer;
+//    Item.Position.X := PMarker(FMapWrapper.Markers[i])^.Left;
+//    Item.Position.Y := PMarker(FMapWrapper.Markers[i])^.Top;
+//    Item.Bitmap.Assign(MapTagImages.Bitmap(TSizeF.Create(32, 32), Ord(PMarker(FMapWrapper.Markers[i])^.Kind)));
+//  end;
 end;
 
-procedure TMainForm.OnLocationChanged(const Value: PMap);
+procedure TMainForm.OnLocationChanged(const Value: TMap);
 begin
   LocationPanel.Visible := False;
 

@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Variants, System.Rtti, System.TypInfo,
-  System.SysConst, System.JSON;
+  System.SysConst, System.JSON, Generics.Collections;
 
 const
   MainLayerIndex = 0;
@@ -28,6 +28,7 @@ type
   TLayerArray = array of TLayer;
   TMarkerKind = (PMCExtraction, ScavExtraction, CoopExtraction, Quest);
   TMarkerKindSet = set of TMarkerKind;
+  PMarker = ^TMarker;
 
   TMarker = record
   private
@@ -63,8 +64,7 @@ type
   PQuestArray = ^TQuestArray;
   TQuestArray = array of TQuest;
 
-  PMap = ^TMap;
-  TMap = record
+  TMap = class(TObject)
   private
     FName: string;
     FLeft: Integer;
@@ -76,6 +76,9 @@ type
     FQuests: TQuestArray;
     function GetMainLayer: PLayer;
   public
+    constructor Create;
+    destructor Destroy; override;
+
     procedure Assign(const Source: TJSONValue);
 
     property Name: string read FName write FName;
@@ -87,25 +90,6 @@ type
     property Markers: TMarkerArray read FMarkers write FMarkers;
     property Quests: TQuestArray read FQuests write FQuests;
     property MainLayer: PLayer read GetMainLayer;
-  end;
-
-  PMapArray = ^TMapArray;
-  TMapArray = array of TMap;
-
-  TJSONData = class(TObject)
-  private
-    FMapList: TMapArray;
-  
-    function GetMapItem(Index: Integer): TMap;
-    procedure LoadLayers(const Source: TJSONValue; Items: PLayerArray);
-    procedure LoadMarkers(const Source: TJSONValue; Items: PMarkerArray);
-    procedure LoadQuests(const Source: TJSONValue; Items: PQuestArray);
-    procedure SetMapItem(Index: Integer; const Value: TMap);
-  public
-    procedure Load(const Data: string);
-    procedure LoadFromFile(const FileName: string);
-
-    property Map[Index: Integer]: TMap read GetMapItem write SetMapItem; 
   end;
 
 implementation
@@ -165,6 +149,18 @@ begin
   Bottom := Source.GetValue<Integer>('bottom');
 end;
 
+constructor TMap.Create;
+begin
+  inherited;
+
+end;
+
+destructor TMap.Destroy;
+begin
+
+  inherited;
+end;
+
 function TMap.GetMainLayer: PLayer;
 var
   i: Integer;
@@ -176,106 +172,6 @@ begin
     end;
 
   Result := nil;
-end;
-
-{ TJSONData }
-
-function TJSONData.GetMapItem(Index: Integer): TMap;
-begin
-  Result := FMapList[Index];
-end;
-
-procedure TJSONData.SetMapItem(Index: Integer; const Value: TMap);
-begin
-  FMapList[Index] := Value;
-end;
-
-procedure TJSONData.LoadLayers(const Source: TJSONValue; Items: PLayerArray);
-var
-  i: Integer;
-  List: TJSONArray;
-begin
-  if not (Source is TJSONArray) then
-    Exit;
-
-  List := TJSONArray(Source);
-  SetLength(Items^, List.Count);
-  for i := 0 to List.Count - 1 do
-    Items^[i].Assign(TJSONObject(List.Items[i]));
-end;
-
-procedure TJSONData.LoadMarkers(const Source: TJSONValue; Items: PMarkerArray);
-var
-  i: Integer;
-  List: TJSONArray;
-begin
-  if not (Source is TJSONArray) then
-    Exit;
-
-  List := TJSONArray(Source);
-  SetLength(Items^, List.Count);
-  for i := 0 to List.Count - 1 do
-    Items^[i].Assign(TJSONObject(List.Items[i]));
-end;
-
-procedure TJSONData.LoadQuests(const Source: TJSONValue; Items: PQuestArray);
-var
-  i: Integer;
-  List: TJSONArray;
-  JSONObject: TJSONValue;
-begin
-  if not (Source is TJSONArray) then
-    Exit;
-
-  List := TJSONArray(Source);
-  SetLength(Items^, List.Count);
-  for i := 0 to List.Count - 1 do begin
-    JSONObject := TJSONObject(List.Items[i]);
-
-    Items^[i].Assign(JSONObject);
-    LoadMarkers(JSONObject.FindValue('markers'), @(Items^[i].FMarkers));
-  end;
-end;
-
-procedure TJSONData.Load(const Data: string);
-var
-  Root: TJSONArray;
-  JSONObject: TJSONValue;
-  List: TJSONArray;
-  i: Integer;
-  Layers: TLayerArray;
-begin
-  JSONObject := TJSONObject.ParseJSONValue(Data);
-  if not (JSONObject is TJSONArray) then
-    Exit;
-
-  Root := TJSONArray(JSONObject);
-  try
-    SetLength(FMapList, Root.Count);
-    for i := 0 to Root.Count - 1 do begin
-      JSONObject := TJSONObject(Root.Items[i]);
-
-      Map[i].Assign(JSONObject);
-      LoadLayers(JSONObject.FindValue('layers'), @(FMapList[i].FLayers));
-      LoadMarkers(JSONObject.FindValue('markers'), @(FMapList[i].FMarkers));
-      LoadQuests(JSONObject.FindValue('quests'), @(FMapList[i].FQuests));
-    end;
-  finally
-    Root.Free;
-  end;
-end;
-
-procedure TJSONData.LoadFromFile(const FileName: string);
-var
-  Data: TStrings;
-begin
-  Data := TStringList.Create;
-  try
-    Data.LoadFromFile(FileName, TEncoding.UTF8);
-    Load(Data.Text);
-  finally
-    Data.Free;
-  end;
 end;
 
 end.

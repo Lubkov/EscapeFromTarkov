@@ -4,19 +4,26 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Variants, System.IOUtils,
-  Map.Data.Types, Map.Data.Classes;
+  Generics.Collections, Map.Data.Types, Map.Data.Classes;
 
 type
   TDataSertvice = class
   private
-    FData: TJSONMapData;
+    FItems: TList<TMap>;
+
+    function GetCount: Integer;
+    function GetMapItem(Index: Integer): TMap;
+    procedure SetMapItem(Index: Integer; const Value: TMap);
   public
     constructor Create;
     destructor Destroy; override;
 
-    procedure Load;
+    procedure Clear;
+    procedure Load(const FileName: string);
 
-    property Data: TJSONMapData read FData;
+    property Items: TList<TMap> read FItems;
+    property Count: Integer read GetCount;
+    property Map[Index: Integer]: TMap read GetMapItem write SetMapItem;
   end;
 
 var
@@ -33,22 +40,62 @@ constructor TDataSertvice.Create;
 begin
   inherited;
 
-  FData := TJSONMapData.Create;
+  FItems := TList<TMap>.Create;
 end;
 
 destructor TDataSertvice.Destroy;
 begin
-  FData.Free;
+  Clear;
+  FItems.Free;
 
   inherited;
 end;
 
-procedure TDataSertvice.Load;
-var
-  FileName: string;
+function TDataSertvice.GetCount: Integer;
 begin
-  FileName := System.IOUtils.TPath.Combine(AppParams.Path, 'data.json');
-  FData.LoadFromFile(FileName);
+  Result := FItems.Count;
+end;
+
+function TDataSertvice.GetMapItem(Index: Integer): TMap;
+begin
+  Result := Items[Index];
+end;
+
+procedure TDataSertvice.SetMapItem(Index: Integer; const Value: TMap);
+begin
+  Items[Index] := Value;
+end;
+
+procedure TDataSertvice.Clear;
+var
+  i: Integer;
+begin
+  try
+    for i := 0 to FItems.Count - 1 do
+      FItems[i].Free;
+  finally
+    FItems.Clear;
+  end;
+end;
+
+procedure TDataSertvice.Load(const FileName: string);
+var
+  Data: TStrings;
+  DataImport: TJSONDataImport;
+begin
+  Data := TStringList.Create;
+  try
+    Data.LoadFromFile(FileName, TEncoding.UTF8);
+
+    DataImport := TJSONDataImport.Create;
+    try
+      DataImport.Load(Data.Text, Items);
+    finally
+      DataImport.Free;
+    end;
+  finally
+    Data.Free;
+  end;
 end;
 
 end.

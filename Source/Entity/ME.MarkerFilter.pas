@@ -8,7 +8,7 @@ uses
 
 type
   TBoolArray = array of Boolean;
-  TMapChangedEvent = procedure(Map: PMap) of object;
+  TMapChangedEvent = procedure(Map: TMap) of object;
 
   TMarkerFilter = class
   private
@@ -24,7 +24,7 @@ type
     destructor Destroy; override;
 
     procedure Clear;
-    procedure Init(const Map: PMap);
+    procedure Init(const Map: TMap);
 
     procedure EnableGroup(const Kind: TMarkerKind);
     procedure DisableGroup(const Kind: TMarkerKind);
@@ -83,7 +83,7 @@ begin
   SetLength(FQuestFilter, 0);
 end;
 
-procedure TMarkerFilter.Init(const Map: PMap);
+procedure TMarkerFilter.Init(const Map: TMap);
 begin
   SetLength(FQuestFilter, Length(Map.Quests));
   SelectAllQuest(False);

@@ -15,7 +15,7 @@ type
   private
     FDirectory: string;
     FTrackLocation: Boolean;
-    FMap: PMap;
+    FMap: TMap;
     FBackground: TBitmap;
     FChangeMonitor: TChangeMonitor;
     FOnMapChange: TOnMapChangeEvent;
@@ -24,6 +24,7 @@ type
     FImages: TImageList;
     FMarkerIcons: TMarkerIconArray;
     FMarkerFilter: TMarkerFilter;
+    FMarkers: TList;
 
     procedure DoMapChange(Bitmap: TBitmap);
     procedure OnFileChange(Sender: TObject);
@@ -37,7 +38,7 @@ type
 
     function GetScreenshotName: string;
     procedure DeleteAllScreenshots;
-    procedure LoadMap(const Value: PMap);
+    procedure LoadMap(const Value: TMap);
 
     function ExtractPoint(const FileName: string): TPoint;
     procedure DrawPoint(const Value: TPoint);
@@ -48,13 +49,14 @@ type
     procedure Stop;
     procedure Refresh;
 
-    property Map: PMap read FMap;
+    property Map: TMap read FMap;
     property Directory: string read FDirectory;
     property TrackLocation: Boolean read FTrackLocation write FTrackLocation;
     property Images: TImageList read FImages write SetImages;
     property MarkerIcon[Index: TMarkerKind]: TBitmap read GetMarkerIcon;
     property MarkerFilter: TMarkerFilter read FMarkerFilter;
     property OnMapChange: TOnMapChangeEvent read FOnMapChange write FOnMapChange;
+    property Markers: TList read FMarkers;
   end;
 
 implementation
@@ -80,6 +82,8 @@ begin
 
   FMarkerFilter := TMarkerFilter.Create;
   FMarkerFilter.OnChanged := OnFilterChanged;
+
+  FMarkers := TList.Create;
 end;
 
 destructor TMapWrapper.Destroy;
@@ -88,6 +92,8 @@ begin
   FChangeMonitor.Free;
   FOnMapChange := nil;
   FBackground.Free;
+
+  FMarkers.Free;
 
   inherited;
 end;
@@ -174,15 +180,16 @@ var
   Quest: TQuest;
   i: Integer;
 begin
-  for i := 0 to Length(FMap^.Markers) - 1 do begin
-    Marker := FMap^.Markers[i];
+  for i := 0 to Length(FMap.Markers) - 1 do begin
+    Marker := FMap.Markers[i];
 
     if FMarkerFilter.IsGropupEnable(Marker.Kind) then
+//      Markers.Add(@(FMap.Markers[i]));
       DrawMarker(MarkerIcon[Marker.Kind], Marker);
   end;
 
   for i := 0 to Length(FMap.Quests) - 1 do begin
-    Quest := FMap^.Quests[i];
+    Quest := FMap.Quests[i];
     if FMarkerFilter.IsQuestEnable(i) then
       for Marker in Quest.Markers do
         DrawMarker(MarkerIcon[Marker.Kind], Marker);
@@ -225,7 +232,7 @@ begin
     TFile.Delete(FileName);
 end;
 
-procedure TMapWrapper.LoadMap(const Value: PMap);
+procedure TMapWrapper.LoadMap(const Value: TMap);
 const
   FolderName = 'Maps';
   fmtFileName = '%s_%s.png';
@@ -237,14 +244,14 @@ begin
   FPoint.Empty := True;
   FZoom := 100;
 
-  Layer := Map^.MainLayer;
+  Layer := Map.MainLayer;
   if Layer = nil then begin
     FBackground.Assign(nil);
     Exit;
   end;
 
   FileName := TPath.Combine(AppParams.Path, FolderName);
-  FileName := TPath.Combine(FileName, Format(fmtFileName, [Map^.Name, Layer^.Name]));
+  FileName := TPath.Combine(FileName, Format(fmtFileName, [Map.Name, Layer^.Name]));
   FBackground.LoadFromFile(FileName);
 
   MarkerFilter.Init(Value);

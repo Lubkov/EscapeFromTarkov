@@ -26,13 +26,13 @@ type
     procedure SpeedButton1Click(Sender: TObject);
   private
     FMarkerFilter: TMarkerFilter;
-    FMap: PMap;
+    FMap: TMap;
     FQuests: TList<TSpeedButton>;
     FMaxHeight: Integer;
     FOnClose: TNotifyEvent;
 
     procedure ClearQuests;
-    procedure OnMapChanged(Value: PMap);
+    procedure OnMapChanged(Value: TMap);
     procedure OnExtractionButtonClick(Sender: TObject);
     procedure OnQuestButtonClick(Sender: TObject);
   public
@@ -98,9 +98,8 @@ begin
   FMarkerFilter.OnMapChanged := OnMapChanged;
 end;
 
-procedure TMarkerFilterList.OnMapChanged(Value: PMap);
+procedure TMarkerFilterList.OnMapChanged(Value: TMap);
 var
-  Map: TMap;
   Idx: Integer;
   Quest: TQuest;
   Item: TSpeedButton;
@@ -114,12 +113,11 @@ begin
     ClearQuests;
     Exit;
   end;
-  Map := FMap^;
 
   PMCCount := 0;
   ScavCount := 0;
   CoopCount := 0;
-  for Marker in Map.Markers do
+  for Marker in FMap.Markers do
     case Marker.Kind of
       TMarkerKind.PMCExtraction:
         Inc(PMCCount);
@@ -142,8 +140,8 @@ begin
 
   QuestGrid.BeginUpdate;
   try
-    for Idx := 0 to Length(Map.Quests) - 1 do begin
-      Quest := Map.Quests[Idx];
+    for Idx := 0 to Length(FMap.Quests) - 1 do begin
+      Quest := FMap.Quests[Idx];
 
       Item := TSpeedButton.Create(Self);
       try
@@ -163,7 +161,7 @@ begin
     QuestGrid.Position.X := 0;
     QuestGrid.Position.Y := 0;
     QuestGrid.Width := QuestContainer.Width;
-    QuestGrid.Height := QuestGrid.ItemHeight * Length(Map.Quests);
+    QuestGrid.Height := QuestGrid.ItemHeight * Length(FMap.Quests);
   finally
     QuestGrid.EndUpdate;
   end;

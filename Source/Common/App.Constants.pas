@@ -9,7 +9,7 @@ type
   TAppParams = record
   public
     Path: string;
-    DatabasePath: string;
+    DataPath: string;
     SreenshotPath: string;
     TrackLocation: Boolean;
 
@@ -31,7 +31,7 @@ var
 begin
   Config := TIniFile.Create(TPath.Combine(Path, ConfigFileName));
   try
-    DatabasePath := Config.ReadString('Options', 'DatabasePath', '');
+    DataPath := Config.ReadString('Options', 'DataPath', '');
     SreenshotPath := Config.ReadString('Options', 'SreenshotPath', '');
     TrackLocation := Config.ReadBool('Options', 'TrackLocation', True);
   finally

@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Variants, System.Rtti, System.TypInfo,
-  System.SysConst, System.JSON, Map.Data.Types;
+  System.SysConst, System.JSON, Generics.Collections, Map.Data.Types;
 
 type
   TJSONDataImport = class(TObject)
@@ -13,24 +13,8 @@ type
     procedure LoadMarkers(const Source: TJSONValue; Items: PMarkerArray);
     procedure LoadQuests(const Source: TJSONValue; Items: PQuestArray);
   public
-    procedure Load(const Data: string; Items: PMapArray);
-    procedure LoadFromFile(const FileName: string; Items: PMapArray);
-  end;
-
-  TJSONMapData = class(TObject)
-  private
-    FMapArray: TMapArray;
-
-    function GetMapItem(Index: Integer): PMap;
-    procedure SetMapItem(Index: Integer; const Value: PMap);
-    function GetCount: Integer;
-  public
-    procedure Clear;
-    procedure Load(const Data: string);
-    procedure LoadFromFile(const FileName: string);
-
-    property Count: Integer read GetCount;
-    property Map[Index: Integer]: PMap read GetMapItem write SetMapItem;
+    procedure Load(const Data: string; Items: TList<TMap>);
+    procedure LoadFromFile(const FileName: string; Items: TList<TMap>);
   end;
 
 implementation
@@ -82,11 +66,12 @@ begin
   end;
 end;
 
-procedure TJSONDataImport.Load(const Data: string; Items: PMapArray);
+procedure TJSONDataImport.Load(const Data: string; Items: TList<TMap>);
 var
   Root: TJSONArray;
   JSONObject: TJSONValue;
   List: TJSONArray;
+  Map: TMap;
   i: Integer;
   Layers: TLayerArray;
 begin
@@ -96,21 +81,25 @@ begin
 
   Root := TJSONArray(JSONObject);
   try
-    SetLength(Items^, Root.Count);
     for i := 0 to Root.Count - 1 do begin
       JSONObject := TJSONObject(Root.Items[i]);
 
-      Items^[i].Assign(JSONObject);
-      LoadLayers(JSONObject.FindValue('layers'), @(Items^[i].Layers));
-      LoadMarkers(JSONObject.FindValue('markers'), @(Items^[i].Markers));
-      LoadQuests(JSONObject.FindValue('quests'), @(Items^[i].Quests));
+      Map := TMap.Create;
+      try
+        Map.Assign(JSONObject);
+        LoadLayers(JSONObject.FindValue('layers'), @(Map.Layers));
+        LoadMarkers(JSONObject.FindValue('markers'), @(Map.Markers));
+        LoadQuests(JSONObject.FindValue('quests'), @(Map.Quests));
+      finally
+        Items.Add(Map);
+      end;
     end;
   finally
     Root.Free;
   end;
 end;
 
-procedure TJSONDataImport.LoadFromFile(const FileName: string; Items: PMapArray);
+procedure TJSONDataImport.LoadFromFile(const FileName: string; Items: TList<TMap>);
 var
   Data: TStrings;
 begin
@@ -118,55 +107,6 @@ begin
   try
     Data.LoadFromFile(FileName, TEncoding.UTF8);
     Load(Data.Text, Items);
-  finally
-    Data.Free;
-  end;
-end;
-
-{ TJSONMapData }
-
-function TJSONMapData.GetCount: Integer;
-begin
-  Result := Length(FMapArray);
-end;
-
-function TJSONMapData.GetMapItem(Index: Integer): PMap;
-begin
-  Result := @FMapArray[Index];
-end;
-
-procedure TJSONMapData.SetMapItem(Index: Integer; const Value: PMap);
-begin
-  FMapArray[Index] := Value^;
-end;
-
-procedure TJSONMapData.Clear;
-begin
-  SetLength(FMapArray, 0);
-end;
-
-procedure TJSONMapData.Load(const Data: string);
-var
-  DataImport: TJSONDataImport;
-begin
-  Clear;
-
-  DataImport := TJSONDataImport.Create;
-  try
-    DataImport.Load(Data, @FMapArray);
-  finally
-    DataImport.Free;
-  end;
-end;
-
-procedure TJSONMapData.LoadFromFile(const FileName: string);
-var
-  Data: TStrings;
-begin
-  Data := TStringList.Create;
-  try
-    Data.LoadFromFile(FileName, TEncoding.UTF8);
-    Load(Data.Text);
   finally
     Data.Free;
   end;
