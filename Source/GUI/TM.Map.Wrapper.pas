@@ -50,6 +50,7 @@ type
     procedure Refresh;
 
     property Map: TMap read FMap;
+    property Background: TBitmap read FBackground;
     property Directory: string read FDirectory;
     property TrackLocation: Boolean read FTrackLocation write FTrackLocation;
     property Images: TImageList read FImages write SetImages;
@@ -180,9 +181,9 @@ var
   Quest: TQuest;
   i: Integer;
 begin
-  for Marker in FMap.Markers do
-    if FMarkerFilter.IsGropupEnable(Marker.Kind) then
-      DrawMarker(MarkerIcon[Marker.Kind], Marker);
+//  for Marker in FMap.Markers do
+//    if FMarkerFilter.IsGropupEnable(Marker.Kind) then
+//      DrawMarker(MarkerIcon[Marker.Kind], Marker);
 
   for i := 0 to FMap.Quests.Count - 1 do begin
     Quest := FMap.Quests[i];

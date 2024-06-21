@@ -3,9 +3,9 @@ unit Map.Frame.InteractiveMap;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
-  FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
-  FMX.Objects, FMX.Layouts, TM.Form.Wrapper, FMX.Controls.Presentation,
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  Generics.Collections, FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs,
+  FMX.StdCtrls, FMX.Objects, FMX.Layouts, TM.Form.Wrapper, FMX.Controls.Presentation,
   System.ImageList, FMX.ImgList, TM.Map.Wrapper, ME.MarkerFilter, Map.Data.Types;
 
 type
@@ -22,6 +22,7 @@ type
   private
     FMapWrapper: TMapWrapper;
     FMousePosition: TMousePosition;
+    FItems: TList<TImage>;
     FOnDoubleClick: TNotifyEvent;
     FOnMouseDown: TNotifyEvent;
 
@@ -31,6 +32,8 @@ type
     function GetMarkerFilter: TMarkerFilter;
     function GetMap: TMap;
     procedure SetMap(const Value: TMap);
+
+    procedure Clear;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -69,6 +72,8 @@ begin
   FMapWrapper.TrackLocation := AppParams.TrackLocation;
   FMapWrapper.Images := MapTagImages;
   FMapWrapper.OnMapChange := OnMapChange;
+
+  FItems := TList<TImage>.Create;
 end;
 
 destructor TInteractiveMap.Destroy;
@@ -76,6 +81,9 @@ begin
   FOnDoubleClick := nil;
   FOnMouseDown := nil;
   FMapWrapper.Free;
+
+  Clear;
+  FItems.Free;
 
   inherited;
 end;
@@ -95,34 +103,44 @@ begin
 end;
 
 procedure TInteractiveMap.OnMapChange(Bitmap: TBitmap);
-//var
-//  i: Integer;
-//  Item: TImage;
+const
+  MarkerHeight = 32;
+  MarkerWidth = 32;
+var
+  Marker: TMarker;
+  Item: TImage;
+  Offset: Double;
+  Left, Top: Integer;
 begin
 //{$IFNDEF DEBUG}
 //  Logger.Lines.Add('OnMapChange');
 //{$ENDIF}
 
-
-//  MapBackground.Width := Bitmap.Width;
-//  MapBackground.Height := Bitmap.Height;
-//  MapBackground.Bitmap.Assign(nil);
-//  MapBackground.Bitmap.Assign(Bitmap);
-
-//  FInteractiveMap.Visible := not Bitmap.IsEmpty;
-//  FInteractiveMap.Width := Bitmap.Width;
-//  FInteractiveMap.Height := Bitmap.Height;
   Self.Bitmap := Bitmap;
 
-//  for i := 0 to FMapWrapper.Markers.Count -1 do begin
-//    Item := TImage.Create(Self);
-//    Item.Height := 32;
-//    Item.Width := 32;
-//    Item.Parent := MainContainer;
-//    Item.Position.X := PMarker(FMapWrapper.Markers[i])^.Left;
-//    Item.Position.Y := PMarker(FMapWrapper.Markers[i])^.Top;
-//    Item.Bitmap.Assign(MapTagImages.Bitmap(TSizeF.Create(32, 32), Ord(PMarker(FMapWrapper.Markers[i])^.Kind)));
-//  end;
+  Clear;
+  for Marker in Map.Markers do
+    if MarkerFilter.IsGropupEnable(Marker.Kind) then begin
+      Offset := Abs((Map.Top - Marker.Top) / (Map.Bottom - Map.Top));
+      Top := Trunc(Bitmap.Height * Offset) - MarkerHeight div 2;
+      Offset := Abs((Map.Left - Marker.Left) / (Map.Right - Map.Left));
+      Left := Trunc(Bitmap.Width * Offset) - MarkerWidth div 2;
+
+      Item := TImage.Create(Self);
+      try
+        Item.Height := MarkerHeight;
+        Item.Width := MarkerWidth;
+        Item.Parent := Background;
+        Item.Position.X := Left;
+        Item.Position.Y := Top;
+        Item.Cursor := crHandPoint;
+        Item.Bitmap.Assign(MapTagImages.Bitmap(TSizeF.Create(32, 32), Ord(Marker.Kind)));
+        Item.Hint := Marker.Name;
+        Item.ShowHint := Trim(Marker.Name) <> '';
+      finally
+        FItems.Add(Item);
+      end;
+    end;
 end;
 
 function TInteractiveMap.GetMarkerFilter: TMarkerFilter;
@@ -142,6 +160,18 @@ begin
 
   FMapWrapper.LoadMap(Value);
   FMapWrapper.Start;
+end;
+
+procedure TInteractiveMap.Clear;
+var
+  i: Integer;
+begin
+  try
+    for i := 0 to FItems.Count - 1 do
+      FItems[i].Free;
+  finally
+    FItems.Clear;
+  end;
 end;
 
 procedure TInteractiveMap.SetMouseDown(const Value: Boolean);
