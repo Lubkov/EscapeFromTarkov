@@ -260,6 +260,7 @@ begin
   SetMouseDown(True);
   FMousePosition.X := X;
   FMousePosition.Y := Y;
+  MarkerPanel.Visible := False;
 
   if Assigned(FOnMouseDown) then
     FOnMouseDown(Self);
