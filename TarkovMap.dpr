@@ -38,7 +38,8 @@ uses
   Map.Data.Classes in 'Source\Data\Map.Data.Classes.pas',
   Map.Data.Types in 'Source\Data\Map.Data.Types.pas',
   Map.Data.Service in 'Source\Data\Map.Data.Service.pas',
-  Map.Frame.InteractiveMap in 'Source\GUI\Frame\Map.Frame.InteractiveMap.pas' {InteractiveMap: TFrame};
+  Map.Frame.InteractiveMap in 'Source\GUI\Frame\Map.Frame.InteractiveMap.pas' {InteractiveMap: TFrame},
+  Map.Frame.Marker in 'Source\GUI\Frame\Map.Frame.Marker.pas' {MarkerDescript: TFrame};
 
 {$R *.res}
 

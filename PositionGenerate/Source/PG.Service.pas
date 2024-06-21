@@ -108,13 +108,13 @@ function TPositionService.KindToStr(Value: TMarkerKind): string;
 begin
   case Value of
     TMarkerKind.PMCExtraction:
-      Result := 'Выход ЧВК';
+      Result := 'Р’С‹С…РѕРґ Р§Р’Рљ';
     TMarkerKind.ScavExtraction:
-      Result := 'Выход дикого';
+      Result := 'Р’С‹С…РѕРґ РґРёРєРѕРіРѕ';
     TMarkerKind.CoopExtraction:
-      Result := 'Совм. выход';
+      Result := 'РЎРѕРІРј. РІС‹С…РѕРґ';
     TMarkerKind.Quest:
-      Result := 'Квест';
+      Result := 'РљРІРµСЃС‚';
   else
     Result := '';
   end;

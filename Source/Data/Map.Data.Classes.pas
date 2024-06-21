@@ -11,6 +11,7 @@ type
   private
     class procedure LoadLayers(const Source: TJSONValue; Items: TList<TLayer>);
     class procedure LoadMarkers(const Source: TJSONValue; Items: TList<TMarker>);
+    class procedure LoadMarkerItems(const Source: TJSONValue; Items: TList<string>);
     class procedure LoadQuests(const Source: TJSONValue; Items: TList<TQuest>);
   public
     class procedure Load(const Data: string; Items: TList<TMap>);
@@ -43,6 +44,7 @@ class procedure TJSONDataImport.LoadMarkers(const Source: TJSONValue; Items: TLi
 var
   i: Integer;
   List: TJSONArray;
+  JSONObject: TJSONValue;
   Marker: TMarker;
 begin
   if not (Source is TJSONArray) then
@@ -50,12 +52,32 @@ begin
 
   List := TJSONArray(Source);
   for i := 0 to List.Count - 1 do begin
+    JSONObject := TJSONObject(List.Items[i]);
+
     Marker := TMarker.Create;
     try
-      Marker.Assign(TJSONObject(List.Items[i]));
+      Marker.Assign(JSONObject);
+      LoadMarkerItems(JSONObject.FindValue('items'), Marker.Items);
     finally
       Items.Add(Marker);
     end;
+  end;
+end;
+
+class procedure TJSONDataImport.LoadMarkerItems(const Source: TJSONValue; Items: TList<string>);
+var
+  i: Integer;
+  List: TJSONArray;
+  JSONObject: TJSONValue;
+begin
+  if (Source = nil) or not (Source is TJSONArray) then
+    Exit;
+
+  List := TJSONArray(Source);
+  for i := 0 to List.Count - 1 do begin
+    JSONObject := TJSONObject(List.Items[i]);
+
+    Items.Add(JSONObject.GetValue<string>('id'));
   end;
 end;
 

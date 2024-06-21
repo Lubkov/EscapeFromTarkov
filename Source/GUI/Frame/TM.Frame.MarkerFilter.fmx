@@ -195,8 +195,8 @@ object MarkerFilterList: TMarkerFilterList
     Size.Height = 349.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 10
-    Viewport.Width = 300.000000000000000000
-    Viewport.Height = 351.000000000000000000
+    Viewport.Width = 284.000000000000000000
+    Viewport.Height = 349.000000000000000000
     object QuestGrid: TGridLayout
       ItemHeight = 28.000000000000000000
       ItemWidth = 300.000000000000000000
@@ -207,7 +207,7 @@ object MarkerFilterList: TMarkerFilterList
       TabOrder = 0
     end
   end
-  object SpeedButton1: TSpeedButton
+  object buClose: TSpeedButton
     Images = ImageList24
     ImageIndex = 4
     Position.X = 304.000000000000000000
@@ -216,7 +216,7 @@ object MarkerFilterList: TMarkerFilterList
     Size.Height = 24.000000000000000000
     Size.PlatformDefault = False
     TextSettings.Trimming = None
-    OnClick = SpeedButton1Click
+    OnClick = buCloseClick
   end
   object ImageList24: TImageList
     Source = <

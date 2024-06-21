@@ -22,8 +22,8 @@ type
     QuestGrid: TGridLayout;
     laQuestGroup: TLabel;
     QuestContainer: TVertScrollBox;
-    SpeedButton1: TSpeedButton;
-    procedure SpeedButton1Click(Sender: TObject);
+    buClose: TSpeedButton;
+    procedure buCloseClick(Sender: TObject);
   private
     FMarkerFilter: TMarkerFilter;
     FMap: TMap;
@@ -194,7 +194,7 @@ begin
     FMarkerFilter.DisablQuest(Item.Tag);
 end;
 
-procedure TMarkerFilterList.SpeedButton1Click(Sender: TObject);
+procedure TMarkerFilterList.buCloseClick(Sender: TObject);
 begin
   if Assigned(FOnClose) then
     FOnClose(Self);

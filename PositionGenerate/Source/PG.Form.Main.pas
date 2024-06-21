@@ -214,8 +214,8 @@ begin
   edMapRight.Value := MapRight;
   edMapBottom.Value := MapBottom;
 
-//  laMapWidth.Text := 'Ширина карты: (' + IntToStr(MapLeft) + ', ' + IntToStr(MapRight) + ')';
-//  laMapHeight.Text := 'Высота карты: (' + IntToStr(MapTop) + ', ' + IntToStr(MapBottom) + ')';
+//  laMapWidth.Text := 'пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: (' + IntToStr(MapLeft) + ', ' + IntToStr(MapRight) + ')';
+//  laMapHeight.Text := 'пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: (' + IntToStr(MapTop) + ', ' + IntToStr(MapBottom) + ')';
 
   if MapLeft < MapRight then begin
     edPositionX.Min := MapLeft;

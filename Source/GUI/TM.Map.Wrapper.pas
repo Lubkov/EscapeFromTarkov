@@ -228,8 +228,8 @@ const
   PointColor = $FFE41A10; // $FF53FF53;
 var
   bmp: TBitmap;
-  p: TPoint;
-  Offset: Double;
+//  p: TPoint;
+//  Offset: Double;
   src, trg: TRectF;
 begin
   FPosition := Value;

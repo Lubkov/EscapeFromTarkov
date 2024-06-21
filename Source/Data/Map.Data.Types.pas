@@ -49,7 +49,12 @@ type
     FKind: TMarkerKind;
     FLeft: Integer;
     FTop: Integer;
+    FItems: TList<string>;
+    FImage: string;
   public
+    constructor Create;
+    destructor Destroy; override;
+
     procedure Assign(const Source: TJSONValue);
 
     class function KindToStr(Value: TMarkerKind): string; static;
@@ -58,11 +63,16 @@ type
     property Kind: TMarkerKind read FKind write FKind;
     property Left: Integer read FLeft write FLeft;
     property Top: Integer read FTop write FTop;
+    property Items: TList<string> read FItems;
+    property Image: string read FImage;
   end;
+
+  TTrader = (None, Prapor, Therapist, Skier, Peacemaker, Mechanic, Ragman, Jaeger, Fence, Lightkeeper);
 
   TQuest = class
   private
     FName: string;
+    FTrader: TTrader;
     FMarkers: TList<TMarker>;
   public
     constructor Create;
@@ -72,6 +82,7 @@ type
     procedure ClearMarkers;
 
     property Name: string read FName write FName;
+    property Trader: TTrader read FTrader write FTrader;
     property Markers: TList<TMarker> read FMarkers write FMarkers;
   end;
 
@@ -147,13 +158,28 @@ end;
 
 { TMarker }
 
+constructor TMarker.Create;
+begin
+  inherited;
+
+  FItems := TList<string>.Create;
+  FImage := '';
+end;
+
+destructor TMarker.Destroy;
+begin
+  FItems.Free;
+
+  inherited;
+end;
+
 procedure TMarker.Assign(const Source: TJSONValue);
 begin
-//  id := Source.GetValue<Integer>('id');
   Name := Source.GetValue<string>('name');
   Kind := TRttiEnumerationType.GetValue<TMarkerKind>(Source.GetValue<string>('kind'));
   Left := Source.GetValue<Integer>('left');
   Top := Source.GetValue<Integer>('top');
+  Source.TryGetValue<string>('image', FImage);
 end;
 
 class function TMarker.KindToStr(Value: TMarkerKind): string;
@@ -198,8 +224,14 @@ begin
 end;
 
 procedure TQuest.Assign(const Source: TJSONValue);
+var
+  TraderValue: string;
 begin
   Name := Source.GetValue<string>('name');
+  if Source.TryGetValue<string>('trader', TraderValue) then
+    Trader := TRttiEnumerationType.GetValue<TTrader>(TraderValue)
+  else
+    Trader := TTrader.None;
 end;
 
 { TMap }

@@ -6,7 +6,8 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   Generics.Collections, FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs,
   FMX.StdCtrls, FMX.Objects, FMX.Layouts, TM.Form.Wrapper, FMX.Controls.Presentation,
-  System.ImageList, FMX.ImgList, TM.Map.Wrapper, ME.MarkerFilter, Map.Data.Types;
+  System.ImageList, FMX.ImgList, TM.Map.Wrapper, ME.MarkerFilter, Map.Data.Types,
+  Map.Frame.Marker;
 
 type
   TInteractiveMap = class(TFrame)
@@ -15,6 +16,7 @@ type
     MainContainer: TLayout;
     MapTagImages: TImageList;
     PositionImage: TImage;
+    MarkerPanel: TPanel;
     procedure BackgroundMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
     procedure BackgroundMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure BackgroundMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
@@ -24,6 +26,7 @@ type
     FMapWrapper: TMapWrapper;
     FMousePosition: TMousePosition;
     FItems: TList<TImage>;
+    FMarkerDescript: TMarkerDescript;
     FOnDoubleClick: TNotifyEvent;
     FOnMouseDown: TNotifyEvent;
 
@@ -37,6 +40,8 @@ type
     procedure Clear;
     procedure AddMarker(const Marker: TMarker; const Title: string);
     procedure AddPosition(const Position: TPoint);
+    procedure OnMarkerClick(Sender: TObject);
+    procedure OnMarkerDescriptionClose(Sender: TObject);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -76,9 +81,17 @@ begin
   FMapWrapper.Images := MapTagImages;
   FMapWrapper.OnMapChange := OnMapChange;
 
+  FMarkerDescript := TMarkerDescript.Create(Self);
+  FMarkerDescript.Parent := MarkerPanel;
+  FMarkerDescript.Align := TAlignLayout.Client;
+  FMarkerDescript.OnClose := OnMarkerDescriptionClose;
+
   FItems := TList<TImage>.Create;
 
   PositionImage.Visible := False;
+  MarkerPanel.Visible := False;
+  MarkerPanel.Height := 400;
+  MarkerPanel.Width := 560;
 end;
 
 destructor TInteractiveMap.Destroy;
@@ -191,6 +204,7 @@ begin
     Item.Bitmap.Assign(MapTagImages.Bitmap(TSizeF.Create(32, 32), Ord(Marker.Kind)));
     Item.Hint := Title;
     Item.ShowHint := Trim(Title) <> '';
+    Item.OnClick := OnMarkerClick;
   finally
     FItems.Add(Item);
   end;
@@ -212,6 +226,16 @@ begin
   PositionImage.Position.Y := Top;
   PositionImage.Visible := not Position.Empty;
   PositionImage.BringToFront;
+end;
+
+procedure TInteractiveMap.OnMarkerClick(Sender: TObject);
+begin
+  MarkerPanel.Visible := True;
+end;
+
+procedure TInteractiveMap.OnMarkerDescriptionClose(Sender: TObject);
+begin
+  MarkerPanel.Visible := False;
 end;
 
 procedure TInteractiveMap.SetMouseDown(const Value: Boolean);
