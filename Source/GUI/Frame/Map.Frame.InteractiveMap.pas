@@ -14,6 +14,7 @@ type
     Background: TImage;
     MainContainer: TLayout;
     MapTagImages: TImageList;
+    PositionImage: TImage;
     procedure BackgroundMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
     procedure BackgroundMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure BackgroundMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
@@ -34,6 +35,8 @@ type
     procedure SetMap(const Value: TMap);
 
     procedure Clear;
+    procedure AddMarker(const Marker: TMarker; const Title: string);
+    procedure AddPosition(const Position: TPoint);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -74,6 +77,8 @@ begin
   FMapWrapper.OnMapChange := OnMapChange;
 
   FItems := TList<TImage>.Create;
+
+  PositionImage.Visible := False;
 end;
 
 destructor TInteractiveMap.Destroy;
@@ -103,14 +108,10 @@ begin
 end;
 
 procedure TInteractiveMap.OnMapChange(Bitmap: TBitmap);
-const
-  MarkerHeight = 32;
-  MarkerWidth = 32;
 var
   Marker: TMarker;
-  Item: TImage;
-  Offset: Double;
-  Left, Top: Integer;
+  Quest: TQuest;
+  i: Integer;
 begin
 //{$IFNDEF DEBUG}
 //  Logger.Lines.Add('OnMapChange');
@@ -120,27 +121,18 @@ begin
 
   Clear;
   for Marker in Map.Markers do
-    if MarkerFilter.IsGropupEnable(Marker.Kind) then begin
-      Offset := Abs((Map.Top - Marker.Top) / (Map.Bottom - Map.Top));
-      Top := Trunc(Bitmap.Height * Offset) - MarkerHeight div 2;
-      Offset := Abs((Map.Left - Marker.Left) / (Map.Right - Map.Left));
-      Left := Trunc(Bitmap.Width * Offset) - MarkerWidth div 2;
+    if MarkerFilter.IsGropupEnable(Marker.Kind) then
+      AddMarker(Marker, Marker.Name);
 
-      Item := TImage.Create(Self);
-      try
-        Item.Height := MarkerHeight;
-        Item.Width := MarkerWidth;
-        Item.Parent := Background;
-        Item.Position.X := Left;
-        Item.Position.Y := Top;
-        Item.Cursor := crHandPoint;
-        Item.Bitmap.Assign(MapTagImages.Bitmap(TSizeF.Create(32, 32), Ord(Marker.Kind)));
-        Item.Hint := Marker.Name;
-        Item.ShowHint := Trim(Marker.Name) <> '';
-      finally
-        FItems.Add(Item);
-      end;
-    end;
+  for i := 0 to Map.Quests.Count - 1 do begin
+    Quest := Map.Quests[i];
+
+    if MarkerFilter.IsQuestEnable(i) then
+      for Marker in Quest.Markers do
+        AddMarker(Marker, Quest.Name);
+  end;
+
+  AddPosition(FMapWrapper.Position);
 end;
 
 function TInteractiveMap.GetMarkerFilter: TMarkerFilter;
@@ -172,6 +164,54 @@ begin
   finally
     FItems.Clear;
   end;
+end;
+
+procedure TInteractiveMap.AddMarker(const Marker: TMarker; const Title: string);
+const
+  MarkerHeight = 32;
+  MarkerWidth = 32;
+var
+  Item: TImage;
+  Offset: Double;
+  Left, Top: Integer;
+begin
+  Offset := Abs((Map.Top - Marker.Top) / (Map.Bottom - Map.Top));
+  Top := Trunc(Bitmap.Height * Offset) - MarkerHeight div 2;
+  Offset := Abs((Map.Left - Marker.Left) / (Map.Right - Map.Left));
+  Left := Trunc(Bitmap.Width * Offset) - MarkerWidth div 2;
+
+  Item := TImage.Create(Self);
+  try
+    Item.Height := MarkerHeight;
+    Item.Width := MarkerWidth;
+    Item.Parent := Background;
+    Item.Position.X := Left;
+    Item.Position.Y := Top;
+    Item.Cursor := crHandPoint;
+    Item.Bitmap.Assign(MapTagImages.Bitmap(TSizeF.Create(32, 32), Ord(Marker.Kind)));
+    Item.Hint := Title;
+    Item.ShowHint := Trim(Title) <> '';
+  finally
+    FItems.Add(Item);
+  end;
+end;
+
+procedure TInteractiveMap.AddPosition(const Position: TPoint);
+const
+  MarkerHeight = 16;
+  MarkerWidth = 16;
+var
+  Offset: Double;
+begin
+  Offset := Abs((Map.Top - Position.Top) / (Map.Bottom - Map.Top));
+  Top := Trunc(Bitmap.Height * Offset) - MarkerHeight div 2;
+  Offset := Abs((Map.Left - Position.Left) / (Map.Right - Map.Left));
+  Left := Trunc(Bitmap.Width * Offset) - MarkerWidth div 2;
+
+  PositionImage.Position.X := Left;
+  PositionImage.Position.Y := Top;
+  PositionImage.Visible := not Position.Empty;
+  PositionImage.BringToFront;
 end;
 
 procedure TInteractiveMap.SetMouseDown(const Value: Boolean);

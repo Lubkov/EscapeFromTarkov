@@ -10,6 +10,7 @@ uses
 type
   TMarkerIconArray = array[Low(TMarkerKind) .. High(TMarkerKind)] of TBitmap;
   TOnMapChangeEvent = procedure (Bitmap: TBitmap) of object;
+  TPositionChangeEvent = procedure (Position: TPoint) of object;
 
   TMapWrapper = class
   private
@@ -18,17 +19,17 @@ type
     FMap: TMap;
     FBackground: TBitmap;
     FChangeMonitor: TChangeMonitor;
-    FOnMapChange: TOnMapChangeEvent;
-    FPoint: TPoint;
+    FPosition: TPoint;
     FZoom: Integer;
     FImages: TImageList;
     FMarkerIcons: TMarkerIconArray;
     FMarkerFilter: TMarkerFilter;
     FMarkers: TList;
+    FOnMapChange: TOnMapChangeEvent;
+    FOnPositionChange: TPositionChangeEvent;
 
     procedure DoMapChange(Bitmap: TBitmap);
     procedure OnFileChange(Sender: TObject);
-    procedure DrawMapTags(Bitmap: TBitmap);
     procedure SetImages(const Value: TImageList);
     function GetMarkerIcon(Index: TMarkerKind): TBitmap;
     procedure OnFilterChanged(Sender: TObject);
@@ -51,13 +52,15 @@ type
 
     property Map: TMap read FMap;
     property Background: TBitmap read FBackground;
+    property Position: TPoint read FPosition;
     property Directory: string read FDirectory;
     property TrackLocation: Boolean read FTrackLocation write FTrackLocation;
     property Images: TImageList read FImages write SetImages;
     property MarkerIcon[Index: TMarkerKind]: TBitmap read GetMarkerIcon;
     property MarkerFilter: TMarkerFilter read FMarkerFilter;
-    property OnMapChange: TOnMapChangeEvent read FOnMapChange write FOnMapChange;
     property Markers: TList read FMarkers;
+    property OnMapChange: TOnMapChangeEvent read FOnMapChange write FOnMapChange;
+    property OnPositionChange: TPositionChangeEvent read FOnPositionChange write FOnPositionChange;
   end;
 
 implementation
@@ -73,7 +76,7 @@ begin
 
   FMap := nil;
   FDirectory := Directory;
-  FPoint.Empty := True;
+  FPosition.Empty := True;
   FTrackLocation := True;
   FOnMapChange := nil;
   FChangeMonitor := nil;
@@ -85,6 +88,7 @@ begin
   FMarkerFilter.OnChanged := OnFilterChanged;
 
   FMarkers := TList.Create;
+  FOnPositionChange := nil;
 end;
 
 destructor TMapWrapper.Destroy;
@@ -95,6 +99,7 @@ begin
   FBackground.Free;
 
   FMarkers.Free;
+  FOnPositionChange := nil;
 
   inherited;
 end;
@@ -122,75 +127,6 @@ begin
 //    Logger.Lines.Add('TPoint.Create({0}, {1})', [p.X, p.Y]);
   finally
     DeleteAllScreenshots;
-  end;
-end;
-
-procedure TMapWrapper.DrawMapTags(Bitmap: TBitmap);
-
-  procedure DrawMarker(ico: TBitmap; const Marker: TMarker);
-  var
-    Offset: Double;
-    src, trg: TRectF;
-    Left, Top: Integer;
-    TextWidth, TextHeight: Single;
-  begin
-    Offset := Abs((FMap.Left - Marker.Left) / (FMap.Right - FMap.Left));
-    Left := Trunc(Bitmap.Width * Offset);
-    Offset := Abs((FMap.Top - Marker.Top) / (FMap.Bottom - FMap.Top));
-    Top := Trunc(Bitmap.Height * Offset);
-
-    src := RectF(0, 0, ico.Width, ico.Height);
-    trg := RectF(Left - 16, Top - 16, Left + 16, Top + 16);
-
-    Bitmap.Canvas.BeginScene;
-    try
-      Bitmap.Canvas.DrawBitmap(ico, src, trg, 1);
-
-      if Trim(Marker.Name) <> '' then begin
-        Bitmap.Canvas.Stroke.Kind := TBrushKind.Solid;
-        Bitmap.Canvas.Font.Size := 14;
-        Bitmap.Canvas.Font.Family := 'Tahoma';
-        Bitmap.Canvas.Font.Style := []; // [TFontStyle.fsbold];
-
-        TextWidth := Bitmap.Canvas.TextWidth(Marker.Name) * Bitmap.Canvas.Scale;
-        TextHeight := Bitmap.Canvas.TextHeight(Marker.Name) * Bitmap.Canvas.Scale;
-
-        trg.Left := Left + (ico.Width / 2) + 2;
-        trg.Top := Top - (TextHeight / 2) - 1;
-        trg.Right := trg.Left + TextWidth;
-        trg.Bottom := trg.Top + TextHeight;
-
-        src.Left := trg.Left - 2;
-        src.Top := trg.Top - 2;
-        src.Right := trg.Right + 2;
-        src.Bottom := trg.Bottom + 2;
-
-        Bitmap.Canvas.Fill.Color := $FF000000; //$FF343D41;
-        Bitmap.Canvas.FillRect(src, 0, 0, AllCorners, 0.5);
-
-        Bitmap.Canvas.Fill.Color := $FFFFFFFF;
-        Bitmap.Canvas.FillText(trg, Marker.Name, false, 100, [TFillTextFlag.RightToLeft], TTextAlign.Trailing, TTextAlign.Leading);
-      end;
-    finally
-      Bitmap.Canvas.EndScene;
-    end;
-  end;
-
-var
-  Marker: TMarker;
-  Quest: TQuest;
-  i: Integer;
-begin
-//  for Marker in FMap.Markers do
-//    if FMarkerFilter.IsGropupEnable(Marker.Kind) then
-//      DrawMarker(MarkerIcon[Marker.Kind], Marker);
-
-  for i := 0 to FMap.Quests.Count - 1 do begin
-    Quest := FMap.Quests[i];
-
-    if FMarkerFilter.IsQuestEnable(i) then
-      for Marker in Quest.Markers do
-        DrawMarker(MarkerIcon[Marker.Kind], Marker);
   end;
 end;
 
@@ -239,7 +175,7 @@ var
   FileName: string;
 begin
   FMap := Value;
-  FPoint.Empty := True;
+  FPosition.Empty := True;
   FZoom := 100;
 
   Layer := Map.MainLayer;
@@ -253,7 +189,7 @@ begin
   FBackground.LoadFromFile(FileName);
 
   MarkerFilter.Init(Value);
-  DrawPoint(FPoint);
+  DrawPoint(FPosition);
 end;
 
 function TMapWrapper.ExtractPoint(const FileName: string): TPoint;
@@ -296,7 +232,7 @@ var
   Offset: Double;
   src, trg: TRectF;
 begin
-  FPoint := Value;
+  FPosition := Value;
   if FMap = nil then
     Exit;
 
@@ -314,22 +250,20 @@ begin
     bmp.Canvas.DrawBitmap(FBackground, src, trg, 1);
     bmp.Canvas.EndScene;
 
-    DrawMapTags(bmp);
-
-    if not FPoint.Empty then begin
-      Offset := Abs((FMap.Left - FPoint.Left) / (FMap.Right - FMap.Left));
-      p.Left := Trunc(bmp.Width * Offset);
-      Offset := Abs((FMap.Top - FPoint.Top) / (FMap.Bottom - FMap.Top));
-      p.Top := Trunc(bmp.Height * Offset);
-      trg := RectF(p.Left - 3, p.Top - 3, p.Left + 3, p.Top + 3);
-
-      bmp.Canvas.BeginScene;
-      bmp.Canvas.Stroke.Kind := TBrushKind.Solid;
-      bmp.Canvas.Stroke.Thickness := 5.0;
-      bmp.Canvas.Stroke.Color := PointColor;
-      bmp.Canvas.DrawEllipse(trg, 1);
-      bmp.Canvas.EndScene;
-    end;
+//    if not FPosition.Empty then begin
+//      Offset := Abs((FMap.Left - Position.Left) / (FMap.Right - FMap.Left));
+//      p.Left := Trunc(bmp.Width * Offset);
+//      Offset := Abs((FMap.Top - Position.Top) / (FMap.Bottom - FMap.Top));
+//      p.Top := Trunc(bmp.Height * Offset);
+//      trg := RectF(p.Left - 3, p.Top - 3, p.Left + 3, p.Top + 3);
+//
+//      bmp.Canvas.BeginScene;
+//      bmp.Canvas.Stroke.Kind := TBrushKind.Solid;
+//      bmp.Canvas.Stroke.Thickness := 5.0;
+//      bmp.Canvas.Stroke.Color := PointColor;
+//      bmp.Canvas.DrawEllipse(trg, 1);
+//      bmp.Canvas.EndScene;
+//    end;
 
     DoMapChange(bmp);
   finally
@@ -341,7 +275,7 @@ procedure TMapWrapper.ZoomIn;
 begin
   if FZoom < 180 then begin
     Inc(FZoom, 20);
-    DrawPoint(FPoint);
+    DrawPoint(Position);
   end;
 end;
 
@@ -351,7 +285,7 @@ begin
     Exit;
 
   Dec(FZoom, 20);
-  DrawPoint(FPoint);
+  DrawPoint(Position);
 end;
 
 procedure TMapWrapper.Start;
@@ -379,7 +313,7 @@ end;
 
 procedure TMapWrapper.Refresh;
 begin
-  DrawPoint(FPoint);
+  DrawPoint(Position);
 end;
 
 end.
