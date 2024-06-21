@@ -46,6 +46,8 @@ constructor TInteractiveMap.Create(AOwner: TComponent);
 begin
   inherited;
 
+  Background.Position.X := 0;
+  Background.Position.Y := 0;
   FOnDoubleClick := nil;
   FOnMouseDown := nil;
 end;
@@ -65,8 +67,6 @@ end;
 
 procedure TInteractiveMap.SetBitmap(const Value: TBitmap);
 begin
-  Background.Position.X := 0;
-  Background.Position.Y := 0;
   Background.Width := Value.Width;
   Background.Height := Value.Height;
   Background.Bitmap.Assign(nil);
