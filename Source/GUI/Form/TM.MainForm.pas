@@ -31,6 +31,7 @@ type
     buChoiceLocation: TSpeedButton;
     LocationPanel: TPanel;
     MarkerFilterPanel: TPanel;
+
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure acFullScreenExecute(Sender: TObject);
@@ -44,13 +45,11 @@ type
     procedure buToolButtonMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
   private
     FFormWrapper: TFormWrapper;
-    FMapWrapper: TMapWrapper;
     FLocationGrid: TLocationGrid;
     FMarkerFilterList: TMarkerFilterList;
     FInteractiveMap: TInteractiveMap;
 
     procedure SetFullScreenMode(const Value: Boolean);
-    procedure OnMapChange(Bitmap: TBitmap);
     procedure OnLocationChanged(const Value: TMap);
     procedure MarkerFilterListOnClose(Sender: TObject);
     procedure OnInteractiveMapDblClick(Sender: TObject);
@@ -87,10 +86,6 @@ begin
   MarkerFilterPanel.Visible := False;
 
   FFormWrapper := TFormWrapper.Create(Self);
-  FMapWrapper := TMapWrapper.Create(AppParams.SreenshotPath);
-  FMapWrapper.TrackLocation := AppParams.TrackLocation;
-  FMapWrapper.Images := MapTagImages;
-  FMapWrapper.OnMapChange := OnMapChange;
 
   FInteractiveMap := TInteractiveMap.Create(Self);
   FInteractiveMap.Parent := Self;
@@ -102,7 +97,7 @@ begin
   FMarkerFilterList := TMarkerFilterList.Create(Self);
   FMarkerFilterList.Parent := MarkerFilterPanel;
   FMarkerFilterList.Align := TAlignLayout.Client;
-  FMarkerFilterList.Init(FMapWrapper.MarkerFilter);
+  FMarkerFilterList.Init(FInteractiveMap.MarkerFilter);
   FMarkerFilterList.OnClose := MarkerFilterListOnClose;
 
   FLocationGrid := TLocationGrid.Create(Self);
@@ -110,46 +105,11 @@ begin
   FLocationGrid.Align := TAlignLayout.Client;
   FLocationGrid.Init;
   FLocationGrid.OnLocationChanged := OnLocationChanged;
-
-//  FInteractiveMap.Position.X := 0;
-//  FInteractiveMap.Position.Y := 0;
-//  FInteractiveMap.Height := 0;
-//  FInteractiveMap.Width := 0;
-//
-//  FMousePosition := TMousePosition.Create(0, 0);
-
-//------------------------------------------------------------------------------
-//  AppService.LoadParams;
-//  AppService.Connect;
-//
-//  LocationPanel.Visible := False;
-//  MarkerFilterPanel.Visible := False;
-//
-//  FFormWrapper := TFormWrapper.Create(Self);
-//  FMapWrapper := TMapWrapper.Create(AppParams.SreenshotPath);
-//  FMapWrapper.TrackLocation := AppParams.TrackLocation;
-//  FMapWrapper.Images := MapTagImages;
-//  FMapWrapper.OnMapChange := OnMapChange;
-//
-//  FMarkerFilterList := TMarkerFilterList.Create(Self);
-//  FMarkerFilterList.Parent := MarkerFilterPanel;
-//  FMarkerFilterList.Align := TAlignLayout.Client;
-//  FMarkerFilterList.Init(FMapWrapper.MarkerFilter);
-//  FMarkerFilterList.OnClose := MarkerFilterListOnClose;
-//
-//  FLocationGrid := TLocationGrid.Create(Self);
-//  FLocationGrid.Parent := LocationPanel;
-//  FLocationGrid.Align := TAlignLayout.Client;
-//  FLocationGrid.Init;
-//  FLocationGrid.OnLocationChanged := OnLocationChanged;
-//
-//  FMousePosition := TMousePosition.Create(0, 0);
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
 begin
   FFormWrapper.Free;
-  FMapWrapper.Free;
   FreeAndNil(FLocationGrid);
 end;
 
@@ -192,46 +152,10 @@ begin
 //  FormResize(Self);
 end;
 
-procedure TMainForm.OnMapChange(Bitmap: TBitmap);
-//var
-//  i: Integer;
-//  Item: TImage;
-begin
-//{$IFNDEF DEBUG}
-//  Logger.Lines.Add('OnMapChange');
-//{$ENDIF}
-
-
-//  MapBackground.Width := Bitmap.Width;
-//  MapBackground.Height := Bitmap.Height;
-//  MapBackground.Bitmap.Assign(nil);
-//  MapBackground.Bitmap.Assign(Bitmap);
-
-//  FInteractiveMap.Visible := not Bitmap.IsEmpty;
-//  FInteractiveMap.Width := Bitmap.Width;
-//  FInteractiveMap.Height := Bitmap.Height;
-  FInteractiveMap.Bitmap := Bitmap;
-
-//  for i := 0 to FMapWrapper.Markers.Count -1 do begin
-//    Item := TImage.Create(Self);
-//    Item.Height := 32;
-//    Item.Width := 32;
-//    Item.Parent := MainContainer;
-//    Item.Position.X := PMarker(FMapWrapper.Markers[i])^.Left;
-//    Item.Position.Y := PMarker(FMapWrapper.Markers[i])^.Top;
-//    Item.Bitmap.Assign(MapTagImages.Bitmap(TSizeF.Create(32, 32), Ord(PMarker(FMapWrapper.Markers[i])^.Kind)));
-//  end;
-end;
-
 procedure TMainForm.OnLocationChanged(const Value: TMap);
 begin
   LocationPanel.Visible := False;
-
-  if (Value = nil) or (FMapWrapper.Map = Value) then
-    Exit;
-
-  FMapWrapper.LoadMap(Value);
-  FMapWrapper.Start;
+  FInteractiveMap.Map := Value;
 end;
 
 procedure TMainForm.MarkerFilterListOnClose(Sender: TObject);
@@ -241,12 +165,12 @@ end;
 
 procedure TMainForm.acZoomInExecute(Sender: TObject);
 begin
-  FMapWrapper.ZoomIn;
+  FInteractiveMap.ZoomIn;
 end;
 
 procedure TMainForm.acZoomOutExecute(Sender: TObject);
 begin
-  FMapWrapper.ZoomOut;
+  FInteractiveMap.ZoomOut;
 end;
 
 procedure TMainForm.acChoiceLocationExecute(Sender: TObject);

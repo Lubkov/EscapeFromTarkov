@@ -20,7 +20,6 @@ type
     property Left: Integer read FLeft write SetLelf;
     property Top: Integer read FTop write SetTop;
     property Empty: Boolean read FEmpty write FEmpty;
-
   end;
 
 implementation

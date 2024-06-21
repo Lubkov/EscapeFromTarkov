@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, System.IOUtils, System.Types, System.UITypes,
   Generics.Collections, FMX.Types, FMX.Graphics, FMX.ImgList,
-  ME.Point, Map.Data.Types, TM.FilesMonitor, ME.MarkerFilter;
+  Map.Data.Types, TM.FilesMonitor, ME.MarkerFilter;
 
 type
   TMarkerIconArray = array[Low(TMarkerKind) .. High(TMarkerKind)] of TBitmap;
@@ -182,7 +182,6 @@ var
 begin
   for Marker in FMap.Markers do
     if FMarkerFilter.IsGropupEnable(Marker.Kind) then
-//      Markers.Add(@(FMap.Markers[i]));
       DrawMarker(MarkerIcon[Marker.Kind], Marker);
 
   for i := 0 to FMap.Quests.Count - 1 do begin
@@ -313,8 +312,6 @@ begin
     bmp.Canvas.BeginScene;
     bmp.Canvas.DrawBitmap(FBackground, src, trg, 1);
     bmp.Canvas.EndScene;
-
-//    bmp.Canvas.StretchDraw(Rect(0, 0, bmp.Width, bmp.Height), FBackground);
 
     DrawMapTags(bmp);
 
