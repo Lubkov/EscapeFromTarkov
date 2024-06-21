@@ -1,5 +1,6 @@
 ﻿[
   {
+    "id": 1, 
     "name": "Woods",
     "caption": "Woods",
     "left": "500",
@@ -51,6 +52,7 @@
               ]
   },
   {
+    "id": 2,
     "name": "Customs",
     "caption": "Customs",
     "left": "800",
@@ -98,6 +100,7 @@
               ]
   },
   {
+    "id": 3,
     "name": "Interchange",
     "caption": "Interchange",
     "left": "533",
@@ -138,6 +141,7 @@
               ]
   },
   {
+    "id": 4,
     "name": "Shoreline",
     "caption": "Shoreline",
     "left": "570",
@@ -194,6 +198,7 @@
                 "markers": [{"name": "", "kind": "Quest", "left": "220", "top": "-158"}]}]
   },
   {
+    "id": 5,
     "name": "Reserve",
     "caption": "Reserve",
     "left": "222",
@@ -209,6 +214,7 @@
     "quests": []
   },
   {
+    "id": 6,
     "name": "Lighthouse",
     "caption": "Lighthouse",
     "left": "550",
@@ -252,6 +258,7 @@
               ]
   },
   {
+    "id": 7,
     "name": "Streets",
     "caption": "Streets of Tarkov",
     "left": "330",
@@ -315,6 +322,7 @@
               ]
   },
   {
+    "id": 8,
     "name": "Laboratory",
     "caption": "The Laboratory",
     "left": "0",
@@ -326,6 +334,7 @@
     "quests": []
   },
   {
+    "id": 9,
     "name": "GroundZero",
     "caption": "Ground Zero",
     "left": "300",
@@ -352,6 +361,7 @@
               ]
   },
   {
+    "id": 10,
     "name": "Factory",
     "caption": "Factory",
     "left": "0",

@@ -77,6 +77,7 @@ type
 
   TMap = class(TObject)
   private
+    FID: Integer;
     FName: string;
     FLeft: Integer;
     FTop: Integer;
@@ -96,6 +97,7 @@ type
     procedure ClearMarkers;
     procedure ClearQuests;
 
+    property ID: Integer read FID write FID;
     property Name: string read FName write FName;
     property Left: Integer read FLeft write FLeft;
     property Top: Integer read FTop write FTop;
@@ -147,6 +149,7 @@ end;
 
 procedure TMarker.Assign(const Source: TJSONValue);
 begin
+//  id := Source.GetValue<Integer>('id');
   Name := Source.GetValue<string>('name');
   Kind := TRttiEnumerationType.GetValue<TMarkerKind>(Source.GetValue<string>('kind'));
   Left := Source.GetValue<Integer>('left');
@@ -231,6 +234,7 @@ end;
 
 procedure TMap.Assign(const Source: TJSONValue);
 begin
+  ID := Source.GetValue<Integer>('id');
   Name := Source.GetValue<string>('name');
   Left := Source.GetValue<Integer>('left');
   Top := Source.GetValue<Integer>('top');
