@@ -215,6 +215,7 @@ object MarkerFilterList: TMarkerFilterList
     Size.Width = 24.000000000000000000
     Size.Height = 24.000000000000000000
     Size.PlatformDefault = False
+    StyleLookup = 'IconToolButtonStyle'
     TextSettings.Trimming = None
     OnClick = buCloseClick
   end
