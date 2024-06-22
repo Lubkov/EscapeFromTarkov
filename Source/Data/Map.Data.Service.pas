@@ -3,7 +3,7 @@ unit Map.Data.Service;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.Variants, System.IOUtils,
+  System.SysUtils, System.Classes, System.Variants, System.IOUtils, FMX.Graphics,
   Generics.Collections, Map.Data.Types, Map.Data.Classes;
 
 type
@@ -14,12 +14,15 @@ type
     function GetCount: Integer;
     function GetMapItem(Index: Integer): TMap;
     procedure SetMapItem(Index: Integer; const Value: TMap);
+    procedure InternalLoadImage(const Folder, Name: string; const Dest: TBitmap);
   public
     constructor Create;
     destructor Destroy; override;
 
     procedure Clear;
     procedure Load(const FileName: string);
+    procedure LoadMarkerImage(const Name: string; const Dest: TBitmap);
+    procedure LoadItemImage(const Name: string; const Dest: TBitmap);
 
     property Items: TList<TMap> read FItems;
     property Count: Integer read GetCount;
@@ -89,6 +92,33 @@ begin
   finally
     Data.Free;
   end;
+end;
+
+procedure TDataSertvice.InternalLoadImage(const Folder, Name: string; const Dest: TBitmap);
+var
+  FileName: string;
+begin
+  FileName := TPath.Combine(AppParams.DataPath, Folder);
+  FileName := TPath.Combine(FileName, Name + '.png');
+
+  if FileExists(FileName) then
+    Dest.LoadFromFile(FileName)
+  else
+    Dest.Assign(nil);
+end;
+
+procedure TDataSertvice.LoadMarkerImage(const Name: string; const Dest: TBitmap);
+const
+  FolderName = 'Markers';
+begin
+  InternalLoadImage(FolderName, Name, Dest);
+end;
+
+procedure TDataSertvice.LoadItemImage(const Name: string; const Dest: TBitmap);
+const
+  FolderName = 'Items';
+begin
+  InternalLoadImage(FolderName, Name, Dest);
 end;
 
 end.

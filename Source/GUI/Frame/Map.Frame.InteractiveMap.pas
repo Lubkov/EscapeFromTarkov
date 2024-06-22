@@ -38,10 +38,11 @@ type
     procedure SetMap(const Value: TMap);
 
     procedure Clear;
-    procedure AddMarker(const Marker: TMarker; const Title: string);
+    procedure AddMarker(const Marker: TMarker; const Title: string; Trader: TTrader);
     procedure AddPosition(const Position: TPoint);
     procedure OnMarkerClick(Sender: TObject);
     procedure OnMarkerDescriptionClose(Sender: TObject);
+    function GetMarkerInfoVisible: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -50,10 +51,12 @@ type
     procedure ZoomIn;
     procedure ZoomOut;
     procedure SetMouseDown(const Value: Boolean);
+    procedure HideMarkerInfo;
 
     property Map: TMap read GetMap write SetMap;
     property Bitmap: TBitmap read GetBitmap write SetBitmap;
     property MarkerFilter: TMarkerFilter read GetMarkerFilter;
+    property MarkerInfoVisible: Boolean read GetMarkerInfoVisible;
     property OnDoubleClick: TNotifyEvent read FOnDoubleClick write FOnDoubleClick;
     property OnMouseDown: TNotifyEvent read FOnMouseDown write FOnMouseDown;
   end;
@@ -135,14 +138,14 @@ begin
   Clear;
   for Marker in Map.Markers do
     if MarkerFilter.IsGropupEnable(Marker.Kind) then
-      AddMarker(Marker, Marker.Name);
+      AddMarker(Marker, Marker.Name, TTrader.None);
 
   for i := 0 to Map.Quests.Count - 1 do begin
     Quest := Map.Quests[i];
 
     if MarkerFilter.IsQuestEnable(i) then
       for Marker in Quest.Markers do
-        AddMarker(Marker, Quest.Name);
+        AddMarker(Marker, Quest.Name, Quest.Trader);
   end;
 
   AddPosition(FMapWrapper.Position);
@@ -151,6 +154,11 @@ end;
 function TInteractiveMap.GetMarkerFilter: TMarkerFilter;
 begin
   Result := FMapWrapper.MarkerFilter;
+end;
+
+function TInteractiveMap.GetMarkerInfoVisible: Boolean;
+begin
+  Result := MarkerPanel.Visible;
 end;
 
 function TInteractiveMap.GetMap: TMap;
@@ -179,7 +187,7 @@ begin
   end;
 end;
 
-procedure TInteractiveMap.AddMarker(const Marker: TMarker; const Title: string);
+procedure TInteractiveMap.AddMarker(const Marker: TMarker; const Title: string; Trader: TTrader);
 const
   MarkerHeight = 32;
   MarkerWidth = 32;
@@ -205,6 +213,8 @@ begin
     Item.Hint := Title;
     Item.ShowHint := Trim(Title) <> '';
     Item.OnClick := OnMarkerClick;
+    Item.TagObject := Marker;
+    Item.Tag := Ord(Trader);
   finally
     FItems.Add(Item);
   end;
@@ -229,8 +239,19 @@ begin
 end;
 
 procedure TInteractiveMap.OnMarkerClick(Sender: TObject);
+var
+  Item: TImage;
+  Marker: TMarker;
 begin
-  MarkerPanel.Visible := True;
+  if Assigned(FOnMouseDown) then
+    FOnMouseDown(Self);
+
+  Item := TImage(Sender);
+  Marker := TMarker(Item.TagObject);
+  if Trim(Marker.Image) <> '' then begin
+    FMarkerDescript.Init(Marker, Item.Hint, TTrader(Item.Tag));
+    MarkerPanel.Visible := True;
+  end;
 end;
 
 procedure TInteractiveMap.OnMarkerDescriptionClose(Sender: TObject);
@@ -245,6 +266,11 @@ begin
     Background.Cursor := crSizeAll
   else
     Background.Cursor := crDefault;
+end;
+
+procedure TInteractiveMap.HideMarkerInfo;
+begin
+  MarkerPanel.Visible := False;
 end;
 
 procedure TInteractiveMap.BackgroundDblClick(Sender: TObject);

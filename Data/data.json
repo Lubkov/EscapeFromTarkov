@@ -106,6 +106,7 @@
                              "items": [{"id": "tarcone_office_key"}],
                              "image": "marker_1"}]},
                {"name": "Проверка на вшивость",
+                "trader": "Prapor", 
                 "markers": [{"name": "Бронзовые часы на полу возле педалей", 
                              "kind": "Quest", 
                              "left": "101", 

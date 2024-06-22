@@ -49,11 +49,11 @@ type
     FMarkerFilterList: TMarkerFilterList;
     FInteractiveMap: TInteractiveMap;
 
+    procedure HideAllPanels(Sender: TObject);
     procedure SetFullScreenMode(const Value: Boolean);
     procedure OnLocationChanged(const Value: TMap);
     procedure MarkerFilterListOnClose(Sender: TObject);
     procedure OnInteractiveMapDblClick(Sender: TObject);
-    procedure OnInteractiveMouseDown(Sender: TObject);
   public
   end;
 
@@ -92,7 +92,7 @@ begin
   FInteractiveMap.Align := TAlignLayout.Contents;
   FInteractiveMap.SendToBack;
   FInteractiveMap.OnDoubleClick := OnInteractiveMapDblClick;
-  FInteractiveMap.OnMouseDown := OnInteractiveMouseDown;
+  FInteractiveMap.OnMouseDown := HideAllPanels;
 
   FMarkerFilterList := TMarkerFilterList.Create(Self);
   FMarkerFilterList.Parent := MarkerFilterPanel;
@@ -123,6 +123,9 @@ begin
       if MarkerFilterPanel.Visible then
         MarkerFilterPanel.Visible := False
       else
+      if FInteractiveMap.MarkerInfoVisible then
+        FInteractiveMap.HideMarkerInfo
+      else
         SetFullScreenMode(False);
     vkF11:
       SetFullScreenMode(True);
@@ -131,8 +134,7 @@ end;
 
 procedure TMainForm.FormResize(Sender: TObject);
 begin
-  LocationPanel.Visible := False;
-  MarkerFilterPanel.Visible := False;
+  HideAllPanels(Sender);
 end;
 
 procedure TMainForm.buToolButtonMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
@@ -145,6 +147,13 @@ begin
   SetFullScreenMode(not FFormWrapper.FullScreen);
 end;
 
+procedure TMainForm.HideAllPanels;
+begin
+  LocationPanel.Visible := False;
+  MarkerFilterPanel.Visible := False;
+  FInteractiveMap.HideMarkerInfo;
+end;
+
 procedure TMainForm.SetFullScreenMode(const Value: Boolean);
 begin
   FFormWrapper.FullScreen := Value;
@@ -154,7 +163,7 @@ end;
 
 procedure TMainForm.OnLocationChanged(const Value: TMap);
 begin
-  LocationPanel.Visible := False;
+  HideAllPanels(Self);
   FInteractiveMap.Map := Value;
 end;
 
@@ -179,7 +188,7 @@ var
   Width: Single;
   OffsetX: Single;
 begin
-  MarkerFilterPanel.Visible := False;
+  HideAllPanels(Sender);
 
   OffsetX := MapControlLayout.Position.X + MapControlLayout.Width;
   Height := Self.ClientHeight;
@@ -205,12 +214,6 @@ begin
   SetFullScreenMode(not FFormWrapper.FullScreen);
 end;
 
-procedure TMainForm.OnInteractiveMouseDown(Sender: TObject);
-begin
-  LocationPanel.Visible := False;
-  MarkerFilterPanel.Visible := False;
-end;
-
 procedure TMainForm.acCentreMapExecute(Sender: TObject);
 begin
   FInteractiveMap.Center;
@@ -220,7 +223,7 @@ procedure TMainForm.acMarkerFilterOpenExecute(Sender: TObject);
 var
   Height: Single;
 begin
-  LocationPanel.Visible := False;
+  HideAllPanels(Sender);
 
   MarkerFilterPanel.Position.X := MapControlLayout.Position.X + MapControlLayout.Width + 10;
   MarkerFilterPanel.Position.Y := MapControlLayout.Position.Y;
