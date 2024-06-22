@@ -96,7 +96,6 @@ procedure TMarkerDescript.Init(const Marker: TMarker; const QuestName: string; T
 var
   Bitmap: TBitmap;
   i: Integer;
-  ItemName: string;
 begin
   laQuestName.Text := QuestName;
   laDescription.Text := Marker.Name;
