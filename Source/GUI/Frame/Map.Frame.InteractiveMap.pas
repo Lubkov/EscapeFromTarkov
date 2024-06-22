@@ -208,13 +208,17 @@ begin
     Item.Parent := Background;
     Item.Position.X := Left;
     Item.Position.Y := Top;
-    Item.Cursor := crHandPoint;
     Item.Bitmap.Assign(MapTagImages.Bitmap(TSizeF.Create(32, 32), Ord(Marker.Kind)));
     Item.Hint := Title;
     Item.ShowHint := Trim(Title) <> '';
     Item.OnClick := OnMarkerClick;
     Item.TagObject := Marker;
     Item.Tag := Ord(Trader);
+
+    if Trim(Marker.Image) <> '' then
+      Item.Cursor := crHandPoint
+    else
+      Item.Cursor := crDefault;
   finally
     FItems.Add(Item);
   end;
