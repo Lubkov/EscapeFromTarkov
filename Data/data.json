@@ -87,8 +87,24 @@
                 {"name": "ЖД к военной базе", "kind": "ScavExtraction", "left": "491", "top": "219"},
                 {"name": "Проход между скалами", "kind": "ScavExtraction", "left": "540", "top": "194"}],
     "quests": [{"name": "Вымогатель",
-                "markers": [{"name": "", "kind": "Quest", "left": "369", "top": "-50"},
-                            {"name": "", "kind": "Quest", "left": "26", "top": "-108"}]},    
+                "trader": "Skier",   
+                "markers": [{
+                              "name": "Труп за гаражами в кустах", 
+                              "kind": "Quest", 
+                              "left": "26", 
+                              "top": "-108",
+                              "items": [{"id": "customs_unknown_key"}],
+                              "image": "customs_extortionist_marker_1"
+                            },
+                            {
+                              "name": "Времянка между проходной и водохранилищем", 
+                              "kind": "Quest", 
+                              "left": "369", 
+                              "top": "-50",
+                              "items": [{"id": "customs_unknown_key"}],
+                              "image": "customs_extortionist_marker_2"
+                            }]
+               },    
                {"name": "Операция \"Водолей\" - Часть 1",
                 "trader": "Therapist",  
                 "markers": [{
@@ -128,7 +144,20 @@
                               "top": "160",
                               "items": [{"id": "dorm_room_114_key"}],
                               "image": "marker_4"
-                            }]},               
+                            }]},     
+               {"name": "Садоводство - Часть 3",
+                "trader": "Mechanic",   
+                "markers": [                                        
+                            {
+                              "name": "Посылка с видеокартами в офисах таможни", 
+                              "kind": "Quest", 
+                              "left": "-203", 
+                              "top": "-103",
+                              "items": [{"id": "tarcone_office_key"}],
+                              "image": "customs_farming_part3_marker_1"
+                            }
+                          ]
+               },           
                {"name": "Сафари на тигра",
                 "trader": "Peacemaker",
                 "markers": [{
