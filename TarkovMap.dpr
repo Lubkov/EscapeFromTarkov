@@ -39,7 +39,8 @@ uses
   Map.Data.Types in 'Source\Data\Map.Data.Types.pas',
   Map.Data.Service in 'Source\Data\Map.Data.Service.pas',
   Map.Frame.InteractiveMap in 'Source\GUI\Frame\Map.Frame.InteractiveMap.pas' {InteractiveMap: TFrame},
-  Map.Frame.Marker in 'Source\GUI\Frame\Map.Frame.Marker.pas' {MarkerDescript: TFrame};
+  Map.Frame.Marker in 'Source\GUI\Frame\Map.Frame.Marker.pas' {MarkerDescript: TFrame},
+  Map.CursorService in 'Source\GUI\Map.CursorService.pas';
 
 {$R *.res}
 

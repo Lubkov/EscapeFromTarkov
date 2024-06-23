@@ -63,7 +63,7 @@ var
 implementation
 
 uses
-  App.Constants, App.Service, Map.Data.Service;
+  App.Constants, App.Service, Map.Data.Service, Map.CursorService;
 
 {$R *.fmx}
 
@@ -152,6 +152,8 @@ begin
   LocationPanel.Visible := False;
   MarkerFilterPanel.Visible := False;
   FInteractiveMap.HideMarkerInfo;
+
+  Application.ProcessMessages;
 end;
 
 procedure TMainForm.SetFullScreenMode(const Value: Boolean);
@@ -164,7 +166,13 @@ end;
 procedure TMainForm.OnLocationChanged(const Value: TMap);
 begin
   HideAllPanels(Self);
-  FInteractiveMap.Map := Value;
+
+  TMapCursorService.Cursor := crHourGlass;
+  try
+    FInteractiveMap.Map := Value;
+  finally
+    TMapCursorService.Cursor := crDefault;
+  end;
 end;
 
 procedure TMainForm.MarkerFilterListOnClose(Sender: TObject);
