@@ -37,9 +37,25 @@
                             {"name": "", "kind": "Quest", "left": "197", "top": "-588"}]},
                {"name": "Поручение",
                 "markers": [{"name": "", "kind": "Quest", "left": "-257", "top": "6"}]},
-               {"name": "Путь выживальщика. Запасливый",
-                "markers": [{"name": "", "kind": "Quest", "left": "434", "top": "67"},
-                            {"name": "ЗБ-016", "kind": "Quest", "left": "-392", "top": "20"}]},
+               {"name": "Путь выживальщика - Запасливый",
+                "trader": "Jaeger",   
+                "markers": [{
+                              "name": "Место для закладки предметов в ЗБ-014", 
+                              "kind": "Quest", 
+                              "left": "434", 
+                              "top": "67",
+                              "items": [{"id": "Iskra_lunch_box"}, {"id": "water_bottle"}],
+                              "image": "survivalist_path_thrifty_marker_1"
+                            },
+                            {
+                              "name": "Место для закладки предметов в ЗБ-016", 
+                              "kind": "Quest", 
+                              "left": "-392", 
+                              "top": "20",
+                              "items": [{"id": "Iskra_lunch_box"}, {"id": "water_bottle"}],
+                              "image": "survivalist_path_thrifty_marker_2"
+                            }]
+               },
                {"name": "Секта - Часть 2",
                 "markers": [{"name": "", "kind": "Quest", "left": "196", "top": "-7"},
                             {"name": "", "kind": "Quest", "left": "-84", "top": "-717"}]},
