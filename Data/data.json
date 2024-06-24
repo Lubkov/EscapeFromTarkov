@@ -121,6 +121,25 @@
                               "image": "customs_extortionist_marker_2"
                             }]
                },    
+               {"name": "Золотые понты",
+                "trader": "Skier",   
+                "markers": [{
+                              "name": "Золотая зажигалка на столе в комнате 303", 
+                              "kind": "Quest", 
+                              "left": "180", 
+                              "top": "149",
+                              "items": [{"id": "customs_dorm_room_303_key"}],
+                              "image": "customs_golden_swag_marker_1"
+                            },
+                            {
+                              "name": "Времянка в которую нужно заложить зажигалку", 
+                              "kind": "Quest", 
+                              "left": "-194", 
+                              "top": "-207",
+                              "items": [{"id": "customs_trailer_park_cabin_key"}],
+                              "image": "customs_golden_swag_marker_2"
+                            }]
+               }, 
                {"name": "Операция \"Водолей\" - Часть 1",
                 "trader": "Therapist",  
                 "markers": [{
