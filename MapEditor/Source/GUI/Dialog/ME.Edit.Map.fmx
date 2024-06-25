@@ -44,11 +44,11 @@ inherited edMap: TedMap
         Size.Width = 210.000000000000000000
         Size.Height = 250.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 8
+        TabOrder = 10
       end
       object edBottom: TNumberBox
         Touch.InteractiveGestures = [LongTap, DoubleTap]
-        TabOrder = 7
+        TabOrder = 9
         Cursor = crIBeam
         DecimalDigits = 0
         Min = -9999.000000000000000000
@@ -56,7 +56,7 @@ inherited edMap: TedMap
         TextSettings.Font.Family = 'Tahoma'
         TextSettings.HorzAlign = Trailing
         Position.X = 360.000000000000000000
-        Position.Y = 138.000000000000000000
+        Position.Y = 178.000000000000000000
         HorzIncrement = 0.000000000000000000
         VertIncrement = 0.000000000000000000
         Size.Width = 90.000000000000000000
@@ -66,7 +66,7 @@ inherited edMap: TedMap
       end
       object edLeft: TNumberBox
         Touch.InteractiveGestures = [LongTap, DoubleTap]
-        TabOrder = 3
+        TabOrder = 5
         Cursor = crIBeam
         DecimalDigits = 0
         Min = -9999.000000000000000000
@@ -74,7 +74,7 @@ inherited edMap: TedMap
         TextSettings.Font.Family = 'Tahoma'
         TextSettings.HorzAlign = Trailing
         Position.X = 256.000000000000000000
-        Position.Y = 85.000000000000000000
+        Position.Y = 125.000000000000000000
         HorzIncrement = 0.000000000000000000
         VertIncrement = 0.000000000000000000
         Size.Width = 90.000000000000000000
@@ -84,7 +84,7 @@ inherited edMap: TedMap
       end
       object edMapName: TEdit
         Touch.InteractiveGestures = [LongTap, DoubleTap]
-        TabOrder = 1
+        TabOrder = 3
         TextSettings.Font.Family = 'Tahoma'
         Position.X = 256.000000000000000000
         Position.Y = 32.000000000000000000
@@ -95,7 +95,7 @@ inherited edMap: TedMap
       end
       object edRight: TNumberBox
         Touch.InteractiveGestures = [LongTap, DoubleTap]
-        TabOrder = 6
+        TabOrder = 8
         Cursor = crIBeam
         DecimalDigits = 0
         Min = -9999.000000000000000000
@@ -103,7 +103,7 @@ inherited edMap: TedMap
         TextSettings.Font.Family = 'Tahoma'
         TextSettings.HorzAlign = Trailing
         Position.X = 256.000000000000000000
-        Position.Y = 138.000000000000000000
+        Position.Y = 178.000000000000000000
         HorzIncrement = 0.000000000000000000
         VertIncrement = 0.000000000000000000
         Size.Width = 90.000000000000000000
@@ -113,7 +113,7 @@ inherited edMap: TedMap
       end
       object edTop: TNumberBox
         Touch.InteractiveGestures = [LongTap, DoubleTap]
-        TabOrder = 4
+        TabOrder = 6
         Cursor = crIBeam
         DecimalDigits = 0
         Min = -9999.000000000000000000
@@ -121,7 +121,7 @@ inherited edMap: TedMap
         TextSettings.Font.Family = 'Tahoma'
         TextSettings.HorzAlign = Trailing
         Position.X = 360.000000000000000000
-        Position.Y = 85.000000000000000000
+        Position.Y = 125.000000000000000000
         HorzIncrement = 0.000000000000000000
         VertIncrement = 0.000000000000000000
         Size.Width = 90.000000000000000000
@@ -132,32 +132,54 @@ inherited edMap: TedMap
       object laBottomPoint: TLabel
         StyledSettings = [Size, Style, FontColor]
         Position.X = 256.000000000000000000
-        Position.Y = 120.000000000000000000
+        Position.Y = 160.000000000000000000
         Size.Width = 195.000000000000000000
         Size.Height = 17.000000000000000000
         Size.PlatformDefault = False
         TextSettings.Font.Family = 'Tahoma'
         Text = #1053#1080#1078#1085#1103#1103' '#1087#1088#1072#1074#1072#1103' '#1082#1086#1086#1088#1076#1080#1085#1072#1090#1072' (x, y):'
-        TabOrder = 5
+        TabOrder = 7
       end
       object laMapName: TLabel
         StyledSettings = [Size, Style, FontColor]
         Position.X = 256.000000000000000000
         Position.Y = 14.000000000000000000
+        Size.Width = 57.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
         TextSettings.Font.Family = 'Tahoma'
-        Text = #1053#1072#1080#1084#1077#1085#1086#1074#1072#1085#1080#1077' '#1082#1072#1088#1090#1099
-        TabOrder = 0
+        Text = 'ID '#1082#1072#1088#1090#1099
+        TabOrder = 1
       end
       object laTopPoint: TLabel
         StyledSettings = [Size, Style, FontColor]
         Position.X = 256.000000000000000000
-        Position.Y = 67.000000000000000000
+        Position.Y = 107.000000000000000000
         Size.Width = 191.000000000000000000
         Size.Height = 17.000000000000000000
         Size.PlatformDefault = False
         TextSettings.Font.Family = 'Tahoma'
         Text = #1042#1077#1088#1093#1085#1103#1103' '#1083#1077#1074#1072#1103' '#1082#1086#1086#1088#1076#1080#1085#1072#1090#1072' (x, y):'
+        TabOrder = 4
+      end
+      object edMapCaption: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
         TabOrder = 2
+        TextSettings.Font.Family = 'Tahoma'
+        Position.X = 256.000000000000000000
+        Position.Y = 79.000000000000000000
+        Size.Width = 185.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        StyledSettings = [Size, Style, FontColor]
+      end
+      object laMapCaption: TLabel
+        StyledSettings = [Size, Style, FontColor]
+        Position.X = 256.000000000000000000
+        Position.Y = 61.000000000000000000
+        TextSettings.Font.Family = 'Tahoma'
+        Text = #1053#1072#1080#1084#1077#1085#1086#1074#1072#1085#1080#1077' '#1082#1072#1088#1090#1099
+        TabOrder = 0
       end
     end
     object tabLayer: TTabItem

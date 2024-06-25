@@ -26,6 +26,8 @@ type
     tabLayer: TTabItem;
     tabExtractions: TTabItem;
     tabQuests: TTabItem;
+    edMapCaption: TEdit;
+    laMapCaption: TLabel;
   private
     FMap: TMap;
     FPicturePanel: TfrPicture;
@@ -45,6 +47,8 @@ type
     procedure SetMapBottom(const Value: Integer);
     function GetPicture: TBitmap;
     procedure SetPicture(const Value: TBitmap);
+    function GetMapCaption: string;
+    procedure SetMapCaption(const Value: string);
   public
     constructor Create(AOwner: TComponent); override;
 
@@ -52,6 +56,7 @@ type
     procedure PostValues(const Value: TMap);
 
     property MapName: string read GetMapName write SetMapName;
+    property MapCaption: string read GetMapCaption write SetMapCaption;
     property MapLeft: Integer read GetMapLeft write SetMapLeft;
     property MapTop: Integer read GetMapTop write SetMapTop;
     property MapRight: Integer read GetMapRight write SetMapRight;
@@ -147,6 +152,16 @@ begin
   FPicturePanel.Picture := Value;
 end;
 
+function TedMap.GetMapCaption: string;
+begin
+  Result := edMapCaption.Text;
+end;
+
+procedure TedMap.SetMapCaption(const Value: string);
+begin
+  edMapCaption.Text := Value;
+end;
+
 procedure TedMap.SetInstance(const Value: TMap);
 begin
   FMap := Value;
@@ -157,6 +172,7 @@ begin
   Caption := 'Редактирование карты "' + FMap.Caption + '"';
 
   MapName := FMap.Name;
+  MapCaption := FMap.Caption;
   MapLeft := FMap.Left;
   MapTop := FMap.Top;
   MapRight := FMap.Right;
@@ -171,6 +187,7 @@ end;
 procedure TedMap.PostValues(const Value: TMap);
 begin
   Value.Name := MapName;
+  FMap.Caption := MapCaption;
   FMap.Left := MapLeft;
   FMap.Top := MapTop;
   FMap.Right := MapRight;

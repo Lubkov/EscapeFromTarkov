@@ -141,8 +141,6 @@ begin
     Exit;
 
   case ACol of
-//    ColumnKeyIdx:
-//      Value := VarToStr(Items[ARow].ID);
     ColumnNameIdx:
       Value := Items[ARow].Name;
     ColumnCaptionIdx:

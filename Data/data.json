@@ -1023,6 +1023,31 @@
         ]
       },
       {
+        "name": "bad_rep_evidence",
+        "caption": "Компромат",
+        "trader": "Prapor",
+        "markers": [
+          {
+            "name": "quest_bad_rep_evidence",
+            "caption": "",
+            "kind": "Quest",
+            "left": "203",
+            "top": "13",
+            "items": [
+              {
+                "name": "customs_factory_zone_key"
+              }
+            ],
+            "images": [
+              {
+                "name": "customs_bad_rep_evidence_document",
+                "caption": "Папка 0031 лежит на столе"
+              }
+            ]
+          }
+        ]
+      },
+      {
         "name": "",
         "caption": "Операция \"Водолей\" - Часть 1",
         "trader": "Therapist",
@@ -1117,6 +1142,60 @@
               {
                 "name": "marker_4",
                 "caption": "Кейс с прибором на сейфе"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "chemical_part1",
+        "caption": "Реагент - Часть 1",
+        "trader": "Skier",
+        "markers": [
+          {
+            "name": "quest_chemical_part1",
+            "caption": "",
+            "kind": "Quest",
+            "left": "493",
+            "top": "-140",
+            "items": [
+              {
+                "name": "customs_dorm_room_220_key"
+              }
+            ],
+            "images": [
+              {
+                "name": "customs_chemical_part1_marker_1",
+                "caption": "Папка 0013 на Таможне в вагоне за деревянным ящиком"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "chemical_part2",
+        "caption": "Реагент - Часть 2",
+        "trader": "Skier",
+        "markers": [
+          {
+            "name": "quest_chemical_part2",
+            "caption": "",
+            "kind": "Quest",
+            "left": "194",
+            "top": "171",
+            "items": [
+              {
+                "name": "customs_dorm_room_220_key"
+              }
+            ],
+            "images": [
+              {
+                "name": "customs_chemical_part2_letter",
+                "caption": "Запечатанное письмо между папок на стеллаже"
+              },
+              {
+                "name": "customs_chemical_part2_flash",
+                "caption": "Флешка вставлена в ноутбук"
               }
             ]
           }

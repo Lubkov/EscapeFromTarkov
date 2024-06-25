@@ -112,7 +112,7 @@ procedure TDataSertvice.LoadMarkerImage(const Name: string; const Dest: TBitmap)
 const
   FolderName = 'Markers';
 begin
-  InternalLoadImage(FolderName, Name, 'png', Dest);
+  InternalLoadImage(FolderName, Name, 'jpg', Dest);
 end;
 
 procedure TDataSertvice.LoadItemImage(const Name: string; const Dest: TBitmap);
