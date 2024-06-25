@@ -12,6 +12,7 @@ type
     class procedure LoadLayers(const Source: TJSONValue; Items: TList<TLayer>);
     class procedure LoadMarkers(const Source: TJSONValue; Items: TList<TMarker>);
     class procedure LoadMarkerItems(const Source: TJSONValue; Items: TList<string>);
+    class procedure LoadMarkerImages(const Source: TJSONValue; Items: TObjectList<TLocationImage>);
     class procedure LoadQuests(const Source: TJSONValue; Items: TList<TQuest>);
   public
     class procedure Load(const Data: string; Items: TList<TMap>);
@@ -23,6 +24,7 @@ type
     class procedure SaveLayers(const Root: TJSONObject; Items: TList<TLayer>);
     class procedure SaveMarkers(const Root: TJSONObject; Items: TList<TMarker>);
     class procedure SaveMarkerItems(const Root: TJSONObject; Items: TList<string>);
+    class procedure SaveMarkerImages(const Root: TJSONObject; Items: TObjectList<TLocationImage>);
     class procedure SaveQuests(const Root: TJSONObject; Items: TList<TQuest>);
   public
     class function Save(Items: TList<TMap>): string;
@@ -69,6 +71,7 @@ begin
     try
       Marker.Assign(JSONObject);
       LoadMarkerItems(JSONObject.FindValue('items'), Marker.Items);
+      LoadMarkerImages(JSONObject.FindValue('images'), Marker.Images);
     finally
       Items.Add(Marker);
     end;
@@ -88,7 +91,30 @@ begin
   for i := 0 to List.Count - 1 do begin
     JSONObject := TJSONObject(List.Items[i]);
 
-    Items.Add(JSONObject.GetValue<string>('id'));
+    Items.Add(JSONObject.GetValue<string>({$IFDEF UPDATE_DATA_FORMAT}'id'{$ELSE}'name'{$ENDIF}));
+  end;
+end;
+
+class procedure TJSONDataImport.LoadMarkerImages(const Source: TJSONValue; Items: TObjectList<TLocationImage>);
+var
+  i: Integer;
+  List: TJSONArray;
+  JSONObject: TJSONValue;
+  Image: TLocationImage;
+begin
+  if not (Source is TJSONArray) then
+    Exit;
+
+  List := TJSONArray(Source);
+  for i := 0 to List.Count - 1 do begin
+    JSONObject := TJSONObject(List.Items[i]);
+
+    Image := TLocationImage.Create;
+    try
+      Image.Assign(JSONObject);
+    finally
+      Items.Add(Image);
+    end;
   end;
 end;
 
@@ -213,6 +239,10 @@ begin
       JSONObject.AddPair('name', MarkerName);
 
       SaveMarkerItems(JSONObject, Marker.Items);
+      SaveMarkerImages(JSONObject, Marker.Images);
+
+      if Marker.Kind = TMarkerKind.Quest then
+        JSONObject.AddPair('caption', '');
     finally
       JSONItems.Add(JSONObject);
     end;
@@ -236,6 +266,24 @@ begin
     end;
   end;
   Root.AddPair('items', JSONItems);
+end;
+
+class procedure TJSONDataExport.SaveMarkerImages(const Root: TJSONObject; Items: TObjectList<TLocationImage>);
+var
+  Image: TLocationImage;
+  JSONItems: TJSONArray;
+  JSONObject: TJSONObject;
+begin
+  JSONItems := TJSONArray.Create;
+  for Image in Items do begin
+    JSONObject := TJSONObject.Create;
+    try
+      Image.AssignTo(JSONObject);
+    finally
+      JSONItems.Add(JSONObject);
+    end;
+  end;
+  Root.AddPair('images', JSONItems);
 end;
 
 class procedure TJSONDataExport.SaveQuests(const Root: TJSONObject; Items: TList<TQuest>);

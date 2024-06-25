@@ -148,7 +148,7 @@ begin
         Item.Tag := Idx;
         Item.Parent := QuestGrid;
         Item.Cursor := crHandPoint;
-        Item.Text := Quest.Name + ' (' + IntToStr(Quest.Markers.Count) + ')';
+        Item.Text := Quest.Caption + ' (' + IntToStr(Quest.Markers.Count) + ')';
         Item.StaysPressed := True;
         Item.StyleLookup := 'FilterItemStyle';
         Item.TextSettings.HorzAlign := TTextAlign.Leading;

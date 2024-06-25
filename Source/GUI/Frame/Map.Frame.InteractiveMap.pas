@@ -138,14 +138,14 @@ begin
   Clear;
   for Marker in Map.Markers do
     if MarkerFilter.IsGropupEnable(Marker.Kind) then
-      AddMarker(Marker, Marker.Name, TTrader.None);
+      AddMarker(Marker, Marker.Caption, TTrader.None);
 
   for i := 0 to Map.Quests.Count - 1 do begin
     Quest := Map.Quests[i];
 
     if MarkerFilter.IsQuestEnable(i) then
       for Marker in Quest.Markers do
-        AddMarker(Marker, Quest.Name, Quest.Trader);
+        AddMarker(Marker, Quest.Caption, Quest.Trader);
   end;
 
   AddPosition(FMapWrapper.Position);
@@ -215,7 +215,7 @@ begin
     Item.TagObject := Marker;
     Item.Tag := Ord(Trader);
 
-    if Trim(Marker.Image) <> '' then
+    if (Marker.Images.Count > 0) and (Trim(Marker.Images[0].Name) <> '') then
       Item.Cursor := crHandPoint
     else
       Item.Cursor := crDefault;
@@ -252,7 +252,7 @@ begin
 
   Item := TImage(Sender);
   Marker := TMarker(Item.TagObject);
-  if Trim(Marker.Image) <> '' then begin
+  if (Marker.Images.Count > 0) and (Trim(Marker.Images[0].Name) <> '') then begin
     FMarkerDescript.Init(Marker, Item.Hint, TTrader(Item.Tag));
 
     MarkerPanel.Height := FMarkerDescript.MaxHeight;

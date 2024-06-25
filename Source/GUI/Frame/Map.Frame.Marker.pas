@@ -178,12 +178,19 @@ const
 var
   Bitmap: TBitmap;
   i: Integer;
+  Image: TLocationImage;
 begin
   laQuestName.Text := QuestName;
-  laDescription.Text := Marker.Name;
+//  laDescription.Text := Marker.Name;
   Bitmap := TraderImageList.Bitmap(TSizeF.Create(64, 64), Ord(Trader));
   TraderImage.Bitmap.Assign(Bitmap);
-  DataSertvice.LoadMarkerImage(Marker.Image, MarkerImage.Bitmap);
+
+  if Marker.Images.Count > 0 then begin
+    Image := Marker.Images[0];
+
+    DataSertvice.LoadMarkerImage(Image.Name, MarkerImage.Bitmap);
+    laDescription.Text := Image.Caption;
+  end;
 
   FMaxHeight := TitleLayout.Height + TitleLayout.Margins.Top;
   FMaxHeight := FMaxHeight + ImageHeight + MainLayout.Margins.Top + MainLayout.Margins.Bottom;

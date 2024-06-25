@@ -6,65 +6,555 @@
     "top": "-920",
     "right": "-700",
     "bottom": "480",
-    "layers": [{"level": "0", "name": "main"}],
-    "markers": [{"name": "Окраины", "kind": "PMCExtraction", "left": "350", "top": "350"},
-                {"name": "ЗБ-014", "kind": "PMCExtraction", "left": "434", "top": "67"},
-                {"name": "А-Выход на мосту (Платный)", "kind": "PMCExtraction", "left": "-485", "top": "-510"},
-                {"name": "Северный пост ООН", "kind": "PMCExtraction", "left": "-560", "top": "-70"},
-                {"name": "ЗБ-016", "kind": "PMCExtraction", "left": "-392", "top": "20"},
-                {"name": "Южный пост ООН", "kind": "PMCExtraction", "left": "-520", "top": "290"},
-                {"name": "Ворота ВС РФ", "kind": "PMCExtraction", "left": "-135", "top": "412"},
-                {"name": "Окраины", "kind": "ScavExtraction", "left": "350", "top": "350"},
-                {"name": "Изба диких", "kind": "ScavExtraction", "left": "410", "top": "240"},
-                {"name": "Убежище мертвеца", "kind": "ScavExtraction", "left": "186", "top": "252"},
-                {"name": "Лодка", "kind": "ScavExtraction", "left": "184", "top": "214"},
-                {"name": "Бункер диких", "kind": "ScavExtraction", "left": "229", "top": "-683"},
-                {"name": "Дикий мост", "kind": "ScavExtraction", "left": "103", "top": "-836"},
-                {"name": "Горный тайник", "kind": "ScavExtraction", "left": "-203", "top": "-203"},
-                {"name": "Восточные скалы", "kind": "ScavExtraction", "left": "-503", "top": "-41"},
-                {"name": "Старое депо", "kind": "ScavExtraction", "left": "-513", "top": "152"},
-                {"name": "Южный пост ООН", "kind": "ScavExtraction", "left": "-520", "top": "290"},
-                {"name": "Ворота ВС РФ", "kind": "ScavExtraction", "left": "-135", "top": "412"},
-                {"name": "Ворота завода (Совм)", "kind": "CoopExtraction", "left": "-362", "top": "348"}],
-    "quests": [{"name": "Врачебная тайна - Часть 3", 
-                "markers": [{"name": "", "kind": "Quest", "left": "-91", "top": "220"}]},
-               {"name": "Лендлиз - Часть 1", 
-                "markers": [{"name": "", "kind": "Quest", "left": "231", "top": "-70"},
-                            {"name": "", "kind": "Quest", "left": "56", "top": "-52"}]}, 
-               {"name": "Поисковая миссия",
-                "markers": [{"name": "", "kind": "Quest", "left": "289", "top": "-455"},
-                            {"name": "", "kind": "Quest", "left": "197", "top": "-588"}]},
-               {"name": "Поручение",
-                "markers": [{"name": "", "kind": "Quest", "left": "-257", "top": "6"}]},
-               {"name": "Путь выживальщика - Запасливый",
-                "trader": "Jaeger",   
-                "markers": [{
-                              "name": "Место для закладки предметов в ЗБ-014", 
-                              "kind": "Quest", 
-                              "left": "434", 
-                              "top": "67",
-                              "items": [{"id": "iskra_lunch_box"}, {"id": "water_bottle"}],
-                              "image": "survivalist_path_thrifty_marker_1"
-                            },
-                            {
-                              "name": "Место для закладки предметов в ЗБ-016", 
-                              "kind": "Quest", 
-                              "left": "-392", 
-                              "top": "20",
-                              "items": [{"id": "iskra_lunch_box"}, {"id": "water_bottle"}],
-                              "image": "survivalist_path_thrifty_marker_2"
-                            }]
-               },
-               {"name": "Секта - Часть 2",
-                "markers": [{"name": "", "kind": "Quest", "left": "196", "top": "-7"},
-                            {"name": "", "kind": "Quest", "left": "-84", "top": "-717"}]},
-               {"name": "Устойчивый сигнал", 
-                "markers": [{"name": "", "kind": "Quest", "left": "251", "top": "292"},
-                            {"name": "", "kind": "Quest", "left": "401", "top": "-609"},
-                            {"name": "", "kind": "Quest", "left": "-78", "top": "-543"},
-                            {"name": "", "kind": "Quest", "left": "-210", "top": "-277"},
-                            {"name": "", "kind": "Quest", "left": "-447", "top": "251"}]}
-              ]
+    "layers": [
+      {
+        "level": "0",
+        "name": "main"
+      }
+    ],
+    "markers": [
+      {
+        "name": "pmc_",
+        "caption": "Окраины",
+        "kind": "PMCExtraction",
+        "left": "350",
+        "top": "350",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "ЗБ-014",
+        "kind": "PMCExtraction",
+        "left": "434",
+        "top": "67",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "А-Выход на мосту (Платный)",
+        "kind": "PMCExtraction",
+        "left": "-485",
+        "top": "-510",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Северный пост ООН",
+        "kind": "PMCExtraction",
+        "left": "-560",
+        "top": "-70",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "ЗБ-016",
+        "kind": "PMCExtraction",
+        "left": "-392",
+        "top": "20",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Южный пост ООН",
+        "kind": "PMCExtraction",
+        "left": "-520",
+        "top": "290",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Ворота ВС РФ",
+        "kind": "PMCExtraction",
+        "left": "-135",
+        "top": "412",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Окраины",
+        "kind": "ScavExtraction",
+        "left": "350",
+        "top": "350",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Изба диких",
+        "kind": "ScavExtraction",
+        "left": "410",
+        "top": "240",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Убежище мертвеца",
+        "kind": "ScavExtraction",
+        "left": "186",
+        "top": "252",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Лодка",
+        "kind": "ScavExtraction",
+        "left": "184",
+        "top": "214",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Бункер диких",
+        "kind": "ScavExtraction",
+        "left": "229",
+        "top": "-683",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Дикий мост",
+        "kind": "ScavExtraction",
+        "left": "103",
+        "top": "-836",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Горный тайник",
+        "kind": "ScavExtraction",
+        "left": "-203",
+        "top": "-203",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Восточные скалы",
+        "kind": "ScavExtraction",
+        "left": "-503",
+        "top": "-41",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Старое депо",
+        "kind": "ScavExtraction",
+        "left": "-513",
+        "top": "152",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Южный пост ООН",
+        "kind": "ScavExtraction",
+        "left": "-520",
+        "top": "290",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Ворота ВС РФ",
+        "kind": "ScavExtraction",
+        "left": "-135",
+        "top": "412",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "coop_",
+        "caption": "Ворота завода (Совм)",
+        "kind": "CoopExtraction",
+        "left": "-362",
+        "top": "348",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      }
+    ],
+    "quests": [
+      {
+        "name": "",
+        "caption": "Врачебная тайна - Часть 3",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-91",
+            "top": "220",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Лендлиз - Часть 1",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "231",
+            "top": "-70",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "56",
+            "top": "-52",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Поисковая миссия",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "289",
+            "top": "-455",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "197",
+            "top": "-588",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Поручение",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-257",
+            "top": "6",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Путь выживальщика - Запасливый",
+        "trader": "Jaeger",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "434",
+            "top": "67",
+            "items": [
+              {
+                "name": "iskra_lunch_box"
+              },
+              {
+                "name": "water_bottle"
+              }
+            ],
+            "images": [
+              {
+                "name": "survivalist_path_thrifty_marker_1",
+                "caption": "Место для закладки предметов в ЗБ-014"
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-392",
+            "top": "20",
+            "items": [
+              {
+                "name": "iskra_lunch_box"
+              },
+              {
+                "name": "water_bottle"
+              }
+            ],
+            "images": [
+              {
+                "name": "survivalist_path_thrifty_marker_2",
+                "caption": "Место для закладки предметов в ЗБ-016"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Секта - Часть 2",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "196",
+            "top": "-7",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-84",
+            "top": "-717",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Устойчивый сигнал",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "251",
+            "top": "292",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "401",
+            "top": "-609",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-78",
+            "top": "-543",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-210",
+            "top": "-277",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-447",
+            "top": "251",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "name": "customs",
@@ -73,151 +563,673 @@
     "top": "-300",
     "right": "-400",
     "bottom": "300",
-    "layers": [{"level": "0", "name": "main"}],
-    "markers": [{"name": "ЗБ-1011", "kind": "PMCExtraction", "left": "635", "top": "-135"},
-                {"name": "ЗБ-1012", "kind": "PMCExtraction", "left": "471", "top": "-118"},
-                {"name": "Старая заправка", "kind": "PMCExtraction", "left": "314", "top": "-183"},
-                {"name": "ЗБ-013", "kind": "PMCExtraction", "left": "200", "top": "-154"},
-                {"name": "Блокпост ВС РФ", "kind": "PMCExtraction", "left": "-16", "top": "-130"},
-                {"name": "Трейлерный парк", "kind": "PMCExtraction", "left": "-307", "top": "-220"},
-                {"name": "Перекресток", "kind": "PMCExtraction", "left": "-322", "top": "-83"},
-                {"name": "Лодка контрабандиста", "kind": "PMCExtraction", "left": "-39", "top": "123"},
-                {"name": "Выход у общаги (платный)", "kind": "PMCExtraction", "left": "180", "top": "214"},
-                {"name": "КПП Военной базы", "kind": "ScavExtraction", "left": "644", "top": "123"},
-                {"name": "КПП Диких", "kind": "ScavExtraction", "left": "648", "top": "-25"},
-                {"name": "Административные ворота", "kind": "ScavExtraction", "left": "664", "top": "-53"},
-                {"name": "Дальний угол завода", "kind": "ScavExtraction", "left": "651", "top": "-163"},
-                {"name": "Склад 4", "kind": "ScavExtraction", "left": "342", "top": "-26"},
-                {"name": "Старая заправка", "kind": "ScavExtraction", "left": "300", "top": "-196"},
-                {"name": "Заводские времянки", "kind": "ScavExtraction", "left": "213", "top": "1"},
-                {"name": "Склад 17", "kind": "ScavExtraction", "left": "51", "top": "-74"},
-                {"name": "Блокпост ВС РФ", "kind": "ScavExtraction", "left": "-16", "top": "-130"},
-                {"name": "ЖД до Таркова", "kind": "ScavExtraction", "left": "-165", "top": "-215"},
-                {"name": "Времянки у трейлерного парка", "kind": "ScavExtraction", "left": "-249", "top": "-227"},
-                {"name": "Перекресток", "kind": "ScavExtraction", "left": "-322", "top": "-83"},
-                {"name": "ЖД к порту", "kind": "ScavExtraction", "left": "-142", "top": "46"},
-                {"name": "Блокпост Снайперов", "kind": "ScavExtraction", "left": "21", "top": "127"},
-                {"name": "Ворота на старой дороге", "kind": "ScavExtraction", "left": "184", "top": "211"},
-                {"name": "ЖД к военной базе", "kind": "ScavExtraction", "left": "491", "top": "219"},
-                {"name": "Проход между скалами", "kind": "ScavExtraction", "left": "540", "top": "194"}],
-    "quests": [{"name": "Вымогатель",
-                "trader": "Skier",   
-                "markers": [{
-                              "name": "Труп за гаражами в кустах", 
-                              "kind": "Quest", 
-                              "left": "26", 
-                              "top": "-108",
-                              "items": [{"id": "customs_unknown_key"}],
-                              "image": "customs_extortionist_marker_1"
-                            },
-                            {
-                              "name": "Времянка между проходной и водохранилищем", 
-                              "kind": "Quest", 
-                              "left": "369", 
-                              "top": "-50",
-                              "items": [{"id": "customs_unknown_key"}],
-                              "image": "customs_extortionist_marker_2"
-                            }]
-               },    
-               {"name": "Золотые понты",
-                "trader": "Skier",   
-                "markers": [{
-                              "name": "Золотая зажигалка на столе в комнате 303", 
-                              "kind": "Quest", 
-                              "left": "180", 
-                              "top": "149",
-                              "items": [{"id": "customs_dorm_room_303_key"}],
-                              "image": "customs_golden_swag_marker_1"
-                            },
-                            {
-                              "name": "Времянка в которую нужно заложить зажигалку", 
-                              "kind": "Quest", 
-                              "left": "-194", 
-                              "top": "-207",
-                              "items": [{"id": "customs_trailer_park_cabin_key"}],
-                              "image": "customs_golden_swag_marker_2"
-                            }]
-               }, 
-               {"name": "Операция \"Водолей\" - Часть 1",
-                "trader": "Therapist",  
-                "markers": [{
-                              "name": "Комната 206 в двухэтажном общежитии", 
-                              "kind": "Quest", 
-                              "left": "234", 
-                              "top": "138",
-                              "items": [{"id": "dorm_room_206_key"}],
-                              "image": "marker_3"
-                            }]},         
-               {"name": "Посылка из прошлого",
-                "trader": "Prapor", 
-                "markers": [{
-                              "name": "Защищенный кейс в кабинете директора Tarcone в столе", 
-                              "kind": "Quest", 
-                              "left": "-202", 
-                              "top": "-103",
-                              "items": [{"id": "tarcone_office_key"}],
-                              "image": "marker_1"
-                            }]},
-               {"name": "Проверка на вшивость",
-                "trader": "Prapor", 
-                "markers": [{
-                              "name": "Бронзовые часы на полу возле педалей", 
-                              "kind": "Quest", 
-                              "left": "101", 
-                              "top": "-7",
-                              "items": [{"id": "customs_machinery_key"}],
-                              "image": "marker_2"
-                            }]},
-               {"name": "Провизор",
-                "trader": "Therapist",  
-                "markers": [{
-                              "name": "Кейс с прибором на сейфе", 
-                              "kind": "Quest", 
-                              "left": "237", 
-                              "top": "160",
-                              "items": [{"id": "dorm_room_114_key"}],
-                              "image": "marker_4"
-                            }]},     
-               {"name": "Садоводство - Часть 3",
-                "trader": "Mechanic",   
-                "markers": [                                        
-                            {
-                              "name": "Посылка с видеокартами в офисах таможни", 
-                              "kind": "Quest", 
-                              "left": "-203", 
-                              "top": "-103",
-                              "items": [{"id": "tarcone_office_key"}],
-                              "image": "customs_farming_part3_marker_1"
-                            }
-                          ]
-               },           
-               {"name": "Сафари на тигра",
-                "trader": "Peacemaker",
-                "markers": [{
-                              "name": "Первый автомобиль \"Тигр\"", 
-                              "kind": "Quest", 
-                              "left": "496", 
-                              "top": "-10",
-                              "items": [{"id": "marker_ms2000"}],
-                              "image": "tigr_safari_marker_1"
-                            },
-                            {
-                              "name": "Второй автомобиль \"Тигр\"", 
-                              "kind": "Quest", 
-                              "left": "570", 
-                              "top": "-22",
-                              "items": [{"id": "marker_ms2000"}],
-                              "image": "tigr_safari_marker_2"},
-                            {
-                              "name": "Третий автомобиль \"Тигр\"", 
-                              "kind": "Quest", 
-                              "left": "14", 
-                              "top": "0",
-                              "items": [{"id": "marker_ms2000"}],
-                              "image": "tigr_safari_marker_3"}]},
-               {"name": "Секта - Часть 2",
-                "markers": [{"name": "", "kind": "Quest", "left": "184", "top": "183"}]}
-              ]
+    "layers": [
+      {
+        "level": "0",
+        "name": "main"
+      }
+    ],
+    "markers": [
+      {
+        "name": "pmc_",
+        "caption": "ЗБ-1011",
+        "kind": "PMCExtraction",
+        "left": "635",
+        "top": "-135",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "ЗБ-1012",
+        "kind": "PMCExtraction",
+        "left": "471",
+        "top": "-118",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Старая заправка",
+        "kind": "PMCExtraction",
+        "left": "314",
+        "top": "-183",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "ЗБ-013",
+        "kind": "PMCExtraction",
+        "left": "200",
+        "top": "-154",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Блокпост ВС РФ",
+        "kind": "PMCExtraction",
+        "left": "-16",
+        "top": "-130",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Трейлерный парк",
+        "kind": "PMCExtraction",
+        "left": "-307",
+        "top": "-220",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Перекресток",
+        "kind": "PMCExtraction",
+        "left": "-322",
+        "top": "-83",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Лодка контрабандиста",
+        "kind": "PMCExtraction",
+        "left": "-39",
+        "top": "123",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Выход у общаги (платный)",
+        "kind": "PMCExtraction",
+        "left": "180",
+        "top": "214",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "КПП Военной базы",
+        "kind": "ScavExtraction",
+        "left": "644",
+        "top": "123",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "КПП Диких",
+        "kind": "ScavExtraction",
+        "left": "648",
+        "top": "-25",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Административные ворота",
+        "kind": "ScavExtraction",
+        "left": "664",
+        "top": "-53",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Дальний угол завода",
+        "kind": "ScavExtraction",
+        "left": "651",
+        "top": "-163",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Склад 4",
+        "kind": "ScavExtraction",
+        "left": "342",
+        "top": "-26",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Старая заправка",
+        "kind": "ScavExtraction",
+        "left": "300",
+        "top": "-196",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Заводские времянки",
+        "kind": "ScavExtraction",
+        "left": "213",
+        "top": "1",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Склад 17",
+        "kind": "ScavExtraction",
+        "left": "51",
+        "top": "-74",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Блокпост ВС РФ",
+        "kind": "ScavExtraction",
+        "left": "-16",
+        "top": "-130",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "ЖД до Таркова",
+        "kind": "ScavExtraction",
+        "left": "-165",
+        "top": "-215",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Времянки у трейлерного парка",
+        "kind": "ScavExtraction",
+        "left": "-249",
+        "top": "-227",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Перекресток",
+        "kind": "ScavExtraction",
+        "left": "-322",
+        "top": "-83",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "ЖД к порту",
+        "kind": "ScavExtraction",
+        "left": "-142",
+        "top": "46",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Блокпост Снайперов",
+        "kind": "ScavExtraction",
+        "left": "21",
+        "top": "127",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Ворота на старой дороге",
+        "kind": "ScavExtraction",
+        "left": "184",
+        "top": "211",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "ЖД к военной базе",
+        "kind": "ScavExtraction",
+        "left": "491",
+        "top": "219",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Проход между скалами",
+        "kind": "ScavExtraction",
+        "left": "540",
+        "top": "194",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      }
+    ],
+    "quests": [
+      {
+        "name": "",
+        "caption": "Вымогатель",
+        "trader": "Skier",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "26",
+            "top": "-108",
+            "items": [
+              {
+                "name": "customs_unknown_key"
+              }
+            ],
+            "images": [
+              {
+                "name": "customs_extortionist_marker_1",
+                "caption": "Труп за гаражами в кустах"
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "369",
+            "top": "-50",
+            "items": [
+              {
+                "name": "customs_unknown_key"
+              }
+            ],
+            "images": [
+              {
+                "name": "customs_extortionist_marker_2",
+                "caption": "Времянка между проходной и водохранилищем"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Золотые понты",
+        "trader": "Skier",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "180",
+            "top": "149",
+            "items": [
+              {
+                "name": "customs_dorm_room_303_key"
+              }
+            ],
+            "images": [
+              {
+                "name": "customs_golden_swag_marker_1",
+                "caption": "Золотая зажигалка на столе в комнате 303"
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-194",
+            "top": "-207",
+            "items": [
+              {
+                "name": "customs_trailer_park_cabin_key"
+              }
+            ],
+            "images": [
+              {
+                "name": "customs_golden_swag_marker_2",
+                "caption": "Времянка в которую нужно заложить зажигалку"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Операция \"Водолей\" - Часть 1",
+        "trader": "Therapist",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "234",
+            "top": "138",
+            "items": [
+              {
+                "name": "dorm_room_206_key"
+              }
+            ],
+            "images": [
+              {
+                "name": "marker_3",
+                "caption": "Комната 206 в двухэтажном общежитии"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Посылка из прошлого",
+        "trader": "Prapor",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-202",
+            "top": "-103",
+            "items": [
+              {
+                "name": "tarcone_office_key"
+              }
+            ],
+            "images": [
+              {
+                "name": "marker_1",
+                "caption": "Защищенный кейс в кабинете директора Tarcone в столе"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Проверка на вшивость",
+        "trader": "Prapor",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "101",
+            "top": "-7",
+            "items": [
+              {
+                "name": "customs_machinery_key"
+              }
+            ],
+            "images": [
+              {
+                "name": "marker_2",
+                "caption": "Бронзовые часы на полу возле педалей"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Провизор",
+        "trader": "Therapist",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "237",
+            "top": "160",
+            "items": [
+              {
+                "name": "dorm_room_114_key"
+              }
+            ],
+            "images": [
+              {
+                "name": "marker_4",
+                "caption": "Кейс с прибором на сейфе"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Садоводство - Часть 3",
+        "trader": "Mechanic",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-203",
+            "top": "-103",
+            "items": [
+              {
+                "name": "tarcone_office_key"
+              }
+            ],
+            "images": [
+              {
+                "name": "customs_farming_part3_marker_1",
+                "caption": "Посылка с видеокартами в офисах таможни"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Сафари на тигра",
+        "trader": "Peacemaker",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "496",
+            "top": "-10",
+            "items": [
+              {
+                "name": "marker_ms2000"
+              }
+            ],
+            "images": [
+              {
+                "name": "tigr_safari_marker_1",
+                "caption": "Первый автомобиль \"Тигр\""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "570",
+            "top": "-22",
+            "items": [
+              {
+                "name": "marker_ms2000"
+              }
+            ],
+            "images": [
+              {
+                "name": "tigr_safari_marker_2",
+                "caption": "Второй автомобиль \"Тигр\""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "14",
+            "top": "0",
+            "items": [
+              {
+                "name": "marker_ms2000"
+              }
+            ],
+            "images": [
+              {
+                "name": "tigr_safari_marker_3",
+                "caption": "Третий автомобиль \"Тигр\""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Секта - Часть 2",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "184",
+            "top": "183",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "name": "interchange",
@@ -226,38 +1238,387 @@
     "top": "-477",
     "right": "-367",
     "bottom": "423",
-    "layers": [{"level": "0", "name": "main"}],
-    "markers": [{"name": "Выход на железной дороге", "kind": "PMCExtraction", "left": "475", "top": "-443"},
-                {"name": "Выход на ТЭЦ (Платный)", "kind": "PMCExtraction", "left": "-248", "top": "-370"},
-                {"name": "Дыра в заборе", "kind": "PMCExtraction", "left": "-219", "top": "-37"},
-                {"name": "Безопасная комната", "kind": "PMCExtraction", "left": "-45", "top": "43"},
-                {"name": "КПП МЧС", "kind": "PMCExtraction", "left": "-315", "top": "262"}],
-    "quests": [{"name": "Распродажа",
-                "markers": [{"name": "", "kind": "Quest", "left": "65", "top": "-156"},
-                            {"name": "", "kind": "Quest", "left": "94", "top": "-124"},
-                            {"name": "", "kind": "Quest", "left": "-26", "top": "-104"},
-                            {"name": "", "kind": "Quest", "left": "94", "top": "10"},
-                            {"name": "", "kind": "Quest", "left": "-31", "top": "25"}]},
-               {"name": "Картотека - Часть 1",
-                "markers": [{"name": "", "kind": "Quest", "left": "-3", "top": "-295"},
-                            {"name": "", "kind": "Quest", "left": "-76", "top": "-156"},
-                            {"name": "", "kind": "Quest", "left": "33", "top": "146"}]},
-               {"name": "Кровь войны - Часть 1",
-                "markers": [{"name": "", "kind": "Quest", "left": "276", "top": "5"},
-                            {"name": "", "kind": "Quest", "left": "-172", "top": "-354"},
-                            {"name": "", "kind": "Quest", "left": "-202", "top": "-85"}]},
-               {"name": "Витамины - Часть 1",
-                "markers": [{"name": "", "kind": "Quest", "left": "21", "top": "-107"},
-                            {"name": "", "kind": "Quest", "left": "23", "top": "-82"}]},
-               {"name": "Осведомлён значит вооружён", 
-                "markers": [{"name": "", "kind": "Quest", "left": "10", "top": "-35"}]},
-               {"name": "Секрет успеха", 
-                "markers": [{"name": "", "kind": "Quest", "left": "21", "top": "-3"},
-                            {"name": "", "kind": "Quest", "left": "-33", "top": "-135"}]},
-               {"name": "Горячая доставка", 
-                "markers": [{"name": "", "kind": "Quest", "left": "-49", "top": "23"},
-                            {"name": "", "kind": "Quest", "left": "159", "top": "-38"}]}
-              ]
+    "layers": [
+      {
+        "level": "0",
+        "name": "main"
+      }
+    ],
+    "markers": [
+      {
+        "name": "pmc_",
+        "caption": "Выход на железной дороге",
+        "kind": "PMCExtraction",
+        "left": "475",
+        "top": "-443",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Выход на ТЭЦ (Платный)",
+        "kind": "PMCExtraction",
+        "left": "-248",
+        "top": "-370",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Дыра в заборе",
+        "kind": "PMCExtraction",
+        "left": "-219",
+        "top": "-37",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Безопасная комната",
+        "kind": "PMCExtraction",
+        "left": "-45",
+        "top": "43",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "КПП МЧС",
+        "kind": "PMCExtraction",
+        "left": "-315",
+        "top": "262",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      }
+    ],
+    "quests": [
+      {
+        "name": "",
+        "caption": "Распродажа",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "65",
+            "top": "-156",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "94",
+            "top": "-124",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-26",
+            "top": "-104",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "94",
+            "top": "10",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-31",
+            "top": "25",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Картотека - Часть 1",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-3",
+            "top": "-295",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-76",
+            "top": "-156",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "33",
+            "top": "146",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Кровь войны - Часть 1",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "276",
+            "top": "5",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-172",
+            "top": "-354",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-202",
+            "top": "-85",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Витамины - Часть 1",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "21",
+            "top": "-107",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "23",
+            "top": "-82",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Осведомлён значит вооружён",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "10",
+            "top": "-35",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Секрет успеха",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "21",
+            "top": "-3",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-33",
+            "top": "-135",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Горячая доставка",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-49",
+            "top": "23",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "159",
+            "top": "-38",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "name": "shoreline",
@@ -266,68 +1627,604 @@
     "top": "-450",
     "right": "-1130",
     "bottom": "650",
-    "layers": [{"level": "0", "name": "main"}],
-    "markers": [{"name": "Тоннель", "kind": "PMCExtraction", "left": "385", "top": "310"},
-                {"name": "Переход на Маяк", "kind": "PMCExtraction", "left": "444", "top": "-210"},
-                {"name": "Тропа альпиниста", "kind": "PMCExtraction", "left": "-197", "top": "-360"},
-                {"name": "А-Выход дорога на сервер (Платный)", "kind": "PMCExtraction", "left": "-543", "top": "-375"},
-                {"name": "Дорога на Таможню", "kind": "PMCExtraction", "left": "-853", "top": "10"},
-                {"name": "ЖД-мост", "kind": "PMCExtraction", "left": "-1025", "top": "310"},
-                {"name": "Лодка на причале", "kind": "PMCExtraction", "left": "-340", "top": "575"}],
-    "quests": [{"name": "Анестезия",
-                "markers": [{"name": "", "kind": "Quest", "left": "-264", "top": "-84"},
-                            {"name": "", "kind": "Quest", "left": "96", "top": "96"},
-                            {"name": "", "kind": "Quest", "left": "-316", "top": "496"}]},
-               {"name": "Витамины - Часть 1",        
-                "markers": [{"name": "", "kind": "Quest", "left": "-186", "top": "-87"}]},
-               {"name": "\"Выгодная\" сделка",
-                "markers": [{"name": "", "kind": "Quest", "left": "220", "top": "-158"}]},
-               {"name": "Глаз орла",
-                "markers": [{"name": "", "kind": "Quest", "left": "-553", "top": "-129"},
-                            {"name": "", "kind": "Quest", "left": "81", "top": "-167"}]},
-               {"name": "Гуманитарка",
-                "markers": [{"name": "", "kind": "Quest", "left": "-236", "top": "-165"},
-                            {"name": "", "kind": "Quest", "left": "-594", "top": "476"}]},
-               {"name": "Игра на верняк",
-                "markers": [{"name": "", "kind": "Quest", "left": "98", "top": "96"},
-                            {"name": "", "kind": "Quest", "left": "-305", "top": "493"}]},
-               {"name": "Коллеги - Часть 1",
-                "markers": [{"name": "", "kind": "Quest", "left": "-256", "top": "-57"},
-                            {"name": "", "kind": "Quest", "left": "-316", "top": "496"}]},
-               {"name": "Коллеги - Часть 2",
-                "markers": [{"name": "", "kind": "Quest", "left": "99", "top": "107"}]},
-               {"name": "Лендлиз - Часть 1",
-                "markers": [{"name": "", "kind": "Quest", "left": "-181", "top": "-80"},
-                            {"name": "", "kind": "Quest", "left": "-290", "top": "-85"},
-                            {"name": "", "kind": "Quest", "left": "-567", "top": "105"}]},
-               {"name": "Металлолом", 
-                "markers": [{"name": "", "kind": "Quest", "left": "380", "top": "165"},
-                            {"name": "", "kind": "Quest", "left": "-348", "top": "186"},
-                            {"name": "", "kind": "Quest", "left": "-155", "top": "-280"}]},               
-               {"name": "Путевка в санаторий - Часть 2",
-                "markers": [{"name": "", "kind": "Quest", "left": "-250", "top": "-47"},
-                            {"name": "", "kind": "Quest", "left": "-281", "top": "-43"}]},
-               {"name": "Рыболовные снасти",
-                "trader": "Peacemaker",
-                "markers": [
-                            {
-                              "name": "Место для закладки СВ-98 и Мультитула", 
-                              "kind": "Quest", 
-                              "left": "-180", 
-                              "top": "460",
-                              "items": [{"id": "sv-98_bolt-action_sniper_rifle"}, {"id": "leatherman_multitool"}],
-                              "image": "shoreline_fishing_gear_marker_1"
-                            }
-                          ]
-                },
-               {"name": "Секта - Часть 1", 
-                "markers": [{"name": "", "kind": "Quest", "left": "288", "top": "-40"}]},                              
-               {"name": "Секта - Часть 2",
-                "markers": [{"name": "", "kind": "Quest", "left": "-338", "top": "-90"}]},
-               {"name": "Сигнал - Часть 3",
-                "markers": [{"name": "", "kind": "Quest", "left": "-228", "top": "-88"},
-                            {"name": "", "kind": "Quest", "left": "-491", "top": "250"}]}                
-               ]
+    "layers": [
+      {
+        "level": "0",
+        "name": "main"
+      }
+    ],
+    "markers": [
+      {
+        "name": "pmc_",
+        "caption": "Тоннель",
+        "kind": "PMCExtraction",
+        "left": "385",
+        "top": "310",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Переход на Маяк",
+        "kind": "PMCExtraction",
+        "left": "444",
+        "top": "-210",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Тропа альпиниста",
+        "kind": "PMCExtraction",
+        "left": "-197",
+        "top": "-360",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "А-Выход дорога на сервер (Платный)",
+        "kind": "PMCExtraction",
+        "left": "-543",
+        "top": "-375",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Дорога на Таможню",
+        "kind": "PMCExtraction",
+        "left": "-853",
+        "top": "10",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "ЖД-мост",
+        "kind": "PMCExtraction",
+        "left": "-1025",
+        "top": "310",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Лодка на причале",
+        "kind": "PMCExtraction",
+        "left": "-340",
+        "top": "575",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      }
+    ],
+    "quests": [
+      {
+        "name": "",
+        "caption": "Анестезия",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-264",
+            "top": "-84",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "96",
+            "top": "96",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-316",
+            "top": "496",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Витамины - Часть 1",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-186",
+            "top": "-87",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "\"Выгодная\" сделка",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "220",
+            "top": "-158",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Глаз орла",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-553",
+            "top": "-129",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "81",
+            "top": "-167",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Гуманитарка",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-236",
+            "top": "-165",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-594",
+            "top": "476",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Игра на верняк",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "98",
+            "top": "96",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-305",
+            "top": "493",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Коллеги - Часть 1",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-256",
+            "top": "-57",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-316",
+            "top": "496",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Коллеги - Часть 2",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "99",
+            "top": "107",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Лендлиз - Часть 1",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-181",
+            "top": "-80",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-290",
+            "top": "-85",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-567",
+            "top": "105",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Металлолом",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "380",
+            "top": "165",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-348",
+            "top": "186",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-155",
+            "top": "-280",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Путевка в санаторий - Часть 2",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-250",
+            "top": "-47",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-281",
+            "top": "-43",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Рыболовные снасти",
+        "trader": "Peacemaker",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-180",
+            "top": "460",
+            "items": [
+              {
+                "name": "sv-98_bolt-action_sniper_rifle"
+              },
+              {
+                "name": "leatherman_multitool"
+              }
+            ],
+            "images": [
+              {
+                "name": "shoreline_fishing_gear_marker_1",
+                "caption": "Место для закладки СВ-98 и Мультитула"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Секта - Часть 1",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "288",
+            "top": "-40",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Секта - Часть 2",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-338",
+            "top": "-90",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Сигнал - Часть 3",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-228",
+            "top": "-88",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-491",
+            "top": "250",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "name": "reserve",
@@ -336,12 +2233,84 @@
     "top": "-329",
     "right": "-227",
     "bottom": "309",
-    "layers": [{"level": "0", "name": "main"}],
-    "markers": [{"name": "Гермозатвор бункера", "kind": "PMCExtraction", "left": "51", "top": "-245"},
-                {"name": "Д-2", "kind": "PMCExtraction", "left": "-121", "top": "170"},
-                {"name": "Спуск со скалы", "kind": "PMCExtraction", "left": "-10", "top": "209"},
-                {"name": "Канализационный люк", "kind": "PMCExtraction", "left": "40", "top": "76"},
-                {"name": "Бронепоезд", "kind": "PMCExtraction", "left": "126", "top": "-145"}],
+    "layers": [
+      {
+        "level": "0",
+        "name": "main"
+      }
+    ],
+    "markers": [
+      {
+        "name": "pmc_",
+        "caption": "Гермозатвор бункера",
+        "kind": "PMCExtraction",
+        "left": "51",
+        "top": "-245",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Д-2",
+        "kind": "PMCExtraction",
+        "left": "-121",
+        "top": "170",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Спуск со скалы",
+        "kind": "PMCExtraction",
+        "left": "-10",
+        "top": "209",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Канализационный люк",
+        "kind": "PMCExtraction",
+        "left": "40",
+        "top": "76",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Бронепоезд",
+        "kind": "PMCExtraction",
+        "left": "126",
+        "top": "-145",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      }
+    ],
     "quests": []
   },
   {
@@ -351,41 +2320,408 @@
     "top": "-1050",
     "right": "-550",
     "bottom": "650",
-    "layers": [{"level": "0", "name": "main"}],
-    "markers": [{"name": "Серверный блокпост", "kind": "PMCExtraction", "left": "116", "top": "-976"},
-                {"name": "Бронепоезд", "kind": "PMCExtraction", "left": "5", "top": "-876"},
-                {"name": "А-Выход дорога к военной базе (Платный)", "kind": "PMCExtraction", "left": "-341", "top": "-783"},
-                {"name": "Переход на Берег", "kind": "PMCExtraction", "left": "-352", "top": "-144"},
-                {"name": "Тропа через перевал", "kind": "CoopExtraction", "left": "-168", "top": "-10"},
-                {"name": "Южная дорога", "kind": "PMCExtraction", "left": "-267", "top": "417"}],
-    "quests": [{"name": "Энергетический кризис",
-                "markers": [{"name": "", "kind": "Quest", "left": "-112", "top": "-922"},
-                            {"name": "", "kind": "Quest", "left": "-85", "top": "-883"},
-                            {"name": "", "kind": "Quest", "left": "-159", "top": "-605"},
-                            {"name": "", "kind": "Quest", "left": "25", "top": "-425"}]},
-               {"name": "Простая задача. Часть 1",
-                "markers": [{"name": "", "kind": "Quest", "left": "-99", "top": "-558"}]},
-               {"name": "Отдых у моря",
-                "markers": [{"name": "", "kind": "Quest", "left": "141", "top": "-136"}]},
-               {"name": "Потерянный контакт",  
-                "markers": [{"name": "", "kind": "Quest", "left": "-71", "top": "131"}]},
-               {"name": "Ревизия - Маяк", 
-                "markers": [{"name": "", "kind": "Quest", "left": "-42", "top": "13"},
-                            {"name": "", "kind": "Quest", "left": "72", "top": "514"},
-                            {"name": "", "kind": "Quest", "left": "10", "top": "-506"},
-                            {"name": "", "kind": "Quest", "left": "-69", "top": "-694"}]},
-               {"name": "Груз X. Часть 4",
-                "markers": [{"name": "", "kind": "Quest", "left": "135", "top": "47"}]},
-               {"name": "Тайны Корпоратов",
-                "markers": [{"name": "", "kind": "Quest", "left": "51", "top": "-642"},
-                            {"name": "", "kind": "Quest", "left": "-119", "top": "-753"}]},
-               {"name": "Стрим - Часть 1",
-                "markers": [{"name": "", "kind": "Quest", "left": "34", "top": "-642"}]},
-               {"name": "Отшельник",
-                "markers": [{"name": "", "kind": "Quest", "left": "-250", "top": "-327"}]},
-               {"name": "Наркотрафик",
-                "markers": [{"name": "", "kind": "Quest", "left": "-105", "top": "-560"}]}
-              ]
+    "layers": [
+      {
+        "level": "0",
+        "name": "main"
+      }
+    ],
+    "markers": [
+      {
+        "name": "pmc_",
+        "caption": "Серверный блокпост",
+        "kind": "PMCExtraction",
+        "left": "116",
+        "top": "-976",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Бронепоезд",
+        "kind": "PMCExtraction",
+        "left": "5",
+        "top": "-876",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "А-Выход дорога к военной базе (Платный)",
+        "kind": "PMCExtraction",
+        "left": "-341",
+        "top": "-783",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Переход на Берег",
+        "kind": "PMCExtraction",
+        "left": "-352",
+        "top": "-144",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "coop_",
+        "caption": "Тропа через перевал",
+        "kind": "CoopExtraction",
+        "left": "-168",
+        "top": "-10",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Южная дорога",
+        "kind": "PMCExtraction",
+        "left": "-267",
+        "top": "417",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      }
+    ],
+    "quests": [
+      {
+        "name": "",
+        "caption": "Энергетический кризис",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-112",
+            "top": "-922",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-85",
+            "top": "-883",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-159",
+            "top": "-605",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "25",
+            "top": "-425",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Простая задача. Часть 1",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-99",
+            "top": "-558",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Отдых у моря",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "141",
+            "top": "-136",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Потерянный контакт",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-71",
+            "top": "131",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Ревизия - Маяк",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-42",
+            "top": "13",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "72",
+            "top": "514",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "10",
+            "top": "-506",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-69",
+            "top": "-694",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Груз X. Часть 4",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "135",
+            "top": "47",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Тайны Корпоратов",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "51",
+            "top": "-642",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-119",
+            "top": "-753",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Стрим - Часть 1",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "34",
+            "top": "-642",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Отшельник",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-250",
+            "top": "-327",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Наркотрафик",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-105",
+            "top": "-560",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "name": "streets",
@@ -394,61 +2730,674 @@
     "top": "-210",
     "right": "-300",
     "bottom": "540",
-    "layers": [{"level": "0", "name": "main"}],
-    "markers": [{"name": "Место Крушения", "kind": "PMCExtraction", "left": "309", "top": "410"},
-                {"name": "Упавший кран", "kind": "PMCExtraction", "left": "213", "top": "270"},
-                {"name": "КПП у выставочного центра", "kind": "PMCExtraction", "left": "215", "top": "-108"},
-                {"name": "ЖД Кардинал", "kind": "PMCExtraction", "left": "100", "top": "-194"},
-                {"name": "Лифт в стилобаре", "kind": "PMCExtraction", "left": "-50", "top": "-80"},
-                {"name": "Улица Климова", "kind": "PMCExtraction", "left": "-231", "top": "46"},
-                {"name": "Река в коллекторе", "kind": "PMCExtraction", "left": "-252", "top": "205"},
-                {"name": "Разрушенный дом", "kind": "PMCExtraction", "left": "-249", "top": "344"},
-                {"name": "Двор-Колодец", "kind": "PMCExtraction", "left": "-151", "top": "496"},
-                {"name": "А-выход такси на Проморском (Платный)", "kind": "PMCExtraction", "left": "3", "top": "459"}],
-    "quests": [{"name": "Аудит",
-                "markers": [{"name": "", "kind": "Quest", "left": "-177", "top": "225"}]},
-               {"name": "Вам посылка",
-                "markers": [{"name": "", "kind": "Quest", "left": "43", "top": "112"}]},
-               {"name": "Городская медицина",
-                "markers": [{"name": "", "kind": "Quest", "left": "96", "top": "319"}]}, 
-               {"name": "Городские разборки",
-                "markers": [{"name": "", "kind": "Quest", "left": "6", "top": "230"}]},
-               {"name": "Дверь",
-                "markers": [{"name": "", "kind": "Quest", "left": "189", "top": "62"}]},
-               {"name": "Зеленый коридор",
-                "markers": [{"name": "", "kind": "Quest", "left": "61", "top": "270"},                            
-                            {"name": "", "kind": "Quest", "left": "18", "top": "231"}]},
-               {"name": "Перепись населения",
-                "markers": [{"name": "", "kind": "Quest", "left": "82", "top": "134"}]},
-               {"name": "Продразведка",
-                "markers": [{"name": "", "kind": "Quest", "left": "257", "top": "286"},
-                            {"name": "", "kind": "Quest", "left": "143", "top": "297"},
-                            {"name": "", "kind": "Quest", "left": "-76", "top": "161"},
-                            {"name": "", "kind": "Quest", "left": "-206", "top": "184"}]},
-               {"name": "Ревизия - Улицы Таркова",
-                "markers": [{"name": "", "kind": "Quest", "left": "4", "top": "36"},
-                            {"name": "", "kind": "Quest", "left": "148", "top": "409"},                                        
-                            {"name": "", "kind": "Quest", "left": "-140", "top": "440"}]},
-               {"name": "Секреты идеального вкуса - Часть 1",
-                "markers": [{"name": "", "kind": "Quest", "left": "-45", "top": "-58"}]},
-               {"name": "Техосмотр",
-                "markers": [{"name": "", "kind": "Quest", "left": "63", "top": "300"}]},
-               {"name": "Финансовая пирамида",
-                "markers": [{"name": "", "kind": "Quest", "left": "279", "top": "375"},
-                            {"name": "", "kind": "Quest", "left": "241", "top": "-94"},
-                            {"name": "", "kind": "Quest", "left": "85", "top": "-38"},
-                            {"name": "", "kind": "Quest", "left": "98", "top": "-21"},
-                            {"name": "", "kind": "Quest", "left": "11", "top": "1"},
-                            {"name": "", "kind": "Quest", "left": "4", "top": "-23"},
-                            {"name": "", "kind": "Quest", "left": "-44", "top": "-82"},
-                            {"name": "", "kind": "Quest", "left": "-64", "top": "-79"},
-                            {"name": "", "kind": "Quest", "left": "-152", "top": "-60"},
-                            {"name": "", "kind": "Quest", "left": "-161", "top": "-49"},
-                            {"name": "", "kind": "Quest", "left": "-115", "top": "-15"},
-                            {"name": "", "kind": "Quest", "left": "-168", "top": "-6"},
-                            {"name": "", "kind": "Quest", "left": "59", "top": "231"},
-                            {"name": "", "kind": "Quest", "left": "-54", "top": "456"}]}                 
-              ]
+    "layers": [
+      {
+        "level": "0",
+        "name": "main"
+      }
+    ],
+    "markers": [
+      {
+        "name": "pmc_",
+        "caption": "Место Крушения",
+        "kind": "PMCExtraction",
+        "left": "309",
+        "top": "410",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Упавший кран",
+        "kind": "PMCExtraction",
+        "left": "213",
+        "top": "270",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "КПП у выставочного центра",
+        "kind": "PMCExtraction",
+        "left": "215",
+        "top": "-108",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "ЖД Кардинал",
+        "kind": "PMCExtraction",
+        "left": "100",
+        "top": "-194",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Лифт в стилобаре",
+        "kind": "PMCExtraction",
+        "left": "-50",
+        "top": "-80",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Улица Климова",
+        "kind": "PMCExtraction",
+        "left": "-231",
+        "top": "46",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Река в коллекторе",
+        "kind": "PMCExtraction",
+        "left": "-252",
+        "top": "205",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Разрушенный дом",
+        "kind": "PMCExtraction",
+        "left": "-249",
+        "top": "344",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Двор-Колодец",
+        "kind": "PMCExtraction",
+        "left": "-151",
+        "top": "496",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "А-выход такси на Проморском (Платный)",
+        "kind": "PMCExtraction",
+        "left": "3",
+        "top": "459",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      }
+    ],
+    "quests": [
+      {
+        "name": "",
+        "caption": "Аудит",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-177",
+            "top": "225",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Вам посылка",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "43",
+            "top": "112",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Городская медицина",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "96",
+            "top": "319",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Городские разборки",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "6",
+            "top": "230",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Дверь",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "189",
+            "top": "62",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Зеленый коридор",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "61",
+            "top": "270",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "18",
+            "top": "231",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Перепись населения",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "82",
+            "top": "134",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Продразведка",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "257",
+            "top": "286",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "143",
+            "top": "297",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-76",
+            "top": "161",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-206",
+            "top": "184",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Ревизия - Улицы Таркова",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "4",
+            "top": "36",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "148",
+            "top": "409",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-140",
+            "top": "440",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Секреты идеального вкуса - Часть 1",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-45",
+            "top": "-58",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Техосмотр",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "63",
+            "top": "300",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Финансовая пирамида",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "279",
+            "top": "375",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "241",
+            "top": "-94",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "85",
+            "top": "-38",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "98",
+            "top": "-21",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "11",
+            "top": "1",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "4",
+            "top": "-23",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-44",
+            "top": "-82",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-64",
+            "top": "-79",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-152",
+            "top": "-60",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-161",
+            "top": "-49",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-115",
+            "top": "-15",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-168",
+            "top": "-6",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "59",
+            "top": "231",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-54",
+            "top": "456",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "name": "laboratory",
@@ -457,7 +3406,12 @@
     "top": "0",
     "right": "0",
     "bottom": "0",
-    "layers": [{"level": "0", "name": "main"}],
+    "layers": [
+      {
+        "level": "0",
+        "name": "main"
+      }
+    ],
     "markers": [],
     "quests": []
   },
@@ -468,24 +3422,212 @@
     "top": "-150",
     "right": "-100",
     "bottom": "400",
-    "layers": [{"level": "0", "name": "main"}],
-    "markers": [{"name": "Проспект Мира", "kind": "PMCExtraction", "left": "216", "top": "31"},
-                {"name": "Пункт МЧС", "kind": "PMCExtraction", "left": "155", "top": "-93"}, 
-                {"name": "Полицейский кордон (Платный)", "kind": "PMCExtraction", "left": "-18", "top": "112"},
-                {"name": "Спуск в подвал в Nakatani", "kind": "PMCExtraction", "left": "-22", "top": "333"},
-                {"name": "Пункт МЧС", "kind": "ScavExtraction", "left": "155", "top": "-93"},
-                {"name": "Спуск в подвал в Nakatani", "kind": "ScavExtraction", "left": "-22", "top": "333"},
-                {"name": "Блокпост Диких (Совм.)", "kind": "CoopExtraction", "left": "28", "top": "-83"}],
-    "quests": [{"name": "Первый в очереди",
-                "markers": [{"name": "", "kind": "Quest", "left": "152", "top": "-80"}]},
-               {"name": "Роскошная жизнь",
-                "markers": [{"name": "", "kind": "Quest", "left": "112", "top": "28"}]},
-               {"name": "Спасение крота",
-                "markers": [{"name": "", "kind": "Quest", "left": "-18", "top": "31"}]},
-               {"name": "Стрельба по баночкам",
-                "markers": [{"name": "", "kind": "Quest", "left": "56", "top": "152"},
-                            {"name": "", "kind": "Quest", "left": "95", "top": "276"}]}
-              ]
+    "layers": [
+      {
+        "level": "0",
+        "name": "main"
+      }
+    ],
+    "markers": [
+      {
+        "name": "pmc_",
+        "caption": "Проспект Мира",
+        "kind": "PMCExtraction",
+        "left": "216",
+        "top": "31",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Пункт МЧС",
+        "kind": "PMCExtraction",
+        "left": "155",
+        "top": "-93",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Полицейский кордон (Платный)",
+        "kind": "PMCExtraction",
+        "left": "-18",
+        "top": "112",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "pmc_",
+        "caption": "Спуск в подвал в Nakatani",
+        "kind": "PMCExtraction",
+        "left": "-22",
+        "top": "333",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Пункт МЧС",
+        "kind": "ScavExtraction",
+        "left": "155",
+        "top": "-93",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "scav_",
+        "caption": "Спуск в подвал в Nakatani",
+        "kind": "ScavExtraction",
+        "left": "-22",
+        "top": "333",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      },
+      {
+        "name": "coop_",
+        "caption": "Блокпост Диких (Совм.)",
+        "kind": "CoopExtraction",
+        "left": "28",
+        "top": "-83",
+        "items": [],
+        "images": [
+          {
+            "name": "",
+            "caption": ""
+          }
+        ]
+      }
+    ],
+    "quests": [
+      {
+        "name": "",
+        "caption": "Первый в очереди",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "152",
+            "top": "-80",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Роскошная жизнь",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "112",
+            "top": "28",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Спасение крота",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-18",
+            "top": "31",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "",
+        "caption": "Стрельба по баночкам",
+        "trader": "None",
+        "markers": [
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "56",
+            "top": "152",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          },
+          {
+            "name": "quest_",
+            "caption": "",
+            "kind": "Quest",
+            "left": "95",
+            "top": "276",
+            "items": [],
+            "images": [
+              {
+                "name": "",
+                "caption": ""
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "name": "factory",
@@ -494,7 +3636,12 @@
     "top": "0",
     "right": "0",
     "bottom": "0",
-    "layers": [{"level": "0", "name": "main"}],
+    "layers": [
+      {
+        "level": "0",
+        "name": "main"
+      }
+    ],
     "markers": [],
     "quests": []
   }

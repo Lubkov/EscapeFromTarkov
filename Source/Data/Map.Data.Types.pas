@@ -10,6 +10,11 @@ const
   MainLayerIndex = 0;
 
 type
+//  TObjectList<T> = class(TList<T>)
+//  protected
+//    procedure Notify(const Item: T; Action: TCollectionNotification); override;
+//  end;
+
   TPoint = record
   private
     FEmpty: Boolean;
@@ -51,7 +56,6 @@ type
 
     property Name: string read FName write FName;
     property Caption: string read FCaption write FCaption;
-
   end;
 
   TMarkerKind = (PMCExtraction, ScavExtraction, CoopExtraction, Quest);
@@ -65,7 +69,7 @@ type
     FLeft: Integer;
     FTop: Integer;
     FItems: TList<string>;
-    FImages: TList<TLocationImage>;
+    FImages: TObjectList<TLocationImage>;
   public
     constructor Create;
     destructor Destroy; override;
@@ -81,7 +85,7 @@ type
     property Left: Integer read FLeft write FLeft;
     property Top: Integer read FTop write FTop;
     property Items: TList<string> read FItems;
-    property Images: TList<TLocationImage> read FImages;
+    property Images: TObjectList<TLocationImage> read FImages;
   end;
 
   TTrader = (None, Prapor, Therapist, Skier, Peacemaker, Mechanic, Ragman, Jaeger, Fence, Lightkeeper);
@@ -174,7 +178,7 @@ end;
 
 procedure TLayer.AssignTo(const Dest: TJSONObject);
 begin
-  Dest.AddPair('level', Level);
+  Dest.AddPair('level', Level.ToString);
   Dest.AddPair('name', Name);
 end;
 
@@ -204,24 +208,41 @@ begin
   inherited;
 
   FItems := TList<string>.Create;
-  FImage := '';
+  FImages := TObjectList<TLocationImage>.Create;
 end;
 
 destructor TMarker.Destroy;
 begin
   FItems.Free;
+  FImages.Free;
 
   inherited;
 end;
 
 procedure TMarker.Assign(const Source: TJSONValue);
+{$IFDEF UPDATE_DATA_FORMAT}
+var
+  Image: string;
+  Item: TLocationImage;
+{$ENDIF}
 begin
   Name := Source.GetValue<string>('name');
   Source.TryGetValue<string>('caption', FCaption);
   Kind := TRttiEnumerationType.GetValue<TMarkerKind>(Source.GetValue<string>('kind'));
   Left := Source.GetValue<Integer>('left');
   Top := Source.GetValue<Integer>('top');
-  Source.TryGetValue<string>('image', FImage);
+
+{$IFDEF UPDATE_DATA_FORMAT}
+  Source.TryGetValue<string>('image', Image);
+  Item := TLocationImage.Create;
+  try
+    Item.Name := Image;
+    if Kind = TMarkerKind.Quest then
+      Item.Caption := Name;
+  finally
+    FImages.Add(Item);
+  end;
+{$ENDIF}
 end;
 
 procedure TMarker.AssignTo(const Dest: TJSONObject);
@@ -231,7 +252,7 @@ begin
   Dest.AddPair('kind', TRttiEnumerationType.GetName<TMarkerKind>(Kind));
   Dest.AddPair('left', Left.ToString);
   Dest.AddPair('top', Top.ToString);
-  Dest.AddPair('image', Image);
+//  Dest.AddPair('image', Image);
 end;
 
 class function TMarker.KindToStr(Value: TMarkerKind): string;
@@ -290,6 +311,8 @@ end;
 procedure TQuest.AssignTo(const Dest: TJSONObject);
 begin
   Dest.AddPair('name', Name);
+  Dest.AddPair('caption', Caption);
+  Dest.AddPair('trader', TRttiEnumerationType.GetName<TTrader>(Trader));
 end;
 
 { TMap }
@@ -336,10 +359,10 @@ procedure TMap.AssignTo(const Dest: TJSONObject);
 begin
   Dest.AddPair('name', Name);
   Dest.AddPair('caption', Caption);
-  Dest.AddPair('left', Left);
-  Dest.AddPair('top', Top);
-  Dest.AddPair('right', Right);
-  Dest.AddPair('bottom', Bottom);
+  Dest.AddPair('left', Left.ToString);
+  Dest.AddPair('top', Top.ToString);
+  Dest.AddPair('right', Right.ToString);
+  Dest.AddPair('bottom', Bottom.ToString);
 end;
 
 procedure TMap.ClearLevels;
