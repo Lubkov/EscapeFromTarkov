@@ -6,9 +6,9 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   ME.Edit.Form, FMX.EditBox, FMX.NumberBox, FMX.Edit, System.Actions, FMX.ActnList,
-  FMX.Controls.Presentation, ME.DB.Map, ME.Dialog.Presenter, ME.Edit.Form.Presenter,
-  ME.Frame.Picture, ME.Frame.Layer, FMX.TabControl, ME.Frame.Marker,
-  ME.Frame.Quest;
+  FMX.Controls.Presentation, ME.Dialog.Presenter, ME.Edit.Form.Presenter,
+  ME.Frame.Picture, FMX.TabControl, ME.Frame.Marker, ME.Frame.Quest, ME.Frame.Layer,
+  Map.Data.Types;
 
 type
   TedMap = class(TEditForm, IEditDialog<TMap>)
@@ -151,21 +151,21 @@ procedure TedMap.SetInstance(const Value: TMap);
 begin
   FMap := Value;
 
-  if FMap.IsNewInstance then
-    Caption := 'Создание новой карты'
-  else
-    Caption := '#' + VarToStr(FMap.ID) + '  Редактирование карты "' + FMap.Name + '"';
+//  if FMap.IsNewInstance then
+//    Caption := 'Создание новой карты'
+//  else
+  Caption := 'Редактирование карты "' + FMap.Caption + '"';
 
   MapName := FMap.Name;
   MapLeft := FMap.Left;
   MapTop := FMap.Top;
   MapRight := FMap.Right;
   MapBottom := FMap.Bottom;
-  Picture := FMap.Picture;
+//  Picture := FMap.Picture;
 
-  FLayerList.Init(FMap);
-  FMarkerGrid.Init(FMap);
-  FQuestList.Init(FMap);
+//  FLayerList.Init(FMap);
+//  FMarkerGrid.Init(FMap);
+//  FQuestList.Init(FMap);
 end;
 
 procedure TedMap.PostValues(const Value: TMap);
@@ -175,7 +175,7 @@ begin
   FMap.Top := MapTop;
   FMap.Right := MapRight;
   FMap.Bottom := MapBottom;
-  Value.Picture := Picture;
+//  Value.Picture := Picture;
 end;
 
 end.

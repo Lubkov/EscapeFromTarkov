@@ -39,6 +39,7 @@ type
     procedure acEditMapExecute(Sender: TObject);
     procedure acDeleteMapExecute(Sender: TObject);
     procedure GridSelChanged(Sender: TObject);
+    procedure ActionList1Update(Action: TBasicAction; var Handled: Boolean);
   private
     FOnChange: TOnChangeEvent;
 
@@ -60,7 +61,7 @@ type
 implementation
 
 uses
-  Map.Data.Service;
+  Map.Data.Service, ME.Presenter.Map, ME.Edit.Map;
 
 {$R *.fmx}
 
@@ -92,22 +93,22 @@ begin
 end;
 
 function TfrMap.InternalMapEdit(const Map: TMap): Boolean;
-//var
-//  Presenter: TEditMapPresenter;
-//  Dialog: TedMap;
+var
+  Presenter: TEditMapPresenter;
+  Dialog: TedMap;
 begin
   Result := True;
-//  Dialog := TedMap.Create(Self);
-//  try
-//    Presenter := TEditMapPresenter.Create(Dialog, Map);
-//    try
-//      Result := Presenter.Edit;
-//    finally
-//      Presenter.Free;
-//    end;
-//  finally
-//    Dialog.Free;
-//  end;
+  Dialog := TedMap.Create(Self);
+  try
+    Presenter := TEditMapPresenter.Create(Dialog, Map);
+    try
+      Result := Presenter.Edit;
+    finally
+      Presenter.Free;
+    end;
+  finally
+    Dialog.Free;
+  end;
 end;
 
 procedure TfrMap.MapEdit(const Index: Integer);
@@ -171,6 +172,13 @@ begin
   FOnChange(Item);
 end;
 
+procedure TfrMap.ActionList1Update(Action: TBasicAction; var Handled: Boolean);
+begin
+  acAddMap.Enabled := False;
+  acEditMap.Enabled := (Grid.Selected >= 0) and (Count > 0);
+  acDeleteMap.Enabled := False;
+end;
+
 procedure TfrMap.GridCellDblClick(const Column: TColumn; const Row: Integer);
 begin
   MapEdit(Row);
@@ -228,9 +236,9 @@ procedure TfrMap.acDeleteMapExecute(Sender: TObject);
 //  Dialog: TedMessage;
 //  Res: Boolean;
 begin
-  if (Grid.Selected < 0) or (Grid.Selected >= Count) then
-    Exit;
-
+//  if (Grid.Selected < 0) or (Grid.Selected >= Count) then
+//    Exit;
+//
 //  Res := False;
 //  Map := Items[Grid.Selected];
 //  try

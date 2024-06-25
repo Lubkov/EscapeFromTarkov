@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Variants, System.Classes, FMX.Controls,
-  ME.Edit.Form.Presenter, ME.Del.Form.Presenter, ME.DB.Map;
+  ME.Edit.Form.Presenter, ME.Del.Form.Presenter, Map.Data.Types;
 
 type
   TEditMapPresenter = class(TEditFormPresenter<TMap>)
@@ -24,7 +24,7 @@ type
 implementation
 
 uses
-  ME.DB.Utils, ME.Service.Map;
+  ME.Service.Map;
 
 { TEditMapPresenter }
 
@@ -32,7 +32,7 @@ procedure TEditMapPresenter.InternalSave;
 begin
   inherited;
 
-  MapService.Save(Instance);
+//  MapService.Save(Instance);
 end;
 
 procedure TEditMapPresenter.Cancel;
@@ -50,7 +50,7 @@ end;
 
 procedure TDelMapPresenter.InternalDelete;
 begin
-  MapService.Remove(Instance);
+//  MapService.Remove(Instance);
 end;
 
 end.

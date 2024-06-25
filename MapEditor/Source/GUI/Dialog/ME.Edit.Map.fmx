@@ -194,6 +194,7 @@ inherited edMap: TedMap
       CustomIcon = <
         item
         end>
+      TextSettings.Trimming = None
       IsSelected = False
       Size.Width = 57.000000000000000000
       Size.Height = 26.000000000000000000
