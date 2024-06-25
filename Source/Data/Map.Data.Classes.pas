@@ -181,8 +181,6 @@ begin
   try
     Data.LoadFromFile(FileName, TEncoding.UTF8);
     Load(Data.Text, Items);
-
-
   finally
     Data.Free;
   end;
@@ -221,7 +219,7 @@ begin
     try
       Marker.AssignTo(JSONObject);
 
-      { Temp }
+    {$IFDEF UPDATE_DATA_FORMAT}
       JSONObject.AddPair('caption', JSONObject.GetValue<string>('name'));
       case Marker.Kind of
         TMarkerKind.PMCExtraction:
@@ -235,14 +233,19 @@ begin
       else
         MarkerName := '';
       end;
+    {$ELSE}
+      MarkerName := Marker.Name;
+    {$ENDIF}
 
       JSONObject.AddPair('name', MarkerName);
 
       SaveMarkerItems(JSONObject, Marker.Items);
       SaveMarkerImages(JSONObject, Marker.Images);
 
+    {$IFDEF UPDATE_DATA_FORMAT}
       if Marker.Kind = TMarkerKind.Quest then
         JSONObject.AddPair('caption', '');
+    {$ENDIF}
     finally
       JSONItems.Add(JSONObject);
     end;
@@ -297,10 +300,10 @@ begin
     JSONObject := TJSONObject.Create;
     try
       Quest.AssignTo(JSONObject);
-      { Temp }
+    {$IFDEF UPDATE_DATA_FORMAT}
       JSONObject.AddPair('caption', JSONObject.GetValue<string>('name'));
       JSONObject.AddPair('name', '');
-
+    {$ENDIF}
       SaveMarkers(JSONObject, Quest.Markers);
     finally
       JSONItems.Add(JSONObject);

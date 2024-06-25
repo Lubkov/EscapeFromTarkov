@@ -8,7 +8,7 @@ uses
   FMX.StdCtrls, System.ImageList, FMX.ImgList, FMX.Controls.Presentation, FMX.Styles.Objects,
   FMX.Objects, FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
   FMX.ListView, FMX.Layouts, System.Rtti, FMX.Grid.Style, FMX.Grid, FMX.ScrollBox,
-  ME.DB.Entity, ME.DB.Map, System.Actions, FMX.ActnList;
+  System.Actions, FMX.ActnList, Map.Data.Types;
 
 type
   TOnChangeEvent = procedure (const Map: TMap) of object;
@@ -21,18 +21,18 @@ type
     edDeleteMap: TSpeedButton;
     laTitle: TLabel;
     Grid: TGrid;
-    Column1: TColumn;
-    Column2: TColumn;
-    Column4: TColumn;
-    Column5: TColumn;
-    Column6: TColumn;
+    NameColumn: TColumn;
     ActionList1: TActionList;
     acAddMap: TAction;
     acEditMap: TAction;
     acDeleteMap: TAction;
     ImageList2: TImageList;
-    ImageColumn1: TImageColumn;
-    IntegerColumn1: TIntegerColumn;
+    PictureColumn: TImageColumn;
+    LeftColumn: TIntegerColumn;
+    CaptionColumn: TStringColumn;
+    TopColumn: TIntegerColumn;
+    RightColumn: TIntegerColumn;
+    BottomColumn: TIntegerColumn;
     procedure GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
     procedure GridCellDblClick(const Column: TColumn; const Row: Integer);
     procedure acAddMapExecute(Sender: TObject);
@@ -40,7 +40,6 @@ type
     procedure acDeleteMapExecute(Sender: TObject);
     procedure GridSelChanged(Sender: TObject);
   private
-    FItems: TList<TEntity>;
     FOnChange: TOnChangeEvent;
 
     function GetCount: Integer;
@@ -52,7 +51,6 @@ type
     destructor Destroy; override;
 
     procedure Init;
-    procedure Clear;
 
     property Count: Integer read GetCount;
     property Items[Index: Integer]: TMap read GetItem;
@@ -62,8 +60,7 @@ type
 implementation
 
 uses
-  ME.DB.Utils, ME.Dialog.Presenter, ME.Presenter.Map, ME.Edit.Map, ME.DB.Quest,
-  ME.Service.Map, ME.Dialog.Message, ME.Service.Marker, ME.Service.Quest;
+  Map.Data.Service;
 
 {$R *.fmx}
 
@@ -73,7 +70,6 @@ constructor TfrMap.Create(AOwner: TComponent);
 begin
   inherited;
 
-  FItems := TList<TEntity>.Create;
   Grid.RowCount := 0;
   FOnChange := nil;
 end;
@@ -81,57 +77,47 @@ end;
 destructor TfrMap.Destroy;
 begin
   FOnChange := nil;
-  Clear;
-  FItems.Free;
 
   inherited;
 end;
 
 function TfrMap.GetCount: Integer;
 begin
-  Result := FItems.Count;
+  Result := DataSertvice.Count;
 end;
 
 function TfrMap.GetItem(Index: Integer): TMap;
 begin
-  Result := TMap(FItems[Index]);
+  Result := DataSertvice.Items[Index];
 end;
 
 function TfrMap.InternalMapEdit(const Map: TMap): Boolean;
-var
-  Presenter: TEditMapPresenter;
-  Dialog: TedMap;
+//var
+//  Presenter: TEditMapPresenter;
+//  Dialog: TedMap;
 begin
-  Dialog := TedMap.Create(Self);
-  try
-    Presenter := TEditMapPresenter.Create(Dialog, Map);
-    try
-      Result := Presenter.Edit;
-    finally
-      Presenter.Free;
-    end;
-  finally
-    Dialog.Free;
-  end;
+  Result := True;
+//  Dialog := TedMap.Create(Self);
+//  try
+//    Presenter := TEditMapPresenter.Create(Dialog, Map);
+//    try
+//      Result := Presenter.Edit;
+//    finally
+//      Presenter.Free;
+//    end;
+//  finally
+//    Dialog.Free;
+//  end;
 end;
 
 procedure TfrMap.MapEdit(const Index: Integer);
-var
-  Map: TMap;
 begin
   if (Index < 0) or (Index >= Count) then
     Exit;
 
-  Map := Items[Index];
-  if (Map.Layers.Count = 0) and (Map.Tags.Count = 0) and (Map.Quests.Count = 0) then begin
-    MapService.LoadLayers(Map, True);
-    MarkerService.LoadMarkers(Map.ID, Map.Tags);
-    QuestService.LoadQuests(Map.ID, Map.Quests);
-  end;
-
   Grid.BeginUpdate;
   try
-    InternalMapEdit(Map);
+    InternalMapEdit(Items[Index]);
   finally
     Grid.EndUpdate;
   end;
@@ -139,22 +125,24 @@ end;
 
 procedure TfrMap.GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
 const
-  ColumnKeyIdx = 0;
-  ColumnNameIdx = 1;
+  ColumnNameIdx = 0;
+  ColumnCaptionIdx = 1;
   ColumnLeftIdx = 2;
   ColumnTopIdx = 3;
   ColumnRightIdx = 4;
   ColumnBottomIdx = 5;
   ColumnImageIdx = 6;
 begin
-  if FItems.Count <= ARow then
+  if Count <= ARow then
     Exit;
 
   case ACol of
-    ColumnKeyIdx:
-      Value := VarToStr(Items[ARow].ID);
+//    ColumnKeyIdx:
+//      Value := VarToStr(Items[ARow].ID);
     ColumnNameIdx:
       Value := Items[ARow].Name;
+    ColumnCaptionIdx:
+      Value := Items[ARow].Caption;
     ColumnLeftIdx:
       Value := Items[ARow].Left;
     ColumnTopIdx:
@@ -163,8 +151,8 @@ begin
       Value := Items[ARow].Right;
     ColumnBottomIdx:
       Value := Items[ARow].Bottom;
-    ColumnImageIdx:
-      Value := Items[ARow].Picture;
+//    ColumnImageIdx:
+//      Value := Items[ARow].Picture;
   end;
 end;
 
@@ -190,7 +178,7 @@ end;
 
 procedure TfrMap.Init;
 begin
-  MapService.GetAll(FItems);
+//  MapService.GetAll(FItems);
 
   Grid.BeginUpdate;
   try
@@ -203,39 +191,29 @@ begin
     Grid.Selected := 0;
 end;
 
-procedure TfrMap.Clear;
-var
-  Item: TEntity;
-begin
-  for Item in FItems do
-    Item.Free;
-
-  FItems.Clear;
-end;
-
 procedure TfrMap.acAddMapExecute(Sender: TObject);
-var
-  Map: TMap;
-  Res: Boolean;
+//var
+//  Map: TMap;
+//  Res: Boolean;
 begin
-  Res := False;
-  Map := TMap.Create;
-  try
-    Res := InternalMapEdit(Map);
-    if Res then begin
-      FItems.Add(Map);
-
-      Grid.BeginUpdate;
-      try
-        Grid.RowCount := Count;
-      finally
-        Grid.EndUpdate;
-      end;
-    end;
-  finally
-    if not Res then
-      Map.Free;
-  end;
+//  Res := False;
+//  Map := TMap.Create;
+//  try
+//    Res := InternalMapEdit(Map);
+//    if Res then begin
+//      FItems.Add(Map);
+//
+//      Grid.BeginUpdate;
+//      try
+//        Grid.RowCount := Count;
+//      finally
+//        Grid.EndUpdate;
+//      end;
+//    end;
+//  finally
+//    if not Res then
+//      Map.Free;
+//  end;
 end;
 
 procedure TfrMap.acEditMapExecute(Sender: TObject);
@@ -244,42 +222,42 @@ begin
 end;
 
 procedure TfrMap.acDeleteMapExecute(Sender: TObject);
-var
-  Map: TMap;
-  Presenter: TDelMapPresenter;
-  Dialog: TedMessage;
-  Res: Boolean;
+//var
+//  Map: TMap;
+//  Presenter: TDelMapPresenter;
+//  Dialog: TedMessage;
+//  Res: Boolean;
 begin
   if (Grid.Selected < 0) or (Grid.Selected >= Count) then
     Exit;
 
-  Res := False;
-  Map := Items[Grid.Selected];
-  try
-    Dialog := TedMessage.Create(Self);
-    try
-      Presenter := TDelMapPresenter.Create(Dialog, Map);
-      try
-        Res := Presenter.Delete;
-        if Res then begin
-          Grid.BeginUpdate;
-          try
-            FItems.Delete(Grid.Selected);
-            Grid.RowCount := Count;
-          finally
-            Grid.EndUpdate;
-          end;
-        end;
-      finally
-        Presenter.Free;
-      end;
-    finally
-      Dialog.Free;
-    end;
-  finally
-    if Res then
-      Map.Free;
-  end;
+//  Res := False;
+//  Map := Items[Grid.Selected];
+//  try
+//    Dialog := TedMessage.Create(Self);
+//    try
+//      Presenter := TDelMapPresenter.Create(Dialog, Map);
+//      try
+//        Res := Presenter.Delete;
+//        if Res then begin
+//          Grid.BeginUpdate;
+//          try
+//            FItems.Delete(Grid.Selected);
+//            Grid.RowCount := Count;
+//          finally
+//            Grid.EndUpdate;
+//          end;
+//        end;
+//      finally
+//        Presenter.Free;
+//      end;
+//    finally
+//      Dialog.Free;
+//    end;
+//  finally
+//    if Res then
+//      Map.Free;
+//  end;
 end;
 
 end.

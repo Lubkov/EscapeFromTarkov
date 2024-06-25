@@ -95,19 +95,18 @@ type
     FName: string;
     FCaption: string;
     FTrader: TTrader;
-    FMarkers: TList<TMarker>;
+    FMarkers: TObjectList<TMarker>;
   public
     constructor Create;
     destructor Destroy; override;
 
     procedure Assign(const Source: TJSONValue);
     procedure AssignTo(const Dest: TJSONObject);
-    procedure ClearMarkers;
 
     property Name: string read FName write FName;
     property Caption: string read FCaption write FCaption;
     property Trader: TTrader read FTrader write FTrader;
-    property Markers: TList<TMarker> read FMarkers write FMarkers;
+    property Markers: TObjectList<TMarker> read FMarkers write FMarkers;
   end;
 
   TMap = class(TObject)
@@ -118,9 +117,9 @@ type
     FTop: Integer;
     FRight: Integer;
     FBottom: Integer;
-    FLayers: TList<TLayer>;
-    FMarkers: TList<TMarker>;
-    FQuests: TList<TQuest>;
+    FLayers: TObjectList<TLayer>;
+    FMarkers: TObjectList<TMarker>;
+    FQuests: TObjectList<TQuest>;
 
     function GetMainLayer: TLayer;
   public
@@ -129,9 +128,6 @@ type
 
     procedure Assign(const Source: TJSONValue);
     procedure AssignTo(const Dest: TJSONObject);
-    procedure ClearLevels;
-    procedure ClearMarkers;
-    procedure ClearQuests;
 
     property Name: string read FName write FName;
     property Caption: string read FCaption write FCaption;
@@ -139,9 +135,9 @@ type
     property Top: Integer read FTop write FTop;
     property Right: Integer read FRight write FRight;
     property Bottom: Integer read FBottom write FBottom;
-    property Layers: TList<TLayer> read FLayers write FLayers;
-    property Markers: TList<TMarker> read FMarkers write FMarkers;
-    property Quests: TList<TQuest> read FQuests write FQuests;
+    property Layers: TObjectList<TLayer> read FLayers write FLayers;
+    property Markers: TObjectList<TMarker> read FMarkers write FMarkers;
+    property Quests: TObjectList<TQuest> read FQuests write FQuests;
     property MainLayer: TLayer read GetMainLayer;
   end;
 
@@ -275,25 +271,14 @@ constructor TQuest.Create;
 begin
   inherited;
 
-  FMarkers := TList<TMarker>.Create;
+  FMarkers := TObjectList<TMarker>.Create;
 end;
 
 destructor TQuest.Destroy;
 begin
-  ClearMarkers;
   FMarkers.Free;
 
   inherited;
-end;
-
-procedure TQuest.ClearMarkers;
-var
-  i: Integer;
-begin
-  for i := 0 to FMarkers.Count - 1 do
-    FMarkers[i].Free;
-
-  FMarkers.Clear;
 end;
 
 procedure TQuest.Assign(const Source: TJSONValue);
@@ -326,20 +311,15 @@ begin
   FTop := 0;
   FRight := 0;
   FBottom := 0;
-  FLayers := TList<TLayer>.Create;
-  FMarkers := TList<TMarker>.Create;
-  FQuests := TList<TQuest>.Create;
+  FLayers := TObjectList<TLayer>.Create;
+  FMarkers := TObjectList<TMarker>.Create;
+  FQuests := TObjectList<TQuest>.Create;
 end;
 
 destructor TMap.Destroy;
 begin
-  ClearLevels;
   FLayers.Free;
-
-  ClearMarkers;
   FMarkers.Free;
-
-  ClearQuests;
   FQuests.Free;
 
   inherited;
@@ -363,36 +343,6 @@ begin
   Dest.AddPair('top', Top.ToString);
   Dest.AddPair('right', Right.ToString);
   Dest.AddPair('bottom', Bottom.ToString);
-end;
-
-procedure TMap.ClearLevels;
-var
-  i: Integer;
-begin
-  for i := 0 to FLayers.Count - 1 do
-    FLayers[i].Free;
-
-  FLayers.Clear;
-end;
-
-procedure TMap.ClearMarkers;
-var
-  i: Integer;
-begin
-  for i := 0 to FMarkers.Count - 1 do
-    FMarkers[i].Free;
-
-  FMarkers.Clear;
-end;
-
-procedure TMap.ClearQuests;
-var
-  i: Integer;
-begin
-  for i := 0 to FQuests.Count - 1 do
-    FQuests[i].Free;
-
-  FQuests.Clear;
 end;
 
 function TMap.GetMainLayer: TLayer;

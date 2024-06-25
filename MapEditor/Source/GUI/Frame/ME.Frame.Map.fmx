@@ -64,7 +64,7 @@ object frMap: TfrMap
       AutoSize = True
       StyledSettings = [Size, Style, FontColor]
       Size.Width = 192.000000000000000000
-      Size.Height = 15.200000762939450000
+      Size.Height = 15.000000000000000000
       Size.PlatformDefault = False
       TextSettings.Font.Family = 'Tahoma'
       Text = 'Escape from Tarkov, '#1057#1087#1080#1089#1086#1082' '#1082#1072#1088#1090
@@ -78,6 +78,8 @@ object frMap: TfrMap
     Size.Width = 648.000000000000000000
     Size.Height = 308.000000000000000000
     Size.PlatformDefault = False
+    TextSettings.Font.Family = 'Tahoma'
+    StyledSettings = [Style, FontColor]
     TabOrder = 2
     RowHeight = 64.000000000000000000
     Options = [AlternatingRowBackground, ColumnResize, ColLines, RowLines, RowSelect, AlwaysShowSelection, Header, AutoDisplacement]
@@ -85,32 +87,32 @@ object frMap: TfrMap
     OnSelChanged = GridSelChanged
     OnGetValue = GridGetValue
     OnCellDblClick = GridCellDblClick
-    Viewport.Width = 648.000000000000000000
-    Viewport.Height = 308.000000000000000000
-    object Column1: TColumn
-      Header = '#'
-      Size.Width = 50.000000000000000000
-    end
-    object Column2: TColumn
+    Viewport.Width = 628.000000000000000000
+    Viewport.Height = 283.000000000000000000
+    object NameColumn: TColumn
       Header = 'Name'
+      Size.Width = 80.000000000000000000
     end
-    object IntegerColumn1: TIntegerColumn
+    object CaptionColumn: TStringColumn
+      Header = 'Caption'
+    end
+    object LeftColumn: TIntegerColumn
       Header = 'Left'
       Size.Width = 70.000000000000000000
     end
-    object Column4: TColumn
+    object TopColumn: TIntegerColumn
       Header = 'Top'
       Size.Width = 70.000000000000000000
     end
-    object Column5: TColumn
+    object RightColumn: TIntegerColumn
       Header = 'Right'
       Size.Width = 70.000000000000000000
     end
-    object Column6: TColumn
+    object BottomColumn: TIntegerColumn
       Header = 'Bottom'
       Size.Width = 70.000000000000000000
     end
-    object ImageColumn1: TImageColumn
+    object PictureColumn: TImageColumn
       Header = 'Icon'
     end
   end

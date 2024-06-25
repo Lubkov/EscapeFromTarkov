@@ -1,29 +1,14 @@
-﻿[Column5]
-Coordinates=10,170,66,36
-
-[ActionList1]
+﻿[ActionList1]
 Coordinates=292,1,78,36
 
 [edDeleteMap]
 Coordinates=96,10,91,58
-
-[Column6]
-Coordinates=162,124,66,36
 
 [laTitle]
 Coordinates=283,10,49,58
 
 [edEditMap]
 Coordinates=197,10,76,58
-
-[Column2]
-Coordinates=86,124,66,36
-
-[Column1]
-Coordinates=10,124,66,36
-
-[Column4]
-Coordinates=230,78,66,36
 
 [edAddMap]
 Coordinates=10,10,76,58
@@ -50,6 +35,9 @@ Coordinates=86,78,84,36
 Coordinates=408,221,77,36
 
 []
-Coordinates=238,124,66,36
+Coordinates=162,124,66,36
 Visible=True
+
+[NameColumn]
+Coordinates=86,124,66,36
 

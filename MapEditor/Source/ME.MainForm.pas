@@ -23,7 +23,7 @@ type
   private
     FMapPanel: TfrMap;
 
-    procedure OnMapChanged(const Map: TMap);
+//    procedure OnMapChanged(const Map: TMap);
     procedure ImportLocalMap(const LocalMap: TLocalMap);
   public
   end;
@@ -45,25 +45,26 @@ uses
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
   AppService.LoadParams;
-//  AppService.Connect;
+  AppService.LoadDataFromJSON;
 
+  Self.Caption := '[Maps Editor]';
 //  Self.Caption := '[Maps Editor] Database = "' + AppService.Database + '"';
 
   FMapPanel := TfrMap.Create(Self);
   FMapPanel.Parent := Self;
   FMapPanel.Align := TAlignLayout.Client;
-  FMapPanel.OnChange := OnMapChanged;
+//  FMapPanel.OnChange := OnMapChanged;
 end;
 
 procedure TMainForm.FormShow(Sender: TObject);
 begin
-//  FMapPanel.Init;
+  FMapPanel.Init;
 end;
 
-procedure TMainForm.OnMapChanged(const Map: TMap);
-begin
-
-end;
+//procedure TMainForm.OnMapChanged(const Map: TMap);
+//begin
+//
+//end;
 
 procedure TMainForm.ImportLocalMap(const LocalMap: TLocalMap);
 
@@ -197,8 +198,6 @@ begin
 //  finally
 //    List.Free;
 //  end;
-
-  AppService.LoadDataFromJSON;
 
   FileName := System.IOUtils.TPath.Combine(AppParams.DataPath, 'export.json');
   TJSONDataExport.SaveToFile(FileName, DataSertvice.Items);
