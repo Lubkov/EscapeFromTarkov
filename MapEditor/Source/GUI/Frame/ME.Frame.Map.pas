@@ -4,11 +4,12 @@ interface
 
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
-  Generics.Collections, FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs,
-  FMX.StdCtrls, System.ImageList, FMX.ImgList, FMX.Controls.Presentation, FMX.Styles.Objects,
-  FMX.Objects, FMX.ListView.Types, FMX.ListView.Appearances, FMX.ListView.Adapters.Base,
-  FMX.ListView, FMX.Layouts, System.Rtti, FMX.Grid.Style, FMX.Grid, FMX.ScrollBox,
-  System.Actions, FMX.ActnList, Map.Data.Types;
+  System.IOUtils, Generics.Collections, FMX.Types, FMX.Graphics, FMX.Controls,
+  FMX.Forms, FMX.Dialogs, FMX.StdCtrls, System.ImageList, FMX.ImgList,
+  FMX.Controls.Presentation, FMX.Styles.Objects, FMX.Objects, FMX.ListView.Types,
+  FMX.ListView.Appearances, FMX.ListView.Adapters.Base, FMX.ListView, FMX.Layouts,
+  System.Rtti, FMX.Grid.Style, FMX.Grid, FMX.ScrollBox,  System.Actions,
+  FMX.ActnList, Map.Data.Types;
 
 type
   TOnChangeEvent = procedure (const Map: TMap) of object;
@@ -41,6 +42,7 @@ type
     procedure GridSelChanged(Sender: TObject);
     procedure ActionList1Update(Action: TBasicAction; var Handled: Boolean);
   private
+    FIcons: TObjectList<TBitmap>;
     FOnChange: TOnChangeEvent;
 
     function GetCount: Integer;
@@ -61,7 +63,7 @@ type
 implementation
 
 uses
-  Map.Data.Service, ME.Presenter.Map, ME.Edit.Map;
+  App.Constants, Map.Data.Service, ME.Presenter.Map, ME.Edit.Map;
 
 {$R *.fmx}
 
@@ -71,6 +73,7 @@ constructor TfrMap.Create(AOwner: TComponent);
 begin
   inherited;
 
+  FIcons := TObjectList<TBitmap>.Create;
   Grid.RowCount := 0;
   FOnChange := nil;
 end;
@@ -78,6 +81,7 @@ end;
 destructor TfrMap.Destroy;
 begin
   FOnChange := nil;
+  FIcons.Free;
 
   inherited;
 end;
@@ -97,7 +101,6 @@ var
   Presenter: TEditMapPresenter;
   Dialog: TedMap;
 begin
-  Result := True;
   Dialog := TedMap.Create(Self);
   try
     Presenter := TEditMapPresenter.Create(Dialog, Map);
@@ -152,8 +155,8 @@ begin
       Value := Items[ARow].Right;
     ColumnBottomIdx:
       Value := Items[ARow].Bottom;
-//    ColumnImageIdx:
-//      Value := Items[ARow].Picture;
+    ColumnImageIdx:
+      Value := FIcons[ARow];
   end;
 end;
 
@@ -185,8 +188,18 @@ begin
 end;
 
 procedure TfrMap.Init;
+var
+  i: Integer;
+  bmp: TBitmap;
 begin
-//  MapService.GetAll(FItems);
+  for i := 0 to Count - 1 do begin
+    bmp := TBitmap.Create;
+    try
+      DataSertvice.LoadIMapIcon(Items[i].Name, bmp);
+    finally
+      FIcons.Add(bmp);
+    end;
+  end;
 
   Grid.BeginUpdate;
   try

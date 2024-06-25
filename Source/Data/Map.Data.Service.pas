@@ -14,7 +14,7 @@ type
     function GetCount: Integer;
     function GetMapItem(Index: Integer): TMap;
     procedure SetMapItem(Index: Integer; const Value: TMap);
-    procedure InternalLoadImage(const Folder, Name: string; const Dest: TBitmap);
+    procedure InternalLoadImage(const Folder, Name, Ext: string; const Dest: TBitmap);
   public
     constructor Create;
     destructor Destroy; override;
@@ -23,6 +23,7 @@ type
     procedure Load(const FileName: string);
     procedure LoadMarkerImage(const Name: string; const Dest: TBitmap);
     procedure LoadItemImage(const Name: string; const Dest: TBitmap);
+    procedure LoadIMapIcon(const Name: string; const Dest: TBitmap);
 
     property Items: TList<TMap> read FItems;
     property Count: Integer read GetCount;
@@ -94,12 +95,12 @@ begin
   end;
 end;
 
-procedure TDataSertvice.InternalLoadImage(const Folder, Name: string; const Dest: TBitmap);
+procedure TDataSertvice.InternalLoadImage(const Folder, Name, Ext: string; const Dest: TBitmap);
 var
   FileName: string;
 begin
   FileName := TPath.Combine(AppParams.DataPath, Folder);
-  FileName := TPath.Combine(FileName, Name + '.png');
+  FileName := TPath.Combine(FileName, Name + '.' + Ext);
 
   if FileExists(FileName) then
     Dest.LoadFromFile(FileName)
@@ -111,14 +112,21 @@ procedure TDataSertvice.LoadMarkerImage(const Name: string; const Dest: TBitmap)
 const
   FolderName = 'Markers';
 begin
-  InternalLoadImage(FolderName, Name, Dest);
+  InternalLoadImage(FolderName, Name, 'png', Dest);
 end;
 
 procedure TDataSertvice.LoadItemImage(const Name: string; const Dest: TBitmap);
 const
   FolderName = 'Items';
 begin
-  InternalLoadImage(FolderName, Name, Dest);
+  InternalLoadImage(FolderName, Name, 'png', Dest);
+end;
+
+procedure TDataSertvice.LoadIMapIcon(const Name: string; const Dest: TBitmap);
+const
+  FolderName = 'Maps';
+begin
+  InternalLoadImage(FolderName, Name, 'jpg', Dest);
 end;
 
 end.
