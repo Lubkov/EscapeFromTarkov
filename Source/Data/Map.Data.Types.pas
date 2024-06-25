@@ -34,10 +34,24 @@ type
     function GetIsMainLevel: Boolean;
   public
     procedure Assign(const Source: TJSONValue);
+    procedure AssignTo(const Dest: TJSONObject);
 
     property Level: Integer read FLevel write FLevel;
     property Name: string read FName write FName;
     property IsMainLevel: Boolean read GetIsMainLevel;
+  end;
+
+  TLocationImage = class
+  private
+    FName: string;
+    FCaption: string;
+  public
+    procedure Assign(const Source: TJSONValue);
+    procedure AssignTo(const Dest: TJSONObject);
+
+    property Name: string read FName write FName;
+    property Caption: string read FCaption write FCaption;
+
   end;
 
   TMarkerKind = (PMCExtraction, ScavExtraction, CoopExtraction, Quest);
@@ -46,25 +60,28 @@ type
   TMarker = class
   private
     FName: string;
+    FCaption: string;
     FKind: TMarkerKind;
     FLeft: Integer;
     FTop: Integer;
     FItems: TList<string>;
-    FImage: string;
+    FImages: TList<TLocationImage>;
   public
     constructor Create;
     destructor Destroy; override;
 
     procedure Assign(const Source: TJSONValue);
+    procedure AssignTo(const Dest: TJSONObject);
 
     class function KindToStr(Value: TMarkerKind): string; static;
 
     property Name: string read FName write FName;
+    property Caption: string read FCaption write FCaption;
     property Kind: TMarkerKind read FKind write FKind;
     property Left: Integer read FLeft write FLeft;
     property Top: Integer read FTop write FTop;
     property Items: TList<string> read FItems;
-    property Image: string read FImage;
+    property Images: TList<TLocationImage> read FImages;
   end;
 
   TTrader = (None, Prapor, Therapist, Skier, Peacemaker, Mechanic, Ragman, Jaeger, Fence, Lightkeeper);
@@ -72,6 +89,7 @@ type
   TQuest = class
   private
     FName: string;
+    FCaption: string;
     FTrader: TTrader;
     FMarkers: TList<TMarker>;
   public
@@ -79,9 +97,11 @@ type
     destructor Destroy; override;
 
     procedure Assign(const Source: TJSONValue);
+    procedure AssignTo(const Dest: TJSONObject);
     procedure ClearMarkers;
 
     property Name: string read FName write FName;
+    property Caption: string read FCaption write FCaption;
     property Trader: TTrader read FTrader write FTrader;
     property Markers: TList<TMarker> read FMarkers write FMarkers;
   end;
@@ -104,6 +124,7 @@ type
     destructor Destroy; override;
 
     procedure Assign(const Source: TJSONValue);
+    procedure AssignTo(const Dest: TJSONObject);
     procedure ClearLevels;
     procedure ClearMarkers;
     procedure ClearQuests;
@@ -151,9 +172,29 @@ begin
   Name := Source.GetValue<string>('name');
 end;
 
+procedure TLayer.AssignTo(const Dest: TJSONObject);
+begin
+  Dest.AddPair('level', Level);
+  Dest.AddPair('name', Name);
+end;
+
 function TLayer.GetIsMainLevel: Boolean;
 begin
   Result := Level = MainLayerIndex;
+end;
+
+{ TLocationImage }
+
+procedure TLocationImage.Assign(const Source: TJSONValue);
+begin
+  Name := Source.GetValue<string>('name');
+  Caption := Source.GetValue<string>('caption');
+end;
+
+procedure TLocationImage.AssignTo(const Dest: TJSONObject);
+begin
+  Dest.AddPair('name', Name);
+  Dest.AddPair('caption', Caption);
 end;
 
 { TMarker }
@@ -176,10 +217,21 @@ end;
 procedure TMarker.Assign(const Source: TJSONValue);
 begin
   Name := Source.GetValue<string>('name');
+  Source.TryGetValue<string>('caption', FCaption);
   Kind := TRttiEnumerationType.GetValue<TMarkerKind>(Source.GetValue<string>('kind'));
   Left := Source.GetValue<Integer>('left');
   Top := Source.GetValue<Integer>('top');
   Source.TryGetValue<string>('image', FImage);
+end;
+
+procedure TMarker.AssignTo(const Dest: TJSONObject);
+begin
+  Dest.AddPair('name', Name);
+  Dest.AddPair('caption', Caption);
+  Dest.AddPair('kind', TRttiEnumerationType.GetName<TMarkerKind>(Kind));
+  Dest.AddPair('left', Left.ToString);
+  Dest.AddPair('top', Top.ToString);
+  Dest.AddPair('image', Image);
 end;
 
 class function TMarker.KindToStr(Value: TMarkerKind): string;
@@ -228,10 +280,16 @@ var
   TraderValue: string;
 begin
   Name := Source.GetValue<string>('name');
+  Source.TryGetValue<string>('caption', FCaption);
   if Source.TryGetValue<string>('trader', TraderValue) then
     Trader := TRttiEnumerationType.GetValue<TTrader>(TraderValue)
   else
     Trader := TTrader.None;
+end;
+
+procedure TQuest.AssignTo(const Dest: TJSONObject);
+begin
+  Dest.AddPair('name', Name);
 end;
 
 { TMap }
@@ -272,6 +330,16 @@ begin
   Top := Source.GetValue<Integer>('top');
   Right := Source.GetValue<Integer>('right');
   Bottom := Source.GetValue<Integer>('bottom');
+end;
+
+procedure TMap.AssignTo(const Dest: TJSONObject);
+begin
+  Dest.AddPair('name', Name);
+  Dest.AddPair('caption', Caption);
+  Dest.AddPair('left', Left);
+  Dest.AddPair('top', Top);
+  Dest.AddPair('right', Right);
+  Dest.AddPair('bottom', Bottom);
 end;
 
 procedure TMap.ClearLevels;

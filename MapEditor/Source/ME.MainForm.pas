@@ -35,7 +35,8 @@ implementation
 
 uses
   App.Constants, App.Service, ME.Service.Layer, ME.Service.Map, ME.DB.Marker,
-  ME.Service.Marker, ME.Service.Quest, ME.Service.Export;
+  ME.Service.Marker, ME.Service.Quest, ME.Service.Export,
+  Map.Data.Service, Map.Data.Classes;
 
 {$R *.fmx}
 
@@ -177,6 +178,8 @@ procedure TMainForm.buExpotClick(Sender: TObject);
 //  List: TStrings;
 //  JSONData: string;
 //  FileName: string;
+var
+  FileName: string;
 begin
 //  FileName := System.IOUtils.TPath.Combine(AppParams.Path, 'data.json');
 //
@@ -194,8 +197,13 @@ begin
 //  finally
 //    List.Free;
 //  end;
-//
-//  ShowMessage('Done');
+
+  AppService.LoadDataFromJSON;
+
+  FileName := System.IOUtils.TPath.Combine(AppParams.DataPath, 'export.json');
+  TJSONDataExport.SaveToFile(FileName, DataSertvice.Items);
+
+  ShowMessage('Done');
 end;
 
 procedure TMainForm.buImportClick(Sender: TObject);
@@ -203,7 +211,6 @@ procedure TMainForm.buImportClick(Sender: TObject);
 //  Data: TStrings;
 //  Items: TList<TMap>;
 //  i: Integer;
-//  FileName: string;
 begin
 //  FileName := System.IOUtils.TPath.Combine(AppParams.Path, 'data.json');
 //
@@ -223,10 +230,6 @@ begin
 //  finally
 //    Data.Free;
 //  end;
-
-  AppService.LoadDataFromJSON;
-
-  ShowMessage('Done');
 end;
 
 end.
