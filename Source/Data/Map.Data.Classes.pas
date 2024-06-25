@@ -144,6 +144,8 @@ begin
   try
     Data.LoadFromFile(FileName, TEncoding.UTF8);
     Load(Data.Text, Items);
+
+
   finally
     Data.Free;
   end;

@@ -367,6 +367,9 @@
         <DCCReference Include="..\Source\Common\App.SQLite.Connection.pas"/>
         <DCCReference Include="..\Source\Common\App.Service.pas"/>
         <DCCReference Include="Source\ME.Service.Export.pas"/>
+        <DCCReference Include="..\Source\Data\Map.Data.Classes.pas"/>
+        <DCCReference Include="..\Source\Data\Map.Data.Service.pas"/>
+        <DCCReference Include="..\Source\Data\Map.Data.Types.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -411,6 +414,12 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="..\Bin\MapEditor.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="..\Bin\MapEditor.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>MapEditor.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="..\Bin\MapEditor.exe" Configuration="Release" Class="ProjectOutput"/>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">

@@ -255,6 +255,8 @@ begin
   if Trim(Marker.Image) <> '' then begin
     FMarkerDescript.Init(Marker, Item.Hint, TTrader(Item.Tag));
 
+    MarkerPanel.Height := FMarkerDescript.MaxHeight;
+    MarkerPanel.Width := FMarkerDescript.MaxWidth;
     MarkerPanel.Position.X := (MainContainer.Width - MarkerPanel.Width) / 2;
     MarkerPanel.Position.Y := (MainContainer.Height - MarkerPanel.Height) / 2;
     MarkerPanel.Visible := True;

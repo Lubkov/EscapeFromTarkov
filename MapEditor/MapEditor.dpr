@@ -46,7 +46,10 @@ uses
   App.DB.Connection in '..\Source\Common\App.DB.Connection.pas',
   App.SQLite.Connection in '..\Source\Common\App.SQLite.Connection.pas',
   App.Service in '..\Source\Common\App.Service.pas',
-  ME.Service.Export in 'Source\ME.Service.Export.pas';
+  ME.Service.Export in 'Source\ME.Service.Export.pas',
+  Map.Data.Classes in '..\Source\Data\Map.Data.Classes.pas',
+  Map.Data.Service in '..\Source\Data\Map.Data.Service.pas',
+  Map.Data.Types in '..\Source\Data\Map.Data.Types.pas';
 
 {$R *.res}
 

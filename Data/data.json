@@ -1,8 +1,7 @@
 ﻿[
   {
-    "id": 1, 
-    "name": "Woods",
-    "caption": "Woods",
+    "name": "woods",
+    "caption": "Лес",
     "left": "500",
     "top": "-920",
     "right": "-700",
@@ -44,7 +43,7 @@
                               "kind": "Quest", 
                               "left": "434", 
                               "top": "67",
-                              "items": [{"id": "Iskra_lunch_box"}, {"id": "water_bottle"}],
+                              "items": [{"id": "iskra_lunch_box"}, {"id": "water_bottle"}],
                               "image": "survivalist_path_thrifty_marker_1"
                             },
                             {
@@ -52,7 +51,7 @@
                               "kind": "Quest", 
                               "left": "-392", 
                               "top": "20",
-                              "items": [{"id": "Iskra_lunch_box"}, {"id": "water_bottle"}],
+                              "items": [{"id": "iskra_lunch_box"}, {"id": "water_bottle"}],
                               "image": "survivalist_path_thrifty_marker_2"
                             }]
                },
@@ -68,9 +67,8 @@
               ]
   },
   {
-    "id": 2,
-    "name": "Customs",
-    "caption": "Customs",
+    "name": "customs",
+    "caption": "Таможня",
     "left": "800",
     "top": "-300",
     "right": "-400",
@@ -222,9 +220,8 @@
               ]
   },
   {
-    "id": 3,
-    "name": "Interchange",
-    "caption": "Interchange",
+    "name": "interchange",
+    "caption": "Развязка",
     "left": "533",
     "top": "-477",
     "right": "-367",
@@ -263,9 +260,8 @@
               ]
   },
   {
-    "id": 4,
-    "name": "Shoreline",
-    "caption": "Shoreline",
+    "name": "shoreline",
+    "caption": "Берег",
     "left": "570",
     "top": "-450",
     "right": "-1130",
@@ -319,7 +315,7 @@
                               "kind": "Quest", 
                               "left": "-180", 
                               "top": "460",
-                              "items": [{"id": "leatherman_multitool"}, {"id": "sv-98_bolt-action_sniper_rifle"}],
+                              "items": [{"id": "sv-98_bolt-action_sniper_rifle"}, {"id": "leatherman_multitool"}],
                               "image": "shoreline_fishing_gear_marker_1"
                             }
                           ]
@@ -334,9 +330,8 @@
                ]
   },
   {
-    "id": 5,
-    "name": "Reserve",
-    "caption": "Reserve",
+    "name": "reserve",
+    "caption": "Резерв",
     "left": "222",
     "top": "-329",
     "right": "-227",
@@ -350,9 +345,8 @@
     "quests": []
   },
   {
-    "id": 6,
-    "name": "Lighthouse",
-    "caption": "Lighthouse",
+    "name": "lighthouse",
+    "caption": "Маяк",
     "left": "550",
     "top": "-1050",
     "right": "-550",
@@ -394,9 +388,8 @@
               ]
   },
   {
-    "id": 7,
-    "name": "Streets",
-    "caption": "Streets of Tarkov",
+    "name": "streets",
+    "caption": "Улицы Таркова",
     "left": "330",
     "top": "-210",
     "right": "-300",
@@ -458,9 +451,8 @@
               ]
   },
   {
-    "id": 8,
-    "name": "Laboratory",
-    "caption": "The Laboratory",
+    "name": "laboratory",
+    "caption": "Лаборатория",
     "left": "0",
     "top": "0",
     "right": "0",
@@ -470,9 +462,8 @@
     "quests": []
   },
   {
-    "id": 9,
-    "name": "GroundZero",
-    "caption": "Ground Zero",
+    "name": "groundzero",
+    "caption": "Эпицентр",
     "left": "300",
     "top": "-150",
     "right": "-100",
@@ -497,9 +488,8 @@
               ]
   },
   {
-    "id": 10,
-    "name": "Factory",
-    "caption": "Factory",
+    "name": "factory",
+    "caption": "Завод",
     "left": "0",
     "top": "0",
     "right": "0",

@@ -44,9 +44,9 @@ uses
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
   AppService.LoadParams;
-  AppService.Connect;
+//  AppService.Connect;
 
-  Self.Caption := '[Maps Editor] Database = "' + AppService.Database + '"';
+//  Self.Caption := '[Maps Editor] Database = "' + AppService.Database + '"';
 
   FMapPanel := TfrMap.Create(Self);
   FMapPanel.Parent := Self;
@@ -56,7 +56,7 @@ end;
 
 procedure TMainForm.FormShow(Sender: TObject);
 begin
-  FMapPanel.Init;
+//  FMapPanel.Init;
 end;
 
 procedure TMainForm.OnMapChanged(const Map: TMap);
@@ -172,57 +172,59 @@ begin
 end;
 
 procedure TMainForm.buExpotClick(Sender: TObject);
-var
-  ExportService: TExportService;
-  List: TStrings;
-  JSONData: string;
-  FileName: string;
+//var
+//  ExportService: TExportService;
+//  List: TStrings;
+//  JSONData: string;
+//  FileName: string;
 begin
-  FileName := System.IOUtils.TPath.Combine(AppParams.Path, 'data.json');
-
-  ExportService := TExportService.Create;
-  try
-    JSONData := ExportService.ExportToJSON;
-  finally
-    ExportService.Free;
-  end;
-
-  List := TStringList.Create;
-  try
-    List.Add(JSONData);
-    List.SaveToFile(FileName, TEncoding.UTF8);
-  finally
-    List.Free;
-  end;
-
-  ShowMessage('Done');
+//  FileName := System.IOUtils.TPath.Combine(AppParams.Path, 'data.json');
+//
+//  ExportService := TExportService.Create;
+//  try
+//    JSONData := ExportService.ExportToJSON;
+//  finally
+//    ExportService.Free;
+//  end;
+//
+//  List := TStringList.Create;
+//  try
+//    List.Add(JSONData);
+//    List.SaveToFile(FileName, TEncoding.UTF8);
+//  finally
+//    List.Free;
+//  end;
+//
+//  ShowMessage('Done');
 end;
 
 procedure TMainForm.buImportClick(Sender: TObject);
-var
-  Data: TStrings;
-  Items: TList<TMap>;
-  i: Integer;
-  FileName: string;
+//var
+//  Data: TStrings;
+//  Items: TList<TMap>;
+//  i: Integer;
+//  FileName: string;
 begin
-  FileName := System.IOUtils.TPath.Combine(AppParams.Path, 'data.json');
+//  FileName := System.IOUtils.TPath.Combine(AppParams.Path, 'data.json');
+//
+//  Data := TStringList.Create;
+//  try
+//    Data.LoadFromFile(FileName, TEncoding.UTF8);
+//
+//    Items := TList<TMap>.Create;
+//    try
+//      MapService.LoadFromJSON(Data.Text, Items);
+//    finally
+//      for i := 0 to Items.Count - 1 do
+//        Items[i].Free;
+//
+//      Items.Free;
+//    end;
+//  finally
+//    Data.Free;
+//  end;
 
-  Data := TStringList.Create;
-  try
-    Data.LoadFromFile(FileName, TEncoding.UTF8);
-
-    Items := TList<TMap>.Create;
-    try
-      MapService.LoadFromJSON(Data.Text, Items);
-    finally
-      for i := 0 to Items.Count - 1 do
-        Items[i].Free;
-
-      Items.Free;
-    end;
-  finally
-    Data.Free;
-  end;
+  AppService.LoadDataFromJSON;
 
   ShowMessage('Done');
 end;

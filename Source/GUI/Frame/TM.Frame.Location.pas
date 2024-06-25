@@ -113,7 +113,8 @@ begin
     Button.StyleLookup := 'LocationGridItemStyle';
     Button.Images := ImageList1;
     Button.ImageIndex := i;
-    Button.Text := Items[i].Name;
+    Button.Text := Items[i].Caption;
+//    Button.TextSettings.Font.Size := 16;
 //    Button.Bitmap.Assign(Items[i].Picture);
     Button.Tag := i;
     Button.OnClick := OnLocationClick;

@@ -290,6 +290,11 @@ end;
 
 procedure TMapWrapper.Start;
 begin
+{$IFDEF DEBUG}
+  if not TDirectory.Exists(FDirectory) then
+    FDirectory := TPath.Combine(AppParams.Path, 'Screenshots');
+{$ENDIF}
+
   if not TDirectory.Exists(FDirectory) then
     raise Exception.Create('The specified directory name is invalid. "' + Directory + '"');
 

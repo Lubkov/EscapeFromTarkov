@@ -55,6 +55,7 @@ object InteractiveMap: TInteractiveMap
               'D:\Projects\Delphi\EscapeFromTarkov\Ico\MapTags\point_marker_16.' +
               'png'
           end>
+        HitTest = False
         Size.Width = 16.000000000000000000
         Size.Height = 16.000000000000000000
         Size.PlatformDefault = False

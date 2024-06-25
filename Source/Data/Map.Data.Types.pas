@@ -88,8 +88,8 @@ type
 
   TMap = class(TObject)
   private
-    FID: Integer;
     FName: string;
+    FCaption: string;
     FLeft: Integer;
     FTop: Integer;
     FRight: Integer;
@@ -108,8 +108,8 @@ type
     procedure ClearMarkers;
     procedure ClearQuests;
 
-    property ID: Integer read FID write FID;
     property Name: string read FName write FName;
+    property Caption: string read FCaption write FCaption;
     property Left: Integer read FLeft write FLeft;
     property Top: Integer read FTop write FTop;
     property Right: Integer read FRight write FRight;
@@ -266,8 +266,8 @@ end;
 
 procedure TMap.Assign(const Source: TJSONValue);
 begin
-  ID := Source.GetValue<Integer>('id');
   Name := Source.GetValue<string>('name');
+  Caption := Source.GetValue<string>('caption');
   Left := Source.GetValue<Integer>('left');
   Top := Source.GetValue<Integer>('top');
   Right := Source.GetValue<Integer>('right');
