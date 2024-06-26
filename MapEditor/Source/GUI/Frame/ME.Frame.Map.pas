@@ -193,7 +193,7 @@ begin
   for i := 0 to Count - 1 do begin
     bmp := TBitmap.Create;
     try
-      DataSertvice.LoadIMapIcon(Items[i].Name, bmp);
+      DataSertvice.LoadMapIcon(Items[i].Name, bmp);
     finally
       FIcons.Add(bmp);
     end;

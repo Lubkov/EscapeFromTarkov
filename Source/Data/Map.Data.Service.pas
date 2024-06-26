@@ -15,6 +15,8 @@ type
     function GetMapItem(Index: Integer): TMap;
     procedure SetMapItem(Index: Integer; const Value: TMap);
     procedure InternalLoadImage(const Folder, Name, Ext: string; const Dest: TBitmap);
+    procedure InternalSaveImage(const Folder, Name, Ext: string; const Dest: TBitmap);
+    procedure InternalDeleteImage(const Folder, Name, Ext: string);
   public
     constructor Create;
     destructor Destroy; override;
@@ -23,7 +25,8 @@ type
     procedure Load(const FileName: string);
     procedure LoadMarkerImage(const Name: string; const Dest: TBitmap);
     procedure LoadItemImage(const Name: string; const Dest: TBitmap);
-    procedure LoadIMapIcon(const Name: string; const Dest: TBitmap);
+    procedure LoadMapIcon(const Name: string; const Dest: TBitmap);
+    procedure SaveMapIcon(const Name: string; const Dest: TBitmap);
 
     property Items: TList<TMap> read FItems;
     property Count: Integer read GetCount;
@@ -108,6 +111,30 @@ begin
     Dest.Assign(nil);
 end;
 
+procedure TDataSertvice.InternalSaveImage(const Folder, Name, Ext: string; const Dest: TBitmap);
+var
+  FileName: string;
+begin
+  FileName := TPath.Combine(AppParams.DataPath, Folder);
+  FileName := TPath.Combine(FileName, Name + '.' + Ext);
+
+  if Dest.IsEmpty then
+    InternalDeleteImage(Folder, Name, Ext)
+  else
+    Dest.SaveToFile(FileName);
+end;
+
+procedure TDataSertvice.InternalDeleteImage(const Folder, Name, Ext: string);
+var
+  FileName: string;
+begin
+  FileName := TPath.Combine(AppParams.DataPath, Folder);
+  FileName := TPath.Combine(FileName, Name + '.' + Ext);
+
+  if FileExists(FileName) then
+    TFile.Delete(FileName);
+end;
+
 procedure TDataSertvice.LoadMarkerImage(const Name: string; const Dest: TBitmap);
 const
   FolderName = 'Markers';
@@ -122,11 +149,18 @@ begin
   InternalLoadImage(FolderName, Name, 'png', Dest);
 end;
 
-procedure TDataSertvice.LoadIMapIcon(const Name: string; const Dest: TBitmap);
+procedure TDataSertvice.LoadMapIcon(const Name: string; const Dest: TBitmap);
 const
   FolderName = 'Maps';
 begin
   InternalLoadImage(FolderName, Name, 'jpg', Dest);
+end;
+
+procedure TDataSertvice.SaveMapIcon(const Name: string; const Dest: TBitmap);
+const
+  FolderName = 'Maps';
+begin
+  InternalSaveImage(FolderName, Name, 'jpg', Dest);
 end;
 
 end.

@@ -68,6 +68,9 @@ implementation
 
 {$R *.fmx}
 
+uses
+  Map.Data.Service;
+
 constructor TedMap.Create(AOwner: TComponent);
 begin
   inherited;
@@ -178,6 +181,8 @@ begin
   MapRight := FMap.Right;
   MapBottom := FMap.Bottom;
 //  Picture := FMap.Picture;
+
+  DataSertvice.LoadMapIcon(FMap.Name, Picture);
 
 //  FLayerList.Init(FMap);
 //  FMarkerGrid.Init(FMap);
