@@ -6,8 +6,8 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   ME.Edit.Marker, System.Actions, FMX.ActnList, FMX.ListBox, FMX.EditBox,
-  FMX.NumberBox, FMX.Edit, FMX.Controls.Presentation, ME.DB.Marker,
-  System.ImageList, FMX.ImgList, FMX.Layouts;
+  FMX.NumberBox, FMX.Edit, FMX.Controls.Presentation, System.ImageList,
+  FMX.ImgList, FMX.Layouts, Map.Data.Types;
 
 type
   TedQuestPart = class(TedMarker)
@@ -38,10 +38,10 @@ end;
 
 function TedQuestPart.GetTitle(const Value: TMarker): string;
 begin
-  if Value.IsNewInstance then
-    Result := 'Добавление новой подзадачи квеста'
-  else
-    Result := '#' + VarToStr(Value.ID) + ' Редактирование подзадачи квеста';
+//  if Value.IsNewInstance then
+//    Result := 'Добавление новой подзадачи квеста'
+//  else
+    Result := {'#' + VarToStr(Value.ID) +} ' Редактирование подзадачи квеста';
 end;
 
 end.

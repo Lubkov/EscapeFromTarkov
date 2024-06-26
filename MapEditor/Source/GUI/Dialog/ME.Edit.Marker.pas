@@ -7,9 +7,8 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   ME.Edit.Form, System.Actions, FMX.ActnList, FMX.Controls.Presentation,
-  ME.DB.Marker, FMX.Edit, FMX.ListBox, FMX.EditBox, FMX.NumberBox,
-  ME.Edit.Form.Presenter, ME.DB.Map, FMX.Layouts, System.ImageList, FMX.ImgList,
-  FMX.Platform;
+  FMX.Edit, FMX.ListBox, FMX.EditBox, FMX.NumberBox, ME.Edit.Form.Presenter,
+  FMX.Layouts, System.ImageList, FMX.ImgList, FMX.Platform, Map.Data.Types;
 
 type
   TedMarker = class(TEditForm, IEditDialog<TMarker>)
@@ -185,10 +184,10 @@ end;
 
 function TedMarker.GetTitle(const Value: TMarker): string;
 begin
-  if Value.IsNewInstance then
-    Result := 'Добавление нового выхода с карты'
-  else
-    Result := '#' + VarToStr(Value.ID) + ' Редактирование выхода с карты';
+//  if Value.IsNewInstance then
+//    Result := 'Добавление нового выхода с карты'
+//  else
+    Result := 'Редактирование выхода с карты';
 end;
 
 function TedMarker.GetIncrement: Integer;

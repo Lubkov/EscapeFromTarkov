@@ -110,7 +110,7 @@ var
 begin
   Dialog := TedQuestPart.Create(Self);
   try
-    Dialog.Map := FMap;
+//    Dialog.Map := FMap;
     Presenter := TEditQuestPartPresenter.Create(Dialog, Point);
     try
       Result := Presenter.Edit;

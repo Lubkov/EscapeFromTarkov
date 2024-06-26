@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Variants, System.Classes, FMX.Controls,
   ME.Edit.Form.Presenter, ME.Del.Form.Presenter,
-  ME.DB.Marker, ME.Service.Marker;
+  Map.Data.Types;
 
 type
   TEditMarkerPresenter = class(TEditFormPresenter<TMarker>)
@@ -31,9 +31,9 @@ uses
 
 procedure TEditMarkerPresenter.InternalSave;
 begin
-  if not IsNullID(Instance.MapID) then begin
-    MarkerService.Save(Instance);
-  end;
+//  if not IsNullID(Instance.MapID) then begin
+//    MarkerService.Save(Instance);
+//  end;
 end;
 
 procedure TEditMarkerPresenter.Cancel;
@@ -51,7 +51,7 @@ end;
 
 procedure TDelMarkerPresenter.InternalDelete;
 begin
-  MarkerService.Remove(Instance);
+//  MarkerService.Remove(Instance);
 end;
 
 end.

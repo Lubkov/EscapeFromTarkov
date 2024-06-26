@@ -9,7 +9,8 @@
     "layers": [
       {
         "level": "0",
-        "name": "main"
+        "name": "woods_main",
+        "caption": "Основной"
       }
     ],
     "markers": [
@@ -566,7 +567,8 @@
     "layers": [
       {
         "level": "0",
-        "name": "main"
+        "name": "customs_main",
+        "caption": "Основной"
       }
     ],
     "markers": [
@@ -1320,7 +1322,8 @@
     "layers": [
       {
         "level": "0",
-        "name": "main"
+        "name": "interchange_main",
+        "caption": "Основной"
       }
     ],
     "markers": [
@@ -1709,7 +1712,8 @@
     "layers": [
       {
         "level": "0",
-        "name": "main"
+        "name": "shoreline_main",
+        "caption": "Основной"
       }
     ],
     "markers": [
@@ -2315,7 +2319,8 @@
     "layers": [
       {
         "level": "0",
-        "name": "main"
+        "name": "reserve_main",
+        "caption": "Основной"
       }
     ],
     "markers": [
@@ -2402,7 +2407,8 @@
     "layers": [
       {
         "level": "0",
-        "name": "main"
+        "name": "lighthouse_main",
+        "caption": "Основной"
       }
     ],
     "markers": [
@@ -2812,7 +2818,8 @@
     "layers": [
       {
         "level": "0",
-        "name": "main"
+        "name": "streets_main",
+        "caption": "Основной"
       }
     ],
     "markers": [
@@ -3488,7 +3495,8 @@
     "layers": [
       {
         "level": "0",
-        "name": "main"
+        "name": "laboratory_main",
+        "caption": "Основной"
       }
     ],
     "markers": [],
@@ -3504,7 +3512,8 @@
     "layers": [
       {
         "level": "0",
-        "name": "main"
+        "name": "groundzero_main",
+        "caption": "Основной"
       }
     ],
     "markers": [
@@ -3718,7 +3727,8 @@
     "layers": [
       {
         "level": "0",
-        "name": "main"
+        "name": "factory_main",
+        "caption": "Основной"
       }
     ],
     "markers": [],

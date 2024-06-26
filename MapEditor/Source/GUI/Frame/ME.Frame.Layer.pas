@@ -7,7 +7,7 @@ uses
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   System.Actions, FMX.ActnList, FMX.Controls.Presentation, System.ImageList,
   FMX.ImgList, FMX.Objects, System.Rtti, FMX.Grid.Style, FMX.Grid, FMX.ScrollBox,
-  ME.DB.Entity, ME.DB.Map, ME.DB.Layer;
+  Map.Data.Types;
 
 type
   TfrLayerList = class(TFrame)
@@ -24,10 +24,9 @@ type
     paPicture: TPanel;
     imMapPicture: TImage;
     Grid: TGrid;
-    Column1: TColumn;
-    Column2: TColumn;
-    Column3: TColumn;
-    Column4: TColumn;
+    NameColumn: TStringColumn;
+    LevelColumn: TIntegerColumn;
+    CaptionColumn: TStringColumn;
 
     procedure GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
     procedure GridSelChanged(Sender: TObject);
@@ -63,7 +62,7 @@ implementation
 
 uses
   ME.DB.Utils, ME.Dialog.Presenter, ME.Presenter.Layer, ME.Edit.Layer,
-  ME.Dialog.Message;
+  ME.Dialog.Message, Map.Data.Service;
 
 { TfrLayerList }
 
@@ -127,7 +126,7 @@ begin
 
   FFocusedIndex := Value;
   if FocusedIndex >= 0 then
-    imMapPicture.Bitmap.Assign(Items[FocusedIndex].Picture)
+    DataSertvice.LoadLayerImage(Items[FocusedIndex].Name, imMapPicture.Bitmap)
   else
     imMapPicture.Bitmap.Assign(nil);
 end;
@@ -161,7 +160,7 @@ begin
   Grid.BeginUpdate;
   try
     InternalLayerEdit(Layer);
-    imMapPicture.Bitmap.Assign(Layer.Picture);
+//    imMapPicture.Bitmap.Assign(Layer.Picture);
   finally
     Grid.EndUpdate;
   end;
@@ -169,23 +168,20 @@ end;
 
 procedure TfrLayerList.GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
 const
-  ColumnKeyIdx = 0;
-  ColumnMapIDIdx = 1;
-  ColumnLevelIdx = 2;
-  ColumnNameIdx = 3;
+  ColumnNameIdx = 0;
+  ColumnLevelIdx = 1;
+  ColumnCaptionIdx = 2;
 begin
   if Count <= ARow then
     Exit;
 
   case ACol of
-    ColumnKeyIdx:
-      Value := VarToStr(Items[ARow].ID);
-    ColumnMapIDIdx:
-      Value := VarToStr(Items[ARow].MapID);
+    ColumnNameIdx:
+      Value := VarToStr(Items[ARow].Name);
     ColumnLevelIdx:
       Value := Items[ARow].Level;
-    ColumnNameIdx:
-      Value := Items[ARow].Name;
+    ColumnCaptionIdx:
+      Value := ''; //Items[ARow].Name;
   end;
 end;
 
@@ -209,8 +205,6 @@ begin
   Res := False;
   Layer := TLayer.Create;
   try
-    Layer.MapID := FMap.ID;
-
     Res := InternalLayerEdit(Layer);
     if Res then begin
       FMap.Layers.Add(Layer);

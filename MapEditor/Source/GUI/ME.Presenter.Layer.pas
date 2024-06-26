@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Variants, System.Classes, FMX.Controls,
   ME.Edit.Form.Presenter, ME.Del.Form.Presenter,
-  ME.DB.Layer, ME.Service.Layer;
+  Map.Data.Types;
 
 type
   TEditLayerPresenter = class(TEditFormPresenter<TLayer>)
@@ -33,10 +33,6 @@ procedure TEditLayerPresenter.InternalSave;
 begin
   inherited;
 
-  if not IsNullID(Instance.MapID) then begin
-    LayerService.Save(Instance);
-    LayerService.SavePicture(Instance);
-  end;
 end;
 
 procedure TEditLayerPresenter.Cancel;
@@ -54,7 +50,7 @@ end;
 
 procedure TDelLayerPresenter.InternalDelete;
 begin
-  LayerService.Remove(Instance);
+
 end;
 
 end.

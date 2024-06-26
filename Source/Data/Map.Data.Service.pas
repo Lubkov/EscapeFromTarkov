@@ -27,6 +27,8 @@ type
     procedure LoadItemImage(const Name: string; const Dest: TBitmap);
     procedure LoadMapIcon(const Name: string; const Dest: TBitmap);
     procedure SaveMapIcon(const Name: string; const Dest: TBitmap);
+    procedure LoadLayerImage(const Name: string; const Dest: TBitmap);
+    procedure SaveLayerImage(const Name: string; const Dest: TBitmap);
 
     property Items: TList<TMap> read FItems;
     property Count: Integer read GetCount;
@@ -161,6 +163,20 @@ const
   FolderName = 'Maps';
 begin
   InternalSaveImage(FolderName, Name, 'jpg', Dest);
+end;
+
+procedure TDataSertvice.LoadLayerImage(const Name: string; const Dest: TBitmap);
+const
+  FolderName = 'Levels';
+begin
+  InternalLoadImage(FolderName, Name, 'png', Dest);
+end;
+
+procedure TDataSertvice.SaveLayerImage(const Name: string; const Dest: TBitmap);
+const
+  FolderName = 'Levels';
+begin
+  InternalSaveImage(FolderName, Name, 'png', Dest);
 end;
 
 end.

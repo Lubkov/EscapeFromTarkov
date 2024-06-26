@@ -7,7 +7,7 @@ uses
   Generics.Collections, FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs,
   FMX.StdCtrls, System.ImageList, FMX.ImgList, System.Actions, FMX.ActnList,
   FMX.Controls.Presentation, System.Rtti, FMX.Grid.Style, FMX.Grid,
-  FMX.ScrollBox, ME.DB.Entity, ME.DB.Map, ME.DB.Marker;
+  FMX.ScrollBox, Map.Data.Types;
 
 type
   TfrMarkerGrid = class(TFrame)
@@ -77,12 +77,12 @@ end;
 
 function TfrMarkerGrid.GetCount: Integer;
 begin
-  Result := FMap.Tags.Count;
+  Result := FMap.Markers.Count;
 end;
 
 function TfrMarkerGrid.GetItem(Index: Integer): TMarker;
 begin
-  Result := FMap.Tags[Index];
+  Result := FMap.Markers[Index];
 end;
 
 function TfrMarkerGrid.InternalExtractionEdit(const Marker: TMarker): Boolean;
@@ -146,8 +146,8 @@ begin
     Exit;
 
   case ACol of
-    ColumnKeyIdx:
-      Value := VarToStr(Items[ARow].ID);
+//    ColumnKeyIdx:
+//      Value := VarToStr(Items[ARow].ID);
     ColumnNameIdx:
       Value := VarToStr(Items[ARow].Name);
     ColumnKindIdx:
@@ -182,11 +182,11 @@ begin
   Res := False;
   Marker := TMarker.Create;
   try
-    Marker.MapID := FMap.ID;
+//    Marker.MapID := FMap.ID;
 
     Res := InternalExtractionEdit(Marker);
     if Res then begin
-      FMap.Tags.Add(Marker);
+      FMap.Markers.Add(Marker);
 
       Grid.BeginUpdate;
       try
@@ -227,7 +227,7 @@ begin
         if Res then begin
           Grid.BeginUpdate;
           try
-            FMap.Tags.Delete(Grid.Selected);
+            FMap.Markers.Delete(Grid.Selected);
             Grid.RowCount := Count;
           finally
             Grid.EndUpdate;

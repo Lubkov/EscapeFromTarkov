@@ -180,12 +180,11 @@ begin
   MapTop := FMap.Top;
   MapRight := FMap.Right;
   MapBottom := FMap.Bottom;
-//  Picture := FMap.Picture;
 
   DataSertvice.LoadMapIcon(FMap.Name, Picture);
 
-//  FLayerList.Init(FMap);
-//  FMarkerGrid.Init(FMap);
+  FLayerList.Init(FMap);
+  FMarkerGrid.Init(FMap);
 //  FQuestList.Init(FMap);
 end;
 
@@ -197,7 +196,9 @@ begin
   FMap.Top := MapTop;
   FMap.Right := MapRight;
   FMap.Bottom := MapBottom;
-//  Value.Picture := Picture;
+
+  if FPicturePanel.Changed then
+    DataSertvice.SaveMapIcon(FMap.Name, Picture);
 end;
 
 end.

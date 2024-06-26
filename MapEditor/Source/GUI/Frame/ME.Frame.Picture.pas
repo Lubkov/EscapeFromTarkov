@@ -28,6 +28,8 @@ type
     procedure acDeletePictureExecute(Sender: TObject);
     procedure ActionList1Update(Action: TBasicAction; var Handled: Boolean);
   private
+    FChanged: Boolean;
+
     function GetPicture: TBitmap;
     procedure SetPicture(const Value: TBitmap);
     function GetTitle: string;
@@ -37,6 +39,7 @@ type
 
     property Picture: TBitmap read GetPicture write SetPicture;
     property Title: string read GetTitle write SetTitle;
+    property Changed: Boolean read FChanged write FChanged;
   end;
 
 implementation
@@ -51,6 +54,7 @@ begin
 
   Title := '';
   Picture := nil;
+  FChanged := False;
 end;
 
 function TfrPicture.GetPicture: TBitmap;
@@ -75,13 +79,16 @@ end;
 
 procedure TfrPicture.acOpenPictureExecute(Sender: TObject);
 begin
-  if OpenDialog.Execute then
+  if OpenDialog.Execute then begin
     Picture.LoadFromFile(OpenDialog.FileName);
+    FChanged := True;
+  end;
 end;
 
 procedure TfrPicture.acDeletePictureExecute(Sender: TObject);
 begin
   Picture.Assign(nil);
+  FChanged := True;
 end;
 
 procedure TfrPicture.ActionList1Update(Action: TBasicAction; var Handled: Boolean);
