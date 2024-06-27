@@ -91,20 +91,20 @@ begin
     Caption := 'Редактирование уровня карты';
 
   Level := FLayer.Level;
-  LevelName := FLayer.Name;
+//  LevelName := FLayer.Name;
 //  Picture := FLayer.Picture;
 
-  DataSertvice.LoadLayerImage(FLayer.Name, Picture);
+  DataSertvice.LoadLayerImage(FLayer.ID, Picture);
 end;
 
 procedure TedLayer.PostValues(const Value: TLayer);
 begin
   Value.Level := Level;
-  Value.Name := LevelName;
+//  Value.Name := LevelName;
 //  Value.Picture := Picture;
 
   if FPicturePanel.Changed then
-    DataSertvice.SaveLayerImage(Value.Name, Picture);
+    DataSertvice.SaveLayerImage(Value.ID, Picture);
 end;
 
 end.

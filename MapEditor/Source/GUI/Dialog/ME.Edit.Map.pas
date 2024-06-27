@@ -174,14 +174,14 @@ begin
 //  else
   Caption := 'Редактирование карты "' + FMap.Caption + '"';
 
-  MapName := FMap.Name;
+//  MapName := FMap.Name;
   MapCaption := FMap.Caption;
   MapLeft := FMap.Left;
   MapTop := FMap.Top;
   MapRight := FMap.Right;
   MapBottom := FMap.Bottom;
 
-  DataSertvice.LoadMapIcon(FMap.Name, Picture);
+  DataSertvice.LoadMapIcon(FMap.ID, Picture);
 
   FLayerList.Init(FMap);
   FMarkerGrid.Init(FMap);
@@ -190,7 +190,7 @@ end;
 
 procedure TedMap.PostValues(const Value: TMap);
 begin
-  Value.Name := MapName;
+//  Value.Name := MapName;
   FMap.Caption := MapCaption;
   FMap.Left := MapLeft;
   FMap.Top := MapTop;
@@ -198,7 +198,7 @@ begin
   FMap.Bottom := MapBottom;
 
   if FPicturePanel.Changed then
-    DataSertvice.SaveMapIcon(FMap.Name, Picture);
+    DataSertvice.SaveMapIcon(FMap.ID, Picture);
 end;
 
 end.

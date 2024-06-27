@@ -148,8 +148,8 @@ begin
   case ACol of
 //    ColumnKeyIdx:
 //      Value := VarToStr(Items[ARow].ID);
-    ColumnNameIdx:
-      Value := VarToStr(Items[ARow].Name);
+//    ColumnNameIdx:
+//      Value := VarToStr(Items[ARow].idName);
     ColumnKindIdx:
       Value := TMarker.KindToStr(Items[ARow].Kind);
     ColumnLeftIdx:

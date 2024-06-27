@@ -126,7 +126,7 @@ begin
 
   FFocusedIndex := Value;
   if FocusedIndex >= 0 then
-    DataSertvice.LoadLayerImage(Items[FocusedIndex].Name, imMapPicture.Bitmap)
+    DataSertvice.LoadLayerImage(Items[FocusedIndex].ID, imMapPicture.Bitmap)
   else
     imMapPicture.Bitmap.Assign(nil);
 end;
@@ -177,7 +177,7 @@ begin
 
   case ACol of
     ColumnNameIdx:
-      Value := VarToStr(Items[ARow].Name);
+      Value := Items[ARow].ID;
     ColumnLevelIdx:
       Value := Items[ARow].Level;
     ColumnCaptionIdx:

@@ -4,15 +4,15 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Variants, System.Rtti, System.TypInfo,
-  System.SysConst, System.JSON, Generics.Collections, FMX.Graphics, Map.Data.Types;
+  System.SysConst, System.JSON, Generics.Collections, Map.Data.Types;
 
 type
   TJSONDataImport = class(TObject)
   private
     class procedure LoadLayers(const Source: TJSONValue; Items: TList<TLayer>);
     class procedure LoadMarkers(const Source: TJSONValue; Items: TList<TMarker>);
-    class procedure LoadMarkerItems(const Source: TJSONValue; Items: TList<string>);
-    class procedure LoadMarkerImages(const Source: TJSONValue; Items: TObjectList<TLocationImage>);
+    class procedure LoadMarkerItems(const Source: TJSONValue; Items: TList<TItemImage>);
+    class procedure LoadMarkerImages(const Source: TJSONValue; Items: TObjectList<TMarkerImage>);
     class procedure LoadQuests(const Source: TJSONValue; Items: TList<TQuest>);
   public
     class procedure Load(const Data: string; Items: TList<TMap>);
@@ -23,8 +23,8 @@ type
   private
     class procedure SaveLayers(const Root: TJSONObject; Items: TList<TLayer>);
     class procedure SaveMarkers(const Root: TJSONObject; Items: TList<TMarker>);
-    class procedure SaveMarkerItems(const Root: TJSONObject; Items: TList<string>);
-    class procedure SaveMarkerImages(const Root: TJSONObject; Items: TObjectList<TLocationImage>);
+    class procedure SaveMarkerItems(const Root: TJSONObject; Items: TList<TItemImage>);
+    class procedure SaveMarkerImages(const Root: TJSONObject; Items: TObjectList<TMarkerImage>);
     class procedure SaveQuests(const Root: TJSONObject; Items: TList<TQuest>);
   public
     class function Save(Items: TList<TMap>): string;
@@ -32,11 +32,6 @@ type
   end;
 
 implementation
-
-{$IFDEF UPDATE_DATA_FORMAT}
-uses
-  Map.Data.Service;
-{$ENDIF}
 
 class procedure TJSONDataImport.LoadLayers(const Source: TJSONValue; Items: TList<TLayer>);
 var
@@ -83,11 +78,12 @@ begin
   end;
 end;
 
-class procedure TJSONDataImport.LoadMarkerItems(const Source: TJSONValue; Items: TList<string>);
+class procedure TJSONDataImport.LoadMarkerItems(const Source: TJSONValue; Items: TList<TItemImage>);
 var
   i: Integer;
   List: TJSONArray;
   JSONObject: TJSONValue;
+  ItemImage: TItemImage;
 begin
   if (Source = nil) or not (Source is TJSONArray) then
     Exit;
@@ -96,16 +92,21 @@ begin
   for i := 0 to List.Count - 1 do begin
     JSONObject := TJSONObject(List.Items[i]);
 
-    Items.Add(JSONObject.GetValue<string>('name'));
+    ItemImage := TItemImage.Create;
+    try
+      ItemImage.Assign(JSONObject);
+    finally
+      Items.Add(ItemImage);
+    end;
   end;
 end;
 
-class procedure TJSONDataImport.LoadMarkerImages(const Source: TJSONValue; Items: TObjectList<TLocationImage>);
+class procedure TJSONDataImport.LoadMarkerImages(const Source: TJSONValue; Items: TObjectList<TMarkerImage>);
 var
   i: Integer;
   List: TJSONArray;
   JSONObject: TJSONValue;
-  Image: TLocationImage;
+  Image: TMarkerImage;
 begin
   if not (Source is TJSONArray) then
     Exit;
@@ -114,7 +115,7 @@ begin
   for i := 0 to List.Count - 1 do begin
     JSONObject := TJSONObject(List.Items[i]);
 
-    Image := TLocationImage.Create;
+    Image := TMarkerImage.Create;
     try
       Image.Assign(JSONObject);
     finally
@@ -232,34 +233,17 @@ begin
   Root.AddPair('markers', JSONItems);
 end;
 
-class procedure TJSONDataExport.SaveMarkerItems(const Root: TJSONObject; Items: TList<string>);
+class procedure TJSONDataExport.SaveMarkerItems(const Root: TJSONObject; Items: TList<TItemImage>);
 var
-  ItemName: string;
+  ItemImage: TItemImage;
   JSONItems: TJSONArray;
   JSONObject: TJSONObject;
-{$IFDEF UPDATE_DATA_FORMAT}
-  id: TGUID;
-  ico: TBitmap;
-{$ENDIF}
 begin
   JSONItems := TJSONArray.Create;
-  for ItemName in Items do begin
+  for ItemImage in Items do begin
     JSONObject := TJSONObject.Create;
     try
-    {$IFDEF UPDATE_DATA_FORMAT}
-      CreateGUID(id);
-      JSONObject.AddPair('id', GUIDToString(id));
-
-      ico := TBitmap.Create;
-      try
-        DataSertvice.LoadItemImage(ItemName, ico);
-        DataSertvice.SaveItemImage(GUIDToString(id), ico);
-      finally
-        ico.Free;
-      end;
-    {$ELSE}
-      JSONObject.AddPair('name', ItemName);
-    {$ENDIF}
+      ItemImage.AssignTo(JSONObject);
     finally
       JSONItems.Add(JSONObject);
     end;
@@ -267,9 +251,9 @@ begin
   Root.AddPair('items', JSONItems);
 end;
 
-class procedure TJSONDataExport.SaveMarkerImages(const Root: TJSONObject; Items: TObjectList<TLocationImage>);
+class procedure TJSONDataExport.SaveMarkerImages(const Root: TJSONObject; Items: TObjectList<TMarkerImage>);
 var
-  Image: TLocationImage;
+  Image: TMarkerImage;
   JSONItems: TJSONArray;
   JSONObject: TJSONObject;
 begin

@@ -215,7 +215,7 @@ begin
     Item.TagObject := Marker;
     Item.Tag := Ord(Trader);
 
-    if (Marker.Images.Count > 0) and (Trim(Marker.Images[0].Name) <> '') then
+    if (Marker.Images.Count > 0) and (Trim(Marker.Images[0].Caption) <> '') then
       Item.Cursor := crHandPoint
     else
       Item.Cursor := crDefault;
@@ -252,7 +252,7 @@ begin
 
   Item := TImage(Sender);
   Marker := TMarker(Item.TagObject);
-  if (Marker.Images.Count > 0) and (Trim(Marker.Images[0].Name) <> '') then begin
+  if (Marker.Images.Count > 0) and (Trim(Marker.Images[0].Caption) <> '') then begin
     FMarkerDescript.Init(Marker, Item.Hint, TTrader(Item.Tag));
 
     MarkerPanel.Height := FMarkerDescript.MaxHeight;

@@ -46,7 +46,7 @@ end;
 
 function TDelMarkerPresenter.GetDelMessage: string;
 begin
-  Result := 'Удалить маркер "' + Instance.Name + '"?';
+//  Result := 'Удалить маркер "' + Instance.Name + '"?';
 end;
 
 procedure TDelMarkerPresenter.InternalDelete;

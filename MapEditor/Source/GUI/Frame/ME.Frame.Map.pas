@@ -129,7 +129,7 @@ end;
 
 procedure TfrMap.GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
 const
-  ColumnNameIdx = 0;
+  ColumnKeyIdx = 0;
   ColumnCaptionIdx = 1;
   ColumnLeftIdx = 2;
   ColumnTopIdx = 3;
@@ -141,8 +141,8 @@ begin
     Exit;
 
   case ACol of
-    ColumnNameIdx:
-      Value := Items[ARow].Name;
+    ColumnKeyIdx:
+      Value := Items[ARow].ID;
     ColumnCaptionIdx:
       Value := Items[ARow].Caption;
     ColumnLeftIdx:
@@ -193,7 +193,7 @@ begin
   for i := 0 to Count - 1 do begin
     bmp := TBitmap.Create;
     try
-      DataSertvice.LoadMapIcon(Items[i].Name, bmp);
+      DataSertvice.LoadMapIcon(Items[i].ID, bmp);
     finally
       FIcons.Add(bmp);
     end;

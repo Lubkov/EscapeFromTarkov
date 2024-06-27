@@ -30,7 +30,7 @@ type
     FOnClose: TNotifyEvent;
     FItems: TList<TImage>;
 
-    procedure AddItem(const Index: Integer; const Name: string);
+    procedure AddItem(const Index: Integer; const ItemImage: TItemImage);
     procedure ArrangeItems;
     procedure ArrangeItemsVertically(ItemHeight, ItemWidth: Integer);
     procedure ArrangeItemsHorizontally(ItemHeight, ItemWidth: Integer);
@@ -75,7 +75,7 @@ begin
   inherited;
 end;
 
-procedure TMarkerDescript.AddItem(const Index: Integer; const Name: string);
+procedure TMarkerDescript.AddItem(const Index: Integer; const ItemImage: TItemImage);
 var
   Item: TImage;
 begin
@@ -90,7 +90,7 @@ begin
     end;
   end;
 
-  DataSertvice.LoadItemImage(Name, Item.Bitmap);
+  DataSertvice.LoadItemImage(ItemImage.ID, Item.Bitmap);
   Item.Visible := True;
 end;
 
@@ -178,7 +178,7 @@ const
 var
   Bitmap: TBitmap;
   i: Integer;
-  Image: TLocationImage;
+  Image: TMarkerImage;
 begin
   laQuestName.Text := ' вест: "' + QuestName + '"';
 //  laDescription.Text := Marker.Name;
@@ -188,7 +188,7 @@ begin
   if Marker.Images.Count > 0 then begin
     Image := Marker.Images[0];
 
-    DataSertvice.LoadMarkerImage(Image.Name, MarkerImage.Bitmap);
+    DataSertvice.LoadMarkerImage(Image.ID, MarkerImage.Bitmap);
     laDescription.Text := Image.Caption;
   end;
 

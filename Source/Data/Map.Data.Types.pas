@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Variants, System.Rtti, System.TypInfo,
-  System.SysConst, System.JSON, Generics.Collections, FMX.Graphics;
+  System.SysConst, System.JSON, Generics.Collections;
 
 const
   MainLayerIndex = 0;
@@ -26,91 +26,98 @@ type
     property Empty: Boolean read FEmpty write FEmpty;
   end;
 
-  TLayer = class
+  TEntity = class(TObject)
   private
-//    FID: string;
+    FID: string;
+
+    function GetIsNewInstance: Boolean;
+  public
+    constructor Create; virtual;
+
+    procedure Assign(const Source: TJSONValue); virtual;
+    procedure AssignTo(const Dest: TJSONObject); virtual;
+
+    property ID: string read FID write FID;
+    property IsNewInstance: Boolean read GetIsNewInstance;
+  end;
+
+  TLayer = class(TEntity)
+  private
     FLevel: Integer;
-    FName: string;
     FCaption: string;
 
     function GetIsMainLevel: Boolean;
   public
-    procedure Assign(const Source: TJSONValue);
-    procedure AssignTo(const Dest: TJSONObject);
+    procedure Assign(const Source: TJSONValue); override;
+    procedure AssignTo(const Dest: TJSONObject); override;
 
-//    property ID: string read FID write FID;
     property Level: Integer read FLevel write FLevel;
-    property Name: string read FName write FName;
     property Caption: string read FCaption write FCaption;
     property IsMainLevel: Boolean read GetIsMainLevel;
   end;
 
-  TLocationImage = class
+  TItemImage = class(TEntity)
+  end;
+
+  TMarkerImage = class(TEntity)
   private
-    FName: string;
     FCaption: string;
   public
-    procedure Assign(const Source: TJSONValue);
-    procedure AssignTo(const Dest: TJSONObject);
+    procedure Assign(const Source: TJSONValue); override;
+    procedure AssignTo(const Dest: TJSONObject); override;
 
-    property Name: string read FName write FName;
     property Caption: string read FCaption write FCaption;
   end;
 
   TMarkerKind = (PMCExtraction, ScavExtraction, CoopExtraction, Quest);
   TMarkerKindSet = set of TMarkerKind;
 
-  TMarker = class
+  TMarker = class(TEntity)
   private
-    FName: string;
     FCaption: string;
     FKind: TMarkerKind;
     FLeft: Integer;
     FTop: Integer;
-    FItems: TList<string>;
-    FImages: TObjectList<TLocationImage>;
+    FItems: TObjectList<TItemImage>;
+    FImages: TObjectList<TMarkerImage>;
   public
-    constructor Create;
+    constructor Create; override;
     destructor Destroy; override;
 
-    procedure Assign(const Source: TJSONValue);
-    procedure AssignTo(const Dest: TJSONObject);
+    procedure Assign(const Source: TJSONValue); override;
+    procedure AssignTo(const Dest: TJSONObject); override;
 
     class function KindToStr(Value: TMarkerKind): string; static;
 
-    property Name: string read FName write FName;
     property Caption: string read FCaption write FCaption;
     property Kind: TMarkerKind read FKind write FKind;
     property Left: Integer read FLeft write FLeft;
     property Top: Integer read FTop write FTop;
-    property Items: TList<string> read FItems;
-    property Images: TObjectList<TLocationImage> read FImages;
+    property Items: TObjectList<TItemImage> read FItems;
+    property Images: TObjectList<TMarkerImage> read FImages;
   end;
 
   TTrader = (None, Prapor, Therapist, Skier, Peacemaker, Mechanic, Ragman, Jaeger, Fence, Lightkeeper);
 
-  TQuest = class
+  TQuest = class(TEntity)
   private
-    FName: string;
     FCaption: string;
     FTrader: TTrader;
     FMarkers: TObjectList<TMarker>;
   public
-    constructor Create;
+    constructor Create; override;
     destructor Destroy; override;
 
-    procedure Assign(const Source: TJSONValue);
-    procedure AssignTo(const Dest: TJSONObject);
+    procedure Assign(const Source: TJSONValue); override;
+    procedure AssignTo(const Dest: TJSONObject); override;
 
-    property Name: string read FName write FName;
     property Caption: string read FCaption write FCaption;
     property Trader: TTrader read FTrader write FTrader;
     property Markers: TObjectList<TMarker> read FMarkers write FMarkers;
   end;
 
-  TMap = class(TObject)
+  TMap = class(TEntity)
   private
-    FName: string;
     FCaption: string;
     FLeft: Integer;
     FTop: Integer;
@@ -122,13 +129,12 @@ type
 
     function GetMainLayer: TLayer;
   public
-    constructor Create;
+    constructor Create; override;
     destructor Destroy; override;
 
-    procedure Assign(const Source: TJSONValue);
-    procedure AssignTo(const Dest: TJSONObject);
+    procedure Assign(const Source: TJSONValue); override;
+    procedure AssignTo(const Dest: TJSONObject); override;
 
-    property Name: string read FName write FName;
     property Caption: string read FCaption write FCaption;
     property Left: Integer read FLeft write FLeft;
     property Top: Integer read FTop write FTop;
@@ -141,11 +147,6 @@ type
   end;
 
 implementation
-
-{$IFDEF UPDATE_DATA_FORMAT}
-uses
-  Map.Data.Service;
-{$ENDIF}
 
 { TPoint }
 
@@ -168,38 +169,45 @@ begin
   FEmpty := False;
 end;
 
+{ TEntity }
+
+constructor TEntity.Create;
+begin
+  inherited;
+
+  FID := '';
+end;
+
+function TEntity.GetIsNewInstance: Boolean;
+begin
+  Result := (Trim(FID) = '');
+end;
+
+procedure TEntity.Assign(const Source: TJSONValue);
+begin
+  ID := Source.GetValue<string>('id');
+end;
+
+procedure TEntity.AssignTo(const Dest: TJSONObject);
+begin
+  Dest.AddPair('id', ID);
+end;
+
 { TLayer }
 
 procedure TLayer.Assign(const Source: TJSONValue);
 begin
-//  ID := Source.GetValue<string>('id');
+  inherited;
+
   Level := Source.GetValue<Integer>('level');
-  Name := Source.GetValue<string>('name');
   Caption := Source.GetValue<string>('caption');
 end;
 
 procedure TLayer.AssignTo(const Dest: TJSONObject);
-{$IFDEF UPDATE_DATA_FORMAT}
-var
-  id: TGUID;
-  ico: TBitmap;
-{$ENDIF}
 begin
-{$IFDEF UPDATE_DATA_FORMAT}
-  CreateGUID(id);
-  Dest.AddPair('id', GUIDToString(id));
-  ico := TBitmap.Create;
-  try
-    DataSertvice.LoadLayerImage(Name, ico);
-    DataSertvice.SaveLayerImage(GUIDToString(id), ico);
-  finally
-    ico.Free;
-  end;
-{$ELSE}
-  Dest.AddPair('name', Name);
-{$ENDIF}
+  inherited;
+
   Dest.AddPair('level', Level.ToString);
-//  Dest.AddPair('name', Name);
   Dest.AddPair('caption', Caption);
 end;
 
@@ -208,34 +216,19 @@ begin
   Result := Level = MainLayerIndex;
 end;
 
-{ TLocationImage }
+{ TMarkerImage }
 
-procedure TLocationImage.Assign(const Source: TJSONValue);
+procedure TMarkerImage.Assign(const Source: TJSONValue);
 begin
-  Name := Source.GetValue<string>('name');
+  inherited;
+
   Caption := Source.GetValue<string>('caption');
 end;
 
-procedure TLocationImage.AssignTo(const Dest: TJSONObject);
-{$IFDEF UPDATE_DATA_FORMAT}
-var
-  id: TGUID;
-  ico: TBitmap;
-{$ENDIF}
+procedure TMarkerImage.AssignTo(const Dest: TJSONObject);
 begin
-{$IFDEF UPDATE_DATA_FORMAT}
-  CreateGUID(id);
-  Dest.AddPair('id', GUIDToString(id));
-  ico := TBitmap.Create;
-  try
-    DataSertvice.LoadMarkerImage(Name, ico);
-    DataSertvice.SaveMarkerImage(GUIDToString(id), ico);
-  finally
-    ico.Free;
-  end;
-{$ELSE}
-  Dest.AddPair('name', Name);
-{$ENDIF}
+  inherited;
+
   Dest.AddPair('caption', Caption);
 end;
 
@@ -245,8 +238,8 @@ constructor TMarker.Create;
 begin
   inherited;
 
-  FItems := TList<string>.Create;
-  FImages := TObjectList<TLocationImage>.Create;
+  FItems := TObjectList<TItemImage>.Create;
+  FImages := TObjectList<TMarkerImage>.Create;
 end;
 
 destructor TMarker.Destroy;
@@ -259,25 +252,18 @@ end;
 
 procedure TMarker.Assign(const Source: TJSONValue);
 begin
-  Name := Source.GetValue<string>('name');
-  Source.TryGetValue<string>('caption', FCaption);
+  inherited;
+
+  FCaption := Source.GetValue<string>('caption');
   Kind := TRttiEnumerationType.GetValue<TMarkerKind>(Source.GetValue<string>('kind'));
   Left := Source.GetValue<Integer>('left');
   Top := Source.GetValue<Integer>('top');
 end;
 
 procedure TMarker.AssignTo(const Dest: TJSONObject);
-{$IFDEF UPDATE_DATA_FORMAT}
-var
-  id: TGUID;
-{$ENDIF}
 begin
-{$IFDEF UPDATE_DATA_FORMAT}
-  CreateGUID(id);
-  Dest.AddPair('id', GUIDToString(id));
-{$ELSE}
-  Dest.AddPair('name', Name);
-{$ENDIF}
+  inherited;
+
   Dest.AddPair('caption', Caption);
   Dest.AddPair('kind', TRttiEnumerationType.GetName<TMarkerKind>(Kind));
   Dest.AddPair('left', Left.ToString);
@@ -318,26 +304,17 @@ procedure TQuest.Assign(const Source: TJSONValue);
 var
   TraderValue: string;
 begin
-  Name := Source.GetValue<string>('name');
-  Source.TryGetValue<string>('caption', FCaption);
-  if Source.TryGetValue<string>('trader', TraderValue) then
-    Trader := TRttiEnumerationType.GetValue<TTrader>(TraderValue)
-  else
-    Trader := TTrader.None;
+  inherited;
+
+  FCaption := Source.GetValue<string>('caption');
+  TraderValue := Source.GetValue<string>('trader');
+  Trader := TRttiEnumerationType.GetValue<TTrader>(TraderValue);
 end;
 
 procedure TQuest.AssignTo(const Dest: TJSONObject);
-{$IFDEF UPDATE_DATA_FORMAT}
-var
-  id: TGUID;
-{$ENDIF}
 begin
-{$IFDEF UPDATE_DATA_FORMAT}
-  CreateGUID(id);
-  Dest.AddPair('id', GUIDToString(id));
-{$ELSE}
-  Dest.AddPair('name', Name);
-{$ENDIF}
+  inherited;
+
   Dest.AddPair('caption', Caption);
   Dest.AddPair('trader', TRttiEnumerationType.GetName<TTrader>(Trader));
 end;
@@ -348,7 +325,7 @@ constructor TMap.Create;
 begin
   inherited;
 
-  FName := '';
+  FCaption := '';
   FLeft := 0;
   FTop := 0;
   FRight := 0;
@@ -369,7 +346,8 @@ end;
 
 procedure TMap.Assign(const Source: TJSONValue);
 begin
-  Name := Source.GetValue<string>('name');
+  inherited;
+
   Caption := Source.GetValue<string>('caption');
   Left := Source.GetValue<Integer>('left');
   Top := Source.GetValue<Integer>('top');
@@ -378,25 +356,9 @@ begin
 end;
 
 procedure TMap.AssignTo(const Dest: TJSONObject);
-{$IFDEF UPDATE_DATA_FORMAT}
-var
-  id: TGUID;
-  ico: TBitmap;
-{$ENDIF}
 begin
-{$IFDEF UPDATE_DATA_FORMAT}
-  CreateGUID(id);
-  Dest.AddPair('id', GUIDToString(id));
-  ico := TBitmap.Create;
-  try
-    DataSertvice.LoadMapIcon(Name, ico);
-    DataSertvice.SaveMapIcon(GUIDToString(id), ico);
-  finally
-    ico.Free;
-  end;
-{$ELSE}
-  Dest.AddPair('name', Name);
-{$ENDIF}
+  inherited;
+
   Dest.AddPair('caption', Caption);
   Dest.AddPair('left', Left.ToString);
   Dest.AddPair('top', Top.ToString);

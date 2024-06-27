@@ -167,12 +167,8 @@ begin
 end;
 
 procedure TMapWrapper.LoadMap(const Value: TMap);
-const
-  FolderName = 'Levels';
-  fmtFileName = '%s_%s.png';
 var
   Layer: TLayer;
-  FileName: string;
 begin
   FMap := Value;
   FPosition.Empty := True;
@@ -184,9 +180,7 @@ begin
     Exit;
   end;
 
-  FileName := TPath.Combine(AppParams.DataPath, FolderName);
-  FileName := TPath.Combine(FileName, Format(fmtFileName, [Map.Name, Layer.Name]));
-  FBackground.LoadFromFile(FileName);
+  DataSertvice.LoadLayerImage(Layer.ID, FBackground);
 
   MarkerFilter.Init(Value);
   DrawPoint(FPosition);

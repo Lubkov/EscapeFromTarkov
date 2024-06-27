@@ -200,7 +200,7 @@ begin
   FMarker := Value;
 
   Caption := GetTitle(Value);
-  MarkerName := FMarker.Name;
+//  MarkerName := FMarker.Name;
   MarkerKind := FMarker.Kind;
   PositionX := FMarker.Left;
   PositionY := FMarker.Top;
@@ -208,7 +208,7 @@ end;
 
 procedure TedMarker.PostValues(const Value: TMarker);
 begin
-  Value.Name := MarkerName;
+//  Value.Name := MarkerName;
   Value.Kind := MarkerKind;
   Value.Left := PositionX;
   Value.Top := PositionY;
