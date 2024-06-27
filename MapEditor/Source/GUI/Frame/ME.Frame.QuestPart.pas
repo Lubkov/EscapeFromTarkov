@@ -24,7 +24,6 @@ type
     ImageList1: TImageList;
     IntegerColumn1: TIntegerColumn;
     IntegerColumn2: TIntegerColumn;
-    IDColumn: TIntegerColumn;
     procedure GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
     procedure GridSelChanged(Sender: TObject);
     procedure ActionList1Update(Action: TBasicAction; var Handled: Boolean);
@@ -110,7 +109,6 @@ var
 begin
   Dialog := TedQuestPart.Create(Self);
   try
-//    Dialog.Map := FMap;
     Presenter := TEditQuestPartPresenter.Create(Dialog, Point);
     try
       Result := Presenter.Edit;
@@ -158,16 +156,13 @@ end;
 
 procedure TfrQuestPartGrid.GridGetValue(Sender: TObject; const ACol, ARow: Integer;  var Value: TValue);
 const
-  ColumnKeyIdx = 0;
-  ColumnLeftIdx = 1;
-  ColumnTopIdx = 2;
+  ColumnLeftIdx = 0;
+  ColumnTopIdx = 1;
 begin
   if Count <= ARow then
     Exit;
 
   case ACol of
-//    ColumnKeyIdx:
-//      Value := VarToStr(Items[ARow].ID);
     ColumnLeftIdx:
       Value := Items[ARow].Left;
     ColumnTopIdx:
@@ -195,8 +190,6 @@ begin
   Res := False;
   Marker := TMarker.Create;
   try
-//    Marker.MapID := FQuest.MapID;
-//    Marker.QuestID := FQuest.ID;
     Marker.Kind := TMarkerKind.Quest;
 
     Res := InternalMarkerEdit(Marker);

@@ -94,7 +94,7 @@ begin
 //  LevelName := FLayer.Name;
 //  Picture := FLayer.Picture;
 
-  DataSertvice.LoadLayerImage(FLayer.ID, Picture);
+  DataSertvice.LoadImage(FLayer, Picture);
 end;
 
 procedure TedLayer.PostValues(const Value: TLayer);
@@ -104,7 +104,7 @@ begin
 //  Value.Picture := Picture;
 
   if FPicturePanel.Changed then
-    DataSertvice.SaveLayerImage(Value.ID, Picture);
+    DataSertvice.SaveImage(Value, Picture);
 end;
 
 end.

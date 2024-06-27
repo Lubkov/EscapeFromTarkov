@@ -49,7 +49,9 @@ uses
   ME.Service.Export in 'Source\ME.Service.Export.pas',
   Map.Data.Classes in '..\Source\Data\Map.Data.Classes.pas',
   Map.Data.Service in '..\Source\Data\Map.Data.Service.pas',
-  Map.Data.Types in '..\Source\Data\Map.Data.Types.pas';
+  Map.Data.Types in '..\Source\Data\Map.Data.Types.pas',
+  ME.Filter.Map in 'Source\GUI\Frame\ME.Filter.Map.pas' {MapFilter: TFrame},
+  ME.Frame.MapData in 'Source\GUI\Frame\ME.Frame.MapData.pas' {frMapData: TFrame};
 
 {$R *.res}
 

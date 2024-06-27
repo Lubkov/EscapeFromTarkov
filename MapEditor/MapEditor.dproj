@@ -369,6 +369,16 @@
         <DCCReference Include="..\Source\Data\Map.Data.Classes.pas"/>
         <DCCReference Include="..\Source\Data\Map.Data.Service.pas"/>
         <DCCReference Include="..\Source\Data\Map.Data.Types.pas"/>
+        <DCCReference Include="Source\GUI\Frame\ME.Filter.Map.pas">
+            <Form>MapFilter</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Source\GUI\Frame\ME.Frame.MapData.pas">
+            <Form>frMapData</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -413,6 +423,12 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="..\Bin\MapEditor.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="..\Bin\MapEditor.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>MapEditor.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="..\Bin\MapEditor.exe" Configuration="Release" Class="ProjectOutput"/>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">

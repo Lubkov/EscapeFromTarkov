@@ -61,7 +61,7 @@ object frMap: TfrMap
       AutoSize = True
       StyledSettings = [Size, Style, FontColor]
       Size.Width = 192.000000000000000000
-      Size.Height = 15.000000000000000000
+      Size.Height = 15.200000762939450000
       Size.PlatformDefault = False
       TextSettings.Font.Family = 'Tahoma'
       Text = 'Escape from Tarkov, '#1057#1087#1080#1089#1086#1082' '#1082#1072#1088#1090
@@ -84,8 +84,8 @@ object frMap: TfrMap
     OnSelChanged = GridSelChanged
     OnGetValue = GridGetValue
     OnCellDblClick = GridCellDblClick
-    Viewport.Width = 648.000000000000000000
-    Viewport.Height = 308.000000000000000000
+    Viewport.Width = 628.000000000000000000
+    Viewport.Height = 283.000000000000000000
     object NameColumn: TColumn
       Header = 'Name'
       HeaderSettings.TextSettings.WordWrap = False

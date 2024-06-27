@@ -6,13 +6,17 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   System.Actions, FMX.ActnList, FMX.Controls.Presentation, FMX.Edit,
-  ME.Edit.Form, ME.Edit.Form.Presenter, ME.DB.Map, ME.DB.Quest, ME.Frame.QuestPart;
+  ME.Edit.Form, ME.Edit.Form.Presenter, ME.Frame.QuestPart, Map.Data.Types,
+  FMX.ListBox;
 
 type
   TedQuest = class(TEditForm, IEditDialog<TQuest>)
     edQuestName: TEdit;
     paTop: TPanel;
     paMain: TPanel;
+    laTraderName: TLabel;
+    edTraderName: TComboBox;
+    laQuestName: TLabel;
   private
     FMap: TMap;
     FQuest: TQuest;
@@ -20,6 +24,8 @@ type
 
     function GetQuestName: string;
     procedure SetQuestName(const Value: string);
+    function GetTraderName: TTrader;
+    procedure SetTraderName(const Value: TTrader);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -29,6 +35,7 @@ type
 
     property Map: TMap read FMap write FMap;
     property QuestName: string read GetQuestName write SetQuestName;
+    property TraderName: TTrader read GetTraderName write SetTraderName;
   end;
 
 implementation
@@ -38,6 +45,8 @@ implementation
 { TedQuest }
 
 constructor TedQuest.Create(AOwner: TComponent);
+var
+  Trader: TTrader;
 begin
   inherited;
 
@@ -46,6 +55,10 @@ begin
   FQuestPartGrid := TfrQuestPartGrid.Create(Self);
   FQuestPartGrid.Parent := paMain;
   FQuestPartGrid.Align := TAlignLayout.Client;
+
+  edTraderName.Clear;
+  for Trader := TTrader.Prapor to TTrader.Lightkeeper do
+    edTraderName.Items.Add(TQuest.TraderToStr(Trader));
 end;
 
 destructor TedQuest.Destroy;
@@ -66,6 +79,19 @@ begin
   edQuestName.Text := Value;
 end;
 
+function TedQuest.GetTraderName: TTrader;
+begin
+  if edTraderName.ItemIndex >= 0 then
+    Result := TTrader(edTraderName.ItemIndex + 1)
+  else
+    Result := TTrader.None;
+end;
+
+procedure TedQuest.SetTraderName(const Value: TTrader);
+begin
+  edTraderName.ItemIndex := Ord(Value) - 1;
+end;
+
 procedure TedQuest.SetInstance(const Value: TQuest);
 begin
   FQuest := Value;
@@ -73,15 +99,17 @@ begin
   if FQuest.IsNewInstance then
     Caption := 'Добавление нового квеста'
   else
-    Caption := '#' + VarToStr(FQuest.ID) + ' Редактирование квеста';
+    Caption := 'Редактирование квеста';
 
-  QuestName := FQuest.Name;
-//  FQuestPartGrid.Init(FMap, FQuest);
+  QuestName := FQuest.Caption;
+  TraderName := FQuest.Trader;
+  FQuestPartGrid.Init(FMap, FQuest);
 end;
 
 procedure TedQuest.PostValues(const Value: TQuest);
 begin
-  Value.Name := QuestName;
+  Value.Caption := QuestName;
+  Value.Trader := TraderName;
 end;
 
 end.

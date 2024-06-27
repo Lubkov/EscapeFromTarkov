@@ -15,18 +15,17 @@ type
     acAddExtraction: TAction;
     acEditExtraction: TAction;
     acDeleteExtraction: TAction;
-    ImageList1: TImageList;
     paTopPanel: TPanel;
     edAddExtraction: TSpeedButton;
     edEditExtraction: TSpeedButton;
     edDeleteExtraction: TSpeedButton;
     laTitle: TLabel;
     Grid: TGrid;
-    Column1: TColumn;
     StringColumn1: TStringColumn;
     IntegerColumn1: TIntegerColumn;
     StringColumn2: TStringColumn;
     IntegerColumn2: TIntegerColumn;
+    ImageList1: TImageList;
 
     procedure GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
     procedure acAddExtractionExecute(Sender: TObject);
@@ -136,20 +135,17 @@ end;
 
 procedure TfrMarkerGrid.GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
 const
-  ColumnKeyIdx = 0;
-  ColumnNameIdx = 1;
-  ColumnKindIdx = 2;
-  ColumnLeftIdx = 3;
-  ColumnTopIdx = 4;
+  ColumnNameIdx = 0;
+  ColumnKindIdx = 1;
+  ColumnLeftIdx = 2;
+  ColumnTopIdx = 3;
 begin
   if Count <= ARow then
     Exit;
 
   case ACol of
-//    ColumnKeyIdx:
-//      Value := VarToStr(Items[ARow].ID);
-//    ColumnNameIdx:
-//      Value := VarToStr(Items[ARow].idName);
+    ColumnNameIdx:
+      Value := VarToStr(Items[ARow].Caption);
     ColumnKindIdx:
       Value := TMarker.KindToStr(Items[ARow].Kind);
     ColumnLeftIdx:

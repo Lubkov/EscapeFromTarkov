@@ -12,7 +12,7 @@ uses
 
 type
   TedMarker = class(TEditForm, IEditDialog<TMarker>)
-    edMarkerName: TEdit;
+    edMarkerCaption: TEdit;
     edPositionX: TNumberBox;
     edPositionY: TNumberBox;
     edKindName: TComboBox;
@@ -45,8 +45,8 @@ type
     FMap: TMap;
     FMarker: TMarker;
 
-    function GetMarkerName: string;
-    procedure SetMarkerName(const Value: string);
+    function GetMarkerCaption: string;
+    procedure SetMarkerCaption(const Value: string);
     function GetMarkerKind: TMarkerKind;
     procedure SetMarkerKind(const Value: TMarkerKind);
     function GetPositionX: Integer;
@@ -65,7 +65,7 @@ type
     procedure PostValues(const Value: TMarker);
 
     property Map: TMap read FMap write SetMap;
-    property MarkerName: string read GetMarkerName write SetMarkerName;
+    property MarkerCaption: string read GetMarkerCaption write SetMarkerCaption;
     property MarkerKind: TMarkerKind read GetMarkerKind write SetMarkerKind;
     property PositionX: Integer read GetPositionX write SetPositionX;
     property PositionY: Integer read GetPositionY write SetPositionY;
@@ -98,14 +98,14 @@ begin
   inherited;
 end;
 
-function TedMarker.GetMarkerName: string;
+function TedMarker.GetMarkerCaption: string;
 begin
-  Result := edMarkerName.Text;
+  Result := edMarkerCaption.Text;
 end;
 
-procedure TedMarker.SetMarkerName(const Value: string);
+procedure TedMarker.SetMarkerCaption(const Value: string);
 begin
-  edMarkerName.Text := Value;
+  edMarkerCaption.Text := Value;
 end;
 
 function TedMarker.GetMarkerKind: TMarkerKind;
@@ -184,9 +184,9 @@ end;
 
 function TedMarker.GetTitle(const Value: TMarker): string;
 begin
-//  if Value.IsNewInstance then
-//    Result := 'Добавление нового выхода с карты'
-//  else
+  if Value.IsNewInstance then
+    Result := 'Добавление нового выхода с карты'
+  else
     Result := 'Редактирование выхода с карты';
 end;
 
@@ -200,7 +200,7 @@ begin
   FMarker := Value;
 
   Caption := GetTitle(Value);
-//  MarkerName := FMarker.Name;
+  MarkerCaption := FMarker.Caption;
   MarkerKind := FMarker.Kind;
   PositionX := FMarker.Left;
   PositionY := FMarker.Top;
@@ -208,7 +208,7 @@ end;
 
 procedure TedMarker.PostValues(const Value: TMarker);
 begin
-//  Value.Name := MarkerName;
+  FMarker.Caption := MarkerCaption;
   Value.Kind := MarkerKind;
   Value.Left := PositionX;
   Value.Top := PositionY;

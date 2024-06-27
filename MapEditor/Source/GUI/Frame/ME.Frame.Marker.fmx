@@ -82,13 +82,8 @@ object frMarkerGrid: TfrMarkerGrid
     Options = [AlternatingRowBackground, ColumnResize, ColLines, RowLines, RowSelect, AlwaysShowSelection, Header, AutoDisplacement]
     OnGetValue = GridGetValue
     OnCellDblClick = GridCellDblClick
-    Viewport.Width = 524.000000000000000000
-    Viewport.Height = 312.000000000000000000
-    object Column1: TColumn
-      Header = '#'
-      HeaderSettings.TextSettings.WordWrap = False
-      Size.Width = 50.000000000000000000
-    end
+    Viewport.Width = 520.000000000000000000
+    Viewport.Height = 287.000000000000000000
     object StringColumn1: TStringColumn
       Header = 'Name'
       HeaderSettings.TextSettings.WordWrap = False

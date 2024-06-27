@@ -1,11 +1,11 @@
-﻿[ClosedView_RDpcUHJvamVjdHNcRGVscGhpXEVzY2FwZUZyb21UYXJrb3ZcU291cmNlXEdVSVxGcmFtZVxNYXAu
-RnJhbWUuTWFya2VyLnBhcw==]
-Module=D:\Projects\Delphi\EscapeFromTarkov\Source\GUI\Frame\Map.Frame.Marker.pas
-CursorX=42
-CursorY=93
-TopLine=120
+﻿[ClosedView_RDpcUHJvamVjdHNcRGVscGhpXEVzY2FwZUZyb21UYXJrb3ZcU291cmNlXERhdGFcTWFwLkRhdGEu
+VHlwZXMucGFz]
+Module=D:\Projects\Delphi\EscapeFromTarkov\Source\Data\Map.Data.Types.pas
+CursorX=15
+CursorY=62
+TopLine=49
 LeftCol=1
 Elisions=
-Bookmarks=
-EditViewName=D:\Projects\Delphi\EscapeFromTarkov\Source\GUI\Frame\Map.Frame.Marker.pas
+Bookmarks={1,187,5}
+EditViewName=D:\Projects\Delphi\EscapeFromTarkov\Source\Data\Map.Data.Types.pas
 

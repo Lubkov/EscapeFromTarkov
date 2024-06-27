@@ -6,25 +6,22 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   System.IOUtils, Generics.Collections, FMX.Types, FMX.Controls, FMX.Forms,
   FMX.Graphics, FMX.Dialogs, FMX.Controls.Presentation, FMX.StdCtrls,
-  System.ImageList, FMX.ImgList, FMX.Objects, ME.Frame.Map, ME.Frame.Layer,
-  ME.DB.Map, ME.DB.Quest, ME.DB.Layer, LocalMap;
+  System.ImageList, FMX.ImgList, FMX.Objects, FMX.Layouts,
+  ME.Frame.Map, Map.Data.Types, ME.Filter.Map, ME.Frame.MapData;
 
 type
   TMainForm = class(TForm)
     Panel1: TPanel;
-    Button1: TButton;
     buExpot: TButton;
-    buImport: TButton;
+    TopLayout: TLayout;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
     procedure buExpotClick(Sender: TObject);
-    procedure buImportClick(Sender: TObject);
+    procedure MapChanged(const Map: TMap);
   private
-    FMapPanel: TfrMap;
-
-//    procedure OnMapChanged(const Map: TMap);
-    procedure ImportLocalMap(const LocalMap: TLocalMap);
+//    FMapPanel: TfrMap;
+    FMapFilter: TMapFilter;
+    FMapData: TfrMapData;
   public
   end;
 
@@ -47,130 +44,34 @@ begin
   AppService.LoadParams;
   AppService.LoadDataFromJSON;
 
-  Self.Caption := '[Maps Editor]';
+  Self.Caption := '[Map Editor] JSON storage';
 //  Self.Caption := '[Maps Editor] Database = "' + AppService.Database + '"';
 
-  FMapPanel := TfrMap.Create(Self);
-  FMapPanel.Parent := Self;
-  FMapPanel.Align := TAlignLayout.Client;
-//  FMapPanel.OnChange := OnMapChanged;
+//  FMapPanel := TfrMap.Create(Self);
+//  FMapPanel.Parent := Self;
+//  FMapPanel.Align := TAlignLayout.Client;
+////  FMapPanel.OnChange := OnMapChanged;
+
+  FMapFilter := TMapFilter.Create(Self);
+  FMapFilter.Parent := TopLayout;
+  FMapFilter.Position.X := 20;
+  FMapFilter.Position.Y := 0;
+  FMapFilter.OnMapChanged := MapChanged;
+
+  FMapData := TfrMapData.Create(Self);
+  FMapData.Parent := Self;
+  FMapData.Align := TAlignLayout.Client;
 end;
 
 procedure TMainForm.FormShow(Sender: TObject);
 begin
-  FMapPanel.Init;
+  FMapFilter.Init;
+//  FMapPanel.Init;
 end;
 
-//procedure TMainForm.OnMapChanged(const Map: TMap);
-//begin
-//
-//end;
-
-procedure TMainForm.ImportLocalMap(const LocalMap: TLocalMap);
-
-  procedure ImportExtraction(const Map: TMap; Kind: TMarkerKind; Items: array of TMapTag);
-  var
-    Marker: TMarker;
-    MapTag: TMapTag;
-  begin
-    for MapTag in Items do begin
-       Marker := TMarker.Create;
-       try
-         Marker.ID := Null;
-         Marker.MapID := Map.ID;
-         Marker.QuestID := Null;
-         Marker.Name := MapTag.Caption;
-         Marker.Kind := Kind;
-         Marker.Left := MapTag.Position.X;
-         Marker.Top := MapTag.Position.Y;
-       finally
-         Map.Tags.Add(Marker);
-       end;
-    end;
-  end;
-
-  procedure ImportQuest(const Map: TMap; const Items: array of TQuestTag);
-  var
-    QuestTag: TQuestTag;
-    Quest: TQuest;
-    Part: TPoint;
-    Marker: TMarker;
-  begin
-    for QuestTag in Items do begin
-      Quest := TQuest.Create;
-      try
-        Quest.MapID := Map.ID;
-        Quest.Name := QuestTag.Caption;
-
-        for Part in QuestTag.Parts do begin
-          Marker := TMarker.Create;
-          try
-            Marker.ID := Null;
-            Marker.MapID := Map.ID;
-            Marker.QuestID := Quest.ID;
-            Marker.Name := '';
-            Marker.Kind := TMarkerKind.Quest;
-            Marker.Left := Part.X;
-            Marker.Top := Part.Y;
-          finally
-            Quest.Markers.Add(Marker);
-          end;
-        end;
-      finally
-        Map.Quests.Add(Quest);
-      end;
-    end;
-  end;
-
-var
-  Map: TMap;
-  Layer: TLayer;
+procedure TMainForm.MapChanged(const Map: TMap);
 begin
-  Map := TMap.Create;
-  try
-    Map.ID := Null;
-    Map.Name := LocalMap.Name;
-    Map.Left := LocalMap.Left.X;
-    Map.Top := LocalMap.Left.Y;
-    Map.Right := LocalMap.Right.X;
-    Map.Bottom := LocalMap.Right.Y;
-
-    if FileExists('d:\Projects\Delphi\EscapeFromTarkov\Bin\MapIcon\' + LocalMap.Name + '.jpg') then
-      Map.Picture.LoadFromFile('d:\Projects\Delphi\EscapeFromTarkov\Bin\MapIcon\' + LocalMap.Name + '.jpg');
-
-    Layer := TLayer.Create;
-    try
-      Layer.MapID := Map.ID;
-      Layer.Level := MainLayerIndex;
-      Layer.Name := 'Основной';
-
-      if FileExists('d:\Projects\Delphi\EscapeFromTarkov\Bin\Maps\' + LocalMap.Name + '.jpg') then
-        Layer.Picture.LoadFromFile('d:\Projects\Delphi\EscapeFromTarkov\Bin\Maps\' + LocalMap.Name + '.jpg');
-    finally
-      Map.Layers.Add(Layer);
-    end;
-
-    ImportExtraction(Map, TMarkerKind.PMCExtraction, LocalMap.PMCExtraction);
-    ImportExtraction(Map, TMarkerKind.ScavExtraction, LocalMap.ScavExtraction);
-    ImportExtraction(Map, TMarkerKind.CoopExtraction, LocalMap.SharedExtraction);
-    ImportQuest(Map, LocalMap.Quests);
-
-    MapService.Save(Map);
-  finally
-    Map.Free;
-  end;
-end;
-
-procedure TMainForm.Button1Click(Sender: TObject);
-begin
-
-  ImportLocalMap(WoodsMap);
-  ImportLocalMap(CustomsMap);
-  ImportLocalMap(InterchangeMap);
-  ImportLocalMap(ShorelineMap);
-  ImportLocalMap(ReserveMap);
-
-  ShowMessage('Success');
+  FMapData.Init(Map);
 end;
 
 procedure TMainForm.buExpotClick(Sender: TObject);
@@ -183,30 +84,4 @@ begin
   ShowMessage('Done');
 end;
 
-procedure TMainForm.buImportClick(Sender: TObject);
-//var
-//  Data: TStrings;
-//  Items: TList<TMap>;
-//  i: Integer;
-begin
-//  FileName := System.IOUtils.TPath.Combine(AppParams.Path, 'data.json');
-//
-//  Data := TStringList.Create;
-//  try
-//    Data.LoadFromFile(FileName, TEncoding.UTF8);
-//
-//    Items := TList<TMap>.Create;
-//    try
-//      MapService.LoadFromJSON(Data.Text, Items);
-//    finally
-//      for i := 0 to Items.Count - 1 do
-//        Items[i].Free;
-//
-//      Items.Free;
-//    end;
-//  finally
-//    Data.Free;
-//  end;
-end;
-
-end.
+end.`

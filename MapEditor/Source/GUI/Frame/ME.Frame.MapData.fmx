@@ -1,0 +1,66 @@
+object frMapData: TfrMapData
+  Size.Width = 652.000000000000000000
+  Size.Height = 384.000000000000000000
+  Size.PlatformDefault = False
+  object MainContainer: TTabControl
+    Align = Client
+    Size.Width = 652.000000000000000000
+    Size.Height = 384.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 1
+    TabOrder = 6
+    TabPosition = PlatformDefault
+    Sizes = (
+      652s
+      358s
+      652s
+      358s
+      652s
+      358s)
+    object tabLayer: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.Trimming = None
+      IsSelected = False
+      Size.Width = 52.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Levels'
+      ExplicitSize.cx = 52.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+    end
+    object tabExtractions: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.Trimming = None
+      IsSelected = True
+      Size.Width = 78.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Extractions'
+      ExplicitSize.cx = 78.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+    end
+    object tabQuests: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.Trimming = None
+      IsSelected = False
+      Size.Width = 57.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Quests'
+      ExplicitSize.cx = 57.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+    end
+  end
+end

@@ -1,11 +1,11 @@
-unit ME.Presenter.Quest;
+﻿unit ME.Presenter.Quest;
 
 interface
 
 uses
   System.SysUtils, System.Variants, System.Classes, FMX.Controls,
   ME.Edit.Form.Presenter, ME.Del.Form.Presenter,
-  ME.DB.Quest, ME.Service.Quest;
+  Map.Data.Types;
 
 type
   TEditQuestPresenter = class(TEditFormPresenter<TQuest>)
@@ -33,9 +33,9 @@ procedure TEditQuestPresenter.InternalSave;
 begin
   inherited;
 
-  if not IsNullID(Instance.MapID) then begin
-    QuestService.Save(Instance);
-  end;
+//  if not IsNullID(Instance.MapID) then begin
+//    QuestService.Save(Instance);
+//  end;
 end;
 
 procedure TEditQuestPresenter.Cancel;
@@ -48,12 +48,12 @@ end;
 
 function TDelQuestPresenter.GetDelMessage: string;
 begin
-  Result := 'Удалить квест "' + Instance.Name + '"?';
+  Result := 'Удалить квест "' + Instance.Caption + '"?';
 end;
 
 procedure TDelQuestPresenter.InternalDelete;
 begin
-  QuestService.Remove(Instance);
+//  QuestService.Remove(Instance);
 end;
 
 end.

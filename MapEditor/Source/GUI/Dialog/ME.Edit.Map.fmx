@@ -1,231 +1,132 @@
 inherited edMap: TedMap
   Caption = 'EditForm1'
-  ClientHeight = 328
+  ClientHeight = 304
   ClientWidth = 568
   DesignerMasterStyle = 0
   inherited paBottom: TPanel
-    Position.Y = 282.000000000000000000
+    Position.Y = 258.000000000000000000
     Size.Width = 568.000000000000000000
+    TabOrder = 1
   end
-  object MainContainer: TTabControl [1]
-    Align = Client
-    Size.Width = 568.000000000000000000
-    Size.Height = 282.000000000000000000
+  object paPicture: TPanel [1]
+    Position.X = 5.000000000000000000
+    Position.Y = 5.000000000000000000
+    Size.Width = 210.000000000000000000
+    Size.Height = 250.000000000000000000
     Size.PlatformDefault = False
-    TabIndex = 0
+    TabOrder = 11
+  end
+  object edBottom: TNumberBox [2]
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 9
+    Cursor = crIBeam
+    DecimalDigits = 0
+    Min = -9999.000000000000000000
+    Max = 9999.000000000000000000
+    TextSettings.Font.Family = 'Tahoma'
+    TextSettings.HorzAlign = Trailing
+    Position.X = 360.000000000000000000
+    Position.Y = 140.000000000000000000
+    HorzIncrement = 0.000000000000000000
+    VertIncrement = 0.000000000000000000
+    Size.Width = 90.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    StyledSettings = [Size, Style, FontColor]
+  end
+  object edLeft: TNumberBox [3]
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 5
+    Cursor = crIBeam
+    DecimalDigits = 0
+    Min = -9999.000000000000000000
+    Max = 9999.000000000000000000
+    TextSettings.Font.Family = 'Tahoma'
+    TextSettings.HorzAlign = Trailing
+    Position.X = 256.000000000000000000
+    Position.Y = 88.000000000000000000
+    HorzIncrement = 0.000000000000000000
+    VertIncrement = 0.000000000000000000
+    Size.Width = 90.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    StyledSettings = [Size, Style, FontColor]
+  end
+  object edMapCaption: TEdit [4]
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 3
+    TextSettings.Font.Family = 'Tahoma'
+    Position.X = 258.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 193.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    StyledSettings = [Size, Style, FontColor]
+  end
+  object edRight: TNumberBox [5]
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 8
+    Cursor = crIBeam
+    DecimalDigits = 0
+    Min = -9999.000000000000000000
+    Max = 9999.000000000000000000
+    TextSettings.Font.Family = 'Tahoma'
+    TextSettings.HorzAlign = Trailing
+    Position.X = 256.000000000000000000
+    Position.Y = 140.000000000000000000
+    HorzIncrement = 0.000000000000000000
+    VertIncrement = 0.000000000000000000
+    Size.Width = 90.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    StyledSettings = [Size, Style, FontColor]
+  end
+  object edTop: TNumberBox [6]
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
     TabOrder = 6
-    TabPosition = PlatformDefault
-    Sizes = (
-      568s
-      256s
-      568s
-      256s
-      568s
-      256s
-      568s
-      256s)
-    object tabGeneral: TTabItem
-      CustomIcon = <
-        item
-        end>
-      TextSettings.Trimming = None
-      IsSelected = True
-      Size.Width = 61.000000000000000000
-      Size.Height = 26.000000000000000000
-      Size.PlatformDefault = False
-      StyleLookup = ''
-      TabOrder = 0
-      Text = 'General'
-      ExplicitSize.cx = 61.000000000000000000
-      ExplicitSize.cy = 26.000000000000000000
-      object paPicture: TPanel
-        Position.X = 5.000000000000000000
-        Position.Y = 5.000000000000000000
-        Size.Width = 210.000000000000000000
-        Size.Height = 250.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 10
-      end
-      object edBottom: TNumberBox
-        Touch.InteractiveGestures = [LongTap, DoubleTap]
-        TabOrder = 9
-        Cursor = crIBeam
-        DecimalDigits = 0
-        Min = -9999.000000000000000000
-        Max = 9999.000000000000000000
-        TextSettings.Font.Family = 'Tahoma'
-        TextSettings.HorzAlign = Trailing
-        Position.X = 360.000000000000000000
-        Position.Y = 178.000000000000000000
-        HorzIncrement = 0.000000000000000000
-        VertIncrement = 0.000000000000000000
-        Size.Width = 90.000000000000000000
-        Size.Height = 22.000000000000000000
-        Size.PlatformDefault = False
-        StyledSettings = [Size, Style, FontColor]
-      end
-      object edLeft: TNumberBox
-        Touch.InteractiveGestures = [LongTap, DoubleTap]
-        TabOrder = 5
-        Cursor = crIBeam
-        DecimalDigits = 0
-        Min = -9999.000000000000000000
-        Max = 9999.000000000000000000
-        TextSettings.Font.Family = 'Tahoma'
-        TextSettings.HorzAlign = Trailing
-        Position.X = 256.000000000000000000
-        Position.Y = 125.000000000000000000
-        HorzIncrement = 0.000000000000000000
-        VertIncrement = 0.000000000000000000
-        Size.Width = 90.000000000000000000
-        Size.Height = 22.000000000000000000
-        Size.PlatformDefault = False
-        StyledSettings = [Size, Style, FontColor]
-      end
-      object edMapName: TEdit
-        Touch.InteractiveGestures = [LongTap, DoubleTap]
-        TabOrder = 3
-        TextSettings.Font.Family = 'Tahoma'
-        Position.X = 256.000000000000000000
-        Position.Y = 32.000000000000000000
-        Size.Width = 193.000000000000000000
-        Size.Height = 22.000000000000000000
-        Size.PlatformDefault = False
-        StyledSettings = [Size, Style, FontColor]
-      end
-      object edRight: TNumberBox
-        Touch.InteractiveGestures = [LongTap, DoubleTap]
-        TabOrder = 8
-        Cursor = crIBeam
-        DecimalDigits = 0
-        Min = -9999.000000000000000000
-        Max = 9999.000000000000000000
-        TextSettings.Font.Family = 'Tahoma'
-        TextSettings.HorzAlign = Trailing
-        Position.X = 256.000000000000000000
-        Position.Y = 178.000000000000000000
-        HorzIncrement = 0.000000000000000000
-        VertIncrement = 0.000000000000000000
-        Size.Width = 90.000000000000000000
-        Size.Height = 22.000000000000000000
-        Size.PlatformDefault = False
-        StyledSettings = [Size, Style, FontColor]
-      end
-      object edTop: TNumberBox
-        Touch.InteractiveGestures = [LongTap, DoubleTap]
-        TabOrder = 6
-        Cursor = crIBeam
-        DecimalDigits = 0
-        Min = -9999.000000000000000000
-        Max = 9999.000000000000000000
-        TextSettings.Font.Family = 'Tahoma'
-        TextSettings.HorzAlign = Trailing
-        Position.X = 360.000000000000000000
-        Position.Y = 125.000000000000000000
-        HorzIncrement = 0.000000000000000000
-        VertIncrement = 0.000000000000000000
-        Size.Width = 90.000000000000000000
-        Size.Height = 22.000000000000000000
-        Size.PlatformDefault = False
-        StyledSettings = [Size, Style, FontColor]
-      end
-      object laBottomPoint: TLabel
-        StyledSettings = [Size, Style, FontColor]
-        Position.X = 256.000000000000000000
-        Position.Y = 160.000000000000000000
-        Size.Width = 195.000000000000000000
-        Size.Height = 17.000000000000000000
-        Size.PlatformDefault = False
-        TextSettings.Font.Family = 'Tahoma'
-        Text = #1053#1080#1078#1085#1103#1103' '#1087#1088#1072#1074#1072#1103' '#1082#1086#1086#1088#1076#1080#1085#1072#1090#1072' (x, y):'
-        TabOrder = 7
-      end
-      object laMapName: TLabel
-        StyledSettings = [Size, Style, FontColor]
-        Position.X = 256.000000000000000000
-        Position.Y = 14.000000000000000000
-        Size.Width = 57.000000000000000000
-        Size.Height = 17.000000000000000000
-        Size.PlatformDefault = False
-        TextSettings.Font.Family = 'Tahoma'
-        Text = 'ID '#1082#1072#1088#1090#1099
-        TabOrder = 1
-      end
-      object laTopPoint: TLabel
-        StyledSettings = [Size, Style, FontColor]
-        Position.X = 256.000000000000000000
-        Position.Y = 107.000000000000000000
-        Size.Width = 191.000000000000000000
-        Size.Height = 17.000000000000000000
-        Size.PlatformDefault = False
-        TextSettings.Font.Family = 'Tahoma'
-        Text = #1042#1077#1088#1093#1085#1103#1103' '#1083#1077#1074#1072#1103' '#1082#1086#1086#1088#1076#1080#1085#1072#1090#1072' (x, y):'
-        TabOrder = 4
-      end
-      object edMapCaption: TEdit
-        Touch.InteractiveGestures = [LongTap, DoubleTap]
-        TabOrder = 2
-        TextSettings.Font.Family = 'Tahoma'
-        Position.X = 256.000000000000000000
-        Position.Y = 79.000000000000000000
-        Size.Width = 193.000000000000000000
-        Size.Height = 22.000000000000000000
-        Size.PlatformDefault = False
-        StyledSettings = [Size, Style, FontColor]
-      end
-      object laMapCaption: TLabel
-        StyledSettings = [Size, Style, FontColor]
-        Position.X = 256.000000000000000000
-        Position.Y = 61.000000000000000000
-        TextSettings.Font.Family = 'Tahoma'
-        Text = #1053#1072#1080#1084#1077#1085#1086#1074#1072#1085#1080#1077' '#1082#1072#1088#1090#1099
-        TabOrder = 0
-      end
-    end
-    object tabLayer: TTabItem
-      CustomIcon = <
-        item
-        end>
-      TextSettings.Trimming = None
-      IsSelected = False
-      Size.Width = 52.000000000000000000
-      Size.Height = 26.000000000000000000
-      Size.PlatformDefault = False
-      StyleLookup = ''
-      TabOrder = 0
-      Text = 'Levels'
-      ExplicitSize.cx = 52.000000000000000000
-      ExplicitSize.cy = 26.000000000000000000
-    end
-    object tabExtractions: TTabItem
-      CustomIcon = <
-        item
-        end>
-      TextSettings.Trimming = None
-      IsSelected = False
-      Size.Width = 78.000000000000000000
-      Size.Height = 26.000000000000000000
-      Size.PlatformDefault = False
-      StyleLookup = ''
-      TabOrder = 0
-      Text = 'Extractions'
-      ExplicitSize.cx = 78.000000000000000000
-      ExplicitSize.cy = 26.000000000000000000
-    end
-    object tabQuests: TTabItem
-      CustomIcon = <
-        item
-        end>
-      TextSettings.Trimming = None
-      IsSelected = False
-      Size.Width = 57.000000000000000000
-      Size.Height = 26.000000000000000000
-      Size.PlatformDefault = False
-      StyleLookup = ''
-      TabOrder = 0
-      Text = 'Quests'
-      ExplicitSize.cx = 57.000000000000000000
-      ExplicitSize.cy = 26.000000000000000000
-    end
+    Cursor = crIBeam
+    DecimalDigits = 0
+    Min = -9999.000000000000000000
+    Max = 9999.000000000000000000
+    TextSettings.Font.Family = 'Tahoma'
+    TextSettings.HorzAlign = Trailing
+    Position.X = 360.000000000000000000
+    Position.Y = 88.000000000000000000
+    HorzIncrement = 0.000000000000000000
+    VertIncrement = 0.000000000000000000
+    Size.Width = 90.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    StyledSettings = [Size, Style, FontColor]
+  end
+  object laBottomPoint: TLabel [7]
+    StyledSettings = [Size, Style, FontColor]
+    Position.X = 256.000000000000000000
+    Position.Y = 122.000000000000000000
+    Size.Width = 195.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Family = 'Tahoma'
+    Text = #1053#1080#1078#1085#1103#1103' '#1087#1088#1072#1074#1072#1103' '#1082#1086#1086#1088#1076#1080#1085#1072#1090#1072' (x, y):'
+    TabOrder = 7
+  end
+  object laMapCaption: TLabel [8]
+    StyledSettings = [Size, Style, FontColor]
+    Position.X = 256.000000000000000000
+    Position.Y = 19.000000000000000000
+    TextSettings.Font.Family = 'Tahoma'
+    Text = #1053#1072#1080#1084#1077#1085#1086#1074#1072#1085#1080#1077' '#1082#1072#1088#1090#1099
+    TabOrder = 0
+  end
+  object laTopPoint: TLabel [9]
+    StyledSettings = [Size, Style, FontColor]
+    Position.X = 256.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 191.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Family = 'Tahoma'
+    Text = #1042#1077#1088#1093#1085#1103#1103' '#1083#1077#1074#1072#1103' '#1082#1086#1086#1088#1076#1080#1085#1072#1090#1072' (x, y):'
+    TabOrder = 2
   end
 end

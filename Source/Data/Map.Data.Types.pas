@@ -111,6 +111,8 @@ type
     procedure Assign(const Source: TJSONValue); override;
     procedure AssignTo(const Dest: TJSONObject); override;
 
+    class function TraderToStr(Value: TTrader): string; static;
+
     property Caption: string read FCaption write FCaption;
     property Trader: TTrader read FTrader write FTrader;
     property Markers: TObjectList<TMarker> read FMarkers write FMarkers;
@@ -145,6 +147,8 @@ type
     property Quests: TObjectList<TQuest> read FQuests write FQuests;
     property MainLayer: TLayer read GetMainLayer;
   end;
+
+  TMapChangedEvent = procedure(const Map: TMap) of object;
 
 implementation
 
@@ -317,6 +321,32 @@ begin
 
   Dest.AddPair('caption', Caption);
   Dest.AddPair('trader', TRttiEnumerationType.GetName<TTrader>(Trader));
+end;
+
+class function TQuest.TraderToStr(Value: TTrader): string;
+begin
+  case Value of
+    TTrader.Prapor:
+      Result := 'Прапор';
+    TTrader.Therapist:
+      Result := 'Терапевт';
+    TTrader.Skier:
+      Result := 'Лыжник';
+    TTrader.Peacemaker:
+      Result := 'Миротворец';
+    TTrader.Mechanic:
+      Result := 'Механик';
+    TTrader.Ragman:
+      Result := 'Барахольщик';
+    TTrader.Jaeger:
+      Result := 'Егерь';
+    TTrader.Fence:
+      Result := 'Скупщик';
+    TTrader.Lightkeeper:
+      Result := 'Смотритель';
+  else
+    Result := '';
+  end;
 end;
 
 { TMap }

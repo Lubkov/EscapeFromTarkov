@@ -90,7 +90,7 @@ begin
     end;
   end;
 
-  DataSertvice.LoadItemImage(ItemImage.ID, Item.Bitmap);
+  DataSertvice.LoadImage(ItemImage, Item.Bitmap);
   Item.Visible := True;
 end;
 
@@ -181,14 +181,13 @@ var
   Image: TMarkerImage;
 begin
   laQuestName.Text := ' вест: "' + QuestName + '"';
-//  laDescription.Text := Marker.Name;
   Bitmap := TraderImageList.Bitmap(TSizeF.Create(64, 64), Ord(Trader));
   TraderImage.Bitmap.Assign(Bitmap);
 
   if Marker.Images.Count > 0 then begin
     Image := Marker.Images[0];
 
-    DataSertvice.LoadMarkerImage(Image.ID, MarkerImage.Bitmap);
+    DataSertvice.LoadImage(Image, MarkerImage.Bitmap);
     laDescription.Text := Image.Caption;
   end;
 

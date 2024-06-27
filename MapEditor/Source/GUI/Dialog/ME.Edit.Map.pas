@@ -7,36 +7,23 @@ uses
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   ME.Edit.Form, FMX.EditBox, FMX.NumberBox, FMX.Edit, System.Actions, FMX.ActnList,
   FMX.Controls.Presentation, ME.Dialog.Presenter, ME.Edit.Form.Presenter,
-  ME.Frame.Picture, FMX.TabControl, ME.Frame.Marker, ME.Frame.Quest, ME.Frame.Layer,
-  Map.Data.Types;
+  FMX.TabControl, ME.Frame.Picture, Map.Data.Types;
 
 type
   TedMap = class(TEditForm, IEditDialog<TMap>)
-    edMapName: TEdit;
     edLeft: TNumberBox;
     edTop: TNumberBox;
     edBottom: TNumberBox;
     edRight: TNumberBox;
     paPicture: TPanel;
-    laMapName: TLabel;
     laTopPoint: TLabel;
     laBottomPoint: TLabel;
-    MainContainer: TTabControl;
-    tabGeneral: TTabItem;
-    tabLayer: TTabItem;
-    tabExtractions: TTabItem;
-    tabQuests: TTabItem;
     edMapCaption: TEdit;
     laMapCaption: TLabel;
   private
     FMap: TMap;
     FPicturePanel: TfrPicture;
-    FLayerList: TfrLayerList;
-    FMarkerGrid: TfrMarkerGrid;
-    FQuestList: TfrQuest;
 
-    function GetMapName: string;
-    procedure SetMapName(const Value: string);
     function GetMapLeft: Integer;
     procedure SetMapLeft(const Value: Integer);
     function GetMapTop: Integer;
@@ -55,7 +42,6 @@ type
     procedure SetInstance(const Value: TMap);
     procedure PostValues(const Value: TMap);
 
-    property MapName: string read GetMapName write SetMapName;
     property MapCaption: string read GetMapCaption write SetMapCaption;
     property MapLeft: Integer read GetMapLeft write SetMapLeft;
     property MapTop: Integer read GetMapTop write SetMapTop;
@@ -75,34 +61,10 @@ constructor TedMap.Create(AOwner: TComponent);
 begin
   inherited;
 
-  MainContainer.TabIndex := tabGeneral.Index;
-
   FPicturePanel := TfrPicture.Create(Self);
   FPicturePanel.Parent := paPicture;
   FPicturePanel.Align := TAlignLayout.Client;
   FPicturePanel.Title := 'Изображени карты ' + #13#10 + '(для меню)';
-
-  FLayerList := TfrLayerList.Create(Self);
-  FLayerList.Parent := tabLayer;
-  FLayerList.Align := TAlignLayout.Client;
-
-  FMarkerGrid := TfrMarkerGrid.Create(Self);
-  FMarkerGrid.Parent := tabExtractions;
-  FMarkerGrid.Align := TAlignLayout.Client;
-
-  FQuestList := TfrQuest.Create(Self);
-  FQuestList.Parent := tabQuests;
-  FQuestList.Align := TAlignLayout.Client;
-end;
-
-function TedMap.GetMapName: string;
-begin
-  Result := edMapName.Text;
-end;
-
-procedure TedMap.SetMapName(const Value: string);
-begin
-  edMapName.Text := Value;
 end;
 
 function TedMap.GetMapLeft: Integer;
@@ -169,28 +131,22 @@ procedure TedMap.SetInstance(const Value: TMap);
 begin
   FMap := Value;
 
-//  if FMap.IsNewInstance then
-//    Caption := 'Создание новой карты'
-//  else
-  Caption := 'Редактирование карты "' + FMap.Caption + '"';
+  if FMap.IsNewInstance then
+    Caption := 'Создание новой карты'
+  else
+    Caption := 'Редактирование карты "' + FMap.Caption + '"';
 
-//  MapName := FMap.Name;
   MapCaption := FMap.Caption;
   MapLeft := FMap.Left;
   MapTop := FMap.Top;
   MapRight := FMap.Right;
   MapBottom := FMap.Bottom;
 
-  DataSertvice.LoadMapIcon(FMap.ID, Picture);
-
-  FLayerList.Init(FMap);
-  FMarkerGrid.Init(FMap);
-//  FQuestList.Init(FMap);
+  DataSertvice.LoadImage(FMap, Picture);
 end;
 
 procedure TedMap.PostValues(const Value: TMap);
 begin
-//  Value.Name := MapName;
   FMap.Caption := MapCaption;
   FMap.Left := MapLeft;
   FMap.Top := MapTop;
@@ -198,7 +154,7 @@ begin
   FMap.Bottom := MapBottom;
 
   if FPicturePanel.Changed then
-    DataSertvice.SaveMapIcon(FMap.ID, Picture);
+    DataSertvice.SaveImage(FMap, Picture);
 end;
 
 end.

@@ -7,7 +7,7 @@ uses
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   System.Rtti, FMX.Grid.Style, System.ImageList, FMX.ImgList, System.Actions,
   FMX.ActnList, FMX.Grid, FMX.ScrollBox, FMX.Controls.Presentation,
-  ME.DB.Entity, ME.DB.Map, ME.DB.Quest;
+  Map.Data.Types;
 
 type
   TfrQuest = class(TFrame)
@@ -23,7 +23,7 @@ type
     acDeleteQuest: TAction;
     ImageList1: TImageList;
     NameColumn: TStringColumn;
-    IDColumn: TIntegerColumn;
+    TraderColumn: TStringColumn;
     procedure GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
     procedure ActionList1Update(Action: TBasicAction; var Handled: Boolean);
     procedure acAddQuestExecute(Sender: TObject);
@@ -148,22 +148,22 @@ begin
   if Count > 0 then
     Grid.Selected := 0;
 
-  NameColumn.Width := Grid.Width - IDColumn.Width - 25;
+  NameColumn.Width := Grid.Width - TraderColumn.Width - 25;
 end;
 
 procedure TfrQuest.GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
 const
-  ColumnKeyIdx = 0;
-  ColumnNameIdx = 1;
+  ColumnNameIdx = 0;
+  ColumnTraderIdx = 1;
 begin
   if Count <= ARow then
     Exit;
 
   case ACol of
-    ColumnKeyIdx:
-      Value := VarToStr(Items[ARow].ID);
     ColumnNameIdx:
-      Value := VarToStr(Items[ARow].Name);
+      Value := Items[ARow].Caption;
+    ColumnTraderIdx:
+      Value := TQuest.TraderToStr(Items[ARow].Trader);
   end;
 end;
 
@@ -187,8 +187,6 @@ begin
   Res := False;
   Quest := TQuest.Create;
   try
-    Quest.MapID := FMap.ID;
-
     Res := InternalQuestEdit(Quest);
     if Res then begin
       FMap.Quests.Add(Quest);
