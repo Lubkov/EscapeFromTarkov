@@ -24,7 +24,9 @@ type
     procedure Clear;
     procedure Load(const FileName: string);
     procedure LoadMarkerImage(const Name: string; const Dest: TBitmap);
+    procedure SaveMarkerImage(const Name: string; const Dest: TBitmap);
     procedure LoadItemImage(const Name: string; const Dest: TBitmap);
+    procedure SaveItemImage(const Name: string; const Dest: TBitmap);
     procedure LoadMapIcon(const Name: string; const Dest: TBitmap);
     procedure SaveMapIcon(const Name: string; const Dest: TBitmap);
     procedure LoadLayerImage(const Name: string; const Dest: TBitmap);
@@ -144,11 +146,25 @@ begin
   InternalLoadImage(FolderName, Name, 'jpg', Dest);
 end;
 
+procedure TDataSertvice.SaveMarkerImage(const Name: string; const Dest: TBitmap);
+const
+  FolderName = 'Markers';
+begin
+  InternalSaveImage(FolderName, Name, 'jpg', Dest);
+end;
+
 procedure TDataSertvice.LoadItemImage(const Name: string; const Dest: TBitmap);
 const
   FolderName = 'Items';
 begin
   InternalLoadImage(FolderName, Name, 'png', Dest);
+end;
+
+procedure TDataSertvice.SaveItemImage(const Name: string; const Dest: TBitmap);
+const
+  FolderName = 'Items';
+begin
+  InternalSaveImage(FolderName, Name, 'png', Dest);
 end;
 
 procedure TDataSertvice.LoadMapIcon(const Name: string; const Dest: TBitmap);

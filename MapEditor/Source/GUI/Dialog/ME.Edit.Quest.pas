@@ -76,7 +76,7 @@ begin
     Caption := '#' + VarToStr(FQuest.ID) + ' Редактирование квеста';
 
   QuestName := FQuest.Name;
-  FQuestPartGrid.Init(FMap, FQuest);
+//  FQuestPartGrid.Init(FMap, FQuest);
 end;
 
 procedure TedQuest.PostValues(const Value: TQuest);

@@ -15,7 +15,7 @@
     ],
     "markers": [
       {
-        "name": "pmc_",
+        "name": "pmc_outskirts",
         "caption": "Окраины",
         "kind": "PMCExtraction",
         "left": "350",
@@ -333,6 +333,31 @@
               {
                 "name": "",
                 "caption": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "supply_plans",
+        "caption": "Планы снабжения",
+        "trader": "Prapor",
+        "markers": [
+          {
+            "name": "quest_supply_marker1",
+            "caption": "",
+            "kind": "Quest",
+            "left": "-4",
+            "top": "-81",
+            "items": [],
+            "images": [
+              {
+                "name": "woods_quest_supply_marker1_1",
+                "caption": "Третья бытовка на лесопилке"
+              },
+              {
+                "name": "woods_quest_supply_marker1_2",
+                "caption": "Защищенная папка 0052 под кроватью"
               }
             ]
           }
@@ -1324,7 +1349,17 @@
         "level": "0",
         "name": "interchange_main",
         "caption": "Основной"
-      }
+      },
+      {
+        "level": "1",
+        "name": "interchange_level2",
+        "caption": "Уровень 1"
+      },
+      {
+        "level": "2",
+        "name": "interchange_level3",
+        "caption": "Уровень 2"
+      }      
     ],
     "markers": [
       {
@@ -2318,10 +2353,15 @@
     "bottom": "309",
     "layers": [
       {
+        "level": "-1",
+        "name": "reserve_bunker",
+        "caption": "Бункер"
+      },
+      {
         "level": "0",
         "name": "reserve_main",
         "caption": "Основной"
-      }
+      }      
     ],
     "markers": [
       {

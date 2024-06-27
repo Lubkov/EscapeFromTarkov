@@ -181,7 +181,7 @@ begin
     ColumnLevelIdx:
       Value := Items[ARow].Level;
     ColumnCaptionIdx:
-      Value := ''; //Items[ARow].Name;
+      Value := Items[ARow].Caption;
   end;
 end;
 

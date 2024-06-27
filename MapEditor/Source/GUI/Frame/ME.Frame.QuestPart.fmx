@@ -83,8 +83,8 @@ object frQuestPartGrid: TfrQuestPartGrid
     OnSelChanged = GridSelChanged
     OnGetValue = GridGetValue
     OnCellDblClick = GridCellDblClick
-    Viewport.Width = 328.000000000000000000
-    Viewport.Height = 280.000000000000000000
+    Viewport.Width = 324.000000000000000000
+    Viewport.Height = 255.000000000000000000
     object IDColumn: TIntegerColumn
       Header = '#'
       HeaderSettings.TextSettings.WordWrap = False

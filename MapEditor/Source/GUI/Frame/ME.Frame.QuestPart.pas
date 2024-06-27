@@ -7,7 +7,7 @@ uses
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   System.Rtti, FMX.Grid.Style, System.ImageList, FMX.ImgList, System.Actions,
   FMX.ActnList, FMX.Grid, FMX.ScrollBox, FMX.Controls.Presentation,
-  ME.DB.Map, ME.DB.Quest, ME.DB.Marker;
+  Map.Data.Types;
 
 type
   TfrQuestPartGrid = class(TFrame)
@@ -166,8 +166,8 @@ begin
     Exit;
 
   case ACol of
-    ColumnKeyIdx:
-      Value := VarToStr(Items[ARow].ID);
+//    ColumnKeyIdx:
+//      Value := VarToStr(Items[ARow].ID);
     ColumnLeftIdx:
       Value := Items[ARow].Left;
     ColumnTopIdx:
@@ -195,8 +195,8 @@ begin
   Res := False;
   Marker := TMarker.Create;
   try
-    Marker.MapID := FQuest.MapID;
-    Marker.QuestID := FQuest.ID;
+//    Marker.MapID := FQuest.MapID;
+//    Marker.QuestID := FQuest.ID;
     Marker.Kind := TMarkerKind.Quest;
 
     Res := InternalMarkerEdit(Marker);

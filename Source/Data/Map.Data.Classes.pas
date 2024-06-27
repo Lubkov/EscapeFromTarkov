@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Variants, System.Rtti, System.TypInfo,
-  System.SysConst, System.JSON, Generics.Collections, Map.Data.Types;
+  System.SysConst, System.JSON, Generics.Collections, FMX.Graphics, Map.Data.Types;
 
 type
   TJSONDataImport = class(TObject)
@@ -32,6 +32,11 @@ type
   end;
 
 implementation
+
+{$IFDEF UPDATE_DATA_FORMAT}
+uses
+  Map.Data.Service;
+{$ENDIF}
 
 class procedure TJSONDataImport.LoadLayers(const Source: TJSONValue; Items: TList<TLayer>);
 var
@@ -91,7 +96,7 @@ begin
   for i := 0 to List.Count - 1 do begin
     JSONObject := TJSONObject(List.Items[i]);
 
-    Items.Add(JSONObject.GetValue<string>({$IFDEF UPDATE_DATA_FORMAT}'id'{$ELSE}'name'{$ENDIF}));
+    Items.Add(JSONObject.GetValue<string>('name'));
   end;
 end;
 
@@ -211,7 +216,6 @@ var
   Marker: TMarker;
   JSONItems: TJSONArray;
   JSONObject: TJSONObject;
-  MarkerName: string;
 begin
   JSONItems := TJSONArray.Create;
   for Marker in Items do begin
@@ -219,33 +223,8 @@ begin
     try
       Marker.AssignTo(JSONObject);
 
-    {$IFDEF UPDATE_DATA_FORMAT}
-      JSONObject.AddPair('caption', JSONObject.GetValue<string>('name'));
-      case Marker.Kind of
-        TMarkerKind.PMCExtraction:
-          MarkerName := 'pmc_';
-        TMarkerKind.ScavExtraction:
-          MarkerName := 'scav_';
-        TMarkerKind.CoopExtraction:
-          MarkerName := 'coop_';
-        TMarkerKind.Quest:
-          MarkerName := 'quest_';
-      else
-        MarkerName := '';
-      end;
-    {$ELSE}
-      MarkerName := Marker.Name;
-    {$ENDIF}
-
-      JSONObject.AddPair('name', MarkerName);
-
       SaveMarkerItems(JSONObject, Marker.Items);
       SaveMarkerImages(JSONObject, Marker.Images);
-
-    {$IFDEF UPDATE_DATA_FORMAT}
-      if Marker.Kind = TMarkerKind.Quest then
-        JSONObject.AddPair('caption', '');
-    {$ENDIF}
     finally
       JSONItems.Add(JSONObject);
     end;
@@ -258,12 +237,29 @@ var
   ItemName: string;
   JSONItems: TJSONArray;
   JSONObject: TJSONObject;
+{$IFDEF UPDATE_DATA_FORMAT}
+  id: TGUID;
+  ico: TBitmap;
+{$ENDIF}
 begin
   JSONItems := TJSONArray.Create;
   for ItemName in Items do begin
     JSONObject := TJSONObject.Create;
     try
+    {$IFDEF UPDATE_DATA_FORMAT}
+      CreateGUID(id);
+      JSONObject.AddPair('id', GUIDToString(id));
+
+      ico := TBitmap.Create;
+      try
+        DataSertvice.LoadItemImage(ItemName, ico);
+        DataSertvice.SaveItemImage(GUIDToString(id), ico);
+      finally
+        ico.Free;
+      end;
+    {$ELSE}
       JSONObject.AddPair('name', ItemName);
+    {$ENDIF}
     finally
       JSONItems.Add(JSONObject);
     end;
@@ -300,10 +296,6 @@ begin
     JSONObject := TJSONObject.Create;
     try
       Quest.AssignTo(JSONObject);
-    {$IFDEF UPDATE_DATA_FORMAT}
-      JSONObject.AddPair('caption', JSONObject.GetValue<string>('name'));
-      JSONObject.AddPair('name', '');
-    {$ENDIF}
       SaveMarkers(JSONObject, Quest.Markers);
     finally
       JSONItems.Add(JSONObject);

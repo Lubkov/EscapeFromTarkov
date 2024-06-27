@@ -1,11 +1,11 @@
-unit ME.Presenter.QuestPart;
+﻿unit ME.Presenter.QuestPart;
 
 interface
 
 uses
   System.SysUtils, System.Variants, System.Classes, FMX.Controls,
   ME.Edit.Form.Presenter, ME.Del.Form.Presenter,
-  ME.DB.Marker, ME.Service.Marker;
+  Map.Data.Types;
 
 type
   TEditQuestPartPresenter = class(TEditFormPresenter<TMarker>)
@@ -31,8 +31,8 @@ uses
 
 procedure TEditQuestPartPresenter.InternalSave;
 begin
-  if not (IsNullID(Instance.MapID) or IsNullID(Instance.QuestID)) then
-    MarkerService.Save(Instance);
+//  if not (IsNullID(Instance.MapID) or IsNullID(Instance.QuestID)) then
+//    MarkerService.Save(Instance);
 end;
 
 procedure TEditQuestPartPresenter.Cancel;
@@ -50,7 +50,7 @@ end;
 
 procedure TDelQuestPartPresenter.InternalDelete;
 begin
-  MarkerService.Remove(Instance);
+//  MarkerService.Remove(Instance);
 end;
 
 end.

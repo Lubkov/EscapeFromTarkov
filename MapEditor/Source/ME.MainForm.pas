@@ -174,31 +174,9 @@ begin
 end;
 
 procedure TMainForm.buExpotClick(Sender: TObject);
-//var
-//  ExportService: TExportService;
-//  List: TStrings;
-//  JSONData: string;
-//  FileName: string;
 var
   FileName: string;
 begin
-//  FileName := System.IOUtils.TPath.Combine(AppParams.Path, 'data.json');
-//
-//  ExportService := TExportService.Create;
-//  try
-//    JSONData := ExportService.ExportToJSON;
-//  finally
-//    ExportService.Free;
-//  end;
-//
-//  List := TStringList.Create;
-//  try
-//    List.Add(JSONData);
-//    List.SaveToFile(FileName, TEncoding.UTF8);
-//  finally
-//    List.Free;
-//  end;
-
   FileName := System.IOUtils.TPath.Combine(AppParams.DataPath, 'export.json');
   TJSONDataExport.SaveToFile(FileName, DataSertvice.Items);
 

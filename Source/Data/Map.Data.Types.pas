@@ -4,17 +4,12 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Variants, System.Rtti, System.TypInfo,
-  System.SysConst, System.JSON, Generics.Collections;
+  System.SysConst, System.JSON, Generics.Collections, FMX.Graphics;
 
 const
   MainLayerIndex = 0;
 
 type
-//  TObjectList<T> = class(TList<T>)
-//  protected
-//    procedure Notify(const Item: T; Action: TCollectionNotification); override;
-//  end;
-
   TPoint = record
   private
     FEmpty: Boolean;
@@ -33,16 +28,20 @@ type
 
   TLayer = class
   private
+//    FID: string;
     FLevel: Integer;
     FName: string;
+    FCaption: string;
 
     function GetIsMainLevel: Boolean;
   public
     procedure Assign(const Source: TJSONValue);
     procedure AssignTo(const Dest: TJSONObject);
 
+//    property ID: string read FID write FID;
     property Level: Integer read FLevel write FLevel;
     property Name: string read FName write FName;
+    property Caption: string read FCaption write FCaption;
     property IsMainLevel: Boolean read GetIsMainLevel;
   end;
 
@@ -143,6 +142,11 @@ type
 
 implementation
 
+{$IFDEF UPDATE_DATA_FORMAT}
+uses
+  Map.Data.Service;
+{$ENDIF}
+
 { TPoint }
 
 constructor TPoint.Create(X, Y: Integer);
@@ -168,14 +172,35 @@ end;
 
 procedure TLayer.Assign(const Source: TJSONValue);
 begin
+//  ID := Source.GetValue<string>('id');
   Level := Source.GetValue<Integer>('level');
   Name := Source.GetValue<string>('name');
+  Caption := Source.GetValue<string>('caption');
 end;
 
 procedure TLayer.AssignTo(const Dest: TJSONObject);
+{$IFDEF UPDATE_DATA_FORMAT}
+var
+  id: TGUID;
+  ico: TBitmap;
+{$ENDIF}
 begin
-  Dest.AddPair('level', Level.ToString);
+{$IFDEF UPDATE_DATA_FORMAT}
+  CreateGUID(id);
+  Dest.AddPair('id', GUIDToString(id));
+  ico := TBitmap.Create;
+  try
+    DataSertvice.LoadLayerImage(Name, ico);
+    DataSertvice.SaveLayerImage(GUIDToString(id), ico);
+  finally
+    ico.Free;
+  end;
+{$ELSE}
   Dest.AddPair('name', Name);
+{$ENDIF}
+  Dest.AddPair('level', Level.ToString);
+//  Dest.AddPair('name', Name);
+  Dest.AddPair('caption', Caption);
 end;
 
 function TLayer.GetIsMainLevel: Boolean;
@@ -192,8 +217,25 @@ begin
 end;
 
 procedure TLocationImage.AssignTo(const Dest: TJSONObject);
+{$IFDEF UPDATE_DATA_FORMAT}
+var
+  id: TGUID;
+  ico: TBitmap;
+{$ENDIF}
 begin
+{$IFDEF UPDATE_DATA_FORMAT}
+  CreateGUID(id);
+  Dest.AddPair('id', GUIDToString(id));
+  ico := TBitmap.Create;
+  try
+    DataSertvice.LoadMarkerImage(Name, ico);
+    DataSertvice.SaveMarkerImage(GUIDToString(id), ico);
+  finally
+    ico.Free;
+  end;
+{$ELSE}
   Dest.AddPair('name', Name);
+{$ENDIF}
   Dest.AddPair('caption', Caption);
 end;
 
@@ -216,39 +258,30 @@ begin
 end;
 
 procedure TMarker.Assign(const Source: TJSONValue);
-{$IFDEF UPDATE_DATA_FORMAT}
-var
-  Image: string;
-  Item: TLocationImage;
-{$ENDIF}
 begin
   Name := Source.GetValue<string>('name');
   Source.TryGetValue<string>('caption', FCaption);
   Kind := TRttiEnumerationType.GetValue<TMarkerKind>(Source.GetValue<string>('kind'));
   Left := Source.GetValue<Integer>('left');
   Top := Source.GetValue<Integer>('top');
-
-{$IFDEF UPDATE_DATA_FORMAT}
-  Source.TryGetValue<string>('image', Image);
-  Item := TLocationImage.Create;
-  try
-    Item.Name := Image;
-    if Kind = TMarkerKind.Quest then
-      Item.Caption := Name;
-  finally
-    FImages.Add(Item);
-  end;
-{$ENDIF}
 end;
 
 procedure TMarker.AssignTo(const Dest: TJSONObject);
+{$IFDEF UPDATE_DATA_FORMAT}
+var
+  id: TGUID;
+{$ENDIF}
 begin
+{$IFDEF UPDATE_DATA_FORMAT}
+  CreateGUID(id);
+  Dest.AddPair('id', GUIDToString(id));
+{$ELSE}
   Dest.AddPair('name', Name);
+{$ENDIF}
   Dest.AddPair('caption', Caption);
   Dest.AddPair('kind', TRttiEnumerationType.GetName<TMarkerKind>(Kind));
   Dest.AddPair('left', Left.ToString);
   Dest.AddPair('top', Top.ToString);
-//  Dest.AddPair('image', Image);
 end;
 
 class function TMarker.KindToStr(Value: TMarkerKind): string;
@@ -294,8 +327,17 @@ begin
 end;
 
 procedure TQuest.AssignTo(const Dest: TJSONObject);
+{$IFDEF UPDATE_DATA_FORMAT}
+var
+  id: TGUID;
+{$ENDIF}
 begin
+{$IFDEF UPDATE_DATA_FORMAT}
+  CreateGUID(id);
+  Dest.AddPair('id', GUIDToString(id));
+{$ELSE}
   Dest.AddPair('name', Name);
+{$ENDIF}
   Dest.AddPair('caption', Caption);
   Dest.AddPair('trader', TRttiEnumerationType.GetName<TTrader>(Trader));
 end;
@@ -336,8 +378,25 @@ begin
 end;
 
 procedure TMap.AssignTo(const Dest: TJSONObject);
+{$IFDEF UPDATE_DATA_FORMAT}
+var
+  id: TGUID;
+  ico: TBitmap;
+{$ENDIF}
 begin
+{$IFDEF UPDATE_DATA_FORMAT}
+  CreateGUID(id);
+  Dest.AddPair('id', GUIDToString(id));
+  ico := TBitmap.Create;
+  try
+    DataSertvice.LoadMapIcon(Name, ico);
+    DataSertvice.SaveMapIcon(GUIDToString(id), ico);
+  finally
+    ico.Free;
+  end;
+{$ELSE}
   Dest.AddPair('name', Name);
+{$ENDIF}
   Dest.AddPair('caption', Caption);
   Dest.AddPair('left', Left.ToString);
   Dest.AddPair('top', Top.ToString);
