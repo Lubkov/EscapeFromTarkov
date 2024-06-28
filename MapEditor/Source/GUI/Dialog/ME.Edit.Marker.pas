@@ -9,7 +9,7 @@ uses
   ME.Edit.Form, System.Actions, FMX.ActnList, FMX.Controls.Presentation,
   FMX.Edit, FMX.ListBox, FMX.EditBox, FMX.NumberBox, ME.Edit.Form.Presenter,
   FMX.Layouts, System.ImageList, FMX.ImgList, FMX.Platform, Map.Data.Types,
-  FMX.TabControl, ME.Frame.MarkerItem;
+  FMX.TabControl, ME.Frame.QuestItem;
 
 type
   TedMarker = class(TEditForm, IEditDialog<TMarker>)
@@ -18,7 +18,6 @@ type
     ImageList24: TImageList;
     laScreenShotName: TLabel;
     MainContainer: TTabControl;
-    tabMarkerItems: TTabItem;
     tabGeneral: TTabItem;
     laKindName: TLabel;
     edKindName: TComboBox;
@@ -40,6 +39,7 @@ type
     edPositionY: TNumberBox;
     laMapWidth: TLabel;
     laMapHeight: TLabel;
+    tabMarkerImages: TTabItem;
     procedure edLeftClick(Sender: TObject);
     procedure buRightClick(Sender: TObject);
     procedure buTopClick(Sender: TObject);
@@ -70,6 +70,7 @@ type
     procedure PostValues(const Value: TMarker);
 
     property Map: TMap read FMap write SetMap;
+    property Marker: TMarker read FMarker;
     property MarkerCaption: string read GetMarkerCaption write SetMarkerCaption;
     property MarkerKind: TMarkerKind read GetMarkerKind write SetMarkerKind;
     property PositionX: Integer read GetPositionX write SetPositionX;
@@ -97,7 +98,7 @@ begin
   laScreenShotName.Visible := False;
 
   FQuestItemsGrid := TfrQuestItemsGrid.Create(Self);
-  FQuestItemsGrid.Parent := tabMarkerItems;
+  FQuestItemsGrid.Parent := tabQuestItems;
   FQuestItemsGrid.Align := TAlignLayout.Client;
 
   MainContainer.TabIndex := tabGeneral.Index;

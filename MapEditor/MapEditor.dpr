@@ -52,7 +52,9 @@ uses
   Map.Data.Types in '..\Source\Data\Map.Data.Types.pas',
   ME.Filter.Map in 'Source\GUI\Frame\ME.Filter.Map.pas' {MapFilter: TFrame},
   ME.Frame.MapData in 'Source\GUI\Frame\ME.Frame.MapData.pas' {frMapData: TFrame},
-  ME.Frame.MarkerItem in 'Source\GUI\Frame\ME.Frame.MarkerItem.pas' {frQuestItemsGrid: TFrame};
+  ME.Frame.QuestItem in 'Source\GUI\Frame\ME.Frame.QuestItem.pas' {frQuestItemsGrid: TFrame},
+  ME.Presenter.QuestItem in 'Source\GUI\ME.Presenter.QuestItem.pas',
+  ME.Frame.MarkerImage in 'Source\GUI\Frame\ME.Frame.MarkerImage.pas' {MarkerImagesGrid: TFrame};
 
 {$R *.res}
 

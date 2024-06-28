@@ -1,4 +1,40 @@
 inherited edQuestPart: TedQuestPart
   Caption = 'edMarker1'
+  ClientHeight = 428
   DesignerMasterStyle = 0
+  inherited paBottom: TPanel
+    Position.Y = 382.000000000000000000
+  end
+  inherited MainContainer: TTabControl
+    Size.Height = 382.000000000000000000
+    TabIndex = 2
+    Sizes = (
+      600s
+      356s
+      600s
+      356s
+      600s
+      356s)
+    inherited tabGeneral: TTabItem
+      ExplicitSize.cx = 78.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+    end
+    inherited tabMarkerImages: TTabItem
+      ExplicitSize.cx = 85.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+    end
+    object tabQuestItems: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.Trimming = None
+      IsSelected = True
+      Size.Width = 77.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = #1055#1088#1077#1076#1084#1077#1090#1099
+    end
+  end
 end

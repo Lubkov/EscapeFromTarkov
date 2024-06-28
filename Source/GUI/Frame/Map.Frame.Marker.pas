@@ -30,7 +30,7 @@ type
     FOnClose: TNotifyEvent;
     FItems: TList<TImage>;
 
-    procedure AddItem(const Index: Integer; const ItemImage: TItemImage);
+    procedure AddItem(const Index: Integer; const QuestItem: TQuestItem);
     procedure ArrangeItems;
     procedure ArrangeItemsVertically(ItemHeight, ItemWidth: Integer);
     procedure ArrangeItemsHorizontally(ItemHeight, ItemWidth: Integer);
@@ -75,7 +75,7 @@ begin
   inherited;
 end;
 
-procedure TMarkerDescript.AddItem(const Index: Integer; const ItemImage: TItemImage);
+procedure TMarkerDescript.AddItem(const Index: Integer; const QuestItem: TQuestItem);
 var
   Item: TImage;
 begin
@@ -90,7 +90,7 @@ begin
     end;
   end;
 
-  DataSertvice.LoadImage(ItemImage, Item.Bitmap);
+  DataSertvice.LoadImage(QuestItem, Item.Bitmap);
   Item.Visible := True;
 end;
 

@@ -110,7 +110,7 @@ begin
     Ext := 'png';
   end
   else
-  if Source is TItemImage then begin
+  if Source is TQuestItem then begin
     Folder := 'Items';
     Ext := 'png';
   end

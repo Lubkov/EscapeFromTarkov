@@ -56,7 +56,7 @@ type
     property IsMainLevel: Boolean read GetIsMainLevel;
   end;
 
-  TItemImage = class(TEntity)
+  TQuestItem = class(TEntity)
   end;
 
   TMarkerImage = class(TEntity)
@@ -78,7 +78,7 @@ type
     FKind: TMarkerKind;
     FLeft: Integer;
     FTop: Integer;
-    FItems: TObjectList<TItemImage>;
+    FItems: TObjectList<TQuestItem>;
     FImages: TObjectList<TMarkerImage>;
   public
     constructor Create; override;
@@ -93,7 +93,7 @@ type
     property Kind: TMarkerKind read FKind write FKind;
     property Left: Integer read FLeft write FLeft;
     property Top: Integer read FTop write FTop;
-    property Items: TObjectList<TItemImage> read FItems;
+    property Items: TObjectList<TQuestItem> read FItems;
     property Images: TObjectList<TMarkerImage> read FImages;
   end;
 
@@ -243,7 +243,7 @@ constructor TMarker.Create;
 begin
   inherited;
 
-  FItems := TObjectList<TItemImage>.Create;
+  FItems := TObjectList<TQuestItem>.Create;
   FImages := TObjectList<TMarkerImage>.Create;
 end;
 
