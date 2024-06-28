@@ -1,10 +1,10 @@
 object frLayerList: TfrLayerList
-  Size.Width = 564.000000000000000000
+  Size.Width = 572.000000000000000000
   Size.Height = 292.000000000000000000
   Size.PlatformDefault = False
   object paTopPanel: TPanel
     Align = Top
-    Size.Width = 564.000000000000000000
+    Size.Width = 572.000000000000000000
     Size.Height = 40.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
@@ -89,7 +89,7 @@ object frLayerList: TfrLayerList
     Align = Client
     CanFocus = True
     ClipChildren = True
-    Size.Width = 275.000000000000000000
+    Size.Width = 283.000000000000000000
     Size.Height = 252.000000000000000000
     Size.PlatformDefault = False
     TextSettings.Font.Family = 'Tahoma'
@@ -99,15 +99,15 @@ object frLayerList: TfrLayerList
     OnSelChanged = GridSelChanged
     OnGetValue = GridGetValue
     OnCellDblClick = GridCellDblClick
-    Viewport.Width = 255.000000000000000000
+    Viewport.Width = 263.000000000000000000
     Viewport.Height = 227.000000000000000000
     object LevelColumn: TIntegerColumn
-      Header = 'Level'
+      Header = #1059#1088#1086#1074#1077#1085#1100
       HeaderSettings.TextSettings.WordWrap = False
-      Size.Width = 50.000000000000000000
+      Size.Width = 60.000000000000000000
     end
     object CaptionColumn: TStringColumn
-      Header = 'Caption'
+      Header = #1053#1072#1080#1084#1077#1085#1086#1074#1072#1085#1080#1077
       HeaderSettings.TextSettings.WordWrap = False
       Size.Width = 198.000000000000000000
     end

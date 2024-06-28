@@ -16,12 +16,16 @@ type
     tabExtractions: TTabItem;
     tabQuests: TTabItem;
     QuestPartsLayout: TLayout;
+    Splitter1: TSplitter;
+    QuestLayout: TLayout;
   private
     FMap: TMap;
     FLayerList: TfrLayerList;
     FMarkerGrid: TfrMarkerGrid;
     FQuestList: TfrQuest;
     FQuestPartGrid: TfrQuestPartGrid;
+
+    procedure OnQuestChanged(const Quest: TQuest);
   public
     constructor Create(AOwner: TComponent); override;
 
@@ -48,14 +52,20 @@ begin
   FMarkerGrid.Align := TAlignLayout.Client;
 
   FQuestList := TfrQuest.Create(Self);
-  FQuestList.Parent := tabQuests;
+  FQuestList.Parent := QuestLayout;
   FQuestList.Align := TAlignLayout.Client;
+  FQuestList.OnQuestChanged := OnQuestChanged;
 
   FQuestPartGrid := TfrQuestPartGrid.Create(Self);
   FQuestPartGrid.Parent := QuestPartsLayout;
   FQuestPartGrid.Align := TAlignLayout.Client;
 
   MainContainer.TabIndex := tabLayer.Index;
+end;
+
+procedure TfrMapData.OnQuestChanged(const Quest: TQuest);
+begin
+  FQuestPartGrid.Init(FMap, Quest);
 end;
 
 procedure TfrMapData.Init(const Map: TMap);

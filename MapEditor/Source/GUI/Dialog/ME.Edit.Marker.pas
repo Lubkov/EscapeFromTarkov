@@ -8,34 +8,38 @@ uses
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   ME.Edit.Form, System.Actions, FMX.ActnList, FMX.Controls.Presentation,
   FMX.Edit, FMX.ListBox, FMX.EditBox, FMX.NumberBox, ME.Edit.Form.Presenter,
-  FMX.Layouts, System.ImageList, FMX.ImgList, FMX.Platform, Map.Data.Types;
+  FMX.Layouts, System.ImageList, FMX.ImgList, FMX.Platform, Map.Data.Types,
+  FMX.TabControl;
 
 type
   TedMarker = class(TEditForm, IEditDialog<TMarker>)
     edMarkerCaption: TEdit;
-    edPositionX: TNumberBox;
-    edPositionY: TNumberBox;
-    edKindName: TComboBox;
     laMarkerName: TLabel;
+    ImageList24: TImageList;
+    laScreenShotName: TLabel;
+    MainContainer: TTabControl;
+    tabMarkerItems: TTabItem;
+    tabGeneral: TTabItem;
     laKindName: TLabel;
-    PositionLayout: TLayout;
-    laTopPoint: TLabel;
-    Layout2: TLayout;
-    laMapWidth: TLabel;
-    laMapHeight: TLabel;
+    edKindName: TComboBox;
     Layout3: TLayout;
-    Layout1: TLayout;
     Layout4: TLayout;
-    HorizontalLayout: TLayout;
-    edLeft: TSpeedButton;
-    buRight: TSpeedButton;
     VerticalLayout: TLayout;
     buTop: TSpeedButton;
     buBottom: TSpeedButton;
-    ImageList24: TImageList;
-    buGenerate: TButton;
-    laScreenShotName: TLabel;
+    HorizontalLayout: TLayout;
+    edLeft: TSpeedButton;
+    buRight: TSpeedButton;
     edIncrement: TComboBox;
+    buGenerate: TButton;
+    Layout1: TLayout;
+    PositionLayout: TLayout;
+    laTopPoint: TLabel;
+    Layout2: TLayout;
+    edPositionX: TNumberBox;
+    edPositionY: TNumberBox;
+    laMapWidth: TLabel;
+    laMapHeight: TLabel;
     procedure edLeftClick(Sender: TObject);
     procedure buRightClick(Sender: TObject);
     procedure buTopClick(Sender: TObject);

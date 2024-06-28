@@ -34,6 +34,7 @@ type
   private
     FMap: TMap;
     FFocusedIndex: Integer;
+    FOnQuestChanged: TQuestChangedEvent;
 
     function GetCount: Integer;
     function GetItem(Index: Integer): TQuest;
@@ -41,6 +42,7 @@ type
     procedure SetFocusedIndex(const Value: Integer);
     function InternalQuestEdit(const Quest: TQuest): Boolean;
     procedure QuestEdit(const Index: Integer);
+    procedure DoQuestChanged;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -50,6 +52,7 @@ type
     property Count: Integer read GetCount;
     property Items[Index: Integer]: TQuest read GetItem;
     property FocusedIndex: Integer read GetFocusedIndex write SetFocusedIndex;
+    property OnQuestChanged: TQuestChangedEvent read FOnQuestChanged write FOnQuestChanged;
   end;
 
 implementation
@@ -66,10 +69,12 @@ begin
   inherited;
 
   Grid.RowCount := 0;
+  FOnQuestChanged := nil;
 end;
 
 destructor TfrQuest.Destroy;
 begin
+  FOnQuestChanged := nil;
 
   inherited;
 end;
@@ -94,8 +99,11 @@ end;
 
 procedure TfrQuest.SetFocusedIndex(const Value: Integer);
 begin
-  if FFocusedIndex <> Value then
-    FFocusedIndex := Value;
+  if FFocusedIndex = Value then
+    Exit;
+
+  FFocusedIndex := Value;
+  DoQuestChanged;
 end;
 
 function TfrQuest.InternalQuestEdit(const Quest: TQuest): Boolean;
@@ -134,6 +142,15 @@ begin
   end;
 end;
 
+procedure TfrQuest.DoQuestChanged;
+begin
+  if Assigned(FOnQuestChanged) then
+    if FocusedIndex >= 0 then
+      FOnQuestChanged(Items[FocusedIndex])
+    else
+      FOnQuestChanged(nil);
+end;
+
 procedure TfrQuest.Init(const Map: TMap);
 begin
   FMap := Map;
@@ -145,8 +162,10 @@ begin
     Grid.EndUpdate;
   end;
 
-  if Count > 0 then
+  if Count > 0 then begin
     Grid.Selected := 0;
+    DoQuestChanged;
+  end;
 
   NameColumn.Width := Grid.Width - TraderColumn.Width - 25;
 end;

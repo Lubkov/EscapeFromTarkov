@@ -83,14 +83,18 @@ object frQuestPartGrid: TfrQuestPartGrid
     OnSelChanged = GridSelChanged
     OnGetValue = GridGetValue
     OnCellDblClick = GridCellDblClick
-    Viewport.Width = 320.000000000000000000
-    Viewport.Height = 280.000000000000000000
-    object IntegerColumn1: TIntegerColumn
-      Header = 'Left'
+    Viewport.Width = 316.000000000000000000
+    Viewport.Height = 255.000000000000000000
+    object LeftColumn: TIntegerColumn
+      Header = #1050#1086#1086#1088#1076#1080#1085#1072#1090#1072' X'
       HeaderSettings.TextSettings.WordWrap = False
     end
-    object IntegerColumn2: TIntegerColumn
-      Header = 'Top'
+    object RightColumn: TIntegerColumn
+      Header = #1050#1086#1086#1088#1076#1080#1085#1072#1090#1072' Y'
+      HeaderSettings.TextSettings.WordWrap = False
+    end
+    object DescriptionColumn: TStringColumn
+      Header = #1054#1087#1080#1089#1072#1085#1080#1077
       HeaderSettings.TextSettings.WordWrap = False
     end
   end

@@ -149,6 +149,7 @@ type
   end;
 
   TMapChangedEvent = procedure(const Map: TMap) of object;
+  TQuestChangedEvent = procedure(const Quest: TQuest) of object;
 
 implementation
 

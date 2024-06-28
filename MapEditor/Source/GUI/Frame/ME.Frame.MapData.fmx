@@ -63,11 +63,29 @@ object frMapData: TfrMapData
       ExplicitSize.cy = 26.000000000000000000
       object QuestPartsLayout: TLayout
         Align = Bottom
-        Position.Y = 256.000000000000000000
+        Position.Y = 218.000000000000000000
         Size.Width = 652.000000000000000000
-        Size.Height = 102.000000000000000000
+        Size.Height = 140.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
+      end
+      object Splitter1: TSplitter
+        Align = Bottom
+        Cursor = crVSplit
+        MinSize = 5.000000000000000000
+        Position.Y = 213.000000000000000000
+        ShowGrip = False
+        Size.Width = 652.000000000000000000
+        Size.Height = 5.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'splitterstyle'
+      end
+      object QuestLayout: TLayout
+        Align = Client
+        Size.Width = 652.000000000000000000
+        Size.Height = 213.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
       end
     end
   end

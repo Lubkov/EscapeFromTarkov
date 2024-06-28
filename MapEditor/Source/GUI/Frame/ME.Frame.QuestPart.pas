@@ -22,8 +22,9 @@ type
     acEditMarker: TAction;
     acDeleteMarker: TAction;
     ImageList1: TImageList;
-    IntegerColumn1: TIntegerColumn;
-    IntegerColumn2: TIntegerColumn;
+    LeftColumn: TIntegerColumn;
+    RightColumn: TIntegerColumn;
+    DescriptionColumn: TStringColumn;
     procedure GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
     procedure GridSelChanged(Sender: TObject);
     procedure ActionList1Update(Action: TBasicAction; var Handled: Boolean);
@@ -158,6 +159,7 @@ procedure TfrQuestPartGrid.GridGetValue(Sender: TObject; const ACol, ARow: Integ
 const
   ColumnLeftIdx = 0;
   ColumnTopIdx = 1;
+  ColumnDescriptionIdx = 2;
 begin
   if Count <= ARow then
     Exit;
@@ -167,6 +169,8 @@ begin
       Value := Items[ARow].Left;
     ColumnTopIdx:
       Value := Items[ARow].Top;
+    ColumnDescriptionIdx:
+      Value := Items[ARow].Caption;
   end;
 end;
 

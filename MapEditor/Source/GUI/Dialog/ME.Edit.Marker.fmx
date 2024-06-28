@@ -1,285 +1,330 @@
 inherited edMarker: TedMarker
   Caption = 'EditForm1'
-  ClientHeight = 316
+  ClientHeight = 360
+  ClientWidth = 416
   FormStyle = StayOnTop
   DesignerMasterStyle = 0
   inherited paBottom: TPanel
-    Position.Y = 270.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 416.000000000000000000
+  end
+  object MainContainer: TTabControl [1]
+    Align = Client
+    Size.Width = 416.000000000000000000
+    Size.Height = 314.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 0
     TabOrder = 2
-  end
-  object edMarkerCaption: TEdit [1]
-    Touch.InteractiveGestures = [LongTap, DoubleTap]
-    Align = Top
-    TabOrder = 0
-    Position.X = 20.000000000000000000
-    Position.Y = 39.000000000000000000
-    Margins.Left = 20.000000000000000000
-    Margins.Top = 2.000000000000000000
-    Margins.Right = 20.000000000000000000
-    Size.Width = 304.000000000000000000
-    Size.Height = 22.000000000000000000
-    Size.PlatformDefault = False
-  end
-  object edKindName: TComboBox [2]
-    Align = Top
-    Margins.Left = 20.000000000000000000
-    Margins.Top = 2.000000000000000000
-    Margins.Right = 20.000000000000000000
-    Position.X = 20.000000000000000000
-    Position.Y = 90.000000000000000000
-    Size.Width = 304.000000000000000000
-    Size.Height = 22.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 1
-  end
-  object laMarkerName: TLabel [3]
-    Align = Top
-    StyledSettings = [Size, Style, FontColor]
-    Margins.Left = 20.000000000000000000
-    Margins.Top = 20.000000000000000000
-    Margins.Right = 20.000000000000000000
-    Position.X = 20.000000000000000000
-    Position.Y = 20.000000000000000000
-    Size.Width = 304.000000000000000000
-    Size.Height = 17.000000000000000000
-    Size.PlatformDefault = False
-    TextSettings.Font.Family = 'Tahoma'
-    Text = #1053#1072#1080#1084#1077#1085#1086#1074#1072#1085#1080#1077' '#1084#1072#1088#1082#1077#1088#1072':'
-    TabOrder = 4
-  end
-  object laKindName: TLabel [4]
-    Align = Top
-    StyledSettings = [Size, Style, FontColor]
-    Margins.Left = 20.000000000000000000
-    Margins.Top = 10.000000000000000000
-    Margins.Right = 20.000000000000000000
-    Position.X = 20.000000000000000000
-    Position.Y = 71.000000000000000000
-    Size.Width = 304.000000000000000000
-    Size.Height = 17.000000000000000000
-    Size.PlatformDefault = False
-    TextSettings.Font.Family = 'Tahoma'
-    Text = #1058#1080#1087' '#1084#1072#1088#1082#1077#1088#1072':'
-    TabOrder = 5
-  end
-  object Layout3: TLayout [5]
-    Align = Top
-    Margins.Left = 20.000000000000000000
-    Margins.Top = 10.000000000000000000
-    Margins.Right = 20.000000000000000000
-    Position.X = 20.000000000000000000
-    Position.Y = 122.000000000000000000
-    Size.Width = 304.000000000000000000
-    Size.Height = 118.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 6
-    object Layout1: TLayout
-      Align = Left
-      Size.Width = 170.000000000000000000
-      Size.Height = 118.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 0
-      object PositionLayout: TLayout
-        Align = Top
-        Size.Width = 170.000000000000000000
-        Size.Height = 41.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 0
-        object laTopPoint: TLabel
-          Align = Top
-          StyledSettings = [Size, Style, FontColor]
-          Size.Width = 170.000000000000000000
-          Size.Height = 17.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Family = 'Tahoma'
-          Text = #1050#1086#1086#1088#1076#1080#1085#1072#1090#1072' (x, y):'
-          TabOrder = 2
-        end
-        object Layout2: TLayout
-          Align = Top
-          Margins.Top = 2.000000000000000000
-          Position.Y = 19.000000000000000000
-          Size.Width = 170.000000000000000000
-          Size.Height = 22.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 3
-          object edPositionX: TNumberBox
-            Touch.InteractiveGestures = [LongTap, DoubleTap]
-            Align = Left
-            TabOrder = 3
-            Cursor = crIBeam
-            DecimalDigits = 0
-            Min = -9999.000000000000000000
-            Max = 9999.000000000000000000
-            TextSettings.Font.Family = 'Tahoma'
-            TextSettings.HorzAlign = Trailing
-            HorzIncrement = 0.000000000000000000
-            VertIncrement = 0.000000000000000000
-            Size.Width = 75.000000000000000000
-            Size.Height = 22.000000000000000000
-            Size.PlatformDefault = False
-            StyledSettings = [Size, Style, FontColor]
-          end
-          object edPositionY: TNumberBox
-            Touch.InteractiveGestures = [LongTap, DoubleTap]
-            Align = Left
-            TabOrder = 4
-            Cursor = crIBeam
-            DecimalDigits = 0
-            Min = -9999.000000000000000000
-            Max = 9999.000000000000000000
-            TextSettings.Font.Family = 'Tahoma'
-            TextSettings.HorzAlign = Trailing
-            Position.X = 85.000000000000000000
-            HorzIncrement = 0.000000000000000000
-            VertIncrement = 0.000000000000000000
-            Margins.Left = 10.000000000000000000
-            Size.Width = 75.000000000000000000
-            Size.Height = 22.000000000000000000
-            Size.PlatformDefault = False
-            StyledSettings = [Size, Style, FontColor]
-          end
-        end
-      end
-      object laMapWidth: TLabel
-        Align = Top
-        StyledSettings = [Size, Style, FontColor]
-        Margins.Top = 10.000000000000000000
-        Position.Y = 51.000000000000000000
-        Size.Width = 170.000000000000000000
-        Size.Height = 17.000000000000000000
-        Size.PlatformDefault = False
-        TextSettings.Font.Family = 'Tahoma'
-        Text = 'laMapWidth'
-        TabOrder = 1
-      end
-      object laMapHeight: TLabel
-        Align = Top
-        StyledSettings = [Size, Style, FontColor]
-        Margins.Top = 5.000000000000000000
-        Position.Y = 73.000000000000000000
-        Size.Width = 170.000000000000000000
-        Size.Height = 17.000000000000000000
-        Size.PlatformDefault = False
-        TextSettings.Font.Family = 'Tahoma'
-        Text = 'laMapHeight'
-        TabOrder = 7
-      end
-    end
-    object Layout4: TLayout
-      Position.X = 178.000000000000000000
-      Position.Y = 4.000000000000000000
-      Size.Width = 120.000000000000000000
-      Size.Height = 73.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 18
-      object VerticalLayout: TLayout
-        Align = Center
-        Size.Width = 24.000000000000000000
-        Size.Height = 82.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 1
-        object buTop: TSpeedButton
-          Align = Top
-          Images = ImageList24
-          ImageIndex = 2
-          Size.Width = 24.000000000000000000
-          Size.Height = 24.000000000000000000
-          Size.PlatformDefault = False
-          StyleLookup = 'actiontoolbutton'
-          Text = 'edLeft'
-          TextSettings.Trimming = None
-          OnClick = buTopClick
-        end
-        object buBottom: TSpeedButton
-          Align = Bottom
-          Images = ImageList24
-          ImageIndex = 3
-          Position.Y = 58.000000000000000000
-          Size.Width = 24.000000000000000000
-          Size.Height = 24.000000000000000000
-          Size.PlatformDefault = False
-          StyleLookup = 'actiontoolbutton'
-          Text = 'SpeedButton1'
-          TextSettings.Trimming = None
-          OnClick = buBottomClick
-        end
-      end
-      object HorizontalLayout: TLayout
-        Align = Center
-        Size.Width = 102.000000000000000000
-        Size.Height = 24.000000000000000000
-        Size.PlatformDefault = False
-        TabOrder = 0
-        object edLeft: TSpeedButton
-          Align = Left
-          Images = ImageList24
-          ImageIndex = 0
-          Size.Width = 24.000000000000000000
-          Size.Height = 24.000000000000000000
-          Size.PlatformDefault = False
-          StyleLookup = 'actiontoolbutton'
-          Text = 'edLeft'
-          TextSettings.Trimming = None
-          OnClick = edLeftClick
-        end
-        object buRight: TSpeedButton
-          Align = Right
-          Images = ImageList24
-          ImageIndex = 1
-          Position.X = 78.000000000000000000
-          Size.Width = 24.000000000000000000
-          Size.Height = 24.000000000000000000
-          Size.PlatformDefault = False
-          StyleLookup = 'actiontoolbutton'
-          Text = 'SpeedButton1'
-          TextSettings.Trimming = None
-          OnClick = buRightClick
-        end
-        object edIncrement: TComboBox
-          Align = Center
-          Items.Strings = (
-            '1'
-            '5'
-            '10'
-            '50'
-            '100')
-          ItemIndex = 0
-          Size.Width = 50.000000000000000000
-          Size.Height = 22.000000000000000000
-          Size.PlatformDefault = False
-          StyleLookup = 'comboboxstyle'
-          TabOrder = 4
-        end
-      end
-    end
-    object buGenerate: TButton
-      Position.X = 178.000000000000000000
-      Position.Y = 89.000000000000000000
-      Size.Width = 94.000000000000000000
-      Size.Height = 27.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 19
-      Text = 'Generate'
+    TabPosition = PlatformDefault
+    Sizes = (
+      416s
+      288s
+      416s
+      288s)
+    object tabGeneral: TTabItem
+      CustomIcon = <
+        item
+        end>
       TextSettings.Trimming = None
-      OnClick = buGenerateClick
+      IsSelected = True
+      Size.Width = 75.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = #1054#1089#1085#1086#1074#1085#1086#1077
+      ExplicitSize.cx = 78.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object laMarkerName: TLabel
+        Align = Top
+        StyledSettings = [Size, Style, FontColor]
+        Margins.Left = 20.000000000000000000
+        Margins.Top = 20.000000000000000000
+        Margins.Right = 20.000000000000000000
+        Position.X = 20.000000000000000000
+        Position.Y = 20.000000000000000000
+        Size.Width = 376.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Family = 'Tahoma'
+        Text = #1053#1072#1080#1084#1077#1085#1086#1074#1072#1085#1080#1077' '#1084#1072#1088#1082#1077#1088#1072' ('#1054#1087#1080#1089#1072#1085#1080#1077'):'
+        TabOrder = 5
+      end
+      object edMarkerCaption: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Top
+        TabOrder = 1
+        Position.X = 20.000000000000000000
+        Position.Y = 39.000000000000000000
+        Margins.Left = 20.000000000000000000
+        Margins.Top = 2.000000000000000000
+        Margins.Right = 20.000000000000000000
+        Size.Width = 376.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object laKindName: TLabel
+        Align = Top
+        StyledSettings = [Size, Style, FontColor]
+        Margins.Left = 20.000000000000000000
+        Margins.Top = 10.000000000000000000
+        Margins.Right = 20.000000000000000000
+        Position.X = 20.000000000000000000
+        Position.Y = 71.000000000000000000
+        Size.Width = 376.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Family = 'Tahoma'
+        Text = #1058#1080#1087' '#1084#1072#1088#1082#1077#1088#1072':'
+        TabOrder = 4
+      end
+      object edKindName: TComboBox
+        Align = Top
+        Margins.Left = 20.000000000000000000
+        Margins.Top = 2.000000000000000000
+        Margins.Right = 20.000000000000000000
+        Position.X = 20.000000000000000000
+        Position.Y = 90.000000000000000000
+        Size.Width = 376.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+      end
+      object Layout3: TLayout
+        Align = Top
+        Margins.Left = 20.000000000000000000
+        Margins.Top = 10.000000000000000000
+        Margins.Right = 20.000000000000000000
+        Position.X = 20.000000000000000000
+        Position.Y = 122.000000000000000000
+        Size.Width = 376.000000000000000000
+        Size.Height = 118.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        object Layout4: TLayout
+          Position.X = 178.000000000000000000
+          Position.Y = 4.000000000000000000
+          Size.Width = 120.000000000000000000
+          Size.Height = 73.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 17
+          object VerticalLayout: TLayout
+            Align = Center
+            Size.Width = 24.000000000000000000
+            Size.Height = 82.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 1
+            object buTop: TSpeedButton
+              Align = Top
+              Images = ImageList24
+              ImageIndex = 2
+              Size.Width = 24.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              StyleLookup = 'actiontoolbutton'
+              Text = 'edLeft'
+              TextSettings.Trimming = None
+              OnClick = buTopClick
+            end
+            object buBottom: TSpeedButton
+              Align = Bottom
+              Images = ImageList24
+              ImageIndex = 3
+              Position.Y = 58.000000000000000000
+              Size.Width = 24.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              StyleLookup = 'actiontoolbutton'
+              Text = 'SpeedButton1'
+              TextSettings.Trimming = None
+              OnClick = buBottomClick
+            end
+          end
+          object HorizontalLayout: TLayout
+            Align = Center
+            Size.Width = 102.000000000000000000
+            Size.Height = 24.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            object edLeft: TSpeedButton
+              Align = Left
+              Images = ImageList24
+              ImageIndex = 0
+              Size.Width = 24.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              StyleLookup = 'actiontoolbutton'
+              Text = 'edLeft'
+              TextSettings.Trimming = None
+              OnClick = edLeftClick
+            end
+            object buRight: TSpeedButton
+              Align = Right
+              Images = ImageList24
+              ImageIndex = 1
+              Position.X = 78.000000000000000000
+              Size.Width = 24.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              StyleLookup = 'actiontoolbutton'
+              Text = 'SpeedButton1'
+              TextSettings.Trimming = None
+              OnClick = buRightClick
+            end
+            object edIncrement: TComboBox
+              Align = Center
+              Items.Strings = (
+                '1'
+                '5'
+                '10'
+                '50'
+                '100')
+              ItemIndex = 0
+              Size.Width = 50.000000000000000000
+              Size.Height = 22.000000000000000000
+              Size.PlatformDefault = False
+              StyleLookup = 'comboboxstyle'
+              TabOrder = 4
+            end
+          end
+        end
+        object buGenerate: TButton
+          Position.X = 178.000000000000000000
+          Position.Y = 89.000000000000000000
+          Size.Width = 94.000000000000000000
+          Size.Height = 27.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 18
+          Text = 'Generate'
+          TextSettings.Trimming = None
+          OnClick = buGenerateClick
+        end
+        object Layout1: TLayout
+          Align = Left
+          Size.Width = 170.000000000000000000
+          Size.Height = 118.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          object PositionLayout: TLayout
+            Align = Top
+            Size.Width = 170.000000000000000000
+            Size.Height = 41.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            object laTopPoint: TLabel
+              Align = Top
+              StyledSettings = [Size, Style, FontColor]
+              Size.Width = 170.000000000000000000
+              Size.Height = 17.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.Font.Family = 'Tahoma'
+              Text = #1050#1086#1086#1088#1076#1080#1085#1072#1090#1072' (x, y):'
+              TabOrder = 2
+            end
+            object Layout2: TLayout
+              Align = Top
+              Margins.Top = 2.000000000000000000
+              Position.Y = 19.000000000000000000
+              Size.Width = 170.000000000000000000
+              Size.Height = 22.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 3
+              object edPositionX: TNumberBox
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Left
+                TabOrder = 3
+                Cursor = crIBeam
+                DecimalDigits = 0
+                Min = -9999.000000000000000000
+                Max = 9999.000000000000000000
+                TextSettings.Font.Family = 'Tahoma'
+                TextSettings.HorzAlign = Trailing
+                HorzIncrement = 0.000000000000000000
+                VertIncrement = 0.000000000000000000
+                Size.Width = 75.000000000000000000
+                Size.Height = 22.000000000000000000
+                Size.PlatformDefault = False
+                StyledSettings = [Size, Style, FontColor]
+              end
+              object edPositionY: TNumberBox
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Left
+                TabOrder = 4
+                Cursor = crIBeam
+                DecimalDigits = 0
+                Min = -9999.000000000000000000
+                Max = 9999.000000000000000000
+                TextSettings.Font.Family = 'Tahoma'
+                TextSettings.HorzAlign = Trailing
+                Position.X = 85.000000000000000000
+                HorzIncrement = 0.000000000000000000
+                VertIncrement = 0.000000000000000000
+                Margins.Left = 10.000000000000000000
+                Size.Width = 75.000000000000000000
+                Size.Height = 22.000000000000000000
+                Size.PlatformDefault = False
+                StyledSettings = [Size, Style, FontColor]
+              end
+            end
+          end
+          object laMapWidth: TLabel
+            Align = Top
+            StyledSettings = [Size, Style, FontColor]
+            Margins.Top = 10.000000000000000000
+            Position.Y = 51.000000000000000000
+            Size.Width = 170.000000000000000000
+            Size.Height = 17.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.Family = 'Tahoma'
+            Text = 'laMapWidth'
+            TabOrder = 1
+          end
+          object laMapHeight: TLabel
+            Align = Top
+            StyledSettings = [Size, Style, FontColor]
+            Margins.Top = 5.000000000000000000
+            Position.Y = 73.000000000000000000
+            Size.Width = 170.000000000000000000
+            Size.Height = 17.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.Family = 'Tahoma'
+            Text = 'laMapHeight'
+            TabOrder = 7
+          end
+        end
+      end
+      object laScreenShotName: TLabel
+        Align = Top
+        StyledSettings = [Style, FontColor]
+        Margins.Left = 10.000000000000000000
+        Margins.Top = 5.000000000000000000
+        Margins.Right = 10.000000000000000000
+        Position.X = 10.000000000000000000
+        Position.Y = 245.000000000000000000
+        Size.Width = 396.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Family = 'Tahoma'
+        TextSettings.Font.Size = 10.000000000000000000
+        Text = 'laScreenShotName'
+        TabOrder = 16
+      end
     end
-  end
-  object laScreenShotName: TLabel [6]
-    Align = Top
-    StyledSettings = [Style, FontColor]
-    Margins.Left = 10.000000000000000000
-    Margins.Top = 5.000000000000000000
-    Margins.Right = 10.000000000000000000
-    Position.X = 10.000000000000000000
-    Position.Y = 245.000000000000000000
-    Size.Width = 324.000000000000000000
-    Size.Height = 17.000000000000000000
-    Size.PlatformDefault = False
-    TextSettings.Font.Family = 'Tahoma'
-    TextSettings.Font.Size = 10.000000000000000000
-    Text = 'laScreenShotName'
-    TabOrder = 16
+    object tabMarkerItems: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.Trimming = None
+      IsSelected = False
+      Size.Width = 77.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = #1055#1088#1077#1076#1084#1077#1090#1099
+      ExplicitSize.cx = 52.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+    end
   end
   inherited ActionList1: TActionList
     Left = 16
