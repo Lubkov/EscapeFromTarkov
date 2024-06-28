@@ -7,19 +7,18 @@ uses
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   ME.Edit.Marker, System.Actions, FMX.ActnList, FMX.ListBox, FMX.EditBox,
   FMX.NumberBox, FMX.Edit, FMX.Controls.Presentation, System.ImageList,
-  FMX.ImgList, FMX.Layouts, Map.Data.Types, FMX.TabControl, ME.Frame.MarkerImage;
+  FMX.ImgList, FMX.Layouts, Map.Data.Types, FMX.TabControl, ME.Frame.QuestItem;
 
 type
   TedQuestPart = class(TedMarker)
     tabQuestItems: TTabItem;
   private
-    FMarkerImagesGrid: TMarkerImagesGrid;
+    FQuestItemsGrid: TfrQuestItemsGrid;
   protected
     function GetTitle(const Value: TMarker): string; override;
+    procedure InternalSetInstance(const Value: TMarker); override;
   public
     constructor Create(AOwner: TComponent); override;
-
-    procedure SetInstance(const Value: TMarker);
   end;
 
 implementation
@@ -32,9 +31,9 @@ constructor TedQuestPart.Create(AOwner: TComponent);
 begin
   inherited;
 
-  FMarkerImagesGrid := TMarkerImagesGrid.Create(Self);
-  FMarkerImagesGrid.Parent := tabMarkerImages;
-  FMarkerImagesGrid.Align := TAlignLayout.Client;
+  FQuestItemsGrid := TfrQuestItemsGrid.Create(Self);
+  FQuestItemsGrid.Parent := tabQuestItems;
+  FQuestItemsGrid.Align := TAlignLayout.Client;
 
   MarkerKind := TMarkerKind.Quest;
   edKindName.Visible := False;
@@ -48,9 +47,11 @@ begin
     Result := {'#' + VarToStr(Value.ID) +} ' Редактирование подзадачи квеста';
 end;
 
-procedure TedQuestPart.SetInstance(const Value: TMarker);
+procedure TedQuestPart.InternalSetInstance(const Value: TMarker);
 begin
-  FMarkerImagesGrid.Init(Marker);
+  inherited;
+
+  FQuestItemsGrid.Init(Marker);
 end;
 
 end.

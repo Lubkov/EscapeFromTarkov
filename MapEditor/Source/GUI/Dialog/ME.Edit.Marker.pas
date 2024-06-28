@@ -9,7 +9,7 @@ uses
   ME.Edit.Form, System.Actions, FMX.ActnList, FMX.Controls.Presentation,
   FMX.Edit, FMX.ListBox, FMX.EditBox, FMX.NumberBox, ME.Edit.Form.Presenter,
   FMX.Layouts, System.ImageList, FMX.ImgList, FMX.Platform, Map.Data.Types,
-  FMX.TabControl, ME.Frame.QuestItem;
+  FMX.TabControl, ME.Frame.MarkerImage;
 
 type
   TedMarker = class(TEditForm, IEditDialog<TMarker>)
@@ -48,7 +48,7 @@ type
   private
     FMap: TMap;
     FMarker: TMarker;
-    FQuestItemsGrid: TfrQuestItemsGrid;
+    FMarkerImagesGrid: TMarkerImagesGrid;
 
     function GetMarkerCaption: string;
     procedure SetMarkerCaption(const Value: string);
@@ -62,6 +62,7 @@ type
     function GetIncrement: Integer;
   protected
     function GetTitle(const Value: TMarker): string; virtual;
+    procedure InternalSetInstance(const Value: TMarker); virtual;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -97,9 +98,9 @@ begin
 
   laScreenShotName.Visible := False;
 
-  FQuestItemsGrid := TfrQuestItemsGrid.Create(Self);
-  FQuestItemsGrid.Parent := tabQuestItems;
-  FQuestItemsGrid.Align := TAlignLayout.Client;
+  FMarkerImagesGrid := TMarkerImagesGrid.Create(Self);
+  FMarkerImagesGrid.Parent := tabMarkerImages;
+  FMarkerImagesGrid.Align := TAlignLayout.Client;
 
   MainContainer.TabIndex := tabGeneral.Index;
 end;
@@ -202,6 +203,11 @@ begin
     Result := 'Редактирование выхода с карты';
 end;
 
+procedure TedMarker.InternalSetInstance(const Value: TMarker);
+begin
+
+end;
+
 function TedMarker.GetIncrement: Integer;
 begin
   Result := StrToInt(edIncrement.Items[edIncrement.ItemIndex]);
@@ -217,7 +223,9 @@ begin
   PositionX := FMarker.Left;
   PositionY := FMarker.Top;
 
-  FQuestItemsGrid.Init(FMarker);
+  FMarkerImagesGrid.Init(FMarker);
+
+  InternalSetInstance(Value);
 end;
 
 procedure TedMarker.PostValues(const Value: TMarker);

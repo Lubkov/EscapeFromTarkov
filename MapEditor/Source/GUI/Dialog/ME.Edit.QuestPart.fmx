@@ -20,6 +20,7 @@ inherited edQuestPart: TedQuestPart
       ExplicitSize.cy = 26.000000000000000000
     end
     inherited tabMarkerImages: TTabItem
+      IsSelected = False
       ExplicitSize.cx = 85.000000000000000000
       ExplicitSize.cy = 26.000000000000000000
     end
@@ -35,6 +36,8 @@ inherited edQuestPart: TedQuestPart
       StyleLookup = ''
       TabOrder = 0
       Text = #1055#1088#1077#1076#1084#1077#1090#1099
+      ExplicitSize.cx = 77.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
     end
   end
 end
