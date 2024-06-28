@@ -7,13 +7,16 @@ uses
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   ME.Edit.Form, System.Actions, FMX.ActnList, FMX.Controls.Presentation, FMX.Objects,
   FMX.Edit, FMX.EditBox, FMX.NumberBox, FMX.ImgList, System.ImageList,
-  ME.Edit.Form.Presenter, ME.Frame.Picture, Map.Data.Types;
+  ME.Edit.Form.Presenter, ME.Frame.Picture, Map.Data.Types, FMX.Layouts;
 
 type
   TedLayer = class(TEditForm, IEditDialog<TLayer>)
-    edLevel: TNumberBox;
-    edLevelName: TEdit;
     paPicture: TPanel;
+    Layout1: TLayout;
+    edLevelName: TEdit;
+    edLevel: TNumberBox;
+    laLayerLevel: TLabel;
+    laLayerName: TLabel;
   private
     FLayer: TLayer;
     FPicturePanel: TfrPicture;
@@ -85,14 +88,13 @@ procedure TedLayer.SetInstance(const Value: TLayer);
 begin
   FLayer := Value;
 
-//  if FLayer.IsNewInstance then
-//    Caption := 'Добавление нового уровня карты'
-//  else
+  if FLayer.IsNewInstance then
+    Caption := 'Добавление нового уровня карты'
+  else
     Caption := 'Редактирование уровня карты';
 
   Level := FLayer.Level;
-//  LevelName := FLayer.Name;
-//  Picture := FLayer.Picture;
+  LevelName := FLayer.Caption;
 
   DataSertvice.LoadImage(FLayer, Picture);
 end;
@@ -100,8 +102,7 @@ end;
 procedure TedLayer.PostValues(const Value: TLayer);
 begin
   Value.Level := Level;
-//  Value.Name := LevelName;
-//  Value.Picture := Picture;
+  Value.Caption := LevelName;
 
   if FPicturePanel.Changed then
     DataSertvice.SaveImage(Value, Picture);

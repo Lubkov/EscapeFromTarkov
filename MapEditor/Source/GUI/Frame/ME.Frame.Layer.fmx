@@ -71,7 +71,7 @@ object frLayerList: TfrLayerList
   object paPicture: TPanel
     Align = Left
     Position.Y = 40.000000000000000000
-    Size.Width = 209.000000000000000000
+    Size.Width = 289.000000000000000000
     Size.Height = 252.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 3
@@ -80,7 +80,7 @@ object frLayerList: TfrLayerList
         item
         end>
       Align = Client
-      Size.Width = 209.000000000000000000
+      Size.Width = 289.000000000000000000
       Size.Height = 252.000000000000000000
       Size.PlatformDefault = False
     end
@@ -89,7 +89,7 @@ object frLayerList: TfrLayerList
     Align = Client
     CanFocus = True
     ClipChildren = True
-    Size.Width = 355.000000000000000000
+    Size.Width = 275.000000000000000000
     Size.Height = 252.000000000000000000
     Size.PlatformDefault = False
     TextSettings.Font.Family = 'Tahoma'
@@ -99,20 +99,17 @@ object frLayerList: TfrLayerList
     OnSelChanged = GridSelChanged
     OnGetValue = GridGetValue
     OnCellDblClick = GridCellDblClick
-    Viewport.Width = 335.000000000000000000
+    Viewport.Width = 255.000000000000000000
     Viewport.Height = 227.000000000000000000
-    object NameColumn: TStringColumn
-      Header = 'Name'
-      HeaderSettings.TextSettings.WordWrap = False
-    end
     object LevelColumn: TIntegerColumn
       Header = 'Level'
       HeaderSettings.TextSettings.WordWrap = False
-      Size.Width = 70.000000000000000000
+      Size.Width = 50.000000000000000000
     end
     object CaptionColumn: TStringColumn
       Header = 'Caption'
       HeaderSettings.TextSettings.WordWrap = False
+      Size.Width = 198.000000000000000000
     end
   end
   object ImageList1: TImageList

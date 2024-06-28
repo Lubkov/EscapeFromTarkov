@@ -2,8 +2,8 @@ object MainForm: TMainForm
   Left = 0
   Top = 0
   Caption = '[Escape from Tarkov Map Editor]'
-  ClientHeight = 360
-  ClientWidth = 640
+  ClientHeight = 480
+  ClientWidth = 720
   Position = ScreenCenter
   FormFactor.Width = 320
   FormFactor.Height = 480
@@ -13,8 +13,8 @@ object MainForm: TMainForm
   DesignerMasterStyle = 0
   object Panel1: TPanel
     Align = Bottom
-    Position.Y = 315.000000000000000000
-    Size.Width = 640.000000000000000000
+    Position.Y = 435.000000000000000000
+    Size.Width = 720.000000000000000000
     Size.Height = 45.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 1
@@ -37,7 +37,7 @@ object MainForm: TMainForm
   end
   object TopLayout: TLayout
     Align = Top
-    Size.Width = 640.000000000000000000
+    Size.Width = 720.000000000000000000
     Size.Height = 60.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 2

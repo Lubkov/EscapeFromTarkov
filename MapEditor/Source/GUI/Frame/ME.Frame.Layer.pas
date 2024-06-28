@@ -24,7 +24,6 @@ type
     paPicture: TPanel;
     imMapPicture: TImage;
     Grid: TGrid;
-    NameColumn: TStringColumn;
     LevelColumn: TIntegerColumn;
     CaptionColumn: TStringColumn;
 
@@ -168,16 +167,13 @@ end;
 
 procedure TfrLayerList.GridGetValue(Sender: TObject; const ACol, ARow: Integer; var Value: TValue);
 const
-  ColumnNameIdx = 0;
-  ColumnLevelIdx = 1;
-  ColumnCaptionIdx = 2;
+  ColumnLevelIdx = 0;
+  ColumnCaptionIdx = 1;
 begin
   if Count <= ARow then
     Exit;
 
   case ACol of
-    ColumnNameIdx:
-      Value := Items[ARow].ID;
     ColumnLevelIdx:
       Value := Items[ARow].Level;
     ColumnCaptionIdx:

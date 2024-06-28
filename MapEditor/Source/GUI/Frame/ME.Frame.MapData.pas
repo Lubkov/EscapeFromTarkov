@@ -6,8 +6,8 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
   FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
   FMX.Edit, FMX.EditBox, FMX.NumberBox, FMX.Controls.Presentation,
-  FMX.TabControl,
-  Map.Data.Types, ME.Frame.Marker, ME.Frame.Quest, ME.Frame.Layer;
+  FMX.TabControl, FMX.Layouts,
+  Map.Data.Types, ME.Frame.Marker, ME.Frame.Quest, ME.Frame.Layer, ME.Frame.QuestPart;
 
 type
   TfrMapData = class(TFrame)
@@ -15,11 +15,13 @@ type
     tabLayer: TTabItem;
     tabExtractions: TTabItem;
     tabQuests: TTabItem;
+    QuestPartsLayout: TLayout;
   private
     FMap: TMap;
     FLayerList: TfrLayerList;
     FMarkerGrid: TfrMarkerGrid;
     FQuestList: TfrQuest;
+    FQuestPartGrid: TfrQuestPartGrid;
   public
     constructor Create(AOwner: TComponent); override;
 
@@ -48,6 +50,12 @@ begin
   FQuestList := TfrQuest.Create(Self);
   FQuestList.Parent := tabQuests;
   FQuestList.Align := TAlignLayout.Client;
+
+  FQuestPartGrid := TfrQuestPartGrid.Create(Self);
+  FQuestPartGrid.Parent := QuestPartsLayout;
+  FQuestPartGrid.Align := TAlignLayout.Client;
+
+  MainContainer.TabIndex := tabLayer.Index;
 end;
 
 procedure TfrMapData.Init(const Map: TMap);
