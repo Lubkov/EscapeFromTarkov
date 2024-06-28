@@ -4,23 +4,20 @@ interface
 
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
-  FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
-  System.Actions, FMX.ActnList, FMX.Controls.Presentation, FMX.Edit,
-  ME.Edit.Form, ME.Edit.Form.Presenter, ME.Frame.QuestPart, Map.Data.Types,
-  FMX.ListBox;
+  System.Actions, FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs,
+  FMX.StdCtrls, FMX.ActnList, FMX.Controls.Presentation, FMX.Edit, FMX.ListBox,
+  FMX.Layouts, ME.Edit.Form, ME.Edit.Form.Presenter, Map.Data.Types;
 
 type
   TedQuest = class(TEditForm, IEditDialog<TQuest>)
+    MainLayout: TLayout;
+    laQuestName: TLabel;
     edQuestName: TEdit;
-    paTop: TPanel;
-    paMain: TPanel;
     laTraderName: TLabel;
     edTraderName: TComboBox;
-    laQuestName: TLabel;
   private
     FMap: TMap;
     FQuest: TQuest;
-    FQuestPartGrid: TfrQuestPartGrid;
 
     function GetQuestName: string;
     procedure SetQuestName(const Value: string);
@@ -52,9 +49,6 @@ begin
 
   FMap := nil;
   FQuest := nil;
-  FQuestPartGrid := TfrQuestPartGrid.Create(Self);
-  FQuestPartGrid.Parent := paMain;
-  FQuestPartGrid.Align := TAlignLayout.Client;
 
   edTraderName.Clear;
   for Trader := TTrader.Prapor to TTrader.Lightkeeper do
@@ -103,7 +97,6 @@ begin
 
   QuestName := FQuest.Caption;
   TraderName := FQuest.Trader;
-  FQuestPartGrid.Init(FMap, FQuest);
 end;
 
 procedure TedQuest.PostValues(const Value: TQuest);
