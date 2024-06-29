@@ -14,7 +14,6 @@ type
     function GetCount: Integer;
     function GetMapItem(Index: Integer): TMap;
     procedure SetMapItem(Index: Integer; const Value: TMap);
-    function GetSourceFileName(const Source: TEntity): string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -22,6 +21,7 @@ type
     procedure Clear;
     procedure Load(const FileName: string);
 
+    function GetSourceFileName(const Source: TEntity): string;
     procedure LoadImage(const Source: TEntity; const Dest: TBitmap);
     procedure SaveImage(const Source: TEntity; const Dest: TBitmap);
     procedure DeleteImage(const Source: TEntity);
@@ -120,7 +120,7 @@ begin
     Ext := 'jpg';
   end;
 
-  Result := TPath.Combine(Folder, Source.ID + '.' + Ext);
+  Result := TPath.Combine(AppParams.DataPath, TPath.Combine(Folder, Source.ID + '.' + Ext));
 end;
 
 procedure TDataSertvice.LoadImage(const Source: TEntity; const Dest: TBitmap);
@@ -128,7 +128,6 @@ var
   FileName: string;
 begin
   FileName := GetSourceFileName(Source);
-  FileName := TPath.Combine(AppParams.DataPath, FileName);
 
   if FileExists(FileName) then
     Dest.LoadFromFile(FileName)
@@ -141,7 +140,6 @@ var
   FileName: string;
 begin
   FileName := GetSourceFileName(Source);
-  FileName := TPath.Combine(AppParams.DataPath, FileName);
 
   if Dest.IsEmpty then
     DeleteImage(Source)
@@ -154,7 +152,6 @@ var
   FileName: string;
 begin
   FileName := GetSourceFileName(Source);
-  FileName := TPath.Combine(AppParams.DataPath, FileName);
 
   if FileExists(FileName) then
     TFile.Delete(FileName);

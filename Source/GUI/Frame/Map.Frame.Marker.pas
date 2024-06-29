@@ -178,7 +178,7 @@ const
 var
   Bitmap: TBitmap;
   i: Integer;
-  Image: TMarkerImage;
+  Image: TResource;
 begin
   laQuestName.Text := ' вест: "' + QuestName + '"';
   Bitmap := TraderImageList.Bitmap(TSizeF.Create(64, 64), Ord(Trader));
@@ -188,7 +188,7 @@ begin
     Image := Marker.Images[0];
 
     DataSertvice.LoadImage(Image, MarkerImage.Bitmap);
-    laDescription.Text := Image.Caption;
+    laDescription.Text := Image.Description;
   end;
 
   FMaxHeight := TitleLayout.Height + TitleLayout.Margins.Top;
