@@ -1,0 +1,54 @@
+inherited edResource: TedResource
+  Caption = ''
+  ClientHeight = 372
+  ClientWidth = 500
+  DesignerMasterStyle = 0
+  inherited paBottom: TPanel
+    Position.Y = 326.000000000000000000
+    Size.Width = 500.000000000000000000
+  end
+  object TopLayout: TLayout [1]
+    Align = Top
+    Size.Width = 500.000000000000000000
+    Size.Height = 80.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+    object edDescription: TMemo
+      Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+      DataDetectorTypes = []
+      Align = Client
+      Margins.Left = 20.000000000000000000
+      Margins.Top = 2.000000000000000000
+      Margins.Right = 20.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Size.Width = 460.000000000000000000
+      Size.Height = 46.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 7
+      Viewport.Width = 456.000000000000000000
+      Viewport.Height = 42.000000000000000000
+    end
+    object laDescription: TLabel
+      Align = Top
+      StyledSettings = [Size, Style, FontColor]
+      Margins.Left = 20.000000000000000000
+      Margins.Top = 10.000000000000000000
+      Margins.Right = 20.000000000000000000
+      Position.X = 20.000000000000000000
+      Position.Y = 10.000000000000000000
+      Size.Width = 460.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Family = 'Tahoma'
+      Text = #1054#1087#1080#1089#1072#1085#1080#1077' '#1088#1077#1089#1091#1088#1089#1072':'
+      TabOrder = 0
+    end
+  end
+  object ImageDescription: TLayout [2]
+    Align = Client
+    Size.Width = 500.000000000000000000
+    Size.Height = 246.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 8
+  end
+end

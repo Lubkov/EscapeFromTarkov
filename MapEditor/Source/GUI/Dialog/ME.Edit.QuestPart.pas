@@ -41,10 +41,10 @@ end;
 
 function TedQuestPart.GetTitle(const Value: TMarker): string;
 begin
-//  if Value.IsNewInstance then
-//    Result := 'Добавление новой подзадачи квеста'
-//  else
-    Result := {'#' + VarToStr(Value.ID) +} ' Редактирование подзадачи квеста';
+  if Value.IsNewInstance then
+    Result := 'Добавление новой подзадачи квеста'
+  else
+    Result := 'Редактирование подзадачи квеста';
 end;
 
 procedure TedQuestPart.InternalSetInstance(const Value: TMarker);

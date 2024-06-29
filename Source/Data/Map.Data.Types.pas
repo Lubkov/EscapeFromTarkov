@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Variants, System.Rtti, System.TypInfo,
-  System.SysConst, System.JSON, Generics.Collections;
+  System.SysConst, System.JSON, Generics.Collections, FMX.Graphics;
 
 const
   MainLayerIndex = 0;
@@ -36,6 +36,7 @@ type
 
     procedure Assign(const Source: TJSONValue); virtual;
     procedure AssignTo(const Dest: TJSONObject); virtual;
+    procedure GenerateNewID;
 
     property ID: string read FID write FID;
     property IsNewInstance: Boolean read GetIsNewInstance;
@@ -56,18 +57,41 @@ type
     property IsMainLevel: Boolean read GetIsMainLevel;
   end;
 
-  TQuestItem = class(TEntity)
-  end;
-
-  TMarkerImage = class(TEntity)
+  TResource = class(TEntity)
   private
-    FCaption: string;
+    FDescription: string;
+    FBitmap: TBitmap;
+
+    function GetIsEmpty: Boolean;
   public
+    constructor Create; override;
+    destructor Destroy; override;
+
     procedure Assign(const Source: TJSONValue); override;
     procedure AssignTo(const Dest: TJSONObject); override;
 
-    property Caption: string read FCaption write FCaption;
+    property Description: string read FDescription write FDescription;
+    property Bitmap: TBitmap read FBitmap write FBitmap;
+    property IsEmpty: Boolean read GetIsEmpty;
   end;
+
+  TResourceClass = class of TResource;
+
+  TQuestItem = class(TEntity)
+  end;
+
+  TMarkerImage = class(TResource)
+  end;
+
+//  TMarkerImage = class(TEntity)
+//  private
+//    FCaption: string;
+//  public
+//    procedure Assign(const Source: TJSONValue); override;
+//    procedure AssignTo(const Dest: TJSONObject); override;
+//
+//    property Caption: string read FCaption write FCaption;
+//  end;
 
   TMarkerKind = (PMCExtraction, ScavExtraction, CoopExtraction, Quest);
   TMarkerKindSet = set of TMarkerKind;
@@ -198,6 +222,14 @@ begin
   Dest.AddPair('id', ID);
 end;
 
+procedure TEntity.GenerateNewID;
+var
+  Key: TGUID;
+begin
+  CreateGUID(Key);
+  FID := GUIDToString(Key);
+end;
+
 { TLayer }
 
 procedure TLayer.Assign(const Source: TJSONValue);
@@ -221,21 +253,57 @@ begin
   Result := Level = MainLayerIndex;
 end;
 
-{ TMarkerImage }
+{ TResource }
 
-procedure TMarkerImage.Assign(const Source: TJSONValue);
+constructor TResource.Create;
 begin
   inherited;
 
-  Caption := Source.GetValue<string>('caption');
+  FBitmap := TBitmap.Create;
 end;
 
-procedure TMarkerImage.AssignTo(const Dest: TJSONObject);
+destructor TResource.Destroy;
+begin
+  FBitmap.Free;
+
+  inherited;
+end;
+
+function TResource.GetIsEmpty: Boolean;
+begin
+  Result := FBitmap.IsEmpty;
+end;
+
+procedure TResource.Assign(const Source: TJSONValue);
 begin
   inherited;
 
-  Dest.AddPair('caption', Caption);
+  if not Source.TryGetValue<string>('caption', FDescription) then
+    FDescription := '';
 end;
+
+procedure TResource.AssignTo(const Dest: TJSONObject);
+begin
+  inherited;
+
+  Dest.AddPair('caption', Description);
+end;
+
+//{ TMarkerImage }
+//
+//procedure TMarkerImage.Assign(const Source: TJSONValue);
+//begin
+//  inherited;
+//
+//  Caption := Source.GetValue<string>('caption');
+//end;
+//
+//procedure TMarkerImage.AssignTo(const Dest: TJSONObject);
+//begin
+//  inherited;
+//
+//  Dest.AddPair('caption', Caption);
+//end;
 
 { TMarker }
 

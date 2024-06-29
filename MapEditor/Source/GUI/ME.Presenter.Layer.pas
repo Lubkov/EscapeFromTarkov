@@ -25,7 +25,7 @@ type
 implementation
 
 uses
-  ME.DB.Utils;
+  Map.Data.Service;
 
 { TEditLayerPresenter }
 
@@ -50,7 +50,7 @@ end;
 
 procedure TDelLayerPresenter.InternalDelete;
 begin
-
+  DataSertvice.DeleteImage(Instance);
 end;
 
 end.

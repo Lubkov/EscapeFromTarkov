@@ -124,7 +124,6 @@ end;
 procedure TfrQuestItemsGrid.acAddQuestItemExecute(Sender: TObject);
 var
   QuestItem: TQuestItem;
-  id: TGUID;
   bmp: TBitmap;
 begin
   if not OpenDialog.Execute then
@@ -132,8 +131,7 @@ begin
 
   QuestItem := TQuestItem.Create;
   try
-    CreateGUID(id);
-    QuestItem.ID := GUIDToString(id);
+    QuestItem.GenerateNewID;
 
     bmp := TBitmap.Create;
     try

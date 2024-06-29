@@ -9,7 +9,7 @@ uses
   ME.Edit.Form, System.Actions, FMX.ActnList, FMX.Controls.Presentation,
   FMX.Edit, FMX.ListBox, FMX.EditBox, FMX.NumberBox, ME.Edit.Form.Presenter,
   FMX.Layouts, System.ImageList, FMX.ImgList, FMX.Platform, Map.Data.Types,
-  FMX.TabControl, ME.Frame.MarkerImage;
+  FMX.TabControl, ME.Frame.Resource;
 
 type
   TedMarker = class(TEditForm, IEditDialog<TMarker>)
@@ -48,7 +48,7 @@ type
   private
     FMap: TMap;
     FMarker: TMarker;
-    FMarkerImagesGrid: TMarkerImagesGrid;
+    FResourcesGrid: TResourcesGrid;
 
     function GetMarkerCaption: string;
     procedure SetMarkerCaption(const Value: string);
@@ -98,9 +98,9 @@ begin
 
   laScreenShotName.Visible := False;
 
-  FMarkerImagesGrid := TMarkerImagesGrid.Create(Self);
-  FMarkerImagesGrid.Parent := tabMarkerImages;
-  FMarkerImagesGrid.Align := TAlignLayout.Client;
+  FResourcesGrid := TResourcesGrid.Create(Self);
+  FResourcesGrid.Parent := tabMarkerImages;
+  FResourcesGrid.Align := TAlignLayout.Client;
 
   MainContainer.TabIndex := tabGeneral.Index;
 end;
@@ -223,7 +223,7 @@ begin
   PositionX := FMarker.Left;
   PositionY := FMarker.Top;
 
-  FMarkerImagesGrid.Init(FMarker);
+  FResourcesGrid.Init(FMarker, TMarkerImage);
 
   InternalSetInstance(Value);
 end;

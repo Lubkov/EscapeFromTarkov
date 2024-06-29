@@ -54,7 +54,9 @@ uses
   ME.Frame.MapData in 'Source\GUI\Frame\ME.Frame.MapData.pas' {frMapData: TFrame},
   ME.Frame.QuestItem in 'Source\GUI\Frame\ME.Frame.QuestItem.pas' {frQuestItemsGrid: TFrame},
   ME.Presenter.QuestItem in 'Source\GUI\ME.Presenter.QuestItem.pas',
-  ME.Frame.MarkerImage in 'Source\GUI\Frame\ME.Frame.MarkerImage.pas' {MarkerImagesGrid: TFrame};
+  ME.Frame.Resource in 'Source\GUI\Frame\ME.Frame.Resource.pas' {ResourcesGrid: TFrame},
+  ME.Edit.Resource in 'Source\GUI\Dialog\ME.Edit.Resource.pas' {edResource},
+  ME.Presenter.Resource in 'Source\GUI\ME.Presenter.Resource.pas';
 
 {$R *.res}
 
