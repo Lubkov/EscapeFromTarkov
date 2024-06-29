@@ -80,19 +80,6 @@ type
   TQuestItem = class(TEntity)
   end;
 
-  TMarkerImage = class(TResource)
-  end;
-
-//  TMarkerImage = class(TEntity)
-//  private
-//    FCaption: string;
-//  public
-//    procedure Assign(const Source: TJSONValue); override;
-//    procedure AssignTo(const Dest: TJSONObject); override;
-//
-//    property Caption: string read FCaption write FCaption;
-//  end;
-
   TMarkerKind = (PMCExtraction, ScavExtraction, CoopExtraction, Quest);
   TMarkerKindSet = set of TMarkerKind;
 
@@ -103,7 +90,7 @@ type
     FLeft: Integer;
     FTop: Integer;
     FItems: TObjectList<TQuestItem>;
-    FImages: TObjectList<TMarkerImage>;
+    FImages: TObjectList<TResource>;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -118,7 +105,7 @@ type
     property Left: Integer read FLeft write FLeft;
     property Top: Integer read FTop write FTop;
     property Items: TObjectList<TQuestItem> read FItems;
-    property Images: TObjectList<TMarkerImage> read FImages;
+    property Images: TObjectList<TResource> read FImages;
   end;
 
   TTrader = (None, Prapor, Therapist, Skier, Peacemaker, Mechanic, Ragman, Jaeger, Fence, Lightkeeper);
@@ -289,22 +276,6 @@ begin
   Dest.AddPair('caption', Description);
 end;
 
-//{ TMarkerImage }
-//
-//procedure TMarkerImage.Assign(const Source: TJSONValue);
-//begin
-//  inherited;
-//
-//  Caption := Source.GetValue<string>('caption');
-//end;
-//
-//procedure TMarkerImage.AssignTo(const Dest: TJSONObject);
-//begin
-//  inherited;
-//
-//  Dest.AddPair('caption', Caption);
-//end;
-
 { TMarker }
 
 constructor TMarker.Create;
@@ -312,7 +283,7 @@ begin
   inherited;
 
   FItems := TObjectList<TQuestItem>.Create;
-  FImages := TObjectList<TMarkerImage>.Create;
+  FImages := TObjectList<TResource>.Create;
 end;
 
 destructor TMarker.Destroy;

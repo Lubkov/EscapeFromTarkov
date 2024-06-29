@@ -223,7 +223,7 @@ begin
   PositionX := FMarker.Left;
   PositionY := FMarker.Top;
 
-  FResourcesGrid.Init(FMarker, TMarkerImage);
+  FResourcesGrid.Init(FMarker);
 
   InternalSetInstance(Value);
 end;

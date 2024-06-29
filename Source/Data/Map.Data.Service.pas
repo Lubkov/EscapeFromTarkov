@@ -115,7 +115,7 @@ begin
     Ext := 'png';
   end
   else
-  if Source is TMarkerImage then begin
+  if Source is TResource then begin
     Folder := 'Markers';
     Ext := 'jpg';
   end;

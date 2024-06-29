@@ -32,7 +32,6 @@ type
     procedure GridCellDblClick(const Column: TColumn; const Row: Integer);
   private
     FMarker: TMarker;
-    FResourceClass: TResourceClass;
     FFocusedIndex: Integer;
 
     function GetCount: Integer;
@@ -45,7 +44,7 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure Init(const Marker: TMarker; const ResourceClass: TResourceClass);
+    procedure Init(const Marker: TMarker);
 
     property Count: Integer read GetCount;
     property Items[Index: Integer]: TResource read GetResource;
@@ -160,10 +159,9 @@ begin
   end;
 end;
 
-procedure TResourcesGrid.Init(const Marker: TMarker; const ResourceClass: TResourceClass);
+procedure TResourcesGrid.Init(const Marker: TMarker);
 begin
   FMarker := Marker;
-  FResourceClass := ResourceClass;
 
   Grid.BeginUpdate;
   try
@@ -184,11 +182,11 @@ var
   Res: Boolean;
 begin
   Res := False;
-  Resource := FResourceClass.Create;
+  Resource := TResource.Create;
   try
     Res := InternalResourceEdit(Resource);
     if Res then begin
-      FMarker.Images.Add(TMarkerImage(Resource));
+      FMarker.Images.Add(Resource);
 
       Grid.BeginUpdate;
       try
