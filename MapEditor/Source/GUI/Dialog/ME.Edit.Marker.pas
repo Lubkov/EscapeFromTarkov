@@ -99,6 +99,7 @@ begin
   laScreenShotName.Visible := False;
 
   FResourcesGrid := TResourcesGrid.Create(Self);
+  FResourcesGrid.Name := 'ImagesGrid';
   FResourcesGrid.Parent := tabMarkerImages;
   FResourcesGrid.Align := TAlignLayout.Client;
 

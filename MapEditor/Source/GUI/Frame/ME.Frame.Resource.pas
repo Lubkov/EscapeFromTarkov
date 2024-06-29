@@ -34,18 +34,23 @@ type
     FMarker: TMarker;
     FFocusedIndex: Integer;
 
-    function GetCount: Integer;
-    function GetResource(Index: Integer): TResource;
     function GetFocusedIndex: Integer;
     procedure SetFocusedIndex(const Value: Integer);
     function InternalResourceEdit(const Resource: TResource): Boolean;
     procedure ResourceEdit(const Index: Integer);
+  protected
+    function GetCount: Integer; virtual;
+    function GetResource(Index: Integer): TResource; virtual;
+    function GetResourceClass: TResourceClass; virtual;
+    procedure InternalAddResource(const Resource: TResource); virtual;
+    procedure InternalDeleteResource(const Index: Integer); virtual;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
     procedure Init(const Marker: TMarker);
 
+    property Marker: TMarker read FMarker;
     property Count: Integer read GetCount;
     property Items[Index: Integer]: TResource read GetResource;
     property FocusedIndex: Integer read GetFocusedIndex write SetFocusedIndex;
@@ -93,19 +98,6 @@ end;
 procedure TResourcesGrid.GridSelChanged(Sender: TObject);
 begin
   FocusedIndex := Grid.Selected;
-end;
-
-function TResourcesGrid.GetCount: Integer;
-begin
-  if FMarker <> nil then
-    Result := FMarker.Images.Count
-  else
-    Result := 0;
-end;
-
-function TResourcesGrid.GetResource(Index: Integer): TResource;
-begin
-  Result := FMarker.Images[Index];
 end;
 
 function TResourcesGrid.GetFocusedIndex: Integer;
@@ -159,6 +151,34 @@ begin
   end;
 end;
 
+function TResourcesGrid.GetCount: Integer;
+begin
+  if FMarker <> nil then
+    Result := FMarker.Images.Count
+  else
+    Result := 0;
+end;
+
+function TResourcesGrid.GetResource(Index: Integer): TResource;
+begin
+  Result := FMarker.Images[Index];
+end;
+
+function TResourcesGrid.GetResourceClass: TResourceClass;
+begin
+  Result := TResource;
+end;
+
+procedure TResourcesGrid.InternalAddResource(const Resource: TResource);
+begin
+  FMarker.Images.Add(Resource);
+end;
+
+procedure TResourcesGrid.InternalDeleteResource(const Index: Integer);
+begin
+  FMarker.Images.Delete(Grid.Selected);
+end;
+
 procedure TResourcesGrid.Init(const Marker: TMarker);
 begin
   FMarker := Marker;
@@ -182,11 +202,11 @@ var
   Res: Boolean;
 begin
   Res := False;
-  Resource := TResource.Create;
+  Resource := GetResourceClass.Create;
   try
     Res := InternalResourceEdit(Resource);
     if Res then begin
-      FMarker.Images.Add(Resource);
+      InternalAddResource(Resource);
 
       Grid.BeginUpdate;
       try
@@ -224,7 +244,7 @@ begin
       if Presenter.Delete then begin
         Grid.BeginUpdate;
         try
-          FMarker.Images.Delete(Grid.Selected);
+          InternalDeleteResource(Grid.Selected);
           Grid.RowCount := Count;
         finally
           Grid.EndUpdate;

@@ -11,6 +11,7 @@ type
   TEditResourcePresenter = class(TEditFormPresenter<TResource>)
   private
   protected
+    procedure SetInstance(const Value: TResource); override;
     procedure InternalSave; override;
     procedure Cancel; override;
   public
@@ -35,6 +36,17 @@ begin
 
   if Instance.IsNewInstance then
     Instance.GenerateNewID;
+
+  if Instance.Changed then
+    DataSertvice.SaveImage(Instance, Instance.Picture);
+end;
+
+procedure TEditResourcePresenter.SetInstance(const Value: TResource);
+begin
+  if not Value.IsNewInstance and Value.Picture.IsEmpty then
+    DataSertvice.LoadImage(Value, Value.Picture);
+
+  inherited;
 end;
 
 procedure TEditResourcePresenter.Cancel;

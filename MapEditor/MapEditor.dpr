@@ -52,11 +52,11 @@ uses
   Map.Data.Types in '..\Source\Data\Map.Data.Types.pas',
   ME.Filter.Map in 'Source\GUI\Frame\ME.Filter.Map.pas' {MapFilter: TFrame},
   ME.Frame.MapData in 'Source\GUI\Frame\ME.Frame.MapData.pas' {frMapData: TFrame},
-  ME.Frame.QuestItem in 'Source\GUI\Frame\ME.Frame.QuestItem.pas' {frQuestItemsGrid: TFrame},
   ME.Presenter.QuestItem in 'Source\GUI\ME.Presenter.QuestItem.pas',
   ME.Frame.Resource in 'Source\GUI\Frame\ME.Frame.Resource.pas' {ResourcesGrid: TFrame},
   ME.Edit.Resource in 'Source\GUI\Dialog\ME.Edit.Resource.pas' {edResource},
-  ME.Presenter.Resource in 'Source\GUI\ME.Presenter.Resource.pas';
+  ME.Presenter.Resource in 'Source\GUI\ME.Presenter.Resource.pas',
+  ME.Frame.QuestItem in 'Source\GUI\Frame\ME.Frame.QuestItem.pas' {QuestItemsGrid: TFrame};
 
 {$R *.res}
 

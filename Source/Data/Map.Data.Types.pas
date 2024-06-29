@@ -60,9 +60,11 @@ type
   TResource = class(TEntity)
   private
     FDescription: string;
-    FBitmap: TBitmap;
+    FPicture: TBitmap;
+    FChanged: Boolean;
 
     function GetIsEmpty: Boolean;
+    procedure SetPicture(const Value: TBitmap);
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -71,13 +73,14 @@ type
     procedure AssignTo(const Dest: TJSONObject); override;
 
     property Description: string read FDescription write FDescription;
-    property Bitmap: TBitmap read FBitmap write FBitmap;
+    property Picture: TBitmap read FPicture write SetPicture;
     property IsEmpty: Boolean read GetIsEmpty;
+    property Changed: Boolean read FChanged write FChanged;
   end;
 
   TResourceClass = class of TResource;
 
-  TQuestItem = class(TEntity)
+  TQuestItem = class(TResource)
   end;
 
   TMarkerKind = (PMCExtraction, ScavExtraction, CoopExtraction, Quest);
@@ -246,19 +249,26 @@ constructor TResource.Create;
 begin
   inherited;
 
-  FBitmap := TBitmap.Create;
+  FPicture := TBitmap.Create;
+  FChanged := False;
 end;
 
 destructor TResource.Destroy;
 begin
-  FBitmap.Free;
+  FPicture.Free;
 
   inherited;
 end;
 
 function TResource.GetIsEmpty: Boolean;
 begin
-  Result := FBitmap.IsEmpty;
+  Result := FPicture.IsEmpty;
+end;
+
+procedure TResource.SetPicture(const Value: TBitmap);
+begin
+  FPicture.Assign(Value);
+  FChanged := True;
 end;
 
 procedure TResource.Assign(const Source: TJSONValue);

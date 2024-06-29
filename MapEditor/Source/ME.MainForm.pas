@@ -78,7 +78,7 @@ procedure TMainForm.buExpotClick(Sender: TObject);
 var
   FileName: string;
 begin
-  FileName := System.IOUtils.TPath.Combine(AppParams.DataPath, 'export.json');
+  FileName := System.IOUtils.TPath.Combine(AppParams.DataPath, 'data.json');
   TJSONDataExport.SaveToFile(FileName, DataSertvice.Items);
 
   ShowMessage('Done');

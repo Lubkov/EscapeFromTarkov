@@ -35,9 +35,6 @@ type
 
 implementation
 
-uses
-  Map.Data.Service;
-
 {$R *.fmx}
 
 { TedMarkerImage }
@@ -81,8 +78,7 @@ begin
     Caption := 'Редактирование ресурса';
 
   Description := FResource.Description;
-
-  DataSertvice.LoadImage(FResource, Picture);
+  Picture := FResource.Picture;
 end;
 
 procedure TedResource.PostValues(const Value: TResource);
@@ -90,7 +86,7 @@ begin
   Value.Description := Description;
 
   if FPicturePanel.Changed then
-    DataSertvice.SaveImage(Value, Picture);
+    Value.Picture := Picture;
 end;
 
 end.

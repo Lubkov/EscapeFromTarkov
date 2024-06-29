@@ -13,7 +13,7 @@ type
   TedQuestPart = class(TedMarker)
     tabQuestItems: TTabItem;
   private
-    FQuestItemsGrid: TfrQuestItemsGrid;
+    FQuestItemsGrid: TQuestItemsGrid;
   protected
     function GetTitle(const Value: TMarker): string; override;
     procedure InternalSetInstance(const Value: TMarker); override;
@@ -31,7 +31,8 @@ constructor TedQuestPart.Create(AOwner: TComponent);
 begin
   inherited;
 
-  FQuestItemsGrid := TfrQuestItemsGrid.Create(Self);
+  FQuestItemsGrid := TQuestItemsGrid.Create(Self);
+  FQuestItemsGrid.Name := 'QuestItemsGrid';
   FQuestItemsGrid.Parent := tabQuestItems;
   FQuestItemsGrid.Align := TAlignLayout.Client;
 
