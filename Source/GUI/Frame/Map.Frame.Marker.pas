@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   Generics.Collections, FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs,
   FMX.StdCtrls, FMX.Controls.Presentation, FMX.Objects, FMX.Layouts, System.ImageList,
-  FMX.ImgList, Map.Data.Types;
+  FMX.ImgList, Map.Data.Types, FMX.ListBox, System.Rtti, ME.GUI.PictureList;
 
 type
   TMarkerDescript = class(TFrame)
@@ -22,15 +22,25 @@ type
     ButtonCloseLayout: TLayout;
     ImageList24: TImageList;
     TraderImageList: TImageList;
+    MarkerStyleBook: TStyleBook;
+    PreviewLayout: TLayout;
+
     procedure buCloseClick(Sender: TObject);
+    procedure ListBox1ItemClick(const Sender: TCustomListBox; const Item: TListBoxItem);
+    procedure ListBoxItem2Click(Sender: TObject);
   private
     [Weak] FMarker: TMarker;
     FMaxHeight: Single;
     FMaxWidth: Single;
     FOnClose: TNotifyEvent;
     FItems: TList<TImage>;
+    FCurrentImageIndex: Integer;
+    FPictureList: TPictureList;
 
     procedure AddItem(const Index: Integer; const QuestItem: TQuestItem);
+    procedure ShowResource(const Index: Integer);
+    procedure ChangedPreviewIcon(ItemIndex: Integer);
+
     procedure ArrangeItems;
     procedure ArrangeItemsVertically(ItemHeight, ItemWidth: Integer);
     procedure ArrangeItemsHorizontally(ItemHeight, ItemWidth: Integer);
@@ -55,6 +65,8 @@ uses
 { TMarkerDescript }
 
 constructor TMarkerDescript.Create(AOwner: TComponent);
+// #70A700 - focused color
+// ##4E7500 - selected color
 begin
   inherited;
 
@@ -64,6 +76,13 @@ begin
   laDescription.TextSettings.FontColor := $FFFFFFFF;
   FItems := TList<TImage>.Create;
   FItems.Add(Item1Image);
+
+  FPictureList := TPictureList.Create(Self);
+  FPictureList.Parent := PreviewLayout;
+  FPictureList.Align := TAlignLayout.Client;
+  FPictureList.ItemHeight := 52;
+  FPictureList.ItemWidth := 85;
+  FPictureList.OnChangeItem := ChangedPreviewIcon;
 end;
 
 destructor TMarkerDescript.Destroy;
@@ -92,6 +111,32 @@ begin
 
   DataSertvice.LoadImage(QuestItem, Item.Bitmap);
   Item.Visible := True;
+end;
+
+procedure TMarkerDescript.ShowResource(const Index: Integer);
+var
+  Image: TResource;
+begin
+  if FCurrentImageIndex = Index then
+    Exit;
+
+  FCurrentImageIndex := Index;
+
+  if FMarker.Images.Count > Index then begin
+    Image := FMarker.Images[Index];
+
+    DataSertvice.LoadImage(Image, MarkerImage.Bitmap);
+    laDescription.Text := Image.Description;
+  end
+  else begin
+    MarkerImage.Bitmap.Assign(nil);
+    laDescription.Text := '';
+  end;
+end;
+
+procedure TMarkerDescript.ChangedPreviewIcon(ItemIndex: Integer);
+begin
+  ShowResource(ItemIndex);
 end;
 
 procedure TMarkerDescript.ArrangeItems;
@@ -178,23 +223,37 @@ const
 var
   Bitmap: TBitmap;
   i: Integer;
-  Image: TResource;
+  Resource: TResource;
 begin
+  FMarker := Marker;
+  FCurrentImageIndex := -1;
   laQuestName.Text := ' вест: "' + QuestName + '"';
   Bitmap := TraderImageList.Bitmap(TSizeF.Create(64, 64), Ord(Trader));
   TraderImage.Bitmap.Assign(Bitmap);
+  ShowResource(0);
 
-  if Marker.Images.Count > 0 then begin
-    Image := Marker.Images[0];
+  FPictureList.Clear;
+  if Marker.Images.Count > 1 then
+    for Resource in Marker.Images do
+    begin
+      if Resource.Picture.IsEmpty then
+        DataSertvice.LoadImage(Resource, Resource.Picture);
 
-    DataSertvice.LoadImage(Image, MarkerImage.Bitmap);
-    laDescription.Text := Image.Description;
-  end;
+      FPictureList.Add(Resource.Picture);
+    end;
+
+  if Marker.Images.Count > 1 then
+    FPictureList.SelectedIndex := 0;
+
+  PreviewLayout.Visible := Marker.Images.Count > 1;
 
   FMaxHeight := TitleLayout.Height + TitleLayout.Margins.Top;
   FMaxHeight := FMaxHeight + ImageHeight + MainLayout.Margins.Top + MainLayout.Margins.Bottom;
   FMaxHeight := FMaxHeight + laDescription.Height + laDescription.Margins.Top;
   FMaxWidth := ImageWidth + MainLayout.Margins.Left + MainLayout.Margins.Right;
+
+  if PreviewLayout.Visible then
+    FMaxHeight := FMaxHeight + PreviewLayout.Height + PreviewLayout.Margins.Top + PreviewLayout.Margins.Bottom;
 
   for i := 0 to FItems.Count - 1 do
     FItems[i].Visible := False;
@@ -203,6 +262,16 @@ begin
     AddItem(i, Marker.Items[i]);
 
   ArrangeItems;
+end;
+
+procedure TMarkerDescript.ListBox1ItemClick(const Sender: TCustomListBox; const Item: TListBoxItem);
+begin
+  ShowMessage('ListBox1ItemClick');
+end;
+
+procedure TMarkerDescript.ListBoxItem2Click(Sender: TObject);
+begin
+  ShowMessage('ListBoxItem2Click');
 end;
 
 procedure TMarkerDescript.buCloseClick(Sender: TObject);

@@ -342,6 +342,16 @@
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Source\GUI\Map.CursorService.pas"/>
+        <DCCReference Include="Source\Common\ME.GUI.PictureItem.pas">
+            <Form>PictureItemItem</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Source\Common\ME.GUI.PictureList.pas">
+            <Form>PictureList</Form>
+            <FormType>fmx</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -385,7 +395,12 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="Bin\TarkovMap.exe" Configuration="Debug" Class="ProjectOutput"/>
-                <DeployFile LocalName="Bin\TarkovMap.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="Bin\TarkovMap.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>TarkovMap.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Bin\TarkovMap.exe" Configuration="Release" Class="ProjectOutput"/>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">

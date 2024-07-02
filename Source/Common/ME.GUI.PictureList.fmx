@@ -1,0 +1,24 @@
+object PictureList: TPictureList
+  Size.Width = 372.000000000000000000
+  Size.Height = 64.000000000000000000
+  Size.PlatformDefault = False
+  object Background: TRectangle
+    Align = Contents
+    Fill.Color = claWhitesmoke
+    HitTest = False
+    Size.Width = 372.000000000000000000
+    Size.Height = 64.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Thickness = 0.000000000000000000
+  end
+  object MainContainer: TGridLayout
+    Align = Top
+    ItemHeight = 64.000000000000000000
+    ItemWidth = 64.000000000000000000
+    Orientation = Horizontal
+    Size.Width = 372.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+  end
+end

@@ -40,7 +40,9 @@ uses
   Map.Data.Service in 'Source\Data\Map.Data.Service.pas',
   Map.Frame.InteractiveMap in 'Source\GUI\Frame\Map.Frame.InteractiveMap.pas' {InteractiveMap: TFrame},
   Map.Frame.Marker in 'Source\GUI\Frame\Map.Frame.Marker.pas' {MarkerDescript: TFrame},
-  Map.CursorService in 'Source\GUI\Map.CursorService.pas';
+  Map.CursorService in 'Source\GUI\Map.CursorService.pas',
+  ME.GUI.PictureItem in 'Source\Common\ME.GUI.PictureItem.pas' {PictureItemItem: TFrame},
+  ME.GUI.PictureList in 'Source\Common\ME.GUI.PictureList.pas' {PictureList: TFrame};
 
 {$R *.res}
 
