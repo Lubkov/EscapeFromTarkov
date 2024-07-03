@@ -26,24 +26,17 @@ type
     PreviewLayout: TLayout;
 
     procedure buCloseClick(Sender: TObject);
-    procedure ListBox1ItemClick(const Sender: TCustomListBox; const Item: TListBoxItem);
-    procedure ListBoxItem2Click(Sender: TObject);
   private
     [Weak] FMarker: TMarker;
     FMaxHeight: Single;
     FMaxWidth: Single;
     FOnClose: TNotifyEvent;
-    FItems: TList<TImage>;
     FCurrentImageIndex: Integer;
-    FPictureList: TPictureList;
+    FItemIconList: TPictureList;
+    FPictureIconList: TPictureList;
 
-    procedure AddItem(const Index: Integer; const QuestItem: TQuestItem);
     procedure ShowResource(const Index: Integer);
     procedure ChangedPreviewIcon(ItemIndex: Integer);
-
-    procedure ArrangeItems;
-    procedure ArrangeItemsVertically(ItemHeight, ItemWidth: Integer);
-    procedure ArrangeItemsHorizontally(ItemHeight, ItemWidth: Integer);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -74,43 +67,32 @@ begin
   FOnClose := nil;
   laQuestName.TextSettings.FontColor := $FFFFFFFF;
   laDescription.TextSettings.FontColor := $FFFFFFFF;
-  FItems := TList<TImage>.Create;
-  FItems.Add(Item1Image);
 
-  FPictureList := TPictureList.Create(Self);
-  FPictureList.Parent := PreviewLayout;
-  FPictureList.Align := TAlignLayout.Client;
-  FPictureList.ItemHeight := 52;
-  FPictureList.ItemWidth := 85;
-  FPictureList.OnChangeItem := ChangedPreviewIcon;
+  FPictureIconList := TPictureList.Create(Self);
+  FPictureIconList.Name := 'PictureIconList';
+  FPictureIconList.Parent := PreviewLayout;
+  FPictureIconList.Align := TAlignLayout.Client;
+  FPictureIconList.ListDirection := TListDirection.Horizontal;
+  FPictureIconList.ItemHeight := 52;
+  FPictureIconList.ItemWidth := 85;
+  FPictureIconList.OnChangeItem := ChangedPreviewIcon;
+
+  FItemIconList := TPictureList.Create(Self);
+  FItemIconList.Name := 'PictureList';
+  FItemIconList.Parent := ItemsLayout;
+  FItemIconList.Align := TAlignLayout.Client;
+  FItemIconList.ListDirection := TListDirection.Vertical;
+  FItemIconList.Stretch := True;
+  FItemIconList.HideFocus := True;
+  FItemIconList.HideSelect := True;
 end;
 
 destructor TMarkerDescript.Destroy;
 begin
   FOnClose := nil;
   FMarker := nil;
-  FItems.Free;
 
   inherited;
-end;
-
-procedure TMarkerDescript.AddItem(const Index: Integer; const QuestItem: TQuestItem);
-var
-  Item: TImage;
-begin
-  if Index < FItems.Count then
-    Item := FItems[Index]
-  else begin
-    Item := TImage.Create(Self);
-    try
-      Item.Parent := ItemsLayout;
-    finally
-      FItems.Add(Item);
-    end;
-  end;
-
-  DataSertvice.LoadImage(QuestItem, Item.Bitmap);
-  Item.Visible := True;
 end;
 
 procedure TMarkerDescript.ShowResource(const Index: Integer);
@@ -139,91 +121,14 @@ begin
   ShowResource(ItemIndex);
 end;
 
-procedure TMarkerDescript.ArrangeItems;
-var
-  i: Integer;
-  ItemHeight: Integer;
-  ItemWidth: Integer;
-begin
-  ItemHeight := 0;
-  ItemWidth := 0;
-  for i := 0 to FItems.Count - 1 do
-    if FItems[i].Visible then begin
-      if FItems[i].Bitmap.Height > ItemHeight then
-        ItemHeight := FItems[i].Bitmap.Height;
-
-      if FItems[i].Bitmap.Width > ItemWidth then
-        ItemWidth := FItems[i].Bitmap.Width;
-    end;
-
-  if ItemWidth > ItemHeight then
-    ArrangeItemsHorizontally(ItemHeight, ItemWidth)
-  else
-    ArrangeItemsVertically(ItemHeight, ItemWidth);
-end;
-
-procedure TMarkerDescript.ArrangeItemsVertically(ItemHeight, ItemWidth: Integer);
-var
-  i: Integer;
-  Item: TImage;
-begin
-  ItemsLayout.Align := TAlignLayout.Right;
-  ItemsLayout.Width := ItemWidth;
-  ItemsLayout.Margins.Top := 0;
-  ItemsLayout.Margins.Left := 5;
-  FMaxWidth := FMaxWidth + ItemsLayout.Width + ItemsLayout.Margins.Left;
-
-  for i := 0 to FItems.Count - 1 do begin    
-    Item := FItems[i];
-    if not Item.Visible then
-      Continue;
-      
-    Item.Height := Item.Bitmap.Height;
-    Item.Width := Item.Bitmap.Width;
-
-    Item.Position.X := 0;
-    if i > 0 then
-      Item.Position.Y := FItems[i - 1].Position.Y + FItems[i - 1].Height + 5
-    else
-      Item.Position.Y := 0;
-  end;
-end;
-
-procedure TMarkerDescript.ArrangeItemsHorizontally(ItemHeight, ItemWidth: Integer);
-var
-  i: Integer;
-  Item: TImage;
-begin
-  ItemsLayout.Align := TAlignLayout.Bottom;
-  ItemsLayout.Height := ItemHeight;
-  ItemsLayout.Margins.Top := 5;
-  ItemsLayout.Margins.Left := 0;
-  FMaxHeight := FMaxHeight + ItemsLayout.Height + ItemsLayout.Margins.Top;
-
-  for i := 0 to FItems.Count - 1 do begin
-    Item := FItems[i];
-    if not Item.Visible then
-      Continue;
-      
-    Item.Height := Item.Bitmap.Height;
-    Item.Width := Item.Bitmap.Width;
-
-    Item.Position.Y := 0;
-    if i > 0 then
-      Item.Position.X := FItems[i - 1].Position.X + FItems[i - 1].Width + 5
-    else
-      Item.Position.X := 0;
-  end;
-end;
-
 procedure TMarkerDescript.Init(const Marker: TMarker; const QuestName: string; Trader: TTrader);
 const
   ImageHeight = 360;
   ImageWidth = 640;
 var
   Bitmap: TBitmap;
-  i: Integer;
   Resource: TResource;
+  QuestItem: TQuestItem;
 begin
   FMarker := Marker;
   FCurrentImageIndex := -1;
@@ -232,18 +137,17 @@ begin
   TraderImage.Bitmap.Assign(Bitmap);
   ShowResource(0);
 
-  FPictureList.Clear;
+  FPictureIconList.Clear;
   if Marker.Images.Count > 1 then
-    for Resource in Marker.Images do
-    begin
+    for Resource in Marker.Images do begin
       if Resource.Picture.IsEmpty then
         DataSertvice.LoadImage(Resource, Resource.Picture);
 
-      FPictureList.Add(Resource.Picture);
+      FPictureIconList.Add(Resource.Picture);
     end;
 
   if Marker.Images.Count > 1 then
-    FPictureList.SelectedIndex := 0;
+    FPictureIconList.SelectedIndex := 0;
 
   PreviewLayout.Visible := Marker.Images.Count > 1;
 
@@ -255,23 +159,21 @@ begin
   if PreviewLayout.Visible then
     FMaxHeight := FMaxHeight + PreviewLayout.Height + PreviewLayout.Margins.Top + PreviewLayout.Margins.Bottom;
 
-  for i := 0 to FItems.Count - 1 do
-    FItems[i].Visible := False;
+  FItemIconList.Clear;
+  for QuestItem in Marker.Items do begin
+    if QuestItem.Picture.IsEmpty then
+      DataSertvice.LoadImage(QuestItem, QuestItem.Picture);
 
-  for i := 0 to Marker.Items.Count - 1 do
-    AddItem(i, Marker.Items[i]);
+    FItemIconList.Add(QuestItem.Picture);
+  end;
 
-  ArrangeItems;
-end;
-
-procedure TMarkerDescript.ListBox1ItemClick(const Sender: TCustomListBox; const Item: TListBoxItem);
-begin
-  ShowMessage('ListBox1ItemClick');
-end;
-
-procedure TMarkerDescript.ListBoxItem2Click(Sender: TObject);
-begin
-  ShowMessage('ListBoxItem2Click');
+//  for i := 0 to FItems.Count - 1 do
+//    FItems[i].Visible := False;
+//
+//  for i := 0 to Marker.Items.Count - 1 do
+//    AddItem(i, Marker.Items[i]);
+//
+//  ArrangeItems;
 end;
 
 procedure TMarkerDescript.buCloseClick(Sender: TObject);

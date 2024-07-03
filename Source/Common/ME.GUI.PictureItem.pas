@@ -17,9 +17,13 @@ type
     procedure FrameMouseLeave(Sender: TObject);
   private
     FFocused: Boolean;
+    FHideFocus: Boolean;
     FSelected: Boolean;
+    FHideSelect: Boolean;
     FFocusedColor: TAlphaColor;
     FSelectedColor: TAlphaColor;
+    FStretch: Boolean;
+    FStrokeThickness: Integer;
 
     procedure SetSelected(const Value: Boolean);
     procedure SetFocused(const Value: Boolean);
@@ -31,6 +35,8 @@ type
     procedure SetTextSettings(const Value: TTextSettings);
     procedure SetBackgroundColor(const Value: TAlphaColor);
     function GetBackgroundColor: TAlphaColor;
+    procedure SetHideFocus(const Value: Boolean);
+    procedure SetHideSelect(const Value: Boolean);
   public
     constructor Create(AOwner: TComponent); override;
 
@@ -45,6 +51,10 @@ type
     property BackgroundColor: TAlphaColor read GetBackgroundColor write SetBackgroundColor;
     property FocusedColor: TAlphaColor read FFocusedColor write FFocusedColor;
     property SelectedColor: TAlphaColor read FSelectedColor write FSelectedColor;
+    property HideFocus: Boolean read FHideFocus write SetHideFocus;
+    property HideSelect: Boolean read FHideSelect write SetHideSelect;
+    property Stretch: Boolean read FStretch write FStretch;
+    property StrokeThickness: Integer read FStrokeThickness write FStrokeThickness;
   end;
 
 implementation
@@ -58,6 +68,8 @@ begin
   FFocused := False;
   FSelected := False;
   FocusedRectangle.Visible := False;
+  FStretch := False;
+  StrokeThickness := 2;
 end;
 
 function TPictureItemItem.GetPicture: TBitmap;
@@ -114,7 +126,19 @@ end;
 procedure TPictureItemItem.SetFocused(const Value: Boolean);
 begin
   FFocused := Value;
-  FocusedRectangle.Visible := Value;
+  FocusedRectangle.Visible := Value and not HideFocus;
+  Refresh;
+end;
+
+procedure TPictureItemItem.SetHideFocus(const Value: Boolean);
+begin
+  FHideFocus := Value;
+  Refresh;
+end;
+
+procedure TPictureItemItem.SetHideSelect(const Value: Boolean);
+begin
+  FHideSelect := Value;
   Refresh;
 end;
 
@@ -126,14 +150,19 @@ end;
 
 procedure TPictureItemItem.Refresh;
 begin
-  if IsSelected then begin
+  if StrokeThickness > 0 then
+    Image.Margins :=  TBounds.Create(TRectF.Create(StrokeThickness, StrokeThickness, StrokeThickness, StrokeThickness))
+  else
+    Image.Margins := TBounds.Create(TRectF.Create(0, 0, 0, 0));
+
+  if IsSelected and not HideSelect then begin
     Background.Stroke.Color := SelectedColor;
-    Background.Stroke.Thickness := 2;
+    Background.Stroke.Thickness := StrokeThickness;
   end
   else
-  if IsFocused then begin
+  if IsFocused and not HideFocus then begin
     Background.Stroke.Color := FocusedColor;
-    Background.Stroke.Thickness := 1;
+    Background.Stroke.Thickness := StrokeThickness div 2;
   end
   else
     Background.Stroke.Color := BackgroundColor;
