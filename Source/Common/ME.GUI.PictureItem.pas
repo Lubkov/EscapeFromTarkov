@@ -16,6 +16,7 @@ type
     procedure FrameMouseEnter(Sender: TObject);
     procedure FrameMouseLeave(Sender: TObject);
   private
+    FIndex: Integer;
     FFocused: Boolean;
     FHideFocus: Boolean;
     FSelected: Boolean;
@@ -24,6 +25,7 @@ type
     FSelectedColor: TAlphaColor;
     FStretch: Boolean;
     FStrokeThickness: Integer;
+    FUpdating: Integer;
 
     procedure SetSelected(const Value: Boolean);
     procedure SetFocused(const Value: Boolean);
@@ -37,6 +39,7 @@ type
     function GetBackgroundColor: TAlphaColor;
     procedure SetHideFocus(const Value: Boolean);
     procedure SetHideSelect(const Value: Boolean);
+    procedure SetStrokeThickness(const Value: Integer);
   public
     constructor Create(AOwner: TComponent); override;
 
@@ -44,7 +47,11 @@ type
     property IsSelected: Boolean read FSelected write SetSelected;
 
     procedure Refresh;
+    procedure BeginUpdate; override;
+    function IsUpdating: Boolean; override;
+    procedure EndUpdate; override;
 
+    property Index: Integer read FIndex write FIndex;
     property Picture: TBitmap read GetPicture write SetPicture;
     property Title: string read GetTitle write SetTitle;
     property TextSettings: TTextSettings read GetTextSettings write SetTextSettings;
@@ -54,7 +61,7 @@ type
     property HideFocus: Boolean read FHideFocus write SetHideFocus;
     property HideSelect: Boolean read FHideSelect write SetHideSelect;
     property Stretch: Boolean read FStretch write FStretch;
-    property StrokeThickness: Integer read FStrokeThickness write FStrokeThickness;
+    property StrokeThickness: Integer read FStrokeThickness write SetStrokeThickness;
   end;
 
 implementation
@@ -65,11 +72,13 @@ constructor TPictureItemItem.Create(AOwner: TComponent);
 begin
   inherited;
 
+  FIndex := -1;
   FFocused := False;
   FSelected := False;
   FocusedRectangle.Visible := False;
   FStretch := False;
-  StrokeThickness := 2;
+  FStrokeThickness := 2;
+  FUpdating := 0;
 end;
 
 function TPictureItemItem.GetPicture: TBitmap;
@@ -148,12 +157,21 @@ begin
   Refresh;
 end;
 
+procedure TPictureItemItem.SetStrokeThickness(const Value: Integer);
+begin
+  FStrokeThickness := Value;
+  if StrokeThickness > 0 then
+    Image.Margins.MarginRect(TRectF.Create(StrokeThickness, StrokeThickness, StrokeThickness, StrokeThickness))
+  else
+    Image.Margins.MarginRect(TRectF.Create(0, 0, 0, 0));
+
+  Refresh;
+end;
+
 procedure TPictureItemItem.Refresh;
 begin
-  if StrokeThickness > 0 then
-    Image.Margins :=  TBounds.Create(TRectF.Create(StrokeThickness, StrokeThickness, StrokeThickness, StrokeThickness))
-  else
-    Image.Margins := TBounds.Create(TRectF.Create(0, 0, 0, 0));
+  if IsUpdating then
+    Exit;
 
   if IsSelected and not HideSelect then begin
     Background.Stroke.Color := SelectedColor;
@@ -166,6 +184,33 @@ begin
   end
   else
     Background.Stroke.Color := BackgroundColor;
+end;
+
+procedure TPictureItemItem.BeginUpdate;
+begin
+  if FUpdating < 0 then
+    FUpdating := 0;
+
+  Inc(FUpdating);
+end;
+
+function TPictureItemItem.IsUpdating: Boolean;
+begin
+  Result := FUpdating > 0;
+end;
+
+procedure TPictureItemItem.EndUpdate;
+begin
+  if FUpdating < 0 then
+    FUpdating := 0
+  else
+    Dec(FUpdating);
+
+  if not IsUpdating then begin
+    Refresh;
+    Realign;
+    Repaint;
+  end;
 end;
 
 end.

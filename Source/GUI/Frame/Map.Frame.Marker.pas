@@ -24,6 +24,7 @@ type
     TraderImageList: TImageList;
     MarkerStyleBook: TStyleBook;
     PreviewLayout: TLayout;
+    Background: TRectangle;
 
     procedure buCloseClick(Sender: TObject);
   private
@@ -37,6 +38,7 @@ type
 
     procedure ShowResource(const Index: Integer);
     procedure ChangedPreviewIcon(ItemIndex: Integer);
+    procedure LoadQuestItems(const Marker: TMarker);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -65,6 +67,7 @@ begin
 
   FMarker := nil;
   FOnClose := nil;
+  Background.Fill.Color := $FF252525; // FFB97A57
   laQuestName.TextSettings.FontColor := $FFFFFFFF;
   laDescription.TextSettings.FontColor := $FFFFFFFF;
 
@@ -82,6 +85,7 @@ begin
   FItemIconList.Parent := ItemsLayout;
   FItemIconList.Align := TAlignLayout.Client;
   FItemIconList.ListDirection := TListDirection.Vertical;
+  FItemIconList.ItemWidth := 64;
   FItemIconList.Stretch := True;
   FItemIconList.HideFocus := True;
   FItemIconList.HideSelect := True;
@@ -121,14 +125,49 @@ begin
   ShowResource(ItemIndex);
 end;
 
+procedure TMarkerDescript.LoadQuestItems(const Marker: TMarker);
+var
+  QuestItem: TQuestItem;
+  Height: Single;
+  Width: Single;
+begin
+  Height := 0;
+  Width := 0;
+
+  FItemIconList.Clear;
+  for QuestItem in Marker.Items do begin
+    if QuestItem.Picture.IsEmpty then
+      DataSertvice.LoadImage(QuestItem, QuestItem.Picture);
+
+    Height := Height + QuestItem.Picture.Height;
+    Width := Width + QuestItem.Picture.Width;
+  end;
+
+  if Height < Width then begin
+    ItemsLayout.Align := TAlignLayout.Bottom;
+    ItemsLayout.Height := 64;
+    ItemsLayout.Margins.MarginRect(TRectF.Create(0, 5, 0, 0));
+    FItemIconList.ListDirection := TListDirection.Horizontal;
+  end
+  else begin
+    ItemsLayout.Align := TAlignLayout.Right;
+    ItemsLayout.Width := 64;
+    ItemsLayout.Margins.MarginRect(TRectF.Create(5, 0, 0, 0));
+    FItemIconList.ListDirection := TListDirection.Vertical;
+  end;
+
+  for QuestItem in Marker.Items do
+    FItemIconList.Add(QuestItem.Picture);
+end;
+
 procedure TMarkerDescript.Init(const Marker: TMarker; const QuestName: string; Trader: TTrader);
 const
-  ImageHeight = 360;
-  ImageWidth = 640;
+  MarkerImageHeight = 360;
+  MarkerImageWidth = 640;
 var
   Bitmap: TBitmap;
   Resource: TResource;
-  QuestItem: TQuestItem;
+  ImageHeight: Single;
 begin
   FMarker := Marker;
   FCurrentImageIndex := -1;
@@ -136,6 +175,11 @@ begin
   Bitmap := TraderImageList.Bitmap(TSizeF.Create(64, 64), Ord(Trader));
   TraderImage.Bitmap.Assign(Bitmap);
   ShowResource(0);
+
+  if MarkerImage.Bitmap.IsEmpty then
+    ImageHeight := MarkerImageHeight
+  else
+    ImageHeight := MarkerImageWidth * (MarkerImage.Bitmap.Height / MarkerImage.Bitmap.Width);
 
   FPictureIconList.Clear;
   if Marker.Images.Count > 1 then
@@ -151,29 +195,24 @@ begin
 
   PreviewLayout.Visible := Marker.Images.Count > 1;
 
+  LoadQuestItems(Marker);
+  ItemsLayout.Visible := Marker.Items.Count > 0;
+
   FMaxHeight := TitleLayout.Height + TitleLayout.Margins.Top;
   FMaxHeight := FMaxHeight + ImageHeight + MainLayout.Margins.Top + MainLayout.Margins.Bottom;
   FMaxHeight := FMaxHeight + laDescription.Height + laDescription.Margins.Top;
-  FMaxWidth := ImageWidth + MainLayout.Margins.Left + MainLayout.Margins.Right;
+  FMaxWidth := MarkerImageWidth + MainLayout.Margins.Left + MainLayout.Margins.Right;
 
   if PreviewLayout.Visible then
     FMaxHeight := FMaxHeight + PreviewLayout.Height + PreviewLayout.Margins.Top + PreviewLayout.Margins.Bottom;
 
-  FItemIconList.Clear;
-  for QuestItem in Marker.Items do begin
-    if QuestItem.Picture.IsEmpty then
-      DataSertvice.LoadImage(QuestItem, QuestItem.Picture);
-
-    FItemIconList.Add(QuestItem.Picture);
-  end;
-
-//  for i := 0 to FItems.Count - 1 do
-//    FItems[i].Visible := False;
-//
-//  for i := 0 to Marker.Items.Count - 1 do
-//    AddItem(i, Marker.Items[i]);
-//
-//  ArrangeItems;
+  if ItemsLayout.Visible then
+    case FItemIconList.ListDirection of
+      TListDirection.Vertical:
+        FMaxWidth := FMaxWidth + ItemsLayout.Width + ItemsLayout.Margins.Left + ItemsLayout.Margins.Right;
+      TListDirection.Horizontal:
+        FMaxHeight := FMaxHeight + ItemsLayout.Height + ItemsLayout.Margins.Top + ItemsLayout.Margins.Bottom;
+    end;
 end;
 
 procedure TMarkerDescript.buCloseClick(Sender: TObject);

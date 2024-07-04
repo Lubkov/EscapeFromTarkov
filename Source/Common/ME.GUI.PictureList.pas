@@ -14,6 +14,7 @@ type
   TPictureList = class(TFrame)
     Background: TRectangle;
     MainContainer: TLayout;
+
     procedure MainContainerResize(Sender: TObject);
   private
     FItems: TObjectList<TPictureItemItem>;
@@ -44,6 +45,7 @@ type
     procedure SetListDirection(const Value: TListDirection);
     procedure SetItemMargins(const Item: TPictureItemItem);
     procedure SetItemSize(const Item: TPictureItemItem);
+    procedure SetItemPosition(const Item: TPictureItemItem);
     function GetStrokeThickness: Integer;
   public
     constructor Create(AOwner: TComponent); override;
@@ -172,7 +174,7 @@ procedure TPictureList.SetItemMargins(const Item: TPictureItemItem);
 begin
   case FListDirection of
     TListDirection.Vertical: begin
-      if Count > 0 then
+      if Item.Index = 0 then
         Item.Margins.Top := DelimerWidth
       else
         Item.Margins.Top := 0;
@@ -182,7 +184,7 @@ begin
       Item.Margins.Right := StrokeThickness;
     end;
     TListDirection.Horizontal: begin
-      if Count > 0 then
+      if Item.Index = 0 then
         Item.Margins.Left := DelimerWidth
       else
         Item.Margins.Left := 0;
@@ -195,10 +197,13 @@ begin
 end;
 
 procedure TPictureList.SetItemSize(const Item: TPictureItemItem);
+var
+  Height: Single;
+  Width: Single;
 begin
-  case FListDirection of
-    TListDirection.Vertical: begin
-      if Stretch then begin
+  if Stretch then begin
+    case FListDirection of
+      TListDirection.Vertical: begin
         Item.Width := MainContainer.Width - StrokeThickness * 2;
 
         Height := Item.Width * (Item.Picture.Height / Item.Picture.Width) + StrokeThickness * 2;
@@ -206,14 +211,8 @@ begin
           Item.Height := Item.Picture.Height + StrokeThickness * 2
         else
           Item.Height := Height;
-      end
-      else begin
-        Item.Width := ItemWidth;
-        Item.Height := ItemHeight;
       end;
-    end;
-    TListDirection.Horizontal: begin
-      if Stretch then begin
+      TListDirection.Horizontal: begin
         Item.Height := MainContainer.Height - StrokeThickness * 2;
 
         Width := Item.Height * (Item.Picture.Width / Item.Picture.Height) + StrokeThickness * 2;
@@ -221,11 +220,25 @@ begin
           Item.Width := Item.Picture.Width + StrokeThickness * 2
         else
           Item.Width := Width;
-      end
-      else begin
-        Item.Width := ItemWidth;
-        Item.Height := ItemHeight;
       end;
+    end;
+  end
+  else begin
+    Item.Width := ItemWidth;
+    Item.Height := ItemHeight;
+  end;
+end;
+
+procedure TPictureList.SetItemPosition(const Item: TPictureItemItem);
+begin
+  case FListDirection of
+    TListDirection.Vertical: begin
+      Item.Position.X := Item.Margins.Left;
+      Item.Position.Y := (Item.Width + Item.Margins.Top + Item.Margins.Bottom + DelimerWidth) * Count;
+    end;
+    TListDirection.Horizontal: begin
+      Item.Position.X := (Item.Width + Item.Margins.Left + Item.Margins.Right + DelimerWidth) * Count;
+      Item.Position.Y := Item.Margins.Top;
     end;
   end;
 end;
@@ -247,7 +260,7 @@ begin
     FSelectedIndex := Value;
 
   for Item in FItems do
-    Item.IsSelected := (Item.Tag = Value);
+    Item.IsSelected := (Item.Index = Value);
 end;
 
 function TPictureList.GetStrokeThickness: Integer;
@@ -264,36 +277,41 @@ var
 begin
   Item := TPictureItemItem.Create(Self);
   try
-    Item.Parent := MainContainer;
-    Item.Name := 'PreviewIconItem' + IntToStr(Count + 1);
-    Item.Position.X := Item.Width * Count;
-    Item.Title := Title;
-    Item.Picture := Bitmap;
-    Item.HideFocus := HideFocus;
-    Item.HideSelect := HideSelect;
-    Item.Stretch := Stretch;
-    Item.BackgroundColor := ItemColor;
-    Item.FocusedColor := FocusedColor;
-    Item.SelectedColor := SelectedColor;
-    Item.StrokeThickness := StrokeThickness;
+    Item.BeginUpdate;
+    try
+      Item.Parent := MainContainer;
+      Item.Name := 'PreviewIconItem' + IntToStr(Count + 1);
+      Item.Title := Title;
+      Item.Picture := Bitmap;
+      Item.HideFocus := HideFocus;
+      Item.HideSelect := HideSelect;
+      Item.Stretch := Stretch;
+      Item.BackgroundColor := ItemColor;
+      Item.FocusedColor := FocusedColor;
+      Item.SelectedColor := SelectedColor;
+      Item.StrokeThickness := StrokeThickness;
 
-    SetItemMargins(Item);
-    SetItemSize(Item);
-    case FListDirection of
-      TListDirection.Vertical:
-        Item.Align := TAlignLayout.Top;
-      TListDirection.Horizontal:
-        Item.Align := TAlignLayout.Left;
+      SetItemMargins(Item);
+      SetItemSize(Item);
+      SetItemPosition(Item);
+      case FListDirection of
+        TListDirection.Vertical:
+          Item.Align := TAlignLayout.Top;
+        TListDirection.Horizontal:
+          Item.Align := TAlignLayout.Left;
+      end;
+
+      if HideSelect then
+        Item.Cursor := crDefault
+      else
+        Item.Cursor := crHandPoint;
+
+      Item.OnClick := PreviewIconItemClick;
+    finally
+      Item.EndUpdate;
     end;
-
-    if HideSelect then
-      Item.Cursor := crDefault
-    else
-      Item.Cursor := crHandPoint;
-
-    Item.OnClick := PreviewIconItemClick;
   finally
-    Item.Tag := FItems.Add(Item);
+    Item.Index := FItems.Add(Item);
   end;
 end;
 
@@ -318,7 +336,7 @@ end;
 
 procedure TPictureList.PreviewIconItemClick(Sender: TObject);
 begin
-  SelectedIndex := TPictureItemItem(Sender).Tag;
+  SelectedIndex := TPictureItemItem(Sender).Index;
   if Assigned(FOnChangeItem) then
     FOnChangeItem(SelectedIndex);
 end;
