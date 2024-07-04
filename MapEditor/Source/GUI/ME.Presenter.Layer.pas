@@ -50,7 +50,7 @@ end;
 
 procedure TDelLayerPresenter.InternalDelete;
 begin
-  DataSertvice.DeleteImage(Instance);
+  DataService.DeleteImage(Instance);
 end;
 
 end.

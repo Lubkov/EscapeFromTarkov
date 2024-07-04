@@ -180,7 +180,7 @@ begin
     Exit;
   end;
 
-  DataSertvice.LoadImage(Layer, FBackground);
+  DataService.LoadImage(Layer, FBackground);
 
   MarkerFilter.Init(Value);
   DrawPoint(FPosition);

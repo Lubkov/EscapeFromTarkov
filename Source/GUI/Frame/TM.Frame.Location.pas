@@ -75,7 +75,7 @@ end;
 
 function TLocationGrid.GetCount: Integer;
 begin
-  Result := DataSertvice.Count;
+  Result := DataService.Count;
 end;
 
 function TLocationGrid.GetColumnCount: Integer;
@@ -92,7 +92,7 @@ end;
 
 function TLocationGrid.GetItem(Index: Integer): TMap;
 begin
-  Result := DataSertvice.Map[Index];
+  Result := DataService.Map[Index];
 end;
 
 procedure TLocationGrid.Init;

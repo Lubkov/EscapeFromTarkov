@@ -88,12 +88,12 @@ end;
 
 function TfrMap.GetCount: Integer;
 begin
-  Result := DataSertvice.Count;
+  Result := DataService.Count;
 end;
 
 function TfrMap.GetItem(Index: Integer): TMap;
 begin
-  Result := DataSertvice.Items[Index];
+  Result := DataService.Items[Index];
 end;
 
 function TfrMap.InternalMapEdit(const Map: TMap): Boolean;
@@ -193,7 +193,7 @@ begin
   for i := 0 to Count - 1 do begin
     bmp := TBitmap.Create;
     try
-      DataSertvice.LoadImage(Items[i], bmp);
+      DataService.LoadImage(Items[i], bmp);
     finally
       FIcons.Add(bmp);
     end;

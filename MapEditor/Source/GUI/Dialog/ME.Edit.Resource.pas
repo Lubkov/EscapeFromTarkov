@@ -85,8 +85,10 @@ procedure TedResource.PostValues(const Value: TResource);
 begin
   Value.Description := Description;
 
-  if FPicturePanel.Changed then
+  if FPicturePanel.Changed then begin
+    Value.FileName := FPicturePanel.FileName;
     Value.Picture := Picture;
+  end;
 end;
 
 end.

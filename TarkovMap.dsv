@@ -567,7 +567,6 @@ LeftCol=1
 Elisions=
 Bookmarks={1,210,30}{2,133,5}
 EditViewName=D:\Projects\Delphi\EscapeFromTarkov\Source\GUI\Frame\Map.Frame.Marker.pas
-
 [ClosedView_RDpcUHJvamVjdHNcRGVscGhpXEVzY2FwZUZyb21UYXJrb3ZcU291cmNlXENvbW1vblxNRS5HVUku
 UGljdHVyZUxpc3QucGFz]
 Module=D:\Projects\Delphi\EscapeFromTarkov\Source\Common\ME.GUI.PictureList.pas
@@ -578,4 +577,14 @@ LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=D:\Projects\Delphi\EscapeFromTarkov\Source\Common\ME.GUI.PictureList.pas
+[ClosedView_RDpcUHJvamVjdHNcRGVscGhpXEVzY2FwZUZyb21UYXJrb3ZcU291cmNlXEdVSVxUTS5NYXAuV3Jh
+cHBlci5wYXM=]
+Module=D:\Projects\Delphi\EscapeFromTarkov\Source\GUI\TM.Map.Wrapper.pas
+CursorX=14
+CursorY=183
+TopLine=168
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Projects\Delphi\EscapeFromTarkov\Source\GUI\TM.Map.Wrapper.pas
 

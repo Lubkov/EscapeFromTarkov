@@ -125,7 +125,7 @@ begin
 
   FFocusedIndex := Value;
   if FocusedIndex >= 0 then
-    DataSertvice.LoadImage(Items[FocusedIndex], imMapPicture.Bitmap)
+    DataService.LoadImage(Items[FocusedIndex], imMapPicture.Bitmap)
   else
     imMapPicture.Bitmap.Assign(nil);
 end;

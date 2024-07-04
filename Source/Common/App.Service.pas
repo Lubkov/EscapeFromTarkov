@@ -30,12 +30,12 @@ constructor TAppService.Create(AOwner: TComponent);
 begin
   inherited;
 
-  DataSertvice := TDataSertvice.Create;
+  DataService := TDataService.Create;
 end;
 
 destructor TAppService.Destroy;
 begin
-  DataSertvice.Free;
+  DataService.Free;
 
   inherited;
 end;
@@ -50,7 +50,7 @@ var
   FileName: string;
 begin
   FileName := TPath.Combine(AppParams.DataPath, 'data.json');
-  DataSertvice.Load(FileName);
+  DataService.Load(FileName);
 end;
 
 end.

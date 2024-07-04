@@ -27,7 +27,7 @@ end;
 
 procedure TDelQuestItemPresenter.InternalDelete;
 begin
-  DataSertvice.DeleteImage(Instance);
+  DataService.DeleteImage(Instance);
 end;
 
 end.

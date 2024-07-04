@@ -65,7 +65,7 @@ end;
 function TMapFilter.GetMap: TMap;
 begin
   if edMapName.ItemIndex >= 0 then
-    Result := DataSertvice.Map[edMapName.ItemIndex]
+    Result := DataService.Map[edMapName.ItemIndex]
   else
     Result := nil;
 end;
@@ -75,10 +75,10 @@ var
   i: Integer;
 begin
   edMapName.Clear;
-  for i := 0 to DataSertvice.Count - 1 do
-    edMapName.Items.Add(DataSertvice.Map[i].Caption);
+  for i := 0 to DataService.Count - 1 do
+    edMapName.Items.Add(DataService.Map[i].Caption);
 
-  if DataSertvice.Count > 0 then
+  if DataService.Count > 0 then
     edMapName.ItemIndex := 0;
 end;
 

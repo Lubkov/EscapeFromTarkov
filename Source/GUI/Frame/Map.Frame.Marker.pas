@@ -111,7 +111,7 @@ begin
   if FMarker.Images.Count > Index then begin
     Image := FMarker.Images[Index];
 
-    DataSertvice.LoadImage(Image, MarkerImage.Bitmap);
+    DataService.LoadImage(Image, MarkerImage.Bitmap);
     laDescription.Text := Image.Description;
   end
   else begin
@@ -137,7 +137,7 @@ begin
   FItemIconList.Clear;
   for QuestItem in Marker.Items do begin
     if QuestItem.Picture.IsEmpty then
-      DataSertvice.LoadImage(QuestItem, QuestItem.Picture);
+      DataService.LoadImage(QuestItem, QuestItem.Picture);
 
     Height := Height + QuestItem.Picture.Height;
     Width := Width + QuestItem.Picture.Width;
@@ -185,7 +185,7 @@ begin
   if Marker.Images.Count > 1 then
     for Resource in Marker.Images do begin
       if Resource.Picture.IsEmpty then
-        DataSertvice.LoadImage(Resource, Resource.Picture);
+        DataService.LoadImage(Resource, Resource.Picture);
 
       FPictureIconList.Add(Resource.Picture);
     end;

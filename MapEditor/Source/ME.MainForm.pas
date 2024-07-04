@@ -79,7 +79,7 @@ var
   FileName: string;
 begin
   FileName := System.IOUtils.TPath.Combine(AppParams.DataPath, 'data.json');
-  TJSONDataExport.SaveToFile(FileName, DataSertvice.Items);
+  TJSONDataExport.SaveToFile(FileName, DataService.Items);
 
   ShowMessage('Done');
 end;

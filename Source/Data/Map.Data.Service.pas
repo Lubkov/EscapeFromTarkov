@@ -7,7 +7,7 @@ uses
   Generics.Collections, Map.Data.Types, Map.Data.Classes;
 
 type
-  TDataSertvice = class
+  TDataService = class
   private
     FItems: TList<TMap>;
 
@@ -32,23 +32,23 @@ type
   end;
 
 var
-  DataSertvice: TDataSertvice;
+  DataService: TDataService;
 
 implementation
 
 uses
   App.Constants;
 
-{ TDataSertvice }
+{ TDataService }
 
-constructor TDataSertvice.Create;
+constructor TDataService.Create;
 begin
   inherited;
 
   FItems := TList<TMap>.Create;
 end;
 
-destructor TDataSertvice.Destroy;
+destructor TDataService.Destroy;
 begin
   Clear;
   FItems.Free;
@@ -56,22 +56,22 @@ begin
   inherited;
 end;
 
-function TDataSertvice.GetCount: Integer;
+function TDataService.GetCount: Integer;
 begin
   Result := FItems.Count;
 end;
 
-function TDataSertvice.GetMapItem(Index: Integer): TMap;
+function TDataService.GetMapItem(Index: Integer): TMap;
 begin
   Result := Items[Index];
 end;
 
-procedure TDataSertvice.SetMapItem(Index: Integer; const Value: TMap);
+procedure TDataService.SetMapItem(Index: Integer; const Value: TMap);
 begin
   Items[Index] := Value;
 end;
 
-procedure TDataSertvice.Clear;
+procedure TDataService.Clear;
 var
   i: Integer;
 begin
@@ -83,7 +83,7 @@ begin
   end;
 end;
 
-procedure TDataSertvice.Load(const FileName: string);
+procedure TDataService.Load(const FileName: string);
 var
   Data: TStrings;
 begin
@@ -96,7 +96,7 @@ begin
   end;
 end;
 
-function TDataSertvice.GetSourceFileName(const Source: TEntity): string;
+function TDataService.GetSourceFileName(const Source: TEntity): string;
 var
   Folder, Ext: string;
 begin
@@ -123,7 +123,7 @@ begin
   Result := TPath.Combine(AppParams.DataPath, TPath.Combine(Folder, Source.ID + '.' + Ext));
 end;
 
-procedure TDataSertvice.LoadImage(const Source: TEntity; const Dest: TBitmap);
+procedure TDataService.LoadImage(const Source: TEntity; const Dest: TBitmap);
 var
   FileName: string;
 begin
@@ -135,7 +135,7 @@ begin
     Dest.Assign(nil);
 end;
 
-procedure TDataSertvice.SaveImage(const Source: TEntity; const Dest: TBitmap);
+procedure TDataService.SaveImage(const Source: TEntity; const Dest: TBitmap);
 var
   FileName: string;
 begin
@@ -147,7 +147,7 @@ begin
     Dest.SaveToFile(FileName);
 end;
 
-procedure TDataSertvice.DeleteImage(const Source: TEntity);
+procedure TDataService.DeleteImage(const Source: TEntity);
 var
   FileName: string;
 begin

@@ -62,6 +62,7 @@ type
     FDescription: string;
     FPicture: TBitmap;
     FChanged: Boolean;
+    FFileName: string;
 
     function GetIsEmpty: Boolean;
     procedure SetPicture(const Value: TBitmap);
@@ -76,6 +77,7 @@ type
     property Picture: TBitmap read FPicture write SetPicture;
     property IsEmpty: Boolean read GetIsEmpty;
     property Changed: Boolean read FChanged write FChanged;
+    property FileName: string read FFileName write FFileName;
   end;
 
   TResourceClass = class of TResource;
@@ -251,6 +253,7 @@ begin
 
   FPicture := TBitmap.Create;
   FChanged := False;
+  FFileName := '';
 end;
 
 destructor TResource.Destroy;

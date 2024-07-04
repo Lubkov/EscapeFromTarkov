@@ -142,7 +142,7 @@ begin
   MapRight := FMap.Right;
   MapBottom := FMap.Bottom;
 
-  DataSertvice.LoadImage(FMap, Picture);
+  DataService.LoadImage(FMap, Picture);
 end;
 
 procedure TedMap.PostValues(const Value: TMap);
@@ -154,7 +154,7 @@ begin
   FMap.Bottom := MapBottom;
 
   if FPicturePanel.Changed then
-    DataSertvice.SaveImage(FMap, Picture);
+    DataService.SaveImage(FMap, Picture);
 end;
 
 end.
