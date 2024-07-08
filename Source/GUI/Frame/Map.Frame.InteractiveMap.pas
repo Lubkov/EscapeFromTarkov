@@ -228,13 +228,49 @@ procedure TInteractiveMap.AddPosition(const Position: TPoint);
 const
   MarkerHeight = 16;
   MarkerWidth = 16;
+  Angle = 0.30;  // 0.268;
 var
   Offset: Double;
+  Left: Single;
+  Top: Single;
+  x, y: Single;
 begin
+// ѕовернуть координаты против часовой стрелки
+
+//  Position.Left := Trunc(Position.Left * cos(0.268) + Position.Top * sin(0.268));
+//  Position.Top := (-1) * Trunc(Position.Left * sin(0.268) + Position.Top * cos(0.268));
+
+//  x := Trunc(Position.Left * cos(Angle) - Position.Top * sin(Angle));
+//  y := Trunc(Position.Left * sin(Angle) + Position.Top * cos(Angle));
+
+//  Left := 402 - Position.Left * (Bitmap.Width / 627);
+//  Top := 380 + Position.Top * (Bitmap.Height / 639);
+
+//  Left := 402 - Position.Left * 1.85;
+//  Top := 380 + Position.Top * 1.4;
+  // 426, 664
+  // -13, 203
+  // 1.85 1.4
+
+
+//  Left := Left - MarkerWidth div 2;
+//  Top := Top - MarkerHeight div 2;
+//  Offset := Abs((Map.Top - y) / (Map.Bottom - Map.Top));
+//  Top := Trunc(Bitmap.Height * Offset) - MarkerHeight div 2;
+//  Offset := Abs((Map.Left - x) / (Map.Right - Map.Left));
+//  Left := Trunc(Bitmap.Width * Offset) - MarkerWidth div 2;
+
+
   Offset := Abs((Map.Top - Position.Top) / (Map.Bottom - Map.Top));
   Top := Trunc(Bitmap.Height * Offset) - MarkerHeight div 2;
   Offset := Abs((Map.Left - Position.Left) / (Map.Right - Map.Left));
   Left := Trunc(Bitmap.Width * Offset) - MarkerWidth div 2;
+
+//  Left := Trunc(Left * cos(0.268) + Top * sin(0.268));
+//  Top := (-1) * Trunc(Left * sin(0.268) + Top * cos(0.268));
+
+//  Left := Trunc(Left * cos(0.268) - Top * sin(0.268));
+//  Top := Trunc(Left * sin(0.268) + Top * cos(0.268));
 
   PositionImage.Position.X := Left;
   PositionImage.Position.Y := Top;
