@@ -196,6 +196,21 @@ object MainForm: TMainForm
       TextSettings.Trimming = None
       OnMouseMove = buToolButtonMouseMove
     end
+    object buPositionTest: TSpeedButton
+      Action = acTestPosition
+      Align = Top
+      Cursor = crHandPoint
+      Images = ImageList32
+      ImageIndex = 7
+      Margins.Top = 10.000000000000000000
+      Position.Y = 363.000000000000000000
+      Size.Width = 48.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'IconToolButtonStyle'
+      TextSettings.Trimming = None
+      OnMouseMove = buToolButtonMouseMove
+    end
   end
   object LocationPanel: TPanel
     Position.X = 120.000000000000000000
@@ -423,6 +438,37 @@ object MainForm: TMainForm
             FileName = 'D:\Projects\Delphi\EscapeFromTarkov\Ico\Menu\menu_filter_32.png'
           end>
         Name = 'menu_filter_32'
+      end
+      item
+        MultiResBitmap.Height = 32
+        MultiResBitmap.Width = 32
+        MultiResBitmap.LoadSize = 0
+        MultiResBitmap = <
+          item
+            Width = 32
+            Height = 32
+            PNG = {
+              89504E470D0A1A0A0000000D4948445200000020000000200806000000737A7A
+              F40000000473424954080808087C086488000001E2494441545885C5973F4B5B
+              511C86DF2322281587B64B31DA6E1AEC0710A4435DC441E956BB74F03B88DD74
+              F05B08314BE922B553151CC5C1CDC1765329A5A06DFD371409244F879C0B177B
+              727FF75FEC0B59CEC97B9E879B737212E93FC7652D00154933929E4A7AE2877F
+              483A95F4D939F7BD2CB938D401AF8003A045E7B4FC7BE6CB848F02FB09D04ED9
+              03468AC2A780F31CF02867C0545E7815B82C008F72033CCF0A1F044E4A804739
+              061E84583D1D1C96D5DEE565E599A4A5D0C43FC7107824E99BA4FE120524E98F
+              A411E7DCEFF860E809CCA78023E983A445FF7A2FA969740624CD999AC027E3F3
+              6C00B381DE4B3F97948F6904BE1A8BAC2474578DEE973402D7C622C309DD8AD1
+              BDBEDB09ED814E2723CACF9C735260D3876027C622D584B909A37B9C4660D758
+              E45D68107092D68CAEB5B6048C937CE301D480A1586708D8303A4D60CC14F00B
+              5A4711E00AD80676B0372EC0562AB81798C47E0A59D20226530B78897A8902B5
+              4C702FF09062BF05A2FC021E6716F0126F4A1058C8058F49D40AC0D70BC1BD40
+              3F7098037E040C1416F01263C04506F80569CF7C068917C06D0A7803982E151E
+              93788DFDBFE06D57E03189A43B7FA5AB702FE0087F49D5695F48DD0FD00B6CC6
+              E09B40EFBDC063127DB42FAD2DA0EF5EE177240AC1FF027C909D6FC288E16000
+              00000049454E44AE426082}
+            FileName = 'D:\Downloads\11490414_pin_point_navigation_map_location_icon.png'
+          end>
+        Name = 'map_position_test_32'
       end>
     Destination = <
       item
@@ -478,6 +524,14 @@ object MainForm: TMainForm
             SourceRect.Right = 32.000000000000000000
             SourceRect.Bottom = 32.000000000000000000
           end>
+      end
+      item
+        Layers = <
+          item
+            Name = 'map_position_test_32'
+            SourceRect.Right = 32.000000000000000000
+            SourceRect.Bottom = 32.000000000000000000
+          end>
       end>
     Left = 408
     Top = 120
@@ -516,6 +570,12 @@ object MainForm: TMainForm
     end
     object acMarkerFilterOpen: TAction
       OnExecute = acMarkerFilterOpenExecute
+    end
+    object acTestPosition: TAction
+      Text = 'acTestPosition'
+      ImageIndex = 7
+      OnExecute = acTestPositionExecute
+      ImageIndex = 7
     end
   end
   object MapTagImages: TImageList

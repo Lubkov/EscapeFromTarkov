@@ -17,6 +17,7 @@ type
     MapTagImages: TImageList;
     PositionImage: TImage;
     MarkerPanel: TPanel;
+
     procedure BackgroundMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
     procedure BackgroundMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
     procedure BackgroundMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
@@ -29,6 +30,11 @@ type
     FMarkerDescript: TMarkerDescript;
     FOnDoubleClick: TNotifyEvent;
     FOnMouseDown: TNotifyEvent;
+
+  {$IFDEF DEBUG}
+    FTestData: array of string;
+    FTestIndex: Integer;
+  {$ENDIF}
 
     function GetBitmap: TBitmap;
     procedure SetBitmap(const Value: TBitmap);
@@ -52,6 +58,10 @@ type
     procedure ZoomOut;
     procedure SetMouseDown(const Value: Boolean);
     procedure HideMarkerInfo;
+
+  {$IFDEF DEBUG}
+    procedure TestPosition;
+  {$ENDIF}
 
     property Map: TMap read GetMap write SetMap;
     property Bitmap: TBitmap read GetBitmap write SetBitmap;
@@ -95,6 +105,20 @@ begin
   MarkerPanel.Visible := False;
   MarkerPanel.Height := 400;
   MarkerPanel.Width := 560;
+
+{$IFDEF DEBUG}
+  SetLength(FTestData, 8);
+  FTestData[0] := '2024-07-06[22-01]_0.0, 0.0, 0.0_0.0, 0.0, 0.0, 0.0_0.00 (0).png';
+  FTestData[1] := '2024-07-05[13-20]_234.2, -9.3, -6.7_0.0, 0.8, 0.0, -0.6_15.40 (0).png';
+  FTestData[2] := '2024-07-05[13-22]_186.7, -3.4, 20.5_-0.1, 0.8, -0.1, -0.6_15.62 (0).png';
+  FTestData[3] := '2024-07-05[13-23]_88.8, -5.5, -14.1_0.1, -0.7, 0.1, 0.8_15.79 (0).png';
+  FTestData[4] := '2024-07-05[13-26]_-13.2, 19.9, 203.3_0.0, -1.0, 0.1, 0.3_16.07 (0).png';
+  FTestData[5] := '2024-07-08[21-18]_0.0, 0.0, -100.0_0.0, 0.0, 0.0, 0.0_0.00 (0).png';
+  FTestData[6] := '2024-07-08[21-19]_0.0, 0.0, 100.0_0.0, 0.0, 0.0, 0.0_0.00 (0).png';
+  FTestData[7] := '2024-07-08[21-19]_100.0, 0.0, 0.0_0.0, 0.0, 0.0, 0.0_0.00 (0).png';
+
+  FTestIndex := -1;
+{$ENDIF}
 end;
 
 destructor TInteractiveMap.Destroy;
@@ -228,7 +252,7 @@ procedure TInteractiveMap.AddPosition(const Position: TPoint);
 const
   MarkerHeight = 16;
   MarkerWidth = 16;
-  Angle = 0.30;  // 0.268;
+  Angle = 3.66519; // 0.523599; //0.523599;  0.268
 var
   Offset: Double;
   Left: Single;
@@ -236,13 +260,19 @@ var
   x, y: Single;
 begin
 // ѕовернуть координаты против часовой стрелки
+// x(0) = 600, y(0) = 520
+// x(100) = 406, y(0) = 572)
 
 //  Position.Left := Trunc(Position.Left * cos(0.268) + Position.Top * sin(0.268));
 //  Position.Top := (-1) * Trunc(Position.Left * sin(0.268) + Position.Top * cos(0.268));
 
-//  x := Trunc(Position.Left * cos(Angle) - Position.Top * sin(Angle));
-//  y := Trunc(Position.Left * sin(Angle) + Position.Top * cos(Angle));
-
+//  x := Position.Left;
+//  y := Position.Top;
+//  x := (-1) * Trunc(x * cos(Angle) - y * sin(Angle));
+//  y := (-1) * Trunc(x * sin(Angle) + y * cos(Angle));
+//  y := (-1) * y;
+//  x := (-1) * x;
+//  y := (-1) * y;
 //  Left := 402 - Position.Left * (Bitmap.Width / 627);
 //  Top := 380 + Position.Top * (Bitmap.Height / 639);
 
@@ -252,7 +282,6 @@ begin
   // -13, 203
   // 1.85 1.4
 
-
 //  Left := Left - MarkerWidth div 2;
 //  Top := Top - MarkerHeight div 2;
 //  Offset := Abs((Map.Top - y) / (Map.Bottom - Map.Top));
@@ -260,6 +289,8 @@ begin
 //  Offset := Abs((Map.Left - x) / (Map.Right - Map.Left));
 //  Left := Trunc(Bitmap.Width * Offset) - MarkerWidth div 2;
 
+//  Left := Trunc(Left * cos(Angle) - Top * sin(Angle));
+//  Top := Trunc(Left * sin(Angle) + Top * cos(Angle));
 
   Offset := Abs((Map.Top - Position.Top) / (Map.Bottom - Map.Top));
   Top := Trunc(Bitmap.Height * Offset) - MarkerHeight div 2;
@@ -317,6 +348,20 @@ procedure TInteractiveMap.HideMarkerInfo;
 begin
   MarkerPanel.Visible := False;
 end;
+
+{$IFDEF DEBUG}
+procedure TInteractiveMap.TestPosition;
+var
+  p: TPoint;
+begin
+  Inc(FTestIndex);
+  if FTestIndex >= Length(FTestData) then
+    FTestIndex := 0;
+
+  p := FMapWrapper.ExtractPoint(FTestData[FTestIndex]);
+  FMapWrapper.DrawPoint(p);
+end;
+{$ENDIF}
 
 procedure TInteractiveMap.BackgroundDblClick(Sender: TObject);
 begin

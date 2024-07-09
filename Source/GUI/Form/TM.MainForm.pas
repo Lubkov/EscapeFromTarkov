@@ -31,6 +31,8 @@ type
     buChoiceLocation: TSpeedButton;
     LocationPanel: TPanel;
     MarkerFilterPanel: TPanel;
+    buPositionTest: TSpeedButton;
+    acTestPosition: TAction;
 
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -43,6 +45,7 @@ type
     procedure acMarkerFilterOpenExecute(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure buToolButtonMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Single);
+    procedure acTestPositionExecute(Sender: TObject);
   private
     FFormWrapper: TFormWrapper;
     FLocationGrid: TLocationGrid;
@@ -105,6 +108,8 @@ begin
   FLocationGrid.Align := TAlignLayout.Client;
   FLocationGrid.Init;
   FLocationGrid.OnLocationChanged := OnLocationChanged;
+
+  buPositionTest.Visible := {$IFDEF DEBUG}True{$ELSE}False{$ENDIF};
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
@@ -245,6 +250,11 @@ begin
     MarkerFilterPanel.Height := FMarkerFilterList.MaxHeight;
 
   MarkerFilterPanel.Visible := not MarkerFilterPanel.Visible;
+end;
+
+procedure TMainForm.acTestPositionExecute(Sender: TObject);
+begin
+  FInteractiveMap.TestPosition;
 end;
 
 end.
