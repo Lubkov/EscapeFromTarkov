@@ -58,6 +58,7 @@ type
     procedure ZoomOut;
     procedure SetMouseDown(const Value: Boolean);
     procedure HideMarkerInfo;
+    function NormalizePosition(const Left, Top: Integer):  TPoint;
 
   {$IFDEF DEBUG}
     procedure TestPosition;
@@ -107,7 +108,7 @@ begin
   MarkerPanel.Width := 560;
 
 {$IFDEF DEBUG}
-  SetLength(FTestData, 8);
+  SetLength(FTestData, 9);
   FTestData[0] := '2024-07-06[22-01]_0.0, 0.0, 0.0_0.0, 0.0, 0.0, 0.0_0.00 (0).png';
   FTestData[1] := '2024-07-05[13-20]_234.2, -9.3, -6.7_0.0, 0.8, 0.0, -0.6_15.40 (0).png';
   FTestData[2] := '2024-07-05[13-22]_186.7, -3.4, 20.5_-0.1, 0.8, -0.1, -0.6_15.62 (0).png';
@@ -116,6 +117,7 @@ begin
   FTestData[5] := '2024-07-08[21-18]_0.0, 0.0, -100.0_0.0, 0.0, 0.0, 0.0_0.00 (0).png';
   FTestData[6] := '2024-07-08[21-19]_0.0, 0.0, 100.0_0.0, 0.0, 0.0, 0.0_0.00 (0).png';
   FTestData[7] := '2024-07-08[21-19]_100.0, 0.0, 0.0_0.0, 0.0, 0.0, 0.0_0.00 (0).png';
+  FTestData[8] := '2024-07-11[18-53]_-162.0, 0.0, -115.0_0.0, 0.0, 0.0, 0.0_0.00 (0).png';
 
   FTestIndex := -1;
 {$ENDIF}
@@ -218,20 +220,19 @@ const
 var
   Item: TImage;
   Offset: Double;
-  Left, Top: Integer;
+  p: TPoint;
 begin
-  Offset := Abs((Map.Top - Marker.Top) / (Map.Bottom - Map.Top));
-  Top := Trunc(Bitmap.Height * Offset) - MarkerHeight div 2;
-  Offset := Abs((Map.Left - Marker.Left) / (Map.Right - Map.Left));
-  Left := Trunc(Bitmap.Width * Offset) - MarkerWidth div 2;
+  p := NormalizePosition(Marker.Left, Marker.Top);
+  p.Top := p.Top - MarkerHeight div 2;
+  p.Left := p.Left - MarkerWidth div 2;
 
   Item := TImage.Create(Self);
   try
     Item.Height := MarkerHeight;
     Item.Width := MarkerWidth;
     Item.Parent := Background;
-    Item.Position.X := Left;
-    Item.Position.Y := Top;
+    Item.Position.X := p.Left;
+    Item.Position.Y := p.Top;
     Item.Bitmap.Assign(MapTagImages.Bitmap(TSizeF.Create(32, 32), Ord(Marker.Kind)));
     Item.Hint := Title;
     Item.ShowHint := Trim(Title) <> '';
@@ -252,59 +253,15 @@ procedure TInteractiveMap.AddPosition(const Position: TPoint);
 const
   MarkerHeight = 16;
   MarkerWidth = 16;
-  Angle = 3.66519; // 0.523599; //0.523599;  0.268
 var
-  Offset: Double;
-  Left: Single;
-  Top: Single;
-  x, y: Single;
+  p: TPoint;
 begin
-// ѕовернуть координаты против часовой стрелки
-// x(0) = 600, y(0) = 520
-// x(100) = 406, y(0) = 572)
+  p := NormalizePosition(Position.Left, Position.Top);
+  p.Top := p.Top - MarkerHeight div 2;
+  p.Left := p.Left - MarkerWidth div 2;
 
-//  Position.Left := Trunc(Position.Left * cos(0.268) + Position.Top * sin(0.268));
-//  Position.Top := (-1) * Trunc(Position.Left * sin(0.268) + Position.Top * cos(0.268));
-
-//  x := Position.Left;
-//  y := Position.Top;
-//  x := (-1) * Trunc(x * cos(Angle) - y * sin(Angle));
-//  y := (-1) * Trunc(x * sin(Angle) + y * cos(Angle));
-//  y := (-1) * y;
-//  x := (-1) * x;
-//  y := (-1) * y;
-//  Left := 402 - Position.Left * (Bitmap.Width / 627);
-//  Top := 380 + Position.Top * (Bitmap.Height / 639);
-
-//  Left := 402 - Position.Left * 1.85;
-//  Top := 380 + Position.Top * 1.4;
-  // 426, 664
-  // -13, 203
-  // 1.85 1.4
-
-//  Left := Left - MarkerWidth div 2;
-//  Top := Top - MarkerHeight div 2;
-//  Offset := Abs((Map.Top - y) / (Map.Bottom - Map.Top));
-//  Top := Trunc(Bitmap.Height * Offset) - MarkerHeight div 2;
-//  Offset := Abs((Map.Left - x) / (Map.Right - Map.Left));
-//  Left := Trunc(Bitmap.Width * Offset) - MarkerWidth div 2;
-
-//  Left := Trunc(Left * cos(Angle) - Top * sin(Angle));
-//  Top := Trunc(Left * sin(Angle) + Top * cos(Angle));
-
-  Offset := Abs((Map.Top - Position.Top) / (Map.Bottom - Map.Top));
-  Top := Trunc(Bitmap.Height * Offset) - MarkerHeight div 2;
-  Offset := Abs((Map.Left - Position.Left) / (Map.Right - Map.Left));
-  Left := Trunc(Bitmap.Width * Offset) - MarkerWidth div 2;
-
-//  Left := Trunc(Left * cos(0.268) + Top * sin(0.268));
-//  Top := (-1) * Trunc(Left * sin(0.268) + Top * cos(0.268));
-
-//  Left := Trunc(Left * cos(0.268) - Top * sin(0.268));
-//  Top := Trunc(Left * sin(0.268) + Top * cos(0.268));
-
-  PositionImage.Position.X := Left;
-  PositionImage.Position.Y := Top;
+  PositionImage.Position.X := p.Left;
+  PositionImage.Position.Y := p.Top;
   PositionImage.Visible := not Position.Empty;
   PositionImage.BringToFront;
 end;
@@ -347,6 +304,26 @@ end;
 procedure TInteractiveMap.HideMarkerInfo;
 begin
   MarkerPanel.Visible := False;
+end;
+
+function TInteractiveMap.NormalizePosition(const Left, Top: Integer):  TPoint;
+const
+  Angle = 0.268; // 0.523599; //0.523599;  0.268
+var
+  x, y: Single;
+  Offset: Single;
+begin
+  x := Left;
+  y := Top;
+  if Map.ID = '{4BD00E08-6780-4351-91FD-8ACB9AB8F215}' then begin
+    x := Trunc(x * cos(Angle) - y * sin(Angle));
+    y := Trunc(x * sin(Angle) + y * cos(Angle));
+  end;
+
+  Offset := Abs((Map.Top - y) / (Map.Bottom - Map.Top));
+  Result.Top := Trunc(Bitmap.Height * Offset); // - MarkerHeight div 2;
+  Offset := Abs((Map.Left - x) / (Map.Right - Map.Left));
+  Result.Left := Trunc(Bitmap.Width * Offset); // - MarkerWidth div 2;
 end;
 
 {$IFDEF DEBUG}
